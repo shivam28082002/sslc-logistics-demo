@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KS Shipping | Freight Forwarding, LCL/FCL, Air Freight & Transport, Jaipur</title>
+<meta name="description" content="KS Shipping, Jaipur (since 2016): LCL and FCL sea freight, air freight import/export and 24x7 land transport across India.">
+<meta name="robots" content="noindex">
+<style>
+:root{--navy:#0d2240;--navy2:#16365f;--orange:#d62839;--orange2:#ef3e4f;--ink:#1f2937;--muted:#6b7280;--bg:#f5f7fb;--card:#fff;--ok:#16a34a;--line:#e5e7eb}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;font-family:"Segoe UI",Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg);line-height:1.55}
+a{color:inherit}
+.demo-bar{background:#111827;color:#fbbf24;text-align:center;font-size:13px;padding:6px 10px}
+.demo-bar b{color:#fff}
+header{position:sticky;top:0;z-index:50;background:#fff;box-shadow:0 2px 10px rgba(0,0,0,.06)}
+.nav{max-width:1180px;margin:auto;display:flex;align-items:center;justify-content:space-between;padding:10px 18px;gap:12px}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.logo svg{flex:none}
+.logo b{display:block;color:var(--navy);font-size:18px;line-height:1.1}
+.logo small{color:var(--muted);font-size:11.5px;letter-spacing:.3px}
+.menu{display:flex;gap:4px;align-items:center}
+.menu a{text-decoration:none;padding:8px 12px;border-radius:8px;font-weight:600;font-size:14.5px;color:var(--navy)}
+.menu a:hover,.menu a.active{background:#eef4fb}
+.menu a.cta{background:var(--orange);color:#fff}
+.menu a.cta:hover{background:var(--orange2)}
+.burger{display:none;background:none;border:0;font-size:26px;color:var(--navy);cursor:pointer}
+@media(max-width:900px){.menu{display:none;position:absolute;top:100%;left:0;right:0;background:#fff;flex-direction:column;align-items:stretch;padding:8px 14px 14px;box-shadow:0 10px 20px rgba(0,0,0,.08)}.menu.open{display:flex}.burger{display:block}}
+section{padding:56px 18px}
+.wrap{max-width:1180px;margin:auto}
+h1,h2,h3{color:var(--navy);line-height:1.2;margin:0 0 12px}
+h2{font-size:30px}
+.lead{color:var(--muted);font-size:17px;max-width:720px}
+.page{display:none}.page.show{display:block;animation:fade .35s ease}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+/* hero */
+.hero{background:linear-gradient(120deg,rgba(11,42,74,.96),rgba(18,59,102,.88)),radial-gradient(circle at 80% 20%,#1e5a96,transparent 60%);color:#fff;padding:64px 18px 0;overflow:hidden}
+.hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:30px;align-items:center}
+.hero h1{color:#fff;font-size:42px}
+.hero h1 span{color:var(--orange2)}
+.hero p{color:#dbe7f5;font-size:18px}
+.tag{display:inline-block;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);padding:5px 12px;border-radius:30px;font-size:13px;margin-bottom:14px}
+.btns{display:flex;gap:12px;flex-wrap:wrap;margin:22px 0 30px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:13px 20px;border-radius:10px;font-weight:700;text-decoration:none;border:0;cursor:pointer;font-size:15.5px}
+.btn.o{background:var(--orange);color:#fff}.btn.o:hover{background:var(--orange2)}
+.btn.w{background:#fff;color:var(--navy)}
+.btn.g{background:#25d366;color:#fff}
+.btn.line{background:transparent;color:#fff;border:2px solid rgba(255,255,255,.6)}
+.quicktrack{background:#fff;border-radius:14px;padding:18px;color:var(--ink);box-shadow:0 20px 40px rgba(0,0,0,.25);margin-bottom:-40px;position:relative;z-index:2}
+.quicktrack h3{font-size:18px;margin-bottom:10px}
+.row{display:flex;gap:8px}
+input,select,textarea{width:100%;padding:12px 13px;border:1.5px solid var(--line);border-radius:10px;font:inherit;font-size:15px;background:#fff}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--navy2)}
+.hint{font-size:12.5px;color:var(--muted);margin-top:8px}
+.hint code{background:#eef4fb;padding:1px 6px;border-radius:5px;color:var(--navy);cursor:pointer}
+.ship{width:100%;max-width:520px;display:block;margin:0 auto}
+@media(max-width:900px){.hero .wrap{grid-template-columns:1fr}.hero h1{font-size:32px}.ship{display:none}.hero{padding-bottom:28px}.quicktrack{margin-bottom:0}.stats{padding-top:34px}}
+@media(max-width:480px){.logo small{display:none}}
+.stats{background:#fff;padding:70px 18px 34px}
+.stats .wrap{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;text-align:center}
+.stats b{display:block;font-size:30px;color:var(--orange)}
+.stats span{color:var(--muted);font-size:14px}
+@media(max-width:700px){.stats .wrap{grid-template-columns:repeat(2,1fr)}}
+/* cards */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:18px;margin-top:26px}
+.card{background:var(--card);border-radius:14px;padding:22px;box-shadow:0 4px 14px rgba(15,23,42,.06);border:1px solid #eef0f4;transition:.2s}
+.card:hover{transform:translateY(-3px);box-shadow:0 12px 24px rgba(15,23,42,.1)}
+.card .ic{font-size:30px;width:54px;height:54px;border-radius:12px;background:#fff4e8;display:grid;place-items:center;margin-bottom:12px}
+.card h3{font-size:18px}
+.card p{color:var(--muted);font-size:14.5px;margin:0 0 10px}
+.card a.more{color:var(--orange);font-weight:700;text-decoration:none;font-size:14px;cursor:pointer}
+.why{background:var(--navy);color:#fff}
+.why h2{color:#fff}.why .lead{color:#c7d6e8}
+.why .grid .card{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.12);color:#fff}
+.why .grid .card p{color:#c7d6e8}.why .grid .card h3{color:#fff}
+.why .grid .card .ic{background:rgba(242,140,40,.18)}
+.ctaband{background:linear-gradient(90deg,var(--orange),#f5a623);color:#fff;border-radius:16px;padding:28px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+.ctaband h3{color:#fff;font-size:24px;margin:0}
+/* tracking */
+.trackbox{background:#fff;border-radius:16px;padding:24px;box-shadow:0 6px 20px rgba(15,23,42,.07);max-width:820px}
+.result{margin-top:22px;display:none}
+.result.show{display:block;animation:fade .35s}
+.shiphead{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;background:#f8fafc;border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:18px}
+.shiphead div small{display:block;color:var(--muted);font-size:12px}
+.shiphead div b{color:var(--navy);font-size:14.5px}
+.badge{display:inline-block;padding:4px 10px;border-radius:20px;font-size:12.5px;font-weight:700;background:#dcfce7;color:#166534}
+.badge.wait{background:#fef3c7;color:#92400e}
+.timeline{list-style:none;margin:0;padding:0;position:relative}
+.timeline li{position:relative;padding:0 0 22px 40px}
+.timeline li:before{content:"";position:absolute;left:13px;top:26px;bottom:-2px;width:3px;background:var(--line)}
+.timeline li:last-child:before{display:none}
+.timeline li.done:before{background:var(--ok)}
+.dot{position:absolute;left:0;top:0;width:29px;height:29px;border-radius:50%;display:grid;place-items:center;font-size:14px;background:#e5e7eb;color:#6b7280;font-weight:700}
+.done .dot{background:var(--ok);color:#fff}
+.current .dot{background:var(--orange);color:#fff;box-shadow:0 0 0 6px rgba(242,140,40,.2)}
+.timeline b{display:block;color:var(--navy)}
+.timeline small{color:var(--muted)}
+.err{color:#b91c1c;margin-top:12px;display:none}
+.staff{margin-top:30px;background:#fffdf7;border:1.5px dashed #f2c58c;border-radius:14px;padding:18px}
+.staff h3{font-size:17px}
+.sheet{width:100%;border-collapse:collapse;font-size:13.5px;background:#fff;margin-top:10px;overflow:auto;display:block}
+.sheet th{background:#0f9d58;color:#fff;text-align:left;padding:8px;white-space:nowrap}
+.sheet td{border:1px solid #e5e7eb;padding:6px 8px;white-space:nowrap}
+.sheet select{padding:5px;font-size:13px;border-radius:6px}
+/* quote */
+.qgrid{display:grid;grid-template-columns:1.2fr .8fr;gap:22px;align-items:start}
+@media(max-width:900px){.qgrid{grid-template-columns:1fr}}
+.form{background:#fff;border-radius:16px;padding:24px;box-shadow:0 6px 20px rgba(15,23,42,.07)}
+.form .two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:600px){.form .two{grid-template-columns:1fr}}
+.form label{display:block;font-weight:600;font-size:13.5px;margin:12px 0 5px;color:var(--navy)}
+.seg{display:flex;gap:8px}
+.seg label{flex:1;margin:0;cursor:pointer}
+.seg input{display:none}
+.seg span{display:block;text-align:center;padding:11px;border:1.5px solid var(--line);border-radius:10px;font-weight:700;color:var(--muted)}
+.seg input:checked+span{border-color:var(--orange);background:#fff4e8;color:var(--orange)}
+.waprev{background:#e5ddd5;border-radius:14px;padding:16px;min-height:220px}
+.bubble{background:#dcf8c6;border-radius:10px 10px 2px 10px;padding:10px 12px;font-size:14px;white-space:pre-wrap;box-shadow:0 1px 1px rgba(0,0,0,.1);margin-left:auto;max-width:95%}
+.wahead{display:flex;align-items:center;gap:10px;background:#075e54;color:#fff;margin:-16px -16px 14px;padding:10px 14px;border-radius:14px 14px 0 0;font-weight:600}
+/* tools */
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:20px 0}
+.tabs button{border:1.5px solid var(--line);background:#fff;border-radius:30px;padding:9px 16px;font-weight:700;color:var(--navy);cursor:pointer;font:inherit;font-size:14.5px}
+.tabs button.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+.tool{display:none;background:#fff;border-radius:16px;padding:22px;box-shadow:0 6px 20px rgba(15,23,42,.07)}
+.tool.on{display:block}
+table.t{width:100%;border-collapse:collapse;font-size:14.5px}
+table.t th{background:#eef4fb;color:var(--navy);text-align:left;padding:10px}
+table.t td{border-bottom:1px solid var(--line);padding:10px}
+.wrapx{overflow-x:auto}
+.check{columns:2;column-gap:30px}
+@media(max-width:700px){.check{columns:1}}
+.check li{margin-bottom:6px;break-inside:avoid}
+.conv{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:center;max-width:620px}
+/* contact */
+.cgrid{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+@media(max-width:900px){.cgrid{grid-template-columns:1fr}}
+.person{display:flex;gap:14px;align-items:flex-start;margin-bottom:18px}
+.avatar{width:50px;height:50px;border-radius:50%;background:var(--navy);color:#fff;display:grid;place-items:center;font-weight:700;flex:none}
+.map{border:0;width:100%;height:100%;min-height:320px;border-radius:16px}
+footer{background:#081f37;color:#a9bdd3;padding:36px 18px 90px;font-size:14px}
+footer .wrap{display:grid;grid-template-columns:2fr 1fr 1fr;gap:24px}
+footer b{color:#fff}
+footer a{text-decoration:none;display:block;margin:4px 0;cursor:pointer}
+@media(max-width:800px){footer .wrap{grid-template-columns:1fr}}
+.float{position:fixed;right:16px;bottom:16px;display:flex;flex-direction:column;gap:10px;z-index:60}
+.float a{width:56px;height:56px;border-radius:50%;display:grid;place-items:center;box-shadow:0 8px 20px rgba(0,0,0,.25);text-decoration:none;font-size:26px}
+.float .wa{background:#25d366}.float .call{background:var(--orange)}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;z-index:80;padding:16px}
+.modal.show{display:flex}
+.modal .box{background:#fff;border-radius:16px;max-width:620px;width:100%;padding:26px;max-height:85vh;overflow:auto;position:relative}
+.modal .x{position:absolute;right:14px;top:10px;font-size:26px;border:0;background:none;cursor:pointer;color:var(--muted)}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(120px);background:#111827;color:#fff;padding:12px 18px;border-radius:10px;transition:.3s;z-index:90;font-size:14.5px;max-width:92%}
+.toast.show{transform:translateX(-50%) translateY(0)}
+</style>
+</head>
+<body>
+<div class="demo-bar">🔧 <b>Demo website</b> prepared for KS Shipping, Jaipur by <b>SSLC STARTUP</b> · sample tracking data · www.sslctstartup.com</div>
+
+<header>
+ <div class="nav">
+  <a class="logo" href="#home" onclick="go('home')">
+   <svg width="44" height="44" viewBox="0 0 44 44" aria-hidden="true"><rect width="44" height="44" rx="10" fill="#0b2a4a"/><path d="M8 27h28l-4 7H12z" fill="#f28c28"/><rect x="12" y="15" width="8" height="10" fill="#fff"/><rect x="21" y="11" width="8" height="14" fill="#9ec5ee"/><rect x="30" y="18" width="5" height="7" fill="#fff"/></svg>
+   <span><b>KS Shipping</b><small>FREIGHT FORWARDING · JAIPUR · SINCE 2016</small></span>
+  </a>
+  <button class="burger" onclick="document.querySelector('.menu').classList.toggle('open')" aria-label="Menu">☰</button>
+  <nav class="menu">
+   <a data-p="home" onclick="go('home')">Home</a>
+   <a data-p="services" onclick="go('services')">Services</a>
+   <a data-p="track" onclick="go('track')">📦 Track Shipment</a>
+   <a data-p="tools" onclick="go('tools')">Tools</a>
+   <a data-p="about" onclick="go('about')">About</a>
+   <a data-p="contact" onclick="go('contact')">Contact</a>
+   <a class="cta" data-p="quote" onclick="go('quote')">Get a Quote</a>
+  </nav>
+ </div>
+</header>
+
+<!-- HOME -->
+<div class="page" id="p-home">
+ <div class="hero">
+  <div class="wrap">
+   <div>
+    <span class="tag">⚓ Jaipur · ICD · Mundra · Nhava Sheva · Air Cargo</span>
+    <h1>Reliable <span>Freight Forwarding</span> from Jaipur to the world</h1>
+    <p>LCL and FCL sea freight, air freight import & export, and 24×7 land transport across India: one team for your complete shipment.</p>
+    <div class="btns">
+     <a class="btn o" onclick="go('quote')">📝 Get a Free Quote</a>
+     <a class="btn g" href="https://wa.me/917877799931?text=Hello%20KS%20Shipping%2C%20I%20need%20help%20with%20a%20shipment." target="_blank" rel="noopener">💬 WhatsApp Us</a>
+     <a class="btn line" href="tel:+917877799931">📞 Call Now</a>
+    </div>
+    <div class="quicktrack">
+     <h3>📦 Track your shipment</h3>
+     <div class="row"><input id="qt" placeholder="Enter Job No. or BL / AWB No." onkeydown="if(event.key==='Enter')quickTrack()"><button class="btn o" onclick="quickTrack()">Track</button></div>
+     <div class="hint">Try demo numbers: <code onclick="fillTrack('KS/EXP/2410/021')">KS/EXP/2410/021</code> <code onclick="fillTrack('MSKU7741203')">MSKU7741203</code> <code onclick="fillTrack('KS/IMP/2410/008')">KS/IMP/2410/008</code></div>
+    </div>
+   </div>
+   <svg class="ship" viewBox="0 0 520 360" aria-hidden="true">
+    <defs><linearGradient id="sea" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#1e5a96"/><stop offset="1" stop-color="#0b2a4a"/></linearGradient></defs>
+    <rect x="0" y="270" width="520" height="90" fill="url(#sea)"/>
+    <g opacity=".5" stroke="#9ec5ee" stroke-width="3" fill="none"><path d="M20 300q30-10 60 0t60 0 60 0"/><path d="M280 320q30-10 60 0t60 0 60 0"/></g>
+    <path d="M40 250h420l-40 50H90z" fill="#f28c28"/>
+    <path d="M60 250h390v-8H60z" fill="#d9761a"/>
+    <g>
+     <rect x="80" y="192" width="70" height="48" fill="#1f6fb2"/><rect x="152" y="192" width="70" height="48" fill="#f2f5f9"/><rect x="224" y="192" width="70" height="48" fill="#2e9d68"/><rect x="296" y="192" width="70" height="48" fill="#f28c28"/>
+     <rect x="116" y="142" width="70" height="48" fill="#c0392b"/><rect x="188" y="142" width="70" height="48" fill="#1f6fb2"/><rect x="260" y="142" width="70" height="48" fill="#f2f5f9"/>
+     <rect x="152" y="92" width="70" height="48" fill="#2e9d68"/><rect x="224" y="92" width="70" height="48" fill="#f28c28"/>
+     <g stroke="rgba(0,0,0,.15)" stroke-width="2"><path d="M95 192v48M110 192v48M125 192v48M167 192v48M182 192v48M197 192v48M239 192v48M254 192v48M269 192v48M311 192v48M326 192v48M341 192v48"/></g>
+    </g>
+    <rect x="380" y="150" width="60" height="92" fill="#f2f5f9"/><rect x="390" y="162" width="40" height="14" fill="#9ec5ee"/><rect x="405" y="120" width="12" height="30" fill="#0b2a4a"/>
+    <text x="250" y="285" text-anchor="middle" font-family="Segoe UI,Arial" font-weight="700" font-size="20" fill="#fff">KS SHIPPING</text>
+   </svg>
+  </div>
+ </div>
+ <div class="stats"><div class="wrap">
+  <div><b>Since 2016</b><span>Trusted by Jaipur exporters</span></div>
+  <div><b>LCL · FCL</b><span>Sea freight worldwide</span></div>
+  <div><b>Air</b><span>Import & export</span></div>
+  <div><b>24×7</b><span>Land transport</span></div>
+ </div></div>
+ <section><div class="wrap">
+  <h2>Our Services</h2>
+  <p class="lead">From factory pickup in Rajasthan to the overseas port, one team handles your shipment.</p>
+  <div class="grid" id="homeServices"></div>
+ </div></section>
+ <section class="why"><div class="wrap">
+  <h2>Why exporters choose KS Shipping</h2>
+  <p class="lead">A Jaipur team that knows Rajasthan's exporters: handicrafts, textiles, stone, gems and engineering goods.</p>
+  <div class="grid">
+   <div class="card"><div class="ic">⚡</div><h3>Best freight rates</h3><p>Tie-ups with major shipping lines and airlines for competitive LCL, FCL and air rates.</p></div>
+   <div class="card"><div class="ic">📲</div><h3>Live status on WhatsApp</h3><p>Track your job online any time, and get updates on WhatsApp at every stage.</p></div>
+   <div class="card"><div class="ic">🛡️</div><h3>Pickup from your factory</h3><p>Trucks across Rajasthan to Jaipur ICD, Mundra, Pipavav or Nhava Sheva.</p></div>
+   <div class="card"><div class="ic">🤝</div><h3>Directors on call</h3><p>Talk directly to Ajay ji or Arun ji, no call-centre.</p></div>
+  </div>
+ </div></section>
+ <section><div class="wrap"><div class="ctaband"><div><h3>Have a shipment coming up?</h3><div>Send details in 1 minute and get a quote on WhatsApp.</div></div><a class="btn w" onclick="go('quote')">📝 Get a Quote</a></div></div></section>
+</div>
+
+<!-- SERVICES -->
+<div class="page" id="p-services"><section><div class="wrap">
+ <h2>Services</h2>
+ <p class="lead">Sea, air and land freight for importers and exporters across Rajasthan.</p>
+ <div class="grid" id="allServices"></div>
+</div></section></div>
+
+<!-- TRACK -->
+<div class="page" id="p-track"><section><div class="wrap">
+ <h2>📦 Track Your Shipment</h2>
+ <p class="lead">Enter your Job Number or BL / AWB Number to see the latest status of your consignment.</p>
+ <div class="trackbox">
+  <div class="row"><input id="tn" placeholder="e.g. KS/EXP/2410/021 or MSKU7741203" onkeydown="if(event.key==='Enter')track()"><button class="btn o" onclick="track()">Track</button></div>
+  <div class="hint">Demo numbers: <code onclick="fillTrack('KS/EXP/2410/021')">KS/EXP/2410/021</code> <code onclick="fillTrack('MSKU7741203')">MSKU7741203</code> <code onclick="fillTrack('KS/IMP/2410/008')">KS/IMP/2410/008</code></div>
+  <div class="err" id="terr">No shipment found with this number. Please check the number or <a href="https://wa.me/917877799931" target="_blank" rel="noopener">ask us on WhatsApp</a>.</div>
+  <div class="result" id="tres"></div>
+ </div>
+ <div class="staff">
+  <h3>🧑‍💼 For KS Shipping staff: how tracking gets updated</h3>
+  <div class="hint" style="font-size:14px;margin-top:0">Your team updates a simple <b>Google Sheet</b>: just change the "Status" column. The tracking page updates automatically, with no technical knowledge needed. <b>Try it below:</b> change a status, then track that number again.</div>
+  <table class="sheet" id="sheet"></table>
+ </div>
+</div></section></div>
+
+<!-- QUOTE -->
+<div class="page" id="p-quote"><section><div class="wrap">
+ <h2>📝 Get a Quote</h2>
+ <p class="lead">Share your shipment details. Your enquiry reaches our team instantly on WhatsApp and email, and we reply fast.</p>
+ <div class="qgrid">
+  <form class="form" id="qform" onsubmit="sendQuote(event)">
+   <label>Shipment type</label>
+   <div class="seg"><label><input type="radio" name="dir" value="Import" checked><span>⬇️ Import</span></label><label><input type="radio" name="dir" value="Export"><span>⬆️ Export</span></label></div>
+   <div class="two">
+    <div><label>Mode</label><select name="mode"><option>Sea - FCL</option><option>Sea - LCL</option><option>Air</option><option>Project / Break-bulk</option><option>ISO / Flexi tank</option></select></div>
+    <div><label>Port</label><select name="port"><option>Jaipur ICD</option><option>Mundra</option><option>Nhava Sheva (JNPT)</option><option>Jaipur Air Cargo</option><option>Delhi Air Cargo</option><option>Other</option></select></div>
+   </div>
+   <div class="two">
+    <div><label>Container</label><select name="cont"><option>20' GP</option><option>40' GP</option><option>40' HC</option><option>Reefer</option><option>ISO tank</option><option>Not sure / LCL</option></select></div>
+    <div><label>Commodity</label><input name="item" placeholder="e.g. machine parts" required></div>
+   </div>
+   <div class="two">
+    <div><label>Origin / destination country</label><input name="country" placeholder="e.g. China" required></div>
+    <div><label>Expected date</label><input name="date" type="date"></div>
+   </div>
+   <div class="two">
+    <div><label>Your name & company</label><input name="name" placeholder="Name, Company" required></div>
+    <div><label>Mobile (WhatsApp)</label><input name="phone" placeholder="10-digit mobile" pattern="[0-9 +]{10,14}" required></div>
+   </div>
+   <label>Anything else?</label><textarea name="note" rows="2" placeholder="Hazardous? Door delivery needed? Any documents ready?"></textarea>
+   <div class="btns" style="margin-bottom:0"><button class="btn o" type="submit">📩 Send Enquiry</button></div>
+  </form>
+  <div>
+   <div class="waprev"><div class="wahead">🟢 KS Shipping <span style="font-weight:400;opacity:.8;font-size:12px">· enquiry preview</span></div><div class="bubble" id="wabubble">Fill the form: the enquiry KS Shipping's team receives on WhatsApp appears here.</div></div>
+   <div class="hint" style="font-size:13.5px">✔ Each enquiry arrives on the office WhatsApp and email in a clean format, so no lead gets lost.</div>
+  </div>
+ </div>
+</div></section></div>
+
+<!-- TOOLS -->
+<div class="page" id="p-tools"><section><div class="wrap">
+ <h2>🧰 Shipping Tools & Guides</h2>
+ <p class="lead">Handy references for importers and exporters.</p>
+ <div class="tabs">
+  <button class="on" onclick="tool(this,'t1')">📦 Container sizes</button>
+  <button onclick="tool(this,'t2')">📄 Document checklist</button>
+  <button onclick="tool(this,'t3')">🌍 Incoterms</button>
+  <button onclick="tool(this,'t4')">⚖️ Unit converter</button>
+ </div>
+ <div class="tool on" id="t1"><div class="wrapx"><table class="t">
+  <tr><th>Container</th><th>Internal L × W × H (m)</th><th>Capacity</th><th>Max payload</th></tr>
+  <tr><td>20' General Purpose</td><td>5.90 × 2.35 × 2.39</td><td>≈ 33 cbm</td><td>≈ 28,000 kg</td></tr>
+  <tr><td>40' General Purpose</td><td>12.03 × 2.35 × 2.39</td><td>≈ 67 cbm</td><td>≈ 26,700 kg</td></tr>
+  <tr><td>40' High Cube</td><td>12.03 × 2.35 × 2.69</td><td>≈ 76 cbm</td><td>≈ 26,500 kg</td></tr>
+  <tr><td>20' Reefer</td><td>5.44 × 2.29 × 2.27</td><td>≈ 28 cbm</td><td>≈ 27,400 kg</td></tr>
+  <tr><td>ISO Tank (liquids)</td><td>20' frame</td><td>≈ 21,000–26,000 L</td><td>≈ 26,000 kg</td></tr>
+ </table></div><div class="hint">Approximate figures; exact values vary by shipping line.</div></div>
+ <div class="tool" id="t2"><div class="two" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px">
+  <div><h3>⬇️ Import</h3><ul class="check"><li>Commercial invoice</li><li>Packing list</li><li>Bill of Lading / Airway Bill</li><li>IEC (Importer Exporter Code)</li><li>GST registration</li><li>Certificate of origin (for FTA duty benefit)</li><li>Insurance certificate</li><li>Product licence / BIS / FSSAI if applicable</li></ul></div>
+  <div><h3>⬆️ Export</h3><ul class="check"><li>Commercial invoice</li><li>Packing list</li><li>Shipping bill</li><li>IEC & GST (LUT if zero-rated)</li><li>Certificate of origin</li><li>Inspection / phyto certificate if needed</li><li>Letter of credit documents if applicable</li><li>MSDS for hazardous cargo</li></ul></div>
+ </div></div>
+ <div class="tool" id="t3"><div class="wrapx"><table class="t">
+  <tr><th>Term</th><th>Meaning (simple)</th><th>Seller pays up to</th></tr>
+  <tr><td><b>EXW</b></td><td>Ex Works</td><td>Goods ready at seller's premises</td></tr>
+  <tr><td><b>FOB</b></td><td>Free On Board</td><td>Goods loaded on the vessel at origin port</td></tr>
+  <tr><td><b>CFR</b></td><td>Cost & Freight</td><td>Freight to destination port (no insurance)</td></tr>
+  <tr><td><b>CIF</b></td><td>Cost, Insurance & Freight</td><td>Freight + insurance to destination port</td></tr>
+  <tr><td><b>DAP</b></td><td>Delivered At Place</td><td>Delivery at named place, buyer pays duty</td></tr>
+  <tr><td><b>DDP</b></td><td>Delivered Duty Paid</td><td>Everything, including import duty</td></tr>
+ </table></div></div>
+ <div class="tool" id="t4">
+  <div class="conv"><div><input id="cv" type="number" value="1" oninput="conv()"><select id="cf" onchange="conv()" style="margin-top:8px"></select></div><b style="font-size:22px">=</b><div><input id="co" readonly><select id="ct" onchange="conv()" style="margin-top:8px"></select></div></div>
+  <div class="hint">Converts weight, volume and length units used in shipping.</div>
+ </div>
+</div></section></div>
+
+<!-- ABOUT -->
+<div class="page" id="p-about"><section><div class="wrap">
+ <h2>About KS Shipping</h2>
+ <p class="lead">KS Shipping was established in Jaipur in 2016 to give Rajasthan's importers and exporters reliable, flexible and affordable shipping.</p>
+ <div class="grid">
+  <div class="card"><div class="ic">🏢</div><h3>Who we are</h3><p>A Jaipur freight forwarder handling LCL, FCL, air freight and land transport, with partners at every major Indian port.</p></div>
+  <div class="card"><div class="ic">🎯</div><h3>Our vision</h3><p>To make shipping simple for every Rajasthan business, from first export to regular containers.</p></div>
+  <div class="card"><div class="ic">💬</div><h3>Our promise</h3><p>We take feedback seriously and respond promptly. We are only as good as the service we deliver on every shipment.</p></div>
+ </div>
+</div></section></div>
+
+<!-- CONTACT -->
+<div class="page" id="p-contact"><section><div class="wrap">
+ <h2>Contact Us</h2>
+ <div class="cgrid" style="margin-top:20px">
+  <div class="form">
+   <div class="person"><div class="avatar">AS</div><div><b>Mr. Ajay Singh Shekhawat</b><br><small class="hint">Director</small><br><a href="tel:+917877799931">📞 +91 78777 99931</a> · <a href="https://wa.me/917877799931" target="_blank" rel="noopener">💬 WhatsApp</a></div></div>
+   <div class="person"><div class="avatar">AS</div><div><b>Mr. Arun Singh Shekhawat</b><br><small class="hint">Director</small><br><a href="tel:+919928585923">📞 +91 99285 85923</a></div></div>
+   <div class="person"><div class="avatar">📍</div><div><b>Office</b><br>Plot No. 30, Chand Bihari Nagar, Khatipura, Jaipur, Rajasthan 302032<br><a href="mailto:info@ksshipping.in">info@ksshipping.in</a> · <a href="mailto:support@ksshipping.in">support@ksshipping.in</a></div></div>
+  </div>
+  <iframe class="map" loading="lazy" title="Map" src="https://www.google.com/maps?q=Chand+Bihari+Nagar+Khatipura+Jaipur&output=embed"></iframe>
+ </div>
+</div></section></div>
+
+<footer><div class="wrap">
+ <div><b style="font-size:17px">KS Shipping</b><p>Freight forwarding from Jaipur since 2016: LCL & FCL sea freight, air freight import/export and 24×7 land transport.</p><p>© 2026 KS Shipping, Jaipur</p></div>
+ <div><b>Quick links</b><a onclick="go('services')">Services</a><a onclick="go('track')">Track Shipment</a><a onclick="go('quote')">Get a Quote</a><a onclick="go('tools')">Tools</a></div>
+ <div><b>Reach us</b><a href="tel:+917877799931">📞 +91 78777 99931</a><a href="tel:+919928585923">📞 +91 99285 85923</a><a href="mailto:info@ksshipping.in">✉️ info@ksshipping.in</a></div>
+</div></footer>
+
+<div class="float">
+ <a class="wa" href="https://wa.me/917877799931?text=Hello%20KS%20Shipping%2C%20I%20need%20help%20with%20a%20shipment." target="_blank" rel="noopener" aria-label="WhatsApp">💬</a>
+ <a class="call" href="tel:+917877799931" aria-label="Call">📞</a>
+</div>
+<div class="modal" id="modal" onclick="if(event.target===this)closeM()"><div class="box"><button class="x" onclick="closeM()">×</button><div id="mbody"></div></div></div>
+<div class="toast" id="toast"></div>
+
+<script>
+const SERVICES=[
+ ['📦','LCL Sea Freight','Not enough cargo for a full container? Share space and pay only for what you ship.','Less-than-container-load (LCL) consolidation from Jaipur ICD, Mundra and Nhava Sheva to major ports worldwide. Ideal for handicrafts, textiles and sample shipments: you pay by CBM, with pickup, documentation and port handling managed by our team.'],
+ ['🚢','FCL Sea Freight','20ft / 40ft / 40ft HC containers with a choice of sailings and transit times.','Full-container-load (FCL) shipping with a broad range of sailing schedules and lines. We arrange the empty container, stuffing at your factory or ICD, port movement and onward rail/truck delivery at destination.'],
+ ['✈️','Air Freight Import & Export','When time matters: fast, reliable air cargo to and from nearly any destination.','International air freight import and export with competitive rates, consolidation, airport handling and customs brokerage, from Jaipur and Delhi air cargo terminals.'],
+ ['🚛','Land Transport 24×7','Trucks across Rajasthan and India: factory pickup to port, ICD or customer.','Reliable local and national road transport for containers and loose cargo, with time-bound movement and tracking, from any Rajasthan town to Jaipur ICD, Mundra, Pipavav or Nhava Sheva.'],
+ ['📝','Documentation & Customs Support','Shipping bills, BL/AWB, certificates of origin and customs paperwork handled for you.','We coordinate export/import documentation, shipping bill filing through our CHA partners, certificate of origin, insurance and all port formalities so your cargo is never held up.'],
+ ['🛡️','Cargo Insurance','Marine insurance so your goods are covered end to end.','Cargo insurance arranged for sea, air and road movements, protecting your consignment against loss or damage.']];
+function card(s,i){return `<div class="card"><div class="ic">${s[0]}</div><h3>${s[1]}</h3><p>${s[2]}</p><a class="more" onclick="svc(${i})">Read more →</a></div>`}
+document.getElementById('homeServices').innerHTML=SERVICES.slice(0,6).map(card).join('');
+document.getElementById('allServices').innerHTML=SERVICES.map(card).join('');
+function svc(i){const s=SERVICES[i];openM(`<div class="card" style="box-shadow:none;border:0;padding:0"><div class="ic">${s[0]}</div><h2>${s[1]}</h2><p style="color:var(--ink)">${s[3]}</p><div class="btns"><a class="btn o" onclick="closeM();go('quote')">📝 Get a Quote</a><a class="btn g" target="_blank" rel="noopener" href="https://wa.me/917877799931?text=${encodeURIComponent('Hello, I want to know about '+s[1])}">💬 Ask on WhatsApp</a></div></div>`)}
+function openM(h){document.getElementById('mbody').innerHTML=h;document.getElementById('modal').classList.add('show')}
+function closeM(){document.getElementById('modal').classList.remove('show')}
+function toast(t){const e=document.getElementById('toast');e.textContent=t;e.classList.add('show');setTimeout(()=>e.classList.remove('show'),3200)}
+function go(p){document.querySelectorAll('.page').forEach(x=>x.classList.toggle('show',x.id==='p-'+p));document.querySelectorAll('.menu a').forEach(a=>a.classList.toggle('active',a.dataset.p===p));document.querySelector('.menu').classList.remove('open');if(location.hash!=='#'+p)history.replaceState(null,'','#'+p);window.scrollTo({top:0})}
+window.addEventListener('hashchange',()=>go(location.hash.slice(1)||'home'));
+/* tracking (demo data; on the live site this comes from the staff Google Sheet) */
+const IMP=['Shipment booked at origin','Sailed / departed','Arrived at Indian port','Customs cleared','Moved to Jaipur ICD','Out for delivery','Delivered'];
+const EXP=['Booking confirmed','Picked up from factory','Stuffed / received at ICD','Customs cleared (LEO)','Loaded on vessel / flight','Sailed / departed','Delivered at destination'];
+const DEF=[
+ {job:'KS/EXP/2410/021',bl:'MSKU7741203',client:'Rajasthan Handicraft Exports',type:'Export',mode:'Sea FCL · 1×40ft HC',route:'Jaipur ICD → Mundra → New York, USA',vessel:'MAERSK ESSEN / 442W',steps:EXP,at:4,dates:['06 Oct','08 Oct','09 Oct','10 Oct','13 Oct']},
+ {job:'KS/IMP/2410/008',bl:'ONEYSHA88120',client:'Shekhawati Textiles',type:'Import',mode:'Sea LCL · 6.4 CBM',route:'Shanghai, China → Nhava Sheva → Jaipur',vessel:'ONE MANCHESTER / 018E',steps:IMP,at:3,dates:['07 Oct','09 Oct','10 Oct','13 Oct']},
+ {job:'KS/EXP/2410/033',bl:'098-44120871',client:'Jaipur Gems Pvt Ltd',type:'Export',mode:'Air · 2 pkgs, 38 kg',route:'Jaipur → Dubai, UAE',vessel:'EK 2513',steps:EXP,at:6,dates:['12 Oct','12 Oct','12 Oct','13 Oct','13 Oct','13 Oct','14 Oct']}];
+let DATA=JSON.parse(localStorage.getItem('ks_demo')||'null')||DEF;
+function save(){localStorage.setItem('ks_demo',JSON.stringify(DATA))}
+function find(q){q=q.trim().toUpperCase().replace(/\s/g,'');return DATA.find(d=>d.job.toUpperCase()===q||d.bl.toUpperCase().replace(/\s/g,'')===q)}
+function fillTrack(n){go('track');document.getElementById('tn').value=n;track()}
+function quickTrack(){const v=document.getElementById('qt').value;if(!v)return toast('Enter a Job or BL number');go('track');document.getElementById('tn').value=v;track()}
+function track(){const d=find(document.getElementById('tn').value);const r=document.getElementById('tres'),e=document.getElementById('terr');
+ if(!d){r.classList.remove('show');e.style.display='block';return}e.style.display='none';
+ const delivered=d.at>=d.steps.length-1;
+ r.innerHTML=`<div class="shiphead"><div><small>Job No.</small><b>${d.job}</b></div><div><small>BL / AWB</small><b>${d.bl}</b></div><div><small>Client</small><b>${d.client}</b></div><div><small>Type</small><b>${d.type} · ${d.mode}</b></div><div><small>Route</small><b>${d.route}</b></div><div><small>Vessel / Flight</small><b>${d.vessel}</b></div><div><small>Status</small><span class="badge ${delivered?'':'wait'}">${d.steps[d.at]}</span></div></div>
+ <ul class="timeline">${d.steps.map((s,i)=>`<li class="${i<d.at||delivered?'done':i===d.at?'current':''}"><span class="dot">${i<d.at||delivered?'✓':i+1}</span><b>${s}</b><small>${i<=d.at?(d.dates[i]||'Today')+(i===d.at&&!delivered?' · in progress':''):'Pending'}</small></li>`).join('')}</ul>
+ <div class="btns"><a class="btn g" target="_blank" rel="noopener" href="https://wa.me/917877799931?text=${encodeURIComponent('Hello, update needed for Job '+d.job)}">💬 Ask about this shipment</a></div>`;
+ r.classList.add('show')}
+function renderSheet(){document.getElementById('sheet').innerHTML='<tr><th>Job No.</th><th>BL / AWB</th><th>Client</th><th>Status (staff edit)</th></tr>'+DATA.map((d,i)=>`<tr><td>${d.job}</td><td>${d.bl}</td><td>${d.client}</td><td><select onchange="setStatus(${i},this.value)">${d.steps.map((s,j)=>`<option value="${j}" ${j===d.at?'selected':''}>${s}</option>`).join('')}</select></td></tr>`).join('')}
+function setStatus(i,v){v=+v;const d=DATA[i];while(d.dates.length<=v)d.dates.push('Today');d.at=v;save();toast('✅ Status updated: customers now see "'+d.steps[v]+'"');if(find(document.getElementById('tn').value)===d)track()}
+renderSheet();
+/* quote */
+function buildMsg(f){const g=n=>f.elements[n].value.trim();const dir=f.querySelector('input[name=dir]:checked').value;
+ return `🆕 New enquiry (website)\n\n▪️ ${dir} · ${g('mode')}\n▪️ Port: ${g('port')}\n▪️ Container: ${g('cont')}\n▪️ Commodity: ${g('item')||'-'}\n▪️ ${dir==='Import'?'Origin':'Destination'}: ${g('country')||'-'}\n▪️ Date: ${g('date')||'-'}\n\n👤 ${g('name')||'-'}\n📱 ${g('phone')||'-'}${g('note')?'\n📝 '+g('note'):''}`}
+const qf=document.getElementById('qform');qf.addEventListener('input',()=>document.getElementById('wabubble').textContent=buildMsg(qf));
+function sendQuote(e){e.preventDefault();document.getElementById('wabubble').textContent=buildMsg(qf);
+ openM(`<h2>✅ Enquiry sent!</h2><p>Thank you. <b>KS Shipping's team has received your enquiry on WhatsApp and email</b> and will reply shortly.</p><div class="waprev" style="min-height:0"><div class="bubble">${buildMsg(qf).replace(/</g,'&lt;')}</div></div><p class="hint">Demo: on the live website this message goes to the office WhatsApp automatically.</p><div class="btns"><a class="btn o" onclick="closeM()">OK</a></div>`)}
+/* tools */
+function tool(b,id){document.querySelectorAll('.tabs button').forEach(x=>x.classList.toggle('on',x===b));document.querySelectorAll('.tool').forEach(x=>x.classList.toggle('on',x.id===id))}
+const U={'Kilogram (kg)':['w',1],'Metric tonne':['w',1000],'Pound (lb)':['w',0.453592],'Cubic metre (cbm)':['v',1],'Cubic feet (cft)':['v',0.0283168],'Litre':['v',0.001],'Metre':['l',1],'Feet':['l',0.3048],'Inch':['l',0.0254],'Centimetre':['l',0.01]};
+const cf=document.getElementById('cf'),ct=document.getElementById('ct');Object.keys(U).forEach(k=>{cf.add(new Option(k));ct.add(new Option(k))});cf.value='Metric tonne';ct.value='Kilogram (kg)';
+function conv(){const a=U[cf.value],b=U[ct.value],v=+document.getElementById('cv').value;document.getElementById('co').value=a[0]!==b[0]?'Choose same type':(+(v*a[1]/b[1]).toFixed(4)).toLocaleString('en-IN')}
+conv();
+go(location.hash.slice(1)||'home');
+const T0=new URLSearchParams(location.search).get('t');if(T0)fillTrack(T0);
+</script>
+</body>
+</html>
