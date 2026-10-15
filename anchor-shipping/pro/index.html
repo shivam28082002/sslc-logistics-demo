@@ -11,7 +11,7 @@
 *{box-sizing:border-box}html{scroll-behavior:smooth}
 body{margin:0;font-family:"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.55;overflow-x:hidden}
 a{color:inherit}button{font:inherit}
-.demo{background:#0a2540;color:#7dd3fc;text-align:center;font-size:12.5px;padding:6px 10px;position:relative;z-index:70}.demo b{color:#fff}
+.demo{background:#e6f6f9;color:#0b7e93;text-align:center;font-size:12.5px;padding:6px 10px;position:relative;z-index:70}.demo b{color:#0a2540}
 header{position:fixed;top:30px;left:0;right:0;z-index:60;transition:.3s}
 header.solid{top:0;background:rgba(255,255,255,.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);box-shadow:0 4px 18px rgba(10,37,64,.06)}
 .nav{max-width:1240px;margin:auto;display:flex;align-items:center;justify-content:space-between;padding:12px 22px}
@@ -58,9 +58,9 @@ header.solid{top:0;background:rgba(255,255,255,.96);backdrop-filter:blur(12px);b
 .legend span::before{content:"";display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px;vertical-align:middle;background:var(--g)}
 .legend span.s::before{background:var(--c)}
 /* ticker */
-.ticker{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:#0a2540;overflow:hidden;white-space:nowrap}
+.ticker{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:#ffffff;overflow:hidden;white-space:nowrap}
 .ticker .t{display:inline-block;padding:12px 0;animation:tick 45s linear infinite}
-.ticker span{margin:0 26px;font-size:14px;color:#a9c3e3}.ticker span b{color:#fff}.ticker span em{font-style:normal;color:var(--ok)}
+.ticker span{margin:0 26px;font-size:14px;color:#5b6b80}.ticker span b{color:#0a2540}.ticker span em{font-style:normal;color:var(--ok)}
 @keyframes tick{to{transform:translateX(-50%)}}
 section{padding:90px 0;position:relative}
 h2{font-size:40px;letter-spacing:-.5px;margin:0 0 10px;color:var(--navy)}
@@ -121,10 +121,10 @@ input[type=range]{padding:0;accent-color:var(--c)}
 .tm{background:#fff;box-shadow:0 6px 16px rgba(10,37,64,.05);border:1px solid var(--line);border-radius:16px;padding:16px;display:flex;gap:12px;align-items:center}
 .av{width:46px;height:46px;border-radius:50%;background:linear-gradient(135deg,var(--c),var(--navy));color:#fff;display:grid;place-items:center;font-weight:800;flex:none}
 .tm small{display:block;color:var(--mut)}.tm a{color:var(--c);font-size:13.5px;text-decoration:none;word-break:break-all}
-.cta-band{border-radius:26px;padding:40px;color:#fff;background:linear-gradient(120deg,#0a2540,#0f6f86);border:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
-.cta-band h3{font-size:30px;margin:0;color:#fff}
-footer{background:#0a2540;padding:40px 0 110px;color:#9fb4c8;font-size:14px}
-footer .wrap{display:grid;grid-template-columns:2fr 1fr 1fr;gap:20px}footer b{color:#fff}footer a{display:block;text-decoration:none;margin:4px 0;cursor:pointer}
+.cta-band{border-radius:26px;padding:40px;color:#0a2540;background:linear-gradient(120deg,#e6f6f9,#fff4e3);border:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+.cta-band h3{font-size:30px;margin:0;color:#0a2540}
+footer{background:#eef4f9;border-top:1px solid #dfe8f1;padding:40px 0 110px;color:#5b6b80;font-size:14px}
+footer .wrap{display:grid;grid-template-columns:2fr 1fr 1fr;gap:20px}footer b{color:#0a2540}footer a{display:block;text-decoration:none;margin:4px 0;cursor:pointer}
 @media(max-width:800px){footer .wrap{grid-template-columns:1fr}}
 .fab{position:fixed;right:18px;bottom:18px;z-index:65;width:60px;height:60px;border-radius:50%;background:#25d366;display:grid;place-items:center;font-size:28px;text-decoration:none;box-shadow:0 0 0 0 rgba(37,211,102,.6);animation:wapulse 2.2s infinite}
 @keyframes wapulse{70%{box-shadow:0 0 0 16px rgba(37,211,102,0)}100%{box-shadow:0 0 0 0 rgba(37,211,102,0)}}
@@ -253,7 +253,7 @@ footer .wrap{display:grid;grid-template-columns:2fr 1fr 1fr;gap:20px}footer b{co
   <div class="tm"><span class="av">JR</span><div><b>Jaydeep Rathod</b><small>Marine Chemicals</small><a href="mailto:supply@anchorshipping.net">supply@anchorshipping.net</a></div></div>
   <div class="tm"><span class="av">⛽</span><div><b>Bunkers · Water · Tugs</b><small>Transport & tug hire</small><a href="mailto:admin@anchorshipping.net">admin@anchorshipping.net</a></div></div>
  </div>
- <div class="cta-band reveal" style="margin-top:50px"><div><h3>Vessel arriving soon?</h3><div style="color:#d6eef5;margin-top:6px">Nominate Anchor Shipping and relax: we handle the port, you handle the business.</div></div><a class="btn gold" onclick="go('requests')">⚓ Nominate now</a></div>
+ <div class="cta-band reveal" style="margin-top:50px"><div><h3>Vessel arriving soon?</h3><div style="color:#5b6b80;margin-top:6px">Nominate Anchor Shipping and relax: we handle the port, you handle the business.</div></div><a class="btn gold" onclick="go('requests')">⚓ Nominate now</a></div>
 </div></section>
 
 <footer><div class="wrap">
