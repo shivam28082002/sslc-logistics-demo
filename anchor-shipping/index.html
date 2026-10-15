@@ -7,14 +7,14 @@
 <meta name="description" content="Anchor Shipping, Gandhidham (Kandla) since 1996: ship agency, ship chandling, technical services, marine chemicals, safety, navigation and automation equipment across all Indian ports. 24×7.">
 <meta name="robots" content="noindex">
 <style>
-:root{--n:#0a2540;--n2:#12355e;--t:#0f9fb5;--t2:#14b8d0;--a:#f2a33a;--ink:#1d2939;--mut:#64748b;--bg:#f5f8fb;--line:#e3e9f0;--ok:#16a34a}
+:root{--n:#0a2540;--n2:#12355e;--t:#0f9fb5;--t2:#0b8aa0;--a:#e9a23b;--ink:#1d2939;--mut:#5f6f82;--bg:#ffffff;--line:#e4ecef;--ok:#16a34a;--teal:#e7f6f8;--cream:#fff8ec}
 *{box-sizing:border-box}html{scroll-behavior:smooth}
 body{margin:0;font-family:"Segoe UI",Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg);line-height:1.55}
 a{color:inherit}button{font:inherit}
-.demo{background:#0b1320;color:#7dd3fc;text-align:center;font-size:13px;padding:6px 10px}.demo b{color:#fff}
-.top{background:var(--n);color:#cfe3f5;font-size:13px}
+.demo{background:var(--cream);color:#8a5a12;border-bottom:1px solid #f3e3c4;text-align:center;font-size:13px;padding:6px 10px}.demo b{color:var(--n)}
+.top{background:var(--teal);color:var(--n);font-size:13px;border-bottom:1px solid #d6eef2}
 .top .wrap{display:flex;justify-content:space-between;gap:10px;padding:6px 18px;flex-wrap:wrap}
-.top b{color:var(--a)}
+.top b{color:var(--t2)}
 header{position:sticky;top:0;z-index:50;background:#fff;box-shadow:0 2px 12px rgba(0,0,0,.06)}
 .nav{max-width:1200px;margin:auto;display:flex;align-items:center;justify-content:space-between;padding:8px 18px;gap:12px}
 .nav img{height:46px;display:block}
@@ -28,41 +28,44 @@ header{position:sticky;top:0;z-index:50;background:#fff;box-shadow:0 2px 12px rg
 section{padding:58px 18px}
 h1,h2,h3{line-height:1.2;margin:0 0 10px;color:var(--n)}
 h2{font-size:30px}.sub{color:var(--mut);margin:0 0 26px;font-size:16.5px;max-width:780px}
-.hero{background:linear-gradient(100deg,rgba(10,37,64,.95) 0%,rgba(10,37,64,.8) 45%,rgba(10,37,64,.25) 100%),url('assets/hero.jpg') center/cover;color:#fff;padding:80px 18px 110px}
-.hero h1{color:#fff;font-size:44px;max-width:680px}
-.hero h1 span{color:var(--a)}
-.hero p{color:#d6e6f5;font-size:18px;max-width:600px}
-.pill{display:inline-block;border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.1);border-radius:30px;padding:5px 13px;font-size:13px;margin-bottom:14px}
+.hero{position:relative;overflow:hidden;color:var(--n);padding:90px 18px 120px;background:var(--teal);min-height:560px}
+.hero video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
+.hero:after{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(90deg,rgba(255,255,255,.96) 0%,rgba(255,255,255,.88) 38%,rgba(231,246,248,.35) 68%,rgba(255,248,236,.05) 100%)}
+.hero .wrap{position:relative;z-index:2}
+.hero h1{color:var(--n);font-size:46px;max-width:640px}
+.hero h1 span{color:var(--t)}
+.hero p{color:#3d4f63;font-size:18px;max-width:560px}
+.pill{display:inline-block;border:1px solid #cfe9ee;background:#fff;color:var(--n);border-radius:30px;padding:5px 13px;font-size:13px;margin-bottom:14px}
 .btns{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:13px 20px;border-radius:10px;border:0;font-weight:700;font-size:15px;cursor:pointer;text-decoration:none}
-.btn.t{background:var(--t);color:#fff}.btn.t:hover{background:var(--t2)}
-.btn.a{background:var(--a);color:#1d1300}
+.btn.t{background:var(--t);color:#fff;box-shadow:0 8px 20px rgba(15,159,181,.25)}.btn.t:hover{background:var(--t2)}
+.btn.a{background:var(--a);color:#fff;box-shadow:0 8px 20px rgba(233,162,59,.3)}
 .btn.g{background:#25d366;color:#fff}
 .btn.l{background:transparent;color:#fff;border:2px solid rgba(255,255,255,.55)}
 .btn.w{background:#fff;color:var(--t);border:1.5px solid var(--t)}
 .btn.sm{padding:9px 13px;font-size:14px}
-@media(max-width:700px){.hero h1{font-size:32px}.hero{padding:56px 18px 90px}}
+@media(max-width:700px){.hero h1{font-size:32px}.hero{padding:56px 18px 90px;min-height:0}.hero:after{background:rgba(255,255,255,.86)}}
 .stats{max-width:1200px;margin:-52px auto 0;padding:0 18px;position:relative;z-index:2;display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
-.stats div{background:#fff;border-radius:14px;padding:18px;box-shadow:0 10px 26px rgba(0,0,0,.08);text-align:center}
-.stats b{display:block;font-size:24px;color:var(--t)}.stats span{font-size:13.5px;color:var(--mut)}
+.stats div{background:#fff;border-radius:14px;padding:18px;box-shadow:0 10px 26px rgba(10,37,64,.08);text-align:center;border:1px solid var(--line)}
+.stats b{display:block;font-size:24px;color:var(--t2)}.stats span{font-size:13.5px;color:var(--mut)}
 @media(max-width:800px){.stats{grid-template-columns:repeat(2,1fr)}}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(255px,1fr));gap:18px}
 .card{background:#fff;border-radius:16px;padding:22px;border:1px solid var(--line);box-shadow:0 4px 14px rgba(0,0,0,.04);transition:.2s}
 .card:hover{transform:translateY(-3px);box-shadow:0 12px 26px rgba(0,0,0,.08)}
-.card .ic{font-size:28px;width:52px;height:52px;border-radius:12px;background:#e6f6f9;display:grid;place-items:center;margin-bottom:10px}
+.card .ic{font-size:28px;width:52px;height:52px;border-radius:12px;background:var(--teal);display:grid;place-items:center;margin-bottom:10px}
 .card h3{font-size:17.5px}.card p{color:var(--mut);font-size:14px;margin:0 0 10px}
 .card a.more{color:var(--t);font-weight:700;font-size:14px;cursor:pointer;text-decoration:none}
-.ports{background:var(--n);color:#fff}
-.ports h2{color:#fff}.ports .sub{color:#b9d0e6}
+.ports{background:var(--cream);color:var(--n);border-top:1px solid #f3e3c4;border-bottom:1px solid #f3e3c4}
+.ports h2{color:var(--n)}.ports .sub{color:var(--mut)}
 .tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
-.tabs button{border:1.5px solid rgba(255,255,255,.25);background:transparent;color:#fff;border-radius:30px;padding:8px 15px;font-weight:700;font-size:14px;cursor:pointer}
-.tabs button.on{background:var(--a);border-color:var(--a);color:#1d1300}
+.tabs button{border:1.5px solid #ecd9b4;background:#fff;color:var(--n);border-radius:30px;padding:8px 15px;font-weight:700;font-size:14px;cursor:pointer}
+.tabs button.on{background:var(--t);border-color:var(--t);color:#fff}
 .plist{display:flex;flex-wrap:wrap;gap:10px}
-.plist span{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);border-radius:12px;padding:10px 14px;font-weight:600;font-size:14.5px}
-.plist span small{display:block;font-weight:400;color:#9fc0dc;font-size:12px}
+.plist span{background:#fff;border:1px solid #f0e0c0;box-shadow:0 3px 10px rgba(10,37,64,.04);border-radius:12px;padding:10px 14px;font-weight:600;font-size:14.5px}
+.plist span small{display:block;font-weight:400;color:var(--mut);font-size:12px}
 .two{display:grid;grid-template-columns:1fr 1fr;gap:22px}
 @media(max-width:900px){.two{grid-template-columns:1fr}}
-.form{background:#fff;border-radius:16px;padding:24px;border:1px solid var(--line);box-shadow:0 6px 18px rgba(0,0,0,.05)}
+.form{background:#fff;border-radius:16px;padding:24px;border:1px solid #d6eef2;box-shadow:0 8px 22px rgba(10,37,64,.06)}
 .form h3{font-size:20px}
 .lab{display:block;font-weight:700;font-size:13px;margin:12px 0 5px;color:var(--n)}
 input,select,textarea{width:100%;padding:11px 12px;border:1.5px solid var(--line);border-radius:10px;font:inherit;font-size:14.5px;background:#fff;color:var(--ink)}
@@ -73,8 +76,8 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--t)}
 .checks label{display:flex;gap:8px;align-items:center;cursor:pointer}
 .checks input{width:auto}
 .trk{background:#fff;border-radius:16px;padding:24px;border:1px solid var(--line);max-width:860px}
-.hint{font-size:12.5px;color:var(--mut);margin-top:8px}.hint code{background:#e6f6f9;color:var(--n);padding:1px 6px;border-radius:5px;cursor:pointer}
-.vhead{display:grid;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));gap:10px;background:#f7fafc;border:1px solid var(--line);border-radius:12px;padding:14px;margin:18px 0}
+.hint{font-size:12.5px;color:var(--mut);margin-top:8px}.hint code{background:var(--teal);color:var(--n);padding:1px 6px;border-radius:5px;cursor:pointer}
+.vhead{display:grid;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));gap:10px;background:var(--cream);border:1px solid var(--line);border-radius:12px;padding:14px;margin:18px 0}
 .vhead small{display:block;color:var(--mut);font-size:12px}.vhead b{color:var(--n);font-size:14.5px}
 .tl{list-style:none;margin:0;padding:0}
 .tl li{position:relative;padding:0 0 20px 40px}
@@ -84,10 +87,10 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--t)}
 .done .dot{background:var(--ok);color:#fff}.cur .dot{background:var(--a);color:#1d1300;box-shadow:0 0 0 6px rgba(242,163,58,.25)}
 .tl b{display:block;color:var(--n)}.tl small{color:var(--mut)}
 .dept{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
-.dept div{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px}
+.dept div{background:var(--cream);border:1px solid #f3e3c4;border-radius:12px;padding:14px}
 .dept b{display:block;color:var(--n)}.dept small{color:var(--mut)}.dept a{color:var(--t);font-size:14px;word-break:break-all}
-footer{background:#071a2d;color:#9fb4c8;padding:34px 18px 100px;font-size:14px}
-footer .wrap{display:grid;grid-template-columns:2fr 1fr 1fr;gap:22px}footer b{color:#fff}
+footer{background:var(--teal);border-top:1px solid #d6eef2;color:var(--mut);padding:34px 18px 100px;font-size:14px}
+footer .wrap{display:grid;grid-template-columns:2fr 1fr 1fr;gap:22px}footer b{color:var(--n)}
 footer a{display:block;text-decoration:none;margin:4px 0;cursor:pointer}
 @media(max-width:800px){footer .wrap{grid-template-columns:1fr}}
 .fab{position:fixed;right:16px;bottom:16px;z-index:60;width:58px;height:58px;border-radius:50%;background:#25d366;display:grid;place-items:center;font-size:28px;text-decoration:none;box-shadow:0 10px 24px rgba(0,0,0,.25)}
@@ -120,7 +123,9 @@ ul.lst{columns:2;column-gap:24px;padding-left:18px;margin:8px 0}@media(max-width
  </nav>
 </div></header>
 
-<div class="hero" id="top"><div class="wrap">
+<div class="hero" id="top">
+ <video autoplay muted loop playsinline preload="auto" poster="assets/hero_poster.jpg"><source src="assets/hero.mp4" type="video/mp4"></video>
+ <div class="wrap">
  <span class="pill">⚓ Kandla (DPT) · Mundra · JNPT · Pipavav · all Indian ports · since 1996</span>
  <h1>Ship Agency & <span>Ship Chandling</span> across every Indian port</h1>
  <p>Port agency, husbandry, crew changes, provisions & stores, spares delivery, technical services and marine chemicals: one trusted team, 24×7.</p>
@@ -150,7 +155,7 @@ ul.lst{columns:2;column-gap:24px;padding-left:18px;margin:8px 0}@media(max-width
  <div class="plist" id="plist"></div>
 </div></section>
 
-<section id="requests"><div class="wrap">
+<section id="requests" style="background:var(--teal)"><div class="wrap">
  <h2>Online requests</h2>
  <p class="sub">Send a port call or supply requirement in 2 minutes. It reaches the operations desk instantly on WhatsApp and email.</p>
  <div class="two">
