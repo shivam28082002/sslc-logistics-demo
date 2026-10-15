@@ -56,8 +56,13 @@ header{position:sticky;top:0;z-index:50;background:#fff;box-shadow:0 1px 0 var(-
 .menu .btn-m{display:none}
 /* hero */
 .hero{position:relative;min-height:640px;display:flex;align-items:center;color:#fff;background:#0B2345 url('assets/hero-port.jpg') center/cover no-repeat}
-.hero:before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(11,35,69,.92) 0%,rgba(11,35,69,.78) 40%,rgba(11,35,69,.25) 75%,rgba(11,35,69,.1) 100%)}
-.hero .wrap{position:relative;width:100%;padding-top:60px;padding-bottom:60px}
+.hero video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:65% center}
+.vctl{position:absolute;right:24px;bottom:84px;z-index:2;width:44px;height:44px;border-radius:50%;border:1.5px solid rgba(255,255,255,.7);background:rgba(11,35,69,.35);color:#fff;cursor:pointer;display:grid;place-items:center}
+.vctl:hover{background:rgba(11,35,69,.6)}
+.vctl svg{width:16px;height:16px;fill:#fff}
+@media(prefers-reduced-motion:reduce){.hero video{display:none}.vctl{display:none}}
+.hero:before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(90deg,rgba(11,35,69,.92) 0%,rgba(11,35,69,.78) 40%,rgba(11,35,69,.25) 75%,rgba(11,35,69,.1) 100%)}
+.hero .wrap{position:relative;z-index:2;width:100%;padding-top:60px;padding-bottom:60px}
 .hero .eyebrow{color:#FDBA74}
 .hero h1{color:#fff;font-size:54px;font-weight:800;max-width:660px;line-height:1.1;letter-spacing:-.025em}
 .hero h1 span{color:var(--orange)}
@@ -274,6 +279,8 @@ footer .logo img{height:42px}
 
 <main>
 <section class="hero" id="top" aria-label="Introduction">
+ <video id="heroVid" autoplay muted loop playsinline preload="auto" poster="assets/hero-port.jpg" aria-hidden="true"><source src="assets/hero.mp4" type="video/mp4"></video>
+ <button class="vctl" id="vctl" aria-label="Pause background video" onclick="toggleVid()"><svg viewBox="0 0 24 24"><path d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg></button>
  <div class="wrap">
   <span class="eyebrow">Ship agency &amp; marine services · Since 1996</span>
   <h1>Port agency and ship supply at <span>Indian ports</span>, round the clock.</h1>
@@ -485,6 +492,7 @@ function toggleMenu(b){const m=document.getElementById('menu');const o=m.classLi
 function closeMenu(){document.getElementById('menu').classList.remove('open');document.querySelector('.burger').setAttribute('aria-expanded','false')}
 function openM(h){document.getElementById('mb').innerHTML=h;document.getElementById('modal').classList.add('show')}
 function closeM(){document.getElementById('modal').classList.remove('show')}
+function toggleVid(){const v=document.getElementById('heroVid'),b=document.getElementById('vctl');if(v.paused){v.play();b.setAttribute('aria-label','Pause background video');b.innerHTML='<svg viewBox="0 0 24 24"><path d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg>'}else{v.pause();b.setAttribute('aria-label','Play background video');b.innerHTML='<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>'}}
 addEventListener('keydown',e=>{if(e.key==='Escape')closeM()});
 const Q=new URLSearchParams(location.search);if(Q.has('t'))setTimeout(()=>{go('track');q(Q.get('t'))},300);
 </script>
