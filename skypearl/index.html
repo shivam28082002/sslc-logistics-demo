@@ -107,7 +107,7 @@ a:hover>.arrow,button:hover>.arrow{transform:translateX(3px)}
 
 /* hero */
 .hero{background:var(--paper);border-bottom:1px solid var(--line-2);overflow:hidden}
-.hero .wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.02fr);align-items:stretch;min-height:600px}
+.hero .wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.02fr);align-items:stretch;height:700px}
 .hero-copy{padding:48px 56px 96px 0;display:flex;flex-direction:column;justify-content:flex-start}
 .hero h1{font-size:clamp(44px,5.6vw,76px);line-height:1.02;margin:16px 0 20px;letter-spacing:-.02em}
 .hero h1 em{color:var(--blue);font-style:italic;font-weight:400}
@@ -116,7 +116,7 @@ a:hover>.arrow,button:hover>.arrow{transform:translateX(3px)}
 .trust{display:flex;flex-wrap:wrap;gap:12px 28px;margin-top:32px;padding-top:20px;border-top:1px solid var(--line-2);font-size:14px;color:var(--navy)}
 .trust li{list-style:none;display:flex;align-items:center;gap:8px}
 .trust svg{width:16px;height:16px;color:var(--blue);flex:none}
-.hero-media{position:relative;margin-right:calc((100vw - min(1200px,100vw - 48px))/-2)}
+.hero-media{position:relative;height:700px;overflow:hidden;margin-right:calc((100vw - min(1200px,100vw - 48px))/-2)}
 .hero-media img{width:100%;height:100%;object-fit:cover;object-position:35% 40%}
 .hero-cap{position:absolute;left:24px;bottom:92px;background:rgba(255,255,255,.95);padding:12px 16px;border-radius:var(--r);font-size:13px;color:var(--navy);max-width:260px;box-shadow:var(--shadow)}
 .hero-cap b{display:block;font-family:var(--serif);font-weight:500;font-size:17px}
@@ -284,7 +284,7 @@ dialog.zoom{max-width:560px;background:transparent;box-shadow:none}
 dialog.zoom img{border-radius:var(--r-lg)}
 
 /* responsive */
-@media (max-width:1180px){.nav a,.nav .dd-btn{padding:10px 8px;font-size:14px}}
+@media (max-width:1180px){.nav a,.nav .dd-btn{padding:10px 8px;font-size:14px}.hero .wrap,.hero-media{height:790px}}
 @media (max-width:1080px){
   .menu-btn{display:flex}
   .nav{display:none;position:absolute;top:76px;left:0;right:0;background:#fff;border-bottom:1px solid var(--line);flex-direction:column;align-items:stretch;padding:12px 24px 20px;box-shadow:var(--shadow);max-height:calc(100vh - 76px);overflow:auto}
@@ -298,7 +298,7 @@ dialog.zoom img{border-radius:var(--r-lg)}
   .finder .btn{grid-column:1/-1}
 }
 @media (max-width:960px){
-  .hero .wrap{grid-template-columns:1fr;min-height:0}
+  .hero .wrap{grid-template-columns:1fr;height:auto}
   .hero-copy{padding:36px 0 32px}
   .hero-media{margin:0 -24px;height:420px}
   .finder-wrap{margin-top:-40px}
@@ -445,7 +445,7 @@ dialog.zoom img{border-radius:var(--r-lg)}
   <div class="svc-list">
    <a href="#counselling" data-pre="PR Guidance" id="svc-pr"><svg class="ic" viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 12l10-7 10 7v12H4z"/><path d="M11 24v-7h6v7"/></svg><span><b>PR Guidance</b>Understand eligibility, points and the documents involved before you apply.</span></a>
    <a href="#coaching"><svg class="ic" viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 6h8a3 3 0 013 3v14a2.5 2.5 0 00-2.5-2.5H5zM23 6h-5"/><path d="M16 9a3 3 0 013-3h4v14.5h-5.5A1.5 1.5 0 0016 22"/></svg><span><b>IELTS / PTE</b>Test guidance and preparation support, with practice and mock tests.</span></a>
-   <a href="#counselling" data-pre="Air Tickets" id="svc-air"><svg class="ic" viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M25 14H17L12 5h-2.5l2.5 9H6.5L4 11.5H2l1.5 4.5L2 20.5h2l2.5-2.5H12l-2.5 9H12l5-9h8a2 2 0 000-4z"/></svg><span><b>Air Tickets</b>Domestic and international flights, student fares and family or group bookings.</span></a>
+   <a href="book-flight/" id="svc-air"><svg class="ic" viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M25 14H17L12 5h-2.5l2.5 9H6.5L4 11.5H2l1.5 4.5L2 20.5h2l2.5-2.5H12l-2.5 9H12l5-9h8a2 2 0 000-4z"/></svg><span><b>Air Tickets</b>Domestic and international flights, student fares and family or group bookings.</span></a>
   </div>
  </div>
 </section>
