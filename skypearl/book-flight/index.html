@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en-IN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Book Your Flight | Skypearl Aviation India, Jalandhar</title>
+<meta name="description" content="Book domestic and international flights with Skypearl Aviation India, Jalandhar. Send your route and dates and get fare options on WhatsApp.">
+<link rel="canonical" href="https://shivam28082002.github.io/sslc-logistics-demo/skypearl/book-flight/">
+<meta property="og:title" content="Book your flight with Skypearl Aviation India">
+<meta property="og:description" content="Share your route and dates. Get fare options on WhatsApp from our Jalandhar team.">
+<meta name="theme-color" content="#F6E9E6">
+<link rel="icon" href="../assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--blush:#F6E9E6;--blush-2:#EFDCD7;--ink:#1E2433;--mut:#6B7180;--grey:#9A9CA3;--orange:#F29A3A;--orange-d:#D9741C;--navy:#10264A;--blue:#1455B8;--line:#E8DAD5;--r:14px}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:Inter,system-ui,"Segoe UI",Arial,sans-serif;color:var(--ink);background:#fff;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+button,input,select{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+.wrap{width:min(1200px,100% - 48px);margin-inline:auto}
+.ribbon{background:var(--navy);color:#C9D3E6;font-size:12.5px;text-align:center;padding:7px 16px}.ribbon b{color:#fff;font-weight:600}
+
+/* header */
+.hdr{background:var(--blush)}
+.hdr .wrap{display:flex;align-items:center;justify-content:space-between;height:76px}
+.brand{display:flex;align-items:center;gap:10px}
+.brand svg{width:38px;height:38px}
+.wm{display:flex;flex-direction:column;line-height:1}
+.wm b{font-family:Montserrat,sans-serif;font-weight:800;font-size:20px;color:var(--navy);letter-spacing:.02em}
+.wm small{font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--grey);margin-top:4px;font-weight:600}
+.hdr nav{display:flex;gap:28px;font-size:14.5px;font-weight:500;color:#4A4F5C}
+.hdr nav a:hover{color:var(--navy)}
+.hdr .call{font-weight:600;color:var(--navy);font-size:14.5px;border:1px solid #D9C6C0;padding:9px 16px;border-radius:30px;background:rgba(255,255,255,.6)}
+
+/* hero: fixed-size stage */
+.hero{background:radial-gradient(ellipse 70% 80% at 72% 55%,#FBF3F1 0%,var(--blush) 60%,var(--blush-2) 100%);overflow:hidden}
+.hero .wrap{display:grid;grid-template-columns:1fr 1.05fr;align-items:center;gap:24px;height:620px}
+.kicker{font-family:Montserrat,sans-serif;font-size:12px;letter-spacing:.32em;color:var(--grey);font-weight:600;text-transform:uppercase}
+.hero h1{font-family:Montserrat,sans-serif;font-weight:700;font-size:clamp(40px,4.6vw,64px);line-height:1.08;letter-spacing:.14em;text-transform:uppercase;color:#A9AAB0;margin:14px 0 12px}
+.hero h1 span{color:var(--navy)}
+.hero .sub{font-family:Montserrat,sans-serif;font-size:12px;letter-spacing:.38em;text-transform:uppercase;color:#B9B2AE;margin-bottom:22px}
+.hero p.lede{font-size:17px;color:var(--mut);max-width:44ch}
+.ctas{display:flex;gap:12px;margin-top:26px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:52px;padding:0 26px;border-radius:40px;font-weight:600;font-size:15px;border:0;cursor:pointer;transition:transform .2s,box-shadow .2s,background .2s}
+.btn-o{background:linear-gradient(180deg,#F6AA55,var(--orange-d));color:#fff;box-shadow:0 10px 24px rgba(217,116,28,.35),inset 0 1px 0 rgba(255,255,255,.4)}
+.btn-o:hover{transform:translateY(-2px);box-shadow:0 14px 28px rgba(217,116,28,.4)}
+.btn-w{background:#fff;color:var(--navy);box-shadow:0 6px 18px rgba(30,36,51,.08)}
+.btn svg{width:16px;height:16px}
+
+/* illustration (fixed size, scales as one unit) */
+.stage{position:relative;width:560px;height:440px;justify-self:center;transform-origin:center}
+.shadow{position:absolute;left:70px;right:40px;bottom:18px;height:40px;background:radial-gradient(ellipse at center,rgba(120,80,70,.28),transparent 70%);filter:blur(4px)}
+.laptop{position:absolute;left:90px;bottom:48px;width:420px}
+.screen{position:relative;height:262px;border-radius:18px 18px 6px 6px;background:linear-gradient(160deg,#E9EAEE,#C9CCD3);padding:12px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.7),0 20px 40px rgba(80,60,60,.18)}
+.display{height:100%;border-radius:10px;background:linear-gradient(180deg,#FDFBFA,#F1EEF0);overflow:hidden;position:relative;box-shadow:inset 0 0 0 1px rgba(0,0,0,.05)}
+.ui-top{display:flex;gap:5px;padding:9px 10px 40px}
+.ui-top i{width:7px;height:7px;border-radius:50%;background:#E3B4AA}.ui-top i:nth-child(2){background:#EDD39B}.ui-top i:nth-child(3){background:#B8D8B0}
+.ui-card{margin:4px 18px;position:relative;z-index:1;background:#fff;border-radius:10px;box-shadow:0 6px 16px rgba(30,36,51,.08);padding:12px 14px}
+.ui-card small{font-size:9px;letter-spacing:.14em;color:var(--grey);text-transform:uppercase;font-weight:600}
+.ui-route{display:flex;align-items:center;justify-content:space-between;margin-top:6px;font-family:Montserrat,sans-serif;font-weight:700;color:var(--navy);font-size:20px}
+.ui-route span{font-size:9px;display:block;color:var(--mut);font-family:Inter,sans-serif;font-weight:500;letter-spacing:0}
+.ui-route .dash{flex:1;margin:0 10px;border-top:2px dashed #E2CFC9;position:relative}
+.ui-btn{margin:8px 18px 0;height:28px;border-radius:20px;background:linear-gradient(180deg,#F6AA55,var(--orange-d));color:#fff;font-size:11px;font-weight:700;display:grid;place-items:center;letter-spacing:.08em}
+.base{position:relative;height:22px;margin:0 -34px;background:linear-gradient(180deg,#E4E6EA,#B9BCC4);border-radius:3px 3px 22px 22px;box-shadow:0 10px 22px rgba(80,60,60,.18)}
+.base::before{content:"";position:absolute;left:50%;top:0;width:90px;height:7px;margin-left:-45px;background:#C8CBD2;border-radius:0 0 10px 10px}
+.plane{position:absolute;left:70px;top:-18px;width:430px;animation:float 5s ease-in-out infinite;filter:drop-shadow(0 26px 22px rgba(120,70,40,.25))}
+@keyframes float{0%,100%{transform:translateY(0) rotate(-6deg)}50%{transform:translateY(-12px) rotate(-4deg)}}
+.cloud{position:absolute;background:#fff;border-radius:40px;opacity:.85;box-shadow:0 8px 20px rgba(150,110,100,.08)}
+.cloud::before,.cloud::after{content:"";position:absolute;background:#fff;border-radius:50%}
+.c1{width:96px;height:30px;left:0;top:70px}.c1::before{width:44px;height:44px;left:16px;top:-22px}.c1::after{width:30px;height:30px;left:50px;top:-14px}
+.c2{width:70px;height:22px;right:6px;top:24px}.c2::before{width:32px;height:32px;left:12px;top:-16px}.c2::after{width:22px;height:22px;left:38px;top:-10px}
+.c3{width:80px;height:24px;right:-6px;bottom:120px}.c3::before{width:36px;height:36px;left:14px;top:-18px}.c3::after{width:24px;height:24px;left:44px;top:-11px}
+.tag{position:absolute;background:#fff;border-radius:12px;padding:10px 14px;box-shadow:0 12px 26px rgba(80,60,60,.12);font-size:12.5px;color:var(--navy);font-weight:600;display:flex;gap:8px;align-items:center}
+.tag i{width:26px;height:26px;border-radius:50%;background:#FDEBD8;display:grid;place-items:center;font-style:normal}
+.t1{left:-40px;bottom:64px}.t2{right:-18px;top:118px}
+
+/* search card */
+.search-wrap{position:relative;z-index:5;margin-top:-54px}
+.search{background:#fff;border-radius:20px;box-shadow:0 20px 50px rgba(80,60,60,.14);padding:22px 24px}
+.trip{display:flex;gap:6px;margin-bottom:14px}
+.trip label{cursor:pointer}
+.trip input{position:absolute;opacity:0}
+.trip span{display:inline-block;padding:7px 14px;border-radius:30px;font-size:13.5px;font-weight:600;color:var(--mut);border:1px solid var(--line)}
+.trip input:checked+span{background:var(--navy);border-color:var(--navy);color:#fff}
+.trip input:focus-visible+span{outline:2px solid var(--blue);outline-offset:2px}
+.fields{display:grid;grid-template-columns:1.2fr 1.2fr 1fr 1fr .9fr auto;gap:12px;align-items:end}
+.f label{display:block;font-size:12px;font-weight:600;color:var(--mut);letter-spacing:.04em;margin-bottom:6px;text-transform:uppercase}
+.f input,.f select{width:100%;min-width:0;height:50px;border:1px solid #E3D6D2;border-radius:12px;padding:0 14px;font-size:15px;background:#FFFCFB}
+.f input:focus,.f select:focus{outline:none;border-color:var(--orange);box-shadow:0 0 0 3px rgba(242,154,58,.18)}
+.f.err input,.f.err select{border-color:#C2410C}
+.msg{font-size:12px;color:#B42318;min-height:0;margin-top:4px}
+.search .btn{height:50px;border-radius:12px;margin-bottom:4px}
+.note{font-size:12.5px;color:var(--mut);margin-top:12px}
+
+/* sections */
+section{padding:88px 0}
+.eyebrow{font-family:Montserrat,sans-serif;font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--orange-d);font-weight:700}
+h2{font-family:Montserrat,sans-serif;font-weight:700;font-size:clamp(28px,3vw,38px);color:var(--navy);margin:10px 0 12px;letter-spacing:-.01em;line-height:1.2}
+.center{text-align:center}
+.lead{color:var(--mut);font-size:16.5px;max-width:60ch}
+.center .lead{margin:0 auto}
+.routes{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:40px}
+.route{border:1px solid var(--line);border-radius:var(--r);padding:22px;background:#fff;transition:transform .2s,box-shadow .2s;text-align:left;cursor:pointer}
+.route:hover{transform:translateY(-4px);box-shadow:0 14px 30px rgba(80,60,60,.1)}
+.route .codes{display:flex;align-items:center;gap:10px;font-family:Montserrat,sans-serif;font-weight:800;font-size:22px;color:var(--navy)}
+.route .codes svg{width:22px;height:22px;color:var(--orange-d)}
+.route p{font-size:14px;color:var(--mut);margin-top:6px}
+.route span{display:inline-block;margin-top:14px;font-size:13.5px;font-weight:600;color:var(--blue)}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:40px}
+.step{background:var(--blush);border-radius:var(--r);padding:28px}
+.step b{display:grid;place-items:center;width:44px;height:44px;border-radius:50%;background:#fff;color:var(--orange-d);font-family:Montserrat,sans-serif;font-weight:800;margin-bottom:14px;box-shadow:0 6px 14px rgba(80,60,60,.08)}
+.step h3{font-family:Montserrat,sans-serif;font-size:18px;color:var(--navy);margin-bottom:6px}
+.step p{font-size:15px;color:var(--mut)}
+.why{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:40px;border-top:1px solid var(--line)}
+.why div{padding:26px 26px 6px 0}.why div+div{padding-left:26px;border-left:1px solid var(--line)}
+.why h3{font-family:Montserrat,sans-serif;font-size:17px;color:var(--navy);margin-bottom:6px}.why p{font-size:15px;color:var(--mut)}
+.cta{background:var(--navy);color:#C9D3E6;border-radius:24px;padding:56px;display:grid;grid-template-columns:1.3fr 1fr;gap:32px;align-items:center}
+.cta h2{color:#fff;margin-top:0}
+.cta address{font-style:normal;font-size:15px;line-height:1.7}
+.cta address b{color:#fff;display:block;font-size:16px;margin-bottom:4px}
+.cta .ctas{margin-top:20px}
+footer{padding:28px 0 90px;font-size:13px;color:var(--mut);text-align:center}
+.wa{position:fixed;right:20px;bottom:20px;z-index:60;width:56px;height:56px;border-radius:50%;background:#25D366;display:grid;place-items:center;box-shadow:0 6px 18px rgba(0,0,0,.18)}
+.wa svg{width:28px;height:28px;fill:#fff}
+dialog{margin:auto;border:0;border-radius:20px;padding:28px;max-width:520px;width:calc(100% - 32px);box-shadow:0 30px 80px rgba(0,0,0,.3)}
+dialog::backdrop{background:rgba(16,38,74,.55)}
+dialog h3{font-family:Montserrat,sans-serif;color:var(--navy);font-size:22px;margin-bottom:6px}
+dialog pre{white-space:pre-wrap;font:inherit;font-size:14.5px;background:var(--blush);border-radius:12px;padding:14px;margin:14px 0 18px;color:var(--navy)}
+dialog .acts{display:flex;gap:10px;flex-wrap:wrap}
+dialog .x{position:absolute;right:12px;top:12px;width:38px;height:38px;border:0;border-radius:50%;background:var(--blush);cursor:pointer;font-size:20px}
+
+/* responsive: illustration keeps its fixed proportions and scales as a unit */
+@media (max-width:1180px){.stage{transform:scale(.86)}}
+@media (max-width:1024px){.fields{grid-template-columns:1fr 1fr 1fr}.fields .btn{grid-column:span 3}.routes{grid-template-columns:1fr 1fr}.hdr nav{display:none}}
+@media (max-width:900px){
+  .hero .wrap{grid-template-columns:1fr;height:auto;padding:40px 0 90px;text-align:center}
+  .hero p.lede{margin:0 auto}.ctas{justify-content:center}
+  .stage{transform:scale(.8);margin:-30px auto -50px}
+  .steps,.why{grid-template-columns:1fr}.why div,.why div+div{padding:22px 0 6px;border-left:0}.why div+div{border-top:1px solid var(--line)}
+  .cta{grid-template-columns:1fr;padding:36px}
+}
+@media (max-width:600px){
+  .wrap{width:calc(100% - 32px)}
+  .hdr .call{display:none}
+  .stage{transform:scale(.62);margin:-80px -100px -110px;justify-self:center}
+  .fields{grid-template-columns:1fr 1fr}.fields .btn{grid-column:span 2}.f.wide{grid-column:span 2}
+  .routes{grid-template-columns:1fr}
+  section{padding:64px 0}
+  .search{padding:18px}
+}
+@media (max-width:400px){.fields{grid-template-columns:1fr}.fields .btn,.f.wide{grid-column:auto}.f input,.f select{min-width:0}}
+@media (max-width:360px){.stage{transform:scale(.54);margin:-100px -130px -130px}.hero h1{font-size:34px;letter-spacing:.1em}}
+@media (prefers-reduced-motion:reduce){.plane{animation:none}*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="ribbon"><b>Demo landing page</b> prepared for Skypearl Aviation India Pvt Ltd by <b>SSLC STARTUP</b></div>
+<header class="hdr"><div class="wrap">
+ <a class="brand" href="../" aria-label="Skypearl Aviation India home"><svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="19" fill="#10264A"/><circle cx="25" cy="15" r="5.5" fill="#F4F1EA"/><path d="M7 27c7-1.5 14-6 21-14" fill="none" stroke="#F29A3A" stroke-width="2" stroke-linecap="round" stroke-dasharray="0.1 4"/></svg><span class="wm"><b>SKYPEARL</b><small>Aviation India</small></span></a>
+ <nav aria-label="Page sections"><a href="#search">Search flights</a><a href="#routes">Popular routes</a><a href="#how">How it works</a><a href="#contact">Contact</a></nav>
+ <a class="call" href="tel:+919872486000">Call +91 98724 86000</a>
+</div></header>
+
+<main>
+<section class="hero" style="padding:0" aria-labelledby="h1">
+ <div class="wrap">
+  <div>
+   <p class="kicker">Skypearl Aviation India</p>
+   <h1 id="h1">Book your<br><span>flight</span></h1>
+   <p class="sub">Domestic · International · Student fares</p>
+   <p class="lede">Tell us where you want to fly and when. Our Jalandhar team sends you fare options on WhatsApp and helps you book.</p>
+   <div class="ctas">
+    <a class="btn btn-o" href="#search">Search flights <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
+    <a class="btn btn-w" href="https://wa.me/919872486000?text=Hi%20Skypearl%2C%20I%20want%20to%20book%20a%20flight." target="_blank" rel="noopener">WhatsApp us</a>
+   </div>
+  </div>
+
+  <div class="stage" role="img" aria-label="Illustration: a glossy orange aeroplane flying out of a laptop showing a flight booking screen">
+   <div class="cloud c1"></div><div class="cloud c2"></div><div class="cloud c3"></div>
+   <div class="shadow"></div>
+   <div class="laptop">
+    <div class="screen"><div class="display">
+     <div class="ui-top"><i></i><i></i><i></i></div>
+     <div class="ui-card"><small>Your trip</small>
+      <div class="ui-route"><div>ATQ<span>Amritsar</span></div><div class="dash"></div><div style="text-align:right">YYZ<span>Toronto</span></div></div></div>
+     <div class="ui-card" style="display:flex;justify-content:space-between;padding:9px 14px"><small>12 Dec · 1 adult</small><small style="color:var(--orange-d)">Economy</small></div>
+     <div class="ui-btn">GET FARES</div>
+    </div></div>
+    <div class="base"></div>
+   </div>
+   <!-- original 3D-style cartoon plane (front three-quarter view) -->
+   <svg class="plane" viewBox="0 0 500 300" aria-hidden="true">
+    <defs>
+     <radialGradient id="body" cx="40%" cy="30%" r="75%"><stop offset="0" stop-color="#FFD9A8"/><stop offset=".45" stop-color="#F6A54D"/><stop offset="1" stop-color="#C9661A"/></radialGradient>
+     <linearGradient id="wing" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFC27F"/><stop offset=".55" stop-color="#F29A3A"/><stop offset="1" stop-color="#C46219"/></linearGradient>
+     <linearGradient id="wingL" x1="1" y1="0" x2="0" y2="0"><stop offset="0" stop-color="#F7B05F"/><stop offset="1" stop-color="#D9741C"/></linearGradient>
+     <radialGradient id="eng" cx="35%" cy="30%" r="80%"><stop offset="0" stop-color="#FFE2BD"/><stop offset=".5" stop-color="#F29A3A"/><stop offset="1" stop-color="#B85A16"/></radialGradient>
+     <radialGradient id="intake" cx="50%" cy="45%" r="60%"><stop offset="0" stop-color="#2B2F3A"/><stop offset="1" stop-color="#4A4F5C"/></radialGradient>
+     <linearGradient id="glass" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#5A6375"/><stop offset="1" stop-color="#1E2433"/></linearGradient>
+    </defs>
+    <!-- tail fin -->
+    <path d="M262 92 L300 18 Q306 8 312 16 L304 104 Z" fill="url(#wing)"/>
+    <path d="M300 18 Q306 8 312 16 L304 104 L296 100 Z" fill="#C46219" opacity=".35"/>
+    <!-- rear stabilisers -->
+    <path d="M292 100 L360 84 Q368 84 364 92 L300 112 Z" fill="url(#wing)"/>
+    <path d="M270 104 L214 90 Q206 90 210 98 L262 114 Z" fill="url(#wingL)"/>
+    <!-- right wing (viewer's right, nearer) -->
+    <path d="M300 150 L482 112 Q498 110 492 124 L316 186 Z" fill="url(#wing)"/>
+    <path d="M316 186 L492 124 Q490 132 480 135 L322 192 Z" fill="#B85A16" opacity=".55"/>
+    <!-- left wing -->
+    <path d="M196 150 L30 118 Q14 116 20 130 L182 186 Z" fill="url(#wingL)"/>
+    <path d="M182 186 L20 130 Q22 138 32 140 L176 192 Z" fill="#B85A16" opacity=".5"/>
+    <!-- engines -->
+    <g><ellipse cx="392" cy="172" rx="28" ry="26" fill="url(#eng)"/><ellipse cx="388" cy="172" rx="16" ry="15" fill="url(#intake)"/><ellipse cx="384" cy="168" rx="5" ry="4" fill="#fff" opacity=".35"/></g>
+    <g><ellipse cx="96" cy="170" rx="24" ry="22" fill="url(#eng)"/><ellipse cx="99" cy="170" rx="13" ry="12" fill="url(#intake)"/><ellipse cx="95" cy="166" rx="4" ry="3.5" fill="#fff" opacity=".35"/></g>
+    <!-- fuselage (nose toward viewer) -->
+    <ellipse cx="248" cy="150" rx="72" ry="64" fill="url(#body)"/>
+    <ellipse cx="226" cy="122" rx="30" ry="16" fill="#fff" opacity=".35"/>
+    <!-- cockpit windows -->
+    <path d="M206 134 Q248 112 290 134 L284 148 Q248 134 212 148 Z" fill="url(#glass)"/>
+    <path d="M216 138 Q232 130 244 129 L242 135 Q230 136 220 142 Z" fill="#fff" opacity=".35"/>
+    <path d="M247 128 L249 145" stroke="#F6A54D" stroke-width="3"/>
+    <!-- nose cone highlight & belly shade -->
+    <ellipse cx="248" cy="182" rx="40" ry="16" fill="#B85A16" opacity=".25"/>
+   </svg>
+   <div class="tag t1"><i>✈</i>Fare options on WhatsApp</div>
+   <div class="tag t2"><i>🎓</i>Student baggage fares</div>
+  </div>
+ </div>
+</section>
+
+<div class="wrap search-wrap" id="search">
+ <form class="search" id="sform" novalidate aria-label="Flight enquiry">
+  <div class="trip" role="radiogroup" aria-label="Trip type">
+   <label><input type="radio" name="trip" value="One way" checked><span>One way</span></label>
+   <label><input type="radio" name="trip" value="Round trip"><span>Round trip</span></label>
+  </div>
+  <div class="fields">
+   <div class="f" id="from-w"><label for="from">From</label><input id="from" list="cities" placeholder="City or airport" autocomplete="off" required><div class="msg" id="from-m" aria-live="polite"></div></div>
+   <div class="f" id="to-w"><label for="to">To</label><input id="to" list="cities" placeholder="City or airport" autocomplete="off" required><div class="msg" id="to-m" aria-live="polite"></div></div>
+   <div class="f" id="date-w"><label for="date">Departure</label><input id="date" type="date" required><div class="msg" id="date-m" aria-live="polite"></div></div>
+   <div class="f" id="ret-w"><label for="ret">Return</label><input id="ret" type="date" disabled><div class="msg" id="ret-m" aria-live="polite"></div></div>
+   <div class="f"><label for="pax">Travellers</label><select id="pax"><option>1 adult</option><option>2 adults</option><option>3 adults</option><option>4 adults</option><option>Family / group</option></select><div class="msg"></div></div>
+   <button class="btn btn-o" type="submit">Get fares</button>
+  </div>
+  <datalist id="cities"><option value="Amritsar (ATQ)"><option value="Chandigarh (IXC)"><option value="Delhi (DEL)"><option value="Mumbai (BOM)"><option value="Toronto (YYZ)"><option value="Vancouver (YVR)"><option value="London Heathrow (LHR)"><option value="Birmingham (BHX)"><option value="Melbourne (MEL)"><option value="Sydney (SYD)"><option value="Auckland (AKL)"><option value="Dubai (DXB)"></datalist>
+  <p class="note">This sends your trip details to our team on WhatsApp. Fares and seats are confirmed by our staff before booking.</p>
+ </form>
+</div>
+
+<section id="routes" aria-labelledby="r-h">
+ <div class="wrap">
+  <div class="center"><p class="eyebrow">Popular routes</p><h2 id="r-h">Where Punjab is flying</h2><p class="lead">Tap a route to start an enquiry. Our team will share the latest fares and options.</p></div>
+  <div class="routes">
+   <button class="route" data-from="Amritsar (ATQ)" data-to="Toronto (YYZ)"><div class="codes">ATQ <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 12h16M14 6l6 6-6 6"/></svg> YYZ</div><p>Amritsar to Toronto</p><span>Get fares →</span></button>
+   <button class="route" data-from="Delhi (DEL)" data-to="London Heathrow (LHR)"><div class="codes">DEL <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 12h16M14 6l6 6-6 6"/></svg> LHR</div><p>Delhi to London</p><span>Get fares →</span></button>
+   <button class="route" data-from="Delhi (DEL)" data-to="Melbourne (MEL)"><div class="codes">DEL <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 12h16M14 6l6 6-6 6"/></svg> MEL</div><p>Delhi to Melbourne</p><span>Get fares →</span></button>
+   <button class="route" data-from="Amritsar (ATQ)" data-to="Dubai (DXB)"><div class="codes">ATQ <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 12h16M14 6l6 6-6 6"/></svg> DXB</div><p>Amritsar to Dubai</p><span>Get fares →</span></button>
+  </div>
+ </div>
+</section>
+
+<section id="how" style="padding-top:0" aria-labelledby="h-h">
+ <div class="wrap">
+  <div class="center"><p class="eyebrow">How it works</p><h2 id="h-h">Booking in three simple steps</h2></div>
+  <div class="steps">
+   <div class="step"><b>1</b><h3>Share your trip</h3><p>Enter your route, dates and travellers above, or message us on WhatsApp.</p></div>
+   <div class="step"><b>2</b><h3>Compare options</h3><p>We send you available flights and fares, including baggage details for students.</p></div>
+   <div class="step"><b>3</b><h3>Confirm and fly</h3><p>Choose your flight, complete payment with our team and receive your e-ticket.</p></div>
+  </div>
+  <div class="why">
+   <div><h3>Real people, quick replies</h3><p>Talk to our Jalandhar team on WhatsApp or phone instead of a call centre.</p></div>
+   <div><h3>Student-friendly</h3><p>Ask about student fares and extra baggage when you fly abroad to study.</p></div>
+   <div><h3>Visa help too</h3><p>Need a study or visitor visa as well? We can guide you on that too.</p></div>
+  </div>
+ </div>
+</section>
+
+<section id="contact" style="padding-top:0" aria-labelledby="c-h">
+ <div class="wrap">
+  <div class="cta">
+   <div><p class="eyebrow" style="color:#F6AA55">Ready to fly?</p><h2 id="c-h">Send us your route. We’ll find your flight.</h2>
+    <div class="ctas"><a class="btn btn-o" href="#search">Get fares</a><a class="btn btn-w" href="tel:+919872486000">Call +91 98724 86000</a></div></div>
+   <address><b>Skypearl Aviation India Pvt Ltd</b>Shop No. 3B, First Floor, Doaba Market,<br>Near Bus Stand, Jalandhar, Punjab 144001<br><a href="https://www.google.com/maps/search/?api=1&amp;query=Doaba+Market+Near+Bus+Stand+Jalandhar" target="_blank" rel="noopener" style="color:#F6AA55;font-weight:600">Get directions →</a></address>
+  </div>
+ </div>
+</section>
+</main>
+<footer>© 2026 Skypearl Aviation India Pvt Ltd · CIN U52291PB2025PTC064306 · <a href="../" style="color:var(--blue)">Main website</a> · Demo by SSLC STARTUP</footer>
+
+<a class="wa" href="https://wa.me/919872486000?text=Hi%20Skypearl%2C%20I%20want%20to%20book%20a%20flight." target="_blank" rel="noopener" aria-label="Chat with Skypearl on WhatsApp"><svg viewBox="0 0 24 24"><path d="M17.5 14.4c-.3-.1-1.8-.9-2-1s-.5-.1-.7.1-.8 1-1 1.2-.4.2-.7.1a8.2 8.2 0 01-4-3.5c-.3-.5.3-.5.9-1.6.1-.2 0-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6a1.1 1.1 0 00-.8.4 3.4 3.4 0 00-1 2.5 5.9 5.9 0 001.2 3.1 13.4 13.4 0 005.2 4.6c1.9.8 2.7.9 3.6.7a3.1 3.1 0 002-1.4 2.5 2.5 0 00.2-1.4c-.1-.2-.3-.3-.6-.4zM12 21.8a9.8 9.8 0 01-5-1.4l-.4-.2-3.7 1 1-3.6-.2-.4A9.8 9.8 0 1112 21.8zM12 0a12 12 0 00-10.3 18L0 24l6.2-1.6A12 12 0 1012 0z"/></svg></a>
+
+<dialog id="dlg" aria-labelledby="dlg-t"><button class="x" type="button" aria-label="Close" data-close>×</button><div id="dlg-c"></div></dialog>
+
+<script>
+(() => {
+  const $ = s => document.querySelector(s), WA = '919872486000';
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  const today = new Date(Date.now() - new Date().getTimezoneOffset() * 6e4).toISOString().slice(0, 10);
+  $('#date').min = today; $('#ret').min = today;
+  document.querySelectorAll('input[name=trip]').forEach(r => r.addEventListener('change', () => {
+    const rt = $('input[name=trip]:checked').value === 'Round trip'; $('#ret').disabled = !rt; if (!rt) { $('#ret').value = ''; setErr('ret', ''); }
+  }));
+  $('#date').addEventListener('change', () => { $('#ret').min = $('#date').value || today; });
+  function setErr(id, t) { $('#' + id + '-w').classList.toggle('err', !!t); $('#' + id + '-m').textContent = t || ''; const el = $('#' + id); t ? el.setAttribute('aria-invalid', 'true') : el.removeAttribute('aria-invalid'); el.setAttribute('aria-describedby', id + '-m'); return !t; }
+  ['from', 'to', 'date', 'ret'].forEach(id => $('#' + id).addEventListener('input', () => setErr(id, '')));
+  const dlg = $('#dlg');
+  dlg.addEventListener('click', e => { if (e.target === dlg || e.target.closest('[data-close]')) dlg.close(); });
+  $('#sform').addEventListener('submit', e => {
+    e.preventDefault();
+    const v = id => $('#' + id).value.trim(), trip = $('input[name=trip]:checked').value, rt = trip === 'Round trip';
+    const ok = [
+      setErr('from', v('from') ? '' : 'Enter a departure city.'),
+      setErr('to', !v('to') ? 'Enter a destination.' : v('to').toLowerCase() === v('from').toLowerCase() ? 'Destination must differ from departure.' : ''),
+      setErr('date', !v('date') ? 'Choose a date.' : v('date') < today ? 'Date cannot be in the past.' : ''),
+      setErr('ret', !rt ? '' : !v('ret') ? 'Choose a return date.' : v('ret') < v('date') ? 'Return must be after departure.' : '')
+    ].every(Boolean);
+    if (!ok) { $('#sform [aria-invalid="true"]').focus(); return; }
+    const fmt = d => new Date(d + 'T00:00').toLocaleDateString('en-IN', {day: 'numeric', month: 'short', year: 'numeric'});
+    const msg = `Flight enquiry (${trip})\nFrom: ${v('from')}\nTo: ${v('to')}\nDeparture: ${fmt(v('date'))}${rt ? '\nReturn: ' + fmt(v('ret')) : ''}\nTravellers: ${v('pax')}`;
+    $('#dlg-c').innerHTML = `<h3 id="dlg-t">Send your enquiry</h3><p style="color:var(--mut)">Your enquiry has <b>not been sent yet</b>. Send it to our team on WhatsApp and we’ll reply with fare options.</p><pre>${esc(msg)}</pre>
+      <div class="acts"><a class="btn btn-o" target="_blank" rel="noopener" href="https://wa.me/${WA}?text=${encodeURIComponent(msg)}">Send on WhatsApp</a><a class="btn btn-w" href="tel:+919872486000">Or call us</a></div>`;
+    dlg.showModal();
+  });
+  document.querySelectorAll('.route').forEach(b => b.addEventListener('click', () => {
+    $('#from').value = b.dataset.from; $('#to').value = b.dataset.to; setErr('from', ''); setErr('to', '');
+    $('#search').scrollIntoView({behavior: 'smooth', block: 'center'}); setTimeout(() => $('#date').focus({preventScroll: true}), 500);
+  }));
+})();
+</script>
+</body>
+</html>
