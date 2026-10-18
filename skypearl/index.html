@@ -15,7 +15,7 @@
 <link rel="icon" href="assets/favicon-64.png">
 <link rel="apple-touch-icon" href="assets/logo-emblem.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&family=Montserrat:wght@700&display=swap" rel="stylesheet">
 <link rel="preload" as="image" href="assets/logo-full.png">
 <link rel="preload" as="image" href="assets/hero-traveller.jpg">
 <script type="application/ld+json">
@@ -291,6 +291,54 @@ dialog .acts{display:flex;gap:10px;flex-wrap:wrap}
 dialog.zoom{max-width:560px;background:transparent;box-shadow:none}
 dialog.zoom img{border-radius:var(--r-lg)}
 
+
+/* air ticketing section (3D plane + laptop, flight search) */
+.air-box{background:radial-gradient(ellipse 70% 80% at 75% 35%,#FBF3F1 0%,#F6E9E6 60%,#EFDCD7 100%);border-radius:24px;padding:48px 48px 32px;overflow:hidden}
+.air-grid{display:grid;grid-template-columns:1fr 1.05fr;gap:24px;align-items:center}
+.air-title{font-family:"Montserrat",var(--sans);font-weight:700;font-size:clamp(34px,4vw,54px);letter-spacing:.12em;text-transform:uppercase;color:#A9AAB0;line-height:1.08;margin:10px 0 14px}
+.air-title span{color:var(--navy)}
+.air-stage-wrap{height:400px;position:relative}
+.air-stage{position:absolute;left:50%;top:50%;width:560px;height:440px;transform:translate(-50%,-50%) scale(.9)}
+.air-shadow{position:absolute;left:70px;right:40px;bottom:18px;height:40px;background:radial-gradient(ellipse at center,rgba(120,80,70,.28),transparent 70%);filter:blur(4px)}
+.air-laptop{position:absolute;left:90px;bottom:48px;width:420px}
+.air-screen{height:262px;border-radius:18px 18px 6px 6px;background:linear-gradient(160deg,#E9EAEE,#C9CCD3);padding:12px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.7),0 20px 40px rgba(80,60,60,.18)}
+.air-display{height:100%;border-radius:10px;background:linear-gradient(180deg,#FDFBFA,#F1EEF0);overflow:hidden}
+.air-top{display:flex;gap:5px;padding:9px 10px 40px}.air-top i{width:7px;height:7px;border-radius:50%;background:#E3B4AA}.air-top i:nth-child(2){background:#EDD39B}.air-top i:nth-child(3){background:#B8D8B0}
+.air-card{margin:4px 18px;background:#fff;border-radius:10px;box-shadow:0 6px 16px rgba(30,36,51,.08);padding:12px 14px;position:relative;z-index:1}
+.air-card small{font-size:9px;letter-spacing:.14em;color:#9A9CA3;text-transform:uppercase;font-weight:600}
+.air-row{display:flex;justify-content:space-between;padding:9px 14px}
+.air-route{display:flex;align-items:center;justify-content:space-between;margin-top:6px;font-family:"Montserrat",var(--sans);font-weight:700;color:var(--navy);font-size:20px}
+.air-route span{font-size:9px;display:block;color:#6B7180;font-family:var(--sans);font-weight:500}
+.air-dash{flex:1;margin:0 10px;border-top:2px dashed #E2CFC9}
+.air-btn{margin:8px 18px 0;height:28px;border-radius:20px;background:linear-gradient(180deg,#F6AA55,#D9741C);color:#fff;font-size:11px;font-weight:700;display:grid;place-items:center;letter-spacing:.08em}
+.air-base{position:relative;height:22px;margin:0 -34px;background:linear-gradient(180deg,#E4E6EA,#B9BCC4);border-radius:3px 3px 22px 22px;box-shadow:0 10px 22px rgba(80,60,60,.18)}
+.air-plane{position:absolute;left:70px;top:-18px;width:430px;animation:airFloat 5s ease-in-out infinite;filter:drop-shadow(0 26px 22px rgba(120,70,40,.25))}
+@keyframes airFloat{0%,100%{transform:translateY(0) rotate(-6deg)}50%{transform:translateY(-12px) rotate(-4deg)}}
+.air-cloud{position:absolute;background:#fff;border-radius:40px;opacity:.85}
+.air-cloud::before,.air-cloud::after{content:"";position:absolute;background:#fff;border-radius:50%}
+.ac1{width:96px;height:30px;left:0;top:70px}.ac1::before{width:44px;height:44px;left:16px;top:-22px}.ac1::after{width:30px;height:30px;left:50px;top:-14px}
+.ac2{width:70px;height:22px;right:6px;top:24px}.ac2::before{width:32px;height:32px;left:12px;top:-16px}.ac2::after{width:22px;height:22px;left:38px;top:-10px}
+.ac3{width:80px;height:24px;right:-6px;bottom:120px}.ac3::before{width:36px;height:36px;left:14px;top:-18px}.ac3::after{width:24px;height:24px;left:44px;top:-11px}
+.air-search{background:#fff;border-radius:18px;box-shadow:0 16px 40px rgba(80,60,60,.12);padding:22px 24px;margin-top:8px;position:relative;z-index:2}
+.air-trip{display:flex;gap:6px;margin-bottom:14px}
+.air-trip label{cursor:pointer}.air-trip input{position:absolute;opacity:0}
+.air-trip span{display:inline-block;padding:7px 14px;border-radius:30px;font-size:13.5px;font-weight:600;color:var(--text);border:1px solid var(--line)}
+.air-trip input:checked+span{background:var(--navy);border-color:var(--navy);color:#fff}
+.air-trip input:focus-visible+span{outline:2px solid var(--blue);outline-offset:2px}
+.air-fields{display:grid;grid-template-columns:1.2fr 1.2fr 1fr 1fr .9fr auto;gap:12px;align-items:end}
+.air-fields .field input,.air-fields .field select{min-width:0;height:50px;min-height:50px}
+.air-go{height:50px;margin-bottom:4px;background:linear-gradient(180deg,#F6AA55,#D9741C);border-radius:var(--r)}
+.air-go:hover{background:linear-gradient(180deg,#F29A3A,#C46219)}
+.air-routes{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:18px}
+.air-rl{font-size:13px;font-weight:600;color:var(--navy);margin-right:4px}
+.air-chip{border:1px solid #E3D6D2;background:#fff;border-radius:30px;padding:7px 14px;font-size:13px;font-weight:600;color:var(--navy);cursor:pointer;font-family:"Montserrat",var(--sans)}
+.air-chip:hover{border-color:#D9741C;color:#D9741C}
+@media (max-width:1024px){.air-fields{grid-template-columns:1fr 1fr 1fr}.air-go{grid-column:span 3}}
+@media (max-width:900px){.air-grid{grid-template-columns:1fr}.air-stage-wrap{height:340px}.air-stage{transform:translate(-50%,-50%) scale(.75)}.air-box{padding:32px 24px 24px}}
+@media (max-width:600px){.air-stage-wrap{height:260px}.air-stage{transform:translate(-50%,-50%) scale(.56)}.air-fields{grid-template-columns:1fr 1fr}.air-go{grid-column:span 2}.air-box{padding:26px 16px 18px;border-radius:18px}.air-search{padding:16px}}
+@media (max-width:400px){.air-fields{grid-template-columns:1fr}.air-go{grid-column:auto}.air-stage-wrap{height:220px}.air-stage{transform:translate(-50%,-50%) scale(.48)}}
+@media (prefers-reduced-motion:reduce){.air-plane{animation:none}}
+
 /* responsive */
 @media (max-width:1180px){.nav a,.nav .dd-btn{padding:10px 8px;font-size:14px}.hero .wrap,.hero-media{height:790px}}
 @media (max-width:1080px){
@@ -427,7 +475,7 @@ dialog.zoom img{border-radius:var(--r-lg)}
   <ul class="nav" id="nav">
    <li><a href="#top" data-sec="top">Home</a></li>
    <li><a href="#gds" data-sec="gds">GDS Training</a></li>
-   <li><a href="book-flight/">Air Tickets</a></li>
+   <li><a href="#air" data-sec="air">Air Tickets</a></li>
    <li class="has-dd"><button class="dd-btn" aria-expanded="false" aria-controls="dd-dest">Tour Packages <svg viewBox="0 0 12 8" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M1 1l5 5 5-5"/></svg></button>
     <div class="dd" id="dd-dest"><a href="#tours">All tour packages</a><a href="#tours" data-dest="ae">Dubai &amp; UAE</a><a href="#tours" data-dest="eu">Europe</a><a href="#tours" data-dest="uk">United Kingdom</a><a href="#tours" data-dest="au">Australia</a><a href="#tours" data-dest="nz">New Zealand</a><a href="#tours" data-dest="ca">Canada</a></div></li>
    <li><a href="#offices" data-sec="offices">Our Office</a></li>
@@ -450,7 +498,7 @@ dialog.zoom img{border-radius:var(--r-lg)}
    <p class="lede">Learn the airline reservation systems the travel industry runs on, book your next flight, or plan your holiday, all with one Jalandhar team.</p>
    <div class="hero-ctas">
     <a class="btn btn-primary" href="#gds">Explore GDS Training <svg class="arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
-    <a class="btn btn-ghost" href="book-flight/">Book a Flight</a>
+    <a class="btn btn-ghost" href="#air">Book a Flight</a>
    </div>
    <ul class="trust" aria-label="About Sky Pearl Aviation">
     <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 15s5-4.5 5-8.5a5 5 0 00-10 0C3 10.5 8 15 8 15z"/><circle cx="8" cy="6.5" r="1.8"/></svg>Doaba Market, Jalandhar</li>
@@ -521,12 +569,92 @@ dialog.zoom img{border-radius:var(--r-lg)}
    <div class="svc-stack">
     <article class="panel h" id="svc-air">
      <img src="assets/svc-visitor.jpg" alt="Travellers walking through an airport terminal towards an aircraft" loading="lazy">
-     <div class="b"><h3>Air Ticketing</h3><p>Domestic and international flights, family and group bookings, with fare options shared on WhatsApp.</p><a class="link" href="book-flight/">Book a flight <svg class="arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a></div>
+     <div class="b"><h3>Air Ticketing</h3><p>Domestic and international flights, family and group bookings, with fare options shared on WhatsApp.</p><a class="link" href="#air">Book a flight <svg class="arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a></div>
     </article>
     <article class="panel h" id="svc-tours">
      <img src="assets/svc-spouse.jpg" alt="A couple walking towards an aircraft on the tarmac" loading="lazy">
      <div class="b"><h3>Tour Packages</h3><p>Domestic and international holidays planned around your dates, budget and group size.</p><a class="link" href="#tours">See destinations <svg class="arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a></div>
     </article>
+   </div>
+  </div>
+ </div>
+</section>
+
+<!-- AIR TICKETS -->
+<section class="sec" id="air" aria-labelledby="air-h">
+ <div class="wrap">
+  <div class="air-box">
+   <div class="air-grid">
+    <div>
+     <p class="eyebrow">Air ticketing</p>
+     <h2 id="air-h" class="air-title">Book your <span>flight</span></h2>
+     <p class="lede">Tell us where you want to fly and when. Our Jalandhar team sends you fare options on WhatsApp and helps you book, for domestic and international flights, families and groups.</p>
+    </div>
+    <div class="air-stage-wrap" aria-hidden="true">
+     <div class="air-stage">
+      <div class="air-cloud ac1"></div><div class="air-cloud ac2"></div><div class="air-cloud ac3"></div>
+      <div class="air-shadow"></div>
+      <div class="air-laptop">
+       <div class="air-screen"><div class="air-display">
+        <div class="air-top"><i></i><i></i><i></i></div>
+        <div class="air-card"><small>Your trip</small><div class="air-route"><div>ATQ<span>Amritsar</span></div><div class="air-dash"></div><div style="text-align:right">DXB<span>Dubai</span></div></div></div>
+        <div class="air-card air-row"><small>12 Dec · 1 adult</small><small style="color:#D9741C">Economy</small></div>
+        <div class="air-btn">GET FARES</div>
+       </div></div>
+       <div class="air-base"></div>
+      </div>
+      <svg class="air-plane" viewBox="0 0 500 300">
+       <defs>
+        <radialGradient id="apb" cx="40%" cy="30%" r="75%"><stop offset="0" stop-color="#FFD9A8"/><stop offset=".45" stop-color="#F6A54D"/><stop offset="1" stop-color="#C9661A"/></radialGradient>
+        <linearGradient id="apw" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFC27F"/><stop offset=".55" stop-color="#F29A3A"/><stop offset="1" stop-color="#C46219"/></linearGradient>
+        <linearGradient id="apwl" x1="1" y1="0" x2="0" y2="0"><stop offset="0" stop-color="#F7B05F"/><stop offset="1" stop-color="#D9741C"/></linearGradient>
+        <radialGradient id="ape" cx="35%" cy="30%" r="80%"><stop offset="0" stop-color="#FFE2BD"/><stop offset=".5" stop-color="#F29A3A"/><stop offset="1" stop-color="#B85A16"/></radialGradient>
+        <radialGradient id="api" cx="50%" cy="45%" r="60%"><stop offset="0" stop-color="#2B2F3A"/><stop offset="1" stop-color="#4A4F5C"/></radialGradient>
+        <linearGradient id="apg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#5A6375"/><stop offset="1" stop-color="#1E2433"/></linearGradient>
+       </defs>
+       <path d="M262 92 L300 18 Q306 8 312 16 L304 104 Z" fill="url(#apw)"/>
+       <path d="M292 100 L360 84 Q368 84 364 92 L300 112 Z" fill="url(#apw)"/>
+       <path d="M270 104 L214 90 Q206 90 210 98 L262 114 Z" fill="url(#apwl)"/>
+       <path d="M300 150 L482 112 Q498 110 492 124 L316 186 Z" fill="url(#apw)"/>
+       <path d="M316 186 L492 124 Q490 132 480 135 L322 192 Z" fill="#B85A16" opacity=".55"/>
+       <path d="M196 150 L30 118 Q14 116 20 130 L182 186 Z" fill="url(#apwl)"/>
+       <path d="M182 186 L20 130 Q22 138 32 140 L176 192 Z" fill="#B85A16" opacity=".5"/>
+       <ellipse cx="392" cy="172" rx="28" ry="26" fill="url(#ape)"/><ellipse cx="388" cy="172" rx="16" ry="15" fill="url(#api)"/>
+       <ellipse cx="96" cy="170" rx="24" ry="22" fill="url(#ape)"/><ellipse cx="99" cy="170" rx="13" ry="12" fill="url(#api)"/>
+       <ellipse cx="248" cy="150" rx="72" ry="64" fill="url(#apb)"/>
+       <ellipse cx="226" cy="122" rx="30" ry="16" fill="#fff" opacity=".35"/>
+       <path d="M206 134 Q248 112 290 134 L284 148 Q248 134 212 148 Z" fill="url(#apg)"/>
+       <path d="M216 138 Q232 130 244 129 L242 135 Q230 136 220 142 Z" fill="#fff" opacity=".35"/>
+       <ellipse cx="248" cy="182" rx="40" ry="16" fill="#B85A16" opacity=".25"/>
+      </svg>
+     </div>
+    </div>
+   </div>
+
+   <form class="air-search" id="aform" novalidate aria-label="Flight enquiry">
+    <div class="air-trip" role="radiogroup" aria-label="Trip type">
+     <label><input type="radio" name="atrip" value="One way" checked><span>One way</span></label>
+     <label><input type="radio" name="atrip" value="Round trip"><span>Round trip</span></label>
+    </div>
+    <div class="air-fields">
+     <div class="field" id="a-from-w"><label for="a-from">From</label><input id="a-from" list="a-cities" placeholder="City or airport" autocomplete="off" required><div class="msg" id="a-from-m" aria-live="polite"></div></div>
+     <div class="field" id="a-to-w"><label for="a-to">To</label><input id="a-to" list="a-cities" placeholder="City or airport" autocomplete="off" required><div class="msg" id="a-to-m" aria-live="polite"></div></div>
+     <div class="field" id="a-date-w"><label for="a-date">Departure</label><input id="a-date" type="date" required><div class="msg" id="a-date-m" aria-live="polite"></div></div>
+     <div class="field" id="a-ret-w"><label for="a-ret">Return</label><input id="a-ret" type="date" disabled><div class="msg" id="a-ret-m" aria-live="polite"></div></div>
+     <div class="field"><label for="a-pax">Travellers</label><select id="a-pax"><option>1 adult</option><option>2 adults</option><option>3 adults</option><option>4 adults</option><option>Family / group</option></select><div class="msg"></div></div>
+     <button class="btn btn-primary air-go" type="submit">Get fares</button>
+    </div>
+    <datalist id="a-cities"><option value="Amritsar (ATQ)"><option value="Chandigarh (IXC)"><option value="Delhi (DEL)"><option value="Mumbai (BOM)"><option value="Dubai (DXB)"><option value="Toronto (YYZ)"><option value="Vancouver (YVR)"><option value="London Heathrow (LHR)"><option value="Melbourne (MEL)"><option value="Sydney (SYD)"><option value="Auckland (AKL)"><option value="Singapore (SIN)"></datalist>
+    <p class="fine">This sends your trip details to our team on WhatsApp. Fares and seats are confirmed by our staff before booking.</p>
+   </form>
+
+   <div class="air-routes" aria-label="Popular routes">
+    <span class="air-rl">Popular routes:</span>
+    <button type="button" class="air-chip" data-from="Amritsar (ATQ)" data-to="Dubai (DXB)">ATQ → DXB</button>
+    <button type="button" class="air-chip" data-from="Amritsar (ATQ)" data-to="Toronto (YYZ)">ATQ → YYZ</button>
+    <button type="button" class="air-chip" data-from="Delhi (DEL)" data-to="London Heathrow (LHR)">DEL → LHR</button>
+    <button type="button" class="air-chip" data-from="Delhi (DEL)" data-to="Melbourne (MEL)">DEL → MEL</button>
+    <button type="button" class="air-chip" data-from="Chandigarh (IXC)" data-to="Mumbai (BOM)">IXC → BOM</button>
    </div>
   </div>
  </div>
@@ -602,7 +730,7 @@ dialog.zoom img{border-radius:var(--r-lg)}
   <div class="faq">
    <details open><summary>What is GDS training?</summary><p>GDS (Global Distribution System) training teaches you to use the airline reservation systems that travel agencies and airline offices work on: checking availability and fares, making bookings (PNRs), issuing tickets and handling changes and refunds.</p></details>
    <details><summary>Who can join the GDS course?</summary><p>Students and job seekers interested in a career in travel, ticketing or aviation customer service. Contact us for current eligibility, batch timings, duration and fees, or book a free demo class.</p></details>
-   <details><summary>Can Sky Pearl book international air tickets?</summary><p>Yes. We book domestic and international flights, including family and group bookings. Share your route and travel dates on our <a class="link" href="book-flight/">flight booking page</a> or WhatsApp.</p></details>
+   <details><summary>Can Sky Pearl book international air tickets?</summary><p>Yes. We book domestic and international flights, including family and group bookings. Share your route and travel dates on the <a class="link" href="#air">Air Tickets section</a> above or WhatsApp.</p></details>
    <details><summary>Do you offer tour packages?</summary><p>Yes, domestic and international. Tell us your destination, dates, budget and number of travellers and we’ll share an itinerary.</p></details>
    <details><summary>Where is Sky Pearl Aviation located?</summary><p>Shop No. 3B, First Floor, Doaba Market, Near Bus Stand, Jalandhar, Punjab 144001. Call or WhatsApp +91 98724 86000.</p></details>
   </div>
@@ -656,7 +784,7 @@ dialog.zoom img{border-radius:var(--r-lg)}
  <div class="wrap">
   <div class="ftr-grid">
    <div><span class="logo-card"><img src="assets/logo-full.png" alt="Sky Pearl Aviation India Pvt. Ltd. Where Ambition meets the Sky" loading="lazy"></span><p class="slogan" style="color:#9DB7E8;margin-bottom:8px">Where Ambition meets the Sky</p><p>Sky Pearl Aviation India Pvt Ltd<br>GDS training, air ticketing and tour packages.<br>CIN U52291PB2025PTC064306</p></div>
-   <div><h4>Services</h4><ul><li><a href="#gds">GDS Training</a></li><li><a href="book-flight/">Air Tickets</a></li><li><a href="#tours">Tour Packages</a></li><li><a href="#enquire">Free Demo Class</a></li></ul></div>
+   <div><h4>Services</h4><ul><li><a href="#gds">GDS Training</a></li><li><a href="#air">Air Tickets</a></li><li><a href="#tours">Tour Packages</a></li><li><a href="#enquire">Free Demo Class</a></li></ul></div>
    <div><h4>Tour Packages</h4><ul><li><a href="#tours" data-dest="ae">Dubai &amp; UAE</a></li><li><a href="#tours" data-dest="eu">Europe</a></li><li><a href="#tours" data-dest="uk">United Kingdom</a></li><li><a href="#tours" data-dest="au">Australia</a></li><li><a href="#tours" data-dest="nz">New Zealand</a></li><li><a href="#tours" data-dest="ca">Canada</a></li></ul></div>
    <div><h4>Company</h4><ul><li><a href="#about">About Us</a></li><li><a href="#offices">Our Office</a></li><li><a href="#faq">FAQ</a></li><li><a href="#enquire">Enquire Now</a></li></ul></div>
    <div><h4>Contact</h4><ul><li><a href="tel:+919872486000">+91 98724 86000</a></li><li><a href="https://wa.me/919872486000" target="_blank" rel="noopener">WhatsApp</a></li><li>Doaba Market, Near Bus Stand,<br>Jalandhar 144001</li></ul></div>
@@ -723,7 +851,7 @@ dialog.zoom img{border-radius:var(--r-lg)}
     const n = $('#f-need').value, p = $('#f-pref').value;
     const ok = [setErr('f-need', n ? '' : 'Please choose an option.'), setErr('f-pref', p ? '' : 'Please choose one.')].every(Boolean);
     if (!ok) { (n ? $('#f-pref') : $('#f-need')).focus(); return; }
-    if (n === 'Air Tickets') { location.href = 'book-flight/'; return; }
+    if (n === 'Air Tickets') { $('#air').scrollIntoView({behavior: 'smooth'}); setTimeout(() => $('#a-from').focus({preventScroll: true}), 700); return; }
     prefill({service: n, pref: p});
     if (n === 'GDS Training') { $('#gds').scrollIntoView({behavior: 'smooth'}); return; }
     $('#tours').scrollIntoView({behavior: 'smooth'});
@@ -748,6 +876,31 @@ dialog.zoom img{border-radius:var(--r-lg)}
   });
   ['c-name', 'c-phone', 'c-service'].forEach(id => $('#' + id).addEventListener('input', () => setErr(id, '')));
 
+  /* ---------- air ticket search ---------- */
+  (() => {
+    const tz = new Date(Date.now() - new Date().getTimezoneOffset() * 6e4).toISOString().slice(0, 10);
+    $('#a-date').min = tz; $('#a-ret').min = tz;
+    $$('input[name=atrip]').forEach(r => r.addEventListener('change', () => { const rt = $('input[name=atrip]:checked').value === 'Round trip'; $('#a-ret').disabled = !rt; if (!rt) { $('#a-ret').value = ''; setErr('a-ret', ''); } }));
+    $('#a-date').addEventListener('change', () => { $('#a-ret').min = $('#a-date').value || tz; });
+    ['a-from', 'a-to', 'a-date', 'a-ret'].forEach(id => $('#' + id).addEventListener('input', () => setErr(id, '')));
+    $('#aform').addEventListener('submit', e => {
+      e.preventDefault();
+      const v = id => $('#' + id).value.trim(), trip = $('input[name=atrip]:checked').value, rt = trip === 'Round trip';
+      const ok = [
+        setErr('a-from', v('a-from') ? '' : 'Enter a departure city.'),
+        setErr('a-to', !v('a-to') ? 'Enter a destination.' : v('a-to').toLowerCase() === v('a-from').toLowerCase() ? 'Destination must differ from departure.' : ''),
+        setErr('a-date', !v('a-date') ? 'Choose a date.' : v('a-date') < tz ? 'Date cannot be in the past.' : ''),
+        setErr('a-ret', !rt ? '' : !v('a-ret') ? 'Choose a return date.' : v('a-ret') < v('a-date') ? 'Return must be after departure.' : '')
+      ].every(Boolean);
+      if (!ok) { $('#aform [aria-invalid="true"]').focus(); return; }
+      const fmt = d => new Date(d + 'T00:00').toLocaleDateString('en-IN', {day: 'numeric', month: 'short', year: 'numeric'});
+      const msg = `Flight enquiry (${trip})\nFrom: ${v('a-from')}\nTo: ${v('a-to')}\nDeparture: ${fmt(v('a-date'))}${rt ? '\nReturn: ' + fmt(v('a-ret')) : ''}\nTravellers: ${v('a-pax')}`;
+      openDlg(`<div class="d-b"><p class="eyebrow">One last step</p><h3 id="dlg-t">Send your flight enquiry</h3><p>Your enquiry has <b>not been sent yet</b>. Send it to our team on WhatsApp and we’ll reply with fare options:</p>
+        <pre>${esc(msg)}</pre><div class="acts"><a class="btn btn-primary" target="_blank" rel="noopener" href="https://wa.me/${WA}?text=${encodeURIComponent(msg)}">Send on WhatsApp</a><a class="btn btn-ghost" href="tel:+919872486000">Or call us</a></div></div>`);
+    });
+    $$('.air-chip').forEach(b => b.addEventListener('click', () => { $('#a-from').value = b.dataset.from; $('#a-to').value = b.dataset.to; setErr('a-from', ''); setErr('a-to', ''); $('#a-date').focus(); }));
+  })();
+
   /* ---------- navigation ---------- */
   const nav = $('#nav'), mb = $('#menuBtn');
   function closeMenu() { nav.classList.remove('open'); mb.setAttribute('aria-expanded', 'false'); mb.setAttribute('aria-label', 'Open menu'); closeDD(); }
@@ -761,7 +914,7 @@ dialog.zoom img{border-radius:var(--r-lg)}
   /* active section highlighting */
   const links = $$('.nav a[data-sec]');
   const io = new IntersectionObserver(es => es.forEach(en => { if (en.isIntersecting) links.forEach(l => { const on = l.dataset.sec === en.target.id; l.classList.toggle('active', on); on ? l.setAttribute('aria-current', 'true') : l.removeAttribute('aria-current'); }); }), {rootMargin: '-45% 0px -50% 0px'});
-  ['top', 'gds', 'offices', 'about'].forEach(id => io.observe(document.getElementById(id)));
+  ['top', 'gds', 'air', 'offices', 'about'].forEach(id => io.observe(document.getElementById(id)));
 })();
 </script>
 </body>
