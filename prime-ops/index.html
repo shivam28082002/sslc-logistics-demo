@@ -25,6 +25,13 @@
 .belt i{position:absolute;top:1px;width:22px;height:8px;border-radius:2px;background:var(--amber);animation:ride 9s linear infinite}
 @keyframes ride{from{inset-inline-start:-3%}to{inset-inline-start:101%}}
 .two{grid-template-columns:1.25fr 1fr;margin-top:16px}
+.svcs{display:grid;grid-template-columns:repeat(7,1fr);gap:10px;margin-top:16px}
+.svcs a{display:block;background:#fff;border:1px solid var(--line);border-radius:10px;padding:13px 14px;text-decoration:none;transition:border-color .15s}
+.svcs a:hover{border-color:var(--green)}
+.svcs b{display:block;font-weight:600;font-size:14.5px;margin-top:8px;line-height:1.3}
+.svcs small{display:block;color:var(--steel-d);font-size:12.5px;margin-top:3px}
+@media (max-width:1200px){.svcs{grid-template-columns:repeat(4,1fr)}}
+@media (max-width:560px){.svcs{grid-template-columns:1fr 1fr}}
 .dec li{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid #ECEEEA}
 .dec li:last-child{border-bottom:0}
 .dec ul{list-style:none;margin:0;padding:0}
@@ -74,6 +81,8 @@
     </div>
   </section>
 
+  <section aria-labelledby="svch"><h2 class="sr" id="svch">Prime's services</h2><div class="svcs" id="svcs"></div></section>
+
   <div class="grid two">
     <section class="panel dec">
       <div class="ph"><h2 data-ar="يحتاج قرارك الآن">Needs a decision now</h2><small data-ar="مرتبة حسب الأهمية">Most urgent first</small></div>
@@ -106,6 +115,9 @@ const D=[
   ['info','inv','3 invoices waiting for ZATCA clearance','3 فواتير بانتظار اعتماد زاتكا','Total SAR 61,240 for this week.','الإجمالي 61,240 ريال لهذا الأسبوع.','billing.html','Review','مراجعة'],
 ];
 document.getElementById('decisions').innerHTML=D.map(([k,i,en,ar,sen,sar,h,b,bar])=>`<li><span class="ic" style="background:var(--${k==='bad'?'red':k==='warn'?'amber':'blue'}-l);color:var(--${k==='bad'?'red':k==='warn'?'amber-d':'blue'})"><svg viewBox="0 0 24 24">${ic[i]}</svg></span><div><b data-ar="${ar}">${en}</b><small data-ar="${sar}">${sen}</small></div><a class="btn btn-o" href="${h}" data-ar="${bar}">${b}</a></li>`).join('');
+const SN={'3pl':['12 clients, full outsourcing','12 عميلاً، تشغيل كامل'],'2pl':['2 clients, 5 dedicated trucks','عميلان، 5 شاحنات مخصصة'],'cold':['6 rooms, 1 alert','6 غرف، تنبيه واحد'],'trans':['41 trips on the road','41 رحلة على الطريق'],'pack':['5 jobs, 4,256 units today','5 مهام، 4,256 وحدة اليوم'],'wh':['4,812 pallets, 3 sites','4,812 منصة، 3 مواقع'],'pick':['486 orders today','486 طلباً اليوم']};
+function svcs(){document.getElementById('svcs').innerHTML=SERVICES.map(v=>`<a href="${v[5]}"><span class="svc svc-${v[0]}">${isAr()?v[2]:v[1]}</span><b>${isAr()?v[4]:v[3]}</b><small>${isAr()?SN[v[0]][1]:SN[v[0]][0]}</small></a>`).join('')}
+svcs(); document.addEventListener('langchange',svcs);
 if(isAr()) applyLang('ar');
 </script>
 </body>
