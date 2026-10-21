@@ -62,6 +62,7 @@ tr.low td{background:#FFF8EA}
     <button role="tab" aria-selected="false" data-t="stock" id="tab-stock" data-ar="المخزون">Stock</button>
     <button role="tab" aria-selected="false" data-t="inbound" id="tab-inbound" data-ar="استلام (GRN)">Inbound (GRN)</button>
     <button role="tab" aria-selected="false" data-t="pick" data-ar="قوائم الالتقاط">Pick lists</button>
+    <button role="tab" aria-selected="false" data-t="pack" data-ar="محطة التغليف">Pack station</button>
   </div>
 
   <section id="v-map">
@@ -107,6 +108,21 @@ tr.low td{background:#FFF8EA}
   <section id="v-pick" hidden>
     <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(300px,1fr))" id="picks"></div>
   </section>
+  <section id="v-pack" hidden>
+    <div class="grid wh">
+      <div class="panel">
+        <div class="ph"><h2 data-ar="محطة التغليف 3: الطلب PCK-8812">Pack station 3: order PCK-8812</h2><span class="pill p-info" id="packSt"></span></div>
+        <p class="muted" style="margin:-6px 0 12px" data-ar="الواحة للأغذية · إلى مركز الواحة في الدمام · امسح كل كرتون عند وضعه في الشحنة">Al Waha Foods · to Al Waha DC, Dammam · scan each carton as it goes into the shipment</p>
+        <div class="twrap"><table class="t"><thead><tr><th>SKU</th><th class="num" data-ar="المطلوب">Ordered</th><th class="num" data-ar="تم المسح">Scanned</th><th></th></tr></thead><tbody id="packT"></tbody></table></div>
+        <div class="gform" style="margin-top:14px">
+          <div class="field"><label for="pkC" data-ar="عدد الطرود/المنصات">Pallets in this shipment</label><input id="pkC" type="number" min="1" value="6"></div>
+          <div class="field"><label for="pkW" data-ar="الوزن الإجمالي (كجم)">Total weight (kg)</label><input id="pkW" type="number" min="1" value="1180"></div>
+          <div class="full" style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-o" type="button" id="scanAll" data-ar="مسح الكل (عرض)">Scan all (demo)</button><button class="btn btn-g" type="button" id="label" data-ar="طباعة ملصق الشحن">Print shipping label</button></div>
+        </div>
+      </div>
+      <aside class="panel"><div class="ph"><h2 data-ar="ملصق الشحن">Shipping label</h2></div><div id="lbl" class="muted" data-ar="يظهر الملصق بعد مسح كل الكراتين.">The label appears once every carton is scanned.</div></aside>
+    </div>
+  </section>
 </main>
 </div>
 </div>
@@ -142,7 +158,7 @@ document.querySelectorAll('#legend button').forEach(b=>b.addEventListener('click
 document.getElementById('site').addEventListener('change',e=>{sel=null;document.getElementById('loc').innerHTML=`<div class="empty">${isAr()?'اختر أي موقع على الخريطة لرؤية ما بداخله.':'Pick any location on the map to see what\'s in it.'}</div>`;build(e.target.value);stock()});
 
 /* tabs */
-function tab(t){document.querySelectorAll('.tabs button').forEach(b=>b.setAttribute('aria-selected',b.dataset.t===t));['map','stock','inbound','pick'].forEach(x=>document.getElementById('v-'+x).hidden=x!==t)}
+function tab(t){document.querySelectorAll('.tabs button').forEach(b=>b.setAttribute('aria-selected',b.dataset.t===t));['map','stock','inbound','pick','pack'].forEach(x=>document.getElementById('v-'+x).hidden=x!==t)}
 document.querySelectorAll('.tabs button').forEach(b=>b.addEventListener('click',()=>tab(b.dataset.t)));
 window.goInbound=()=>tab('inbound');
 
@@ -181,9 +197,24 @@ const PK=[['PCK-8812','Al Waha Foods','RUH → DMM, PL-24817',[['B-04-2','Date p
 document.getElementById('picks').innerHTML=PK.map(([id,c,r,lines])=>`<section class="panel pick"><div class="ph"><h2>${id}</h2><span class="pill p-info" data-c="${id}">0 / ${lines.length}</span></div><p class="muted" style="margin:-6px 0 8px">${c} · ${r}</p><ul>${lines.map(l=>`<li><input type="checkbox" aria-label="Picked ${l[1]}"><span><b>${l[0]}</b> ${l[1]} × ${l[2]}</span></li>`).join('')}</ul></section>`).join('');
 document.querySelectorAll('.pick').forEach(p=>p.addEventListener('change',e=>{e.target.closest('li').classList.toggle('done',e.target.checked);const n=p.querySelectorAll('input:checked').length,t=p.querySelectorAll('input').length,pl=p.querySelector('.pill');pl.textContent=`${n} / ${t}`;pl.className='pill '+(n===t?'p-ok':'p-info');if(n===t)toast(isAr()?'اكتملت القائمة، جاهزة للتحميل':'List complete, ready for loading')}));
 
+/* pack station */
+const PL=[['Date paste 1 kg × 12',24,0],['Labneh 500 g × 12',12,0],['Frozen samosa 40 pc',16,0]];
+function packT(){document.getElementById('packT').innerHTML=PL.map((l,i)=>`<tr><td>${l[0]}</td><td class="num">${l[1]}</td><td class="num ${l[2]===l[1]?'up':''}">${l[2]}</td><td><button class="btn btn-o" data-i="${i}" ${l[2]>=l[1]?'disabled':''}>${isAr()?'مسح':'Scan'}</button></td></tr>`).join('');
+  document.querySelectorAll('#packT button').forEach(b=>b.addEventListener('click',()=>{PL[+b.dataset.i][2]++;packT()}));
+  const n=PL.reduce((a,l)=>a+l[2],0),tot=PL.reduce((a,l)=>a+l[1],0);const st=document.getElementById('packSt');st.textContent=`${n} / ${tot}`;st.className='pill '+(n===tot?'p-ok':'p-info')}
+document.getElementById('scanAll').addEventListener('click',()=>{PL.forEach(l=>l[2]=l[1]);packT();toast(isAr()?'تم مسح كل الكراتين':'All cartons scanned')});
+function bars(code){let x=0,o='';for(const ch of code){const v=ch.charCodeAt(0);for(let k=0;k<4;k++){const w=1+((v>>k)&1)*2;if(k%2===0)o+=`<rect x="${x}" y="0" width="${w}" height="46"/>`;x+=w+1}}return `<svg viewBox="0 0 ${x} 46" style="width:100%;height:46px" aria-hidden="true">${o}</svg>`}
+document.getElementById('label').addEventListener('click',()=>{if(PL.some(l=>l[2]<l[1])){toast(isAr()?'امسح كل الكراتين أولاً':'Scan every carton first');return}
+  const c=+document.getElementById('pkC').value||1,w=+document.getElementById('pkW').value||0;
+  document.getElementById('lbl').innerHTML=`<div dir="ltr" style="border:2px solid #18211B;border-radius:6px;padding:12px;color:#18211B;font-size:13px;text-align:left"><div style="display:flex;justify-content:space-between;align-items:center"><img src="assets/top-logo.svg" alt="Prime Logistics" style="width:96px"><b style="font-size:18px">PL-24817</b></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0;border-top:1px solid #18211B;padding-top:8px"><div><small>FROM · من</small><br><b>Prime Logistics, Riyadh</b></div><div><small>TO · إلى</small><br><b>Al Waha DC, Dammam</b><br><span style="font-family:var(--ar)">مركز توزيع الواحة، الدمام</span></div></div>
+  <div style="display:flex;gap:14px;font-weight:600"><span>${c} ${c>1?'pallets':'pallet'}</span><span>${w.toLocaleString('en-US')} kg</span><span>CHILLED 2–8 °C</span></div>${bars('PL24817-AWF')}<div style="text-align:center;letter-spacing:.2em">PL24817-AWF</div></div>
+  <div style="display:flex;gap:8px;margin-top:10px"><button class="btn btn-g" onclick="toast(isAr()?'أُرسل الملصق إلى الطابعة':'Label sent to the printer')">${isAr()?'طباعة':'Print'}</button><a class="btn btn-o" href="transport.html">${isAr()?'تسليم للنقل':'Hand over to transport'}</a></div>`;
+  toast(isAr()?'الشحنة مغلفة وجاهزة للتحميل':'Shipment packed and ready for loading')});
+packT();
 build('RUH'); stock();
-if(location.hash==='#inbound')tab('inbound'); if(location.hash==='#stock'){tab('stock');stock('Al Waha')}
-document.addEventListener('langchange',()=>{render();if(sel)show();stock(document.getElementById('q').value)});
+if(location.hash==='#inbound')tab('inbound'); if(location.hash==='#pack')tab('pack'); if(location.hash==='#stock'){tab('stock');stock('Al Waha')}
+document.addEventListener('langchange',()=>{render();if(sel)show();stock(document.getElementById('q').value);packT()});
 if(isAr()) applyLang('ar');
 </script>
 </body>
