@@ -1,0 +1,525 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fateh Overseas · Visa consultants in Amritsar</title>
+<meta name="description" content="Study, spouse, tourist and work visas for Canada, Australia, the UK, the USA, New Zealand and Europe. Honest assessments from Amritsar since 2019.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:ital,wght@0,400..900;1,400..700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<!--
+  Component patterns found through the UI MCP servers and rebuilt in plain HTML/CSS/JS (no React on this site):
+  logo strip ........ Magic UI "marquee"
+  counters .......... Magic UI "number-ticker"
+  reviews ........... Spectrum UI "animated-testimonials"
+  FAQ ............... shadcn/ui "accordion"
+-->
+<style>
+:root{
+  --navy:#00293B; --navy-2:#0B3B52; --red:#BF1E2D; --red-d:#9E1724; --mist:#EBF0F2; --mist-2:#DCE4E8;
+  --ink:#0E1B22; --muted:#56656D; --white:#fff; --ok:#1F7A4A;
+  --f:"Schibsted Grotesk", system-ui, sans-serif; --mono:"JetBrains Mono", ui-monospace, monospace;
+  --wrap:1200px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;font:400 16.5px/1.6 var(--f);color:var(--ink);background:#fff;overflow-x:hidden}
+img{display:block;max-width:100%}
+a{color:inherit}
+button,input,select,textarea{font:inherit;color:inherit}
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 28px}
+:focus-visible{outline:2.5px solid var(--red);outline-offset:3px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.demo{background:var(--navy);color:#B9CBD3;font-size:13px;text-align:center;padding:7px 16px}
+.demo b{color:#fff;font-weight:600}
+
+/* nav */
+.nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.94);backdrop-filter:blur(10px);border-bottom:1px solid var(--mist-2)}
+.nav .wrap{display:flex;align-items:center;gap:26px;height:72px}
+.nav .logo img{height:40px;width:auto}
+.nav ul{display:flex;gap:24px;list-style:none;margin:0 0 0 auto;padding:0}
+.nav ul a{text-decoration:none;font-weight:500;font-size:15px;color:#24363F}
+.nav ul a:hover{color:var(--red)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;border:0;border-radius:10px;padding:13px 20px;font-weight:650;font-size:15.5px;cursor:pointer;text-decoration:none;transition:background .15s,transform .1s}
+.btn:active{transform:translateY(1px)}
+.btn-red{background:var(--red);color:#fff}.btn-red:hover{background:var(--red-d)}
+.btn-navy{background:var(--navy);color:#fff}.btn-navy:hover{background:var(--navy-2)}
+.btn-line{background:#fff;color:var(--navy);box-shadow:inset 0 0 0 1.5px var(--navy)}.btn-line:hover{background:var(--mist)}
+.btn-wa{background:#1FA855;color:#fff}.btn-wa:hover{background:#178A45}
+.btn svg{width:18px;height:18px}
+.nav .btn{padding:10px 16px;font-size:14.5px}
+.burger{display:none;margin-left:auto;width:44px;height:44px;border-radius:10px;border:1px solid var(--mist-2);background:#fff;cursor:pointer}
+.burger span{display:block;width:18px;height:2px;background:var(--navy);margin:4px auto;border-radius:2px}
+
+/* hero */
+.hero{background:linear-gradient(180deg,var(--mist) 0%,#fff 100%);padding:56px 0 70px;position:relative;overflow:hidden}
+.hero .wrap{display:grid;grid-template-columns:1fr 520px;gap:56px;align-items:center}
+.hero h1{font:800 clamp(38px,5.2vw,64px)/1.03 var(--f);letter-spacing:-.03em;color:var(--navy);margin:0}
+.hero .lede{font-size:19px;color:#33454E;max-width:500px;margin:22px 0 28px}
+.hero .ctas{display:flex;gap:10px;flex-wrap:wrap}
+.trust{display:grid;grid-template-columns:repeat(2,minmax(0,250px));justify-content:start;gap:18px 34px;margin-top:34px;padding-top:22px;border-top:1px solid var(--mist-2)}
+.trust div b{display:block;font:800 30px/1 var(--f);color:var(--navy);letter-spacing:-.02em}
+.trust div span{font-size:14px;color:var(--muted)}
+
+/* boarding pass file builder (the signature element) */
+.pass{background:#fff;border-radius:20px;box-shadow:0 30px 70px -30px rgba(0,41,59,.45),0 0 0 1px rgba(0,41,59,.06);overflow:hidden;position:relative}
+.pass-top{background:var(--navy);color:#fff;padding:18px 22px 20px;position:relative}
+.pass-top .row{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:#9FB6C1}
+.pass-top .row img{height:22px;width:auto;opacity:.95}
+.route{display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;margin-top:14px}
+.route .code{font:700 40px/1 var(--mono);letter-spacing:.02em}
+.route .city{display:block;font:400 12.5px var(--f);color:#9FB6C1;margin-top:4px;letter-spacing:0}
+.route .line{position:relative;height:2px;background:repeating-linear-gradient(90deg,#4F7384 0 6px,transparent 6px 11px)}
+.route .line svg{position:absolute;left:50%;top:50%;width:26px;height:26px;transform:translate(-50%,-50%);fill:#fff;transition:left .9s cubic-bezier(.6,0,.2,1)}
+.route .to{text-align:right}
+.pass-body{padding:18px 22px 22px}
+.pick{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.pick label{display:block;font-size:12.5px;font-weight:600;color:var(--muted);margin-bottom:5px}
+.pick select{width:100%;border:1.5px solid var(--mist-2);border-radius:10px;padding:10px 11px;background:#fff;font-weight:600;color:var(--navy);cursor:pointer}
+.pick select:focus{border-color:var(--navy);outline:0}
+.perf{position:relative;height:24px;margin:16px -22px 12px}
+.perf:before,.perf:after{content:"";position:absolute;top:0;width:24px;height:24px;border-radius:50%;background:var(--mist)}
+.perf:before{left:-12px}.perf:after{right:-12px}
+.perf i{position:absolute;left:18px;right:18px;top:11px;border-top:2px dashed var(--mist-2)}
+.file h3{display:flex;justify-content:space-between;align-items:baseline;margin:0 0 8px;font:700 15.5px var(--f);color:var(--navy)}
+.file h3 small{font:500 12.5px var(--f);color:var(--muted)}
+.docs{list-style:none;margin:0;padding:0;max-height:212px;overflow:auto}
+.docs li{display:grid;grid-template-columns:22px 1fr;gap:10px;align-items:start;padding:7px 0;border-bottom:1px solid #F0F3F5;font-size:14.5px;animation:docIn .35s ease both}
+.docs li:last-child{border-bottom:0}
+@keyframes docIn{from{opacity:0;transform:translateY(6px)}}
+.docs input{appearance:none;width:20px;height:20px;border-radius:6px;border:1.5px solid #9DB1BB;margin:2px 0 0;cursor:pointer;display:grid;place-items:center;background:#fff}
+.docs input:checked{background:var(--ok);border-color:var(--ok)}
+.docs input:checked:after{content:"";width:9px;height:5px;border:2px solid #fff;border-top:0;border-right:0;transform:rotate(-45deg) translate(1px,-1px)}
+.docs small{display:block;color:var(--muted);font-size:12.5px}
+.note{font-size:12.5px;color:var(--muted);margin:10px 0 14px}
+.meter{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--muted);margin-bottom:14px}
+.meter .bar{flex:1;height:7px;border-radius:4px;background:var(--mist);overflow:hidden}
+.meter .bar i{display:block;height:100%;width:0;background:var(--ok);transition:width .3s}
+.pass .btn{width:100%}
+
+/* logos marquee (Magic UI marquee pattern) */
+.unis{padding:34px 0;border-bottom:1px solid var(--mist-2)}
+.unis p{text-align:center;margin:0 0 18px;color:var(--muted);font-size:14.5px}
+.unis p b{color:var(--navy)}
+.marquee{--gap:56px;--duration:36s;display:flex;gap:var(--gap);overflow:hidden;mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent)}
+.marquee .track{display:flex;flex-shrink:0;gap:var(--gap);align-items:center;animation:mq var(--duration) linear infinite}
+.marquee:hover .track{animation-play-state:paused}
+.marquee img{height:46px;width:auto;filter:grayscale(1);opacity:.75;transition:filter .2s,opacity .2s}
+.marquee img:hover{filter:none;opacity:1}
+@keyframes mq{to{transform:translateX(calc(-100% - var(--gap)))}}
+
+/* sections */
+section{padding:92px 0;scroll-margin-top:72px}
+h2{font:800 clamp(30px,3.8vw,46px)/1.08 var(--f);letter-spacing:-.025em;color:var(--navy);margin:0}
+.sh{display:flex;justify-content:space-between;align-items:flex-end;gap:30px;margin-bottom:38px}
+.sh p{max-width:430px;margin:0;color:var(--muted);font-size:17px}
+
+/* destinations as departures */
+.routes{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.dest{position:relative;border-radius:16px;overflow:hidden;min-height:300px;display:flex;flex-direction:column;justify-content:flex-end;color:#fff;text-decoration:none;cursor:pointer;border:0;padding:0;text-align:left;background:var(--navy)}
+.dest img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .6s ease}
+.dest:hover img{transform:scale(1.05)}
+.dest:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,41,59,0) 35%,rgba(0,41,59,.92))}
+.dest .in{position:relative;z-index:1;padding:20px}
+.dest .code{font:700 13px var(--mono);letter-spacing:.06em;background:rgba(255,255,255,.16);backdrop-filter:blur(6px);padding:5px 9px;border-radius:6px;display:inline-block}
+.dest b{display:block;font:800 26px/1.1 var(--f);margin:10px 0 4px;letter-spacing:-.01em}
+.dest span.v{font-size:14px;color:#CFE0E7}
+.dest .go{display:inline-block;margin-top:12px;font-size:14px;font-weight:650;border-bottom:1.5px solid rgba(255,255,255,.5)}
+
+/* services */
+.svc{display:grid;grid-template-columns:1.2fr 1fr 1fr;grid-template-rows:auto auto;gap:16px}
+.card{background:var(--mist);border-radius:16px;padding:24px;display:flex;flex-direction:column}
+.card.big{grid-row:span 2;background:var(--navy);color:#fff;padding:0;overflow:hidden}
+.card.big img{height:260px;width:100%;object-fit:cover}
+.card.big .in{padding:24px}
+.card h3{font:750 21px/1.2 var(--f);margin:0 0 8px;color:inherit}
+.card p{margin:0 0 14px;color:var(--muted);font-size:15.5px}
+.card.big p{color:#BFD0D7}
+.card a{margin-top:auto;font-weight:650;color:var(--red);text-decoration:none}
+.card.big a{color:#fff}
+.card a:hover{text-decoration:underline}
+.extras{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:16px}
+.extra{border:1.5px solid var(--mist-2);border-radius:14px;padding:18px 20px}
+.extra b{display:block;color:var(--navy);margin-bottom:4px}
+.extra span{color:var(--muted);font-size:15px}
+
+/* founder + journey */
+.about{background:var(--navy);color:#DCE7EC}
+.about .wrap{display:grid;grid-template-columns:380px 1fr;gap:60px;align-items:start}
+.about h2{color:#fff}
+.founder{position:relative;border-radius:18px;overflow:hidden;background:linear-gradient(180deg,#0E4A66,#012C40)}
+.founder img{width:100%;height:auto}
+.founder figcaption{position:absolute;left:0;right:0;bottom:0;padding:16px 18px;background:linear-gradient(180deg,transparent,rgba(0,20,30,.9))}
+.founder b{display:block;color:#fff;font-size:18px}
+.founder span{color:#9FB6C1;font-size:14px}
+blockquote{margin:22px 0 28px;font:500 22px/1.45 var(--f);color:#fff;border-left:3px solid var(--red);padding-left:20px;max-width:620px}
+.years{list-style:none;margin:0;padding:0;position:relative}
+.years:before{content:"";position:absolute;left:46px;top:6px;bottom:6px;width:2px;background:#1E5470}
+.years li{display:grid;grid-template-columns:92px 1fr;gap:14px;padding:9px 0;position:relative;align-items:baseline}
+.years li:before{content:"";position:absolute;left:41px;top:17px;width:12px;height:12px;border-radius:50%;background:var(--navy);border:2px solid #4F8AA6}
+.years li.now:before{background:var(--red);border-color:var(--red)}
+.years time{font:700 15px var(--mono);color:#fff;text-align:left;padding-left:0;background:var(--navy);position:relative;z-index:1;width:40px}
+.years span{color:#C3D3DA}
+
+/* testimonials (Spectrum UI animated-testimonials pattern) */
+.tst{display:grid;grid-template-columns:360px 1fr;gap:64px;align-items:center}
+.stack{position:relative;height:330px}
+.stack .c{position:absolute;inset:0;border-radius:18px;background:var(--mist);display:grid;place-items:center;transition:transform .55s cubic-bezier(.2,.8,.2,1),opacity .4s,z-index 0s .2s}
+.stack .c i{font:800 92px/1 var(--f);font-style:normal;color:var(--navy);opacity:.9}
+.stack .c:nth-child(1){background:var(--navy)}.stack .c:nth-child(1) i{color:#fff}
+.stack .c:nth-child(2){background:var(--red)}.stack .c:nth-child(2) i{color:#fff}
+.stack .c:nth-child(4){background:var(--mist-2)}
+.stack .c em{position:absolute;left:18px;bottom:16px;font:700 12.5px var(--mono);letter-spacing:.05em;font-style:normal;background:#fff;color:var(--navy);padding:5px 9px;border-radius:6px}
+.quote .stars{color:#E3A008;letter-spacing:2px;font-size:18px}
+.quote p{font:500 21px/1.55 var(--f);color:var(--ink);margin:14px 0 18px;min-height:150px}
+.quote b{display:block;color:var(--navy);font-size:18px}
+.quote span{color:var(--muted)}
+.qnav{display:flex;gap:10px;margin-top:22px;align-items:center}
+.qnav button{width:46px;height:46px;border-radius:50%;border:1.5px solid var(--mist-2);background:#fff;cursor:pointer;display:grid;place-items:center}
+.qnav button:hover{border-color:var(--navy)}
+.qnav svg{width:18px;height:18px;stroke:var(--navy);fill:none;stroke-width:2}
+.qnav small{color:var(--muted);margin-left:8px}
+.quote p.disclaimer{font:400 13.5px/1.5 var(--f);color:var(--muted);margin:26px 0 0;max-width:640px;min-height:0}
+
+/* FAQ (shadcn accordion pattern) */
+.faq{display:grid;grid-template-columns:.8fr 1.2fr;gap:56px}
+.acc{border-top:1px solid var(--mist-2)}
+.acc details{border-bottom:1px solid var(--mist-2)}
+.acc summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:19px 2px;font-weight:650;font-size:17px;color:var(--navy)}
+.acc summary::-webkit-details-marker{display:none}
+.acc summary:after{content:"";width:9px;height:9px;border-right:2px solid var(--navy);border-bottom:2px solid var(--navy);transform:rotate(45deg) translateY(-3px);transition:transform .25s;flex:none}
+.acc details[open] summary:after{transform:rotate(-135deg) translateY(-1px)}
+.acc .a{overflow:hidden;color:#3B4D56;font-size:16px}
+.acc .a p{margin:0 0 20px;padding-right:30px}
+
+/* contact */
+.contact{background:var(--mist)}
+.contact .wrap{display:grid;grid-template-columns:1fr 1.05fr;gap:48px;align-items:start}
+.office{background:#fff;border-radius:16px;padding:22px 24px;margin-top:24px}
+.office b{color:var(--navy);font-size:17px}
+.office p{margin:6px 0 14px;color:#3B4D56}
+.office .r{display:flex;gap:8px;flex-wrap:wrap}
+.form{background:#fff;border-radius:18px;padding:26px;box-shadow:0 30px 60px -40px rgba(0,41,59,.4)}
+.fg{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.f{display:flex;flex-direction:column;gap:6px}
+.f.full{grid-column:1/-1}
+.f label{font-size:13.5px;font-weight:600;color:#33454E}
+.f input,.f select,.f textarea{border:1.5px solid var(--mist-2);border-radius:10px;padding:11px 12px;background:#fff;outline:0}
+.f input:focus,.f select:focus,.f textarea:focus{border-color:var(--navy)}
+.err{font-size:12.5px;color:var(--red);min-height:0}
+.sent{display:none}
+.sent.on{display:block}
+.sent h3{font:800 26px var(--f);color:var(--navy);margin:6px 0}
+.sent pre{white-space:pre-wrap;background:var(--mist);border-radius:10px;padding:14px;font:500 13.5px/1.5 var(--mono);margin:12px 0 16px}
+
+footer{background:var(--navy);color:#9FB6C1;padding:56px 0 26px;font-size:15px}
+footer .wrap{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:36px}
+footer img{height:40px;width:auto;margin-bottom:14px}
+footer h4{color:#fff;margin:4px 0 12px;font-size:15px}
+footer a{text-decoration:none;display:block;margin:0 0 7px}
+footer a:hover{color:#fff}
+.legal{grid-column:1/-1;border-top:1px solid #12465E;padding-top:18px;margin-top:10px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:13px}
+.wa-f{position:fixed;right:18px;bottom:18px;z-index:60;width:56px;height:56px;border-radius:50%;background:#1FA855;display:grid;place-items:center;box-shadow:0 12px 26px -8px rgba(0,0,0,.4)}
+.wa-f svg{width:28px;height:28px;fill:#fff}
+
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+@media (max-width:1080px){.hero .wrap{grid-template-columns:1fr 460px;gap:36px}.svc{grid-template-columns:1fr 1fr}.card.big{grid-row:auto;grid-column:1/-1}.card.big{display:grid;grid-template-columns:1fr 1fr}.card.big img{height:100%}}
+
+@media (max-width:900px){
+  .nav ul,.nav .btn{display:none}.burger{display:block}
+  .nav.open ul{display:flex;flex-direction:column;position:absolute;top:72px;left:0;right:0;background:#fff;padding:12px 24px 18px;gap:4px;border-bottom:1px solid var(--mist-2)}
+  .nav.open ul a{display:block;padding:11px 0;font-size:17px}
+  .hero .wrap,.about .wrap,.tst,.faq,.contact .wrap{grid-template-columns:1fr}
+  .hero{padding-top:34px}
+  .routes{grid-template-columns:1fr 1fr}
+  .sh{flex-direction:column;align-items:flex-start;gap:12px}
+  .founder{max-width:380px}
+  .extras{grid-template-columns:1fr}
+  footer .wrap{grid-template-columns:1fr 1fr}
+  footer .wrap>div:first-child{grid-column:1/-1}
+}
+@media (max-width:600px){
+  .wrap{padding:0 18px}
+  section{padding:70px 0}
+  .hero h1{font-size:clamp(34px,10.5vw,46px)}
+  .route .code{font-size:30px}
+  .pick{grid-template-columns:1fr}
+  .routes{grid-template-columns:1fr}
+  .dest{min-height:230px}
+  .svc{grid-template-columns:1fr}
+  .card.big{display:flex}.card.big img{height:200px}
+  .stack{height:240px}
+  .quote p{font-size:18px;min-height:0}
+  .fg{grid-template-columns:1fr}
+  .form{padding:20px}
+  .trust{grid-template-columns:1fr 1fr;gap:14px 18px}
+}
+</style>
+</head>
+<body>
+<div class="demo"><b>Demo website</b> prepared for Fateh Overseas Visa Consultants by SSLC STARTUP</div>
+
+<header class="nav" id="nav"><div class="wrap">
+  <a class="logo" href="#top" aria-label="Fateh Overseas home"><img src="assets/logo.png" alt="Fateh Overseas" width="392" height="88"></a>
+  <ul>
+    <li><a href="#destinations">Countries</a></li>
+    <li><a href="#services">Visas</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#stories">Success stories</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a class="btn btn-red" href="#top">Free assessment</a>
+  <button class="burger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+</div></header>
+
+<main id="top">
+<section class="hero" style="scroll-margin-top:0">
+  <div class="wrap">
+    <div>
+      <h1>Tell us where you want to go. We'll tell you honestly what it takes.</h1>
+      <p class="lede">Study, spouse, tourist and work visas for Canada, Australia, the UK, the USA, New Zealand and Europe, planned from our office in Amritsar.</p>
+      <div class="ctas"><a class="btn btn-navy" href="#contact">Book a free assessment</a><a class="btn btn-line" href="tel:+919563695636">Call +91 95636 95636</a></div>
+      <div class="trust" aria-label="Fateh Overseas in numbers">
+        <div><b data-to="2019" data-plain="1">2019</b><span>guiding clients since</span></div>
+        <div><b data-to="5000" data-suf="+">5,000+</b><span>clients guided by 2025</span></div>
+        <div><b data-to="250" data-suf="+">250+</b><span>universities in reach</span></div>
+        <div><b data-to="2">2</b><span>offices, Amritsar and Mukerian</span></div>
+      </div>
+    </div>
+
+    <div class="pass" aria-label="Build your visa file">
+      <div class="pass-top">
+        <div class="row"><img src="assets/logo-white.png" alt="Fateh Overseas" width="726" height="162"><span>Your visa file</span></div>
+        <div class="route">
+          <div><span class="code">ATQ</span><span class="city">Amritsar</span></div>
+          <div class="line" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5z" transform="rotate(90 12 12)"/></svg></div>
+          <div class="to"><span class="code" id="toCode">YYZ</span><span class="city" id="toCity">Toronto, Canada</span></div>
+        </div>
+      </div>
+      <div class="pass-body">
+        <div class="pick">
+          <div><label for="pc">Country</label><select id="pc"><option value="ca">Canada</option><option value="au">Australia</option><option value="uk">United Kingdom</option><option value="us">USA</option><option value="nz">New Zealand</option><option value="eu">Europe</option></select></div>
+          <div><label for="pv">Visa</label><select id="pv"><option value="study">Study visa</option><option value="spouse">Spouse visa</option><option value="tourist">Tourist visa</option><option value="work">Work visa</option></select></div>
+        </div>
+        <div class="perf" aria-hidden="true"><i></i></div>
+        <div class="file">
+          <h3><span id="fileT">Documents you'll usually need</span><small id="fileN"></small></h3>
+          <ul class="docs" id="docs"></ul>
+          <p class="note">Tick what you already have. Rules change often, so your counsellor confirms the current list for your case.</p>
+          <div class="meter"><div class="bar"><i id="meter"></i></div><span id="meterT">0 ready</span></div>
+          <a class="btn btn-wa" id="sendFile" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm4.5 12.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.1 5.1 0 0 0 1.1 2.7 11.6 11.6 0 0 0 4.5 4c1.7.7 2.3.8 3.1.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3Z"/></svg>Send my file to a counsellor</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="unis" aria-label="Universities">
+  <p>Get in touch with <b>250+ universities</b>, including</p>
+  <div class="marquee" id="mq"></div>
+</div>
+
+<section id="destinations">
+  <div class="wrap">
+    <div class="sh"><h2>Departures from Amritsar</h2><p>Pick a country to load its document list into your visa file above.</p></div>
+    <div class="routes" id="routes"></div>
+  </div>
+</section>
+
+<section id="services" style="padding-top:0">
+  <div class="wrap">
+    <div class="sh"><h2>One team for every visa you need</h2><p>We look at your profile, goals and finances first, then plan a clear pathway. No shortcuts and no false promises.</p></div>
+    <div class="svc">
+      <article class="card big"><img src="assets/svc-study.jpg" alt="Students on campus" loading="lazy"><div class="in"><h3>Study visa</h3><p>Course and university selection, offer letter, funds, SOP and LORs, and the full visa file.</p><a href="#top" data-v="study">Build a study visa file</a></div></article>
+      <article class="card"><h3>Spouse visa</h3><p>Join your partner abroad, with careful relationship and financial documentation.</p><a href="#top" data-v="spouse">Build a spouse visa file</a></article>
+      <article class="card"><h3>Tourist visa</h3><p>Visit family or travel, with a complete itinerary and a strong, well-documented file.</p><a href="#top" data-v="tourist">Build a tourist visa file</a></article>
+      <article class="card"><h3>Work visa</h3><p>Work and PR pathways explained clearly, with eligibility checks before you apply.</p><a href="#top" data-v="work">Build a work visa file</a></article>
+      <article class="card"><h3>Not sure which visa fits?</h3><p>Tell us your plans and a counsellor will suggest the right route.</p><a href="#contact">Ask a counsellor</a></article>
+    </div>
+    <div class="extras">
+      <div class="extra"><b>Profile assessment</b><span>An honest review of your eligibility before you spend a rupee on fees.</span></div>
+      <div class="extra"><b>SOP, LOR and documentation</b><span>Statement of purpose, recommendation letters and a complete, consistent file.</span></div>
+      <div class="extra"><b>Post-landing guidance</b><span>Support after your visa too, so you settle in with confidence.</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="about" id="about">
+  <div class="wrap">
+    <figure class="founder" style="margin:0"><img src="assets/founder.png" alt="Harinderbir Singh, Founder and CEO of Fateh Overseas" width="420" height="485" loading="lazy"><figcaption><b>Harinderbir Singh</b><span>Founder and CEO</span></figcaption></figure>
+    <div>
+      <h2>Honest assessments. Realistic timelines.</h2>
+      <blockquote>"We focus on transparency, realistic assessments and long-term success, rather than shortcuts or false promises."</blockquote>
+      <ol class="years">
+        <li><time>2019</time><span>First office opens in Amritsar</span></li>
+        <li><time>2020</time><span>500+ successful applications</span></li>
+        <li><time>2021</time><span>Profile assessment, SOP/LOR and post-landing services added</span></li>
+        <li><time>2022</time><span>Partnerships with universities and colleges</span></li>
+        <li><time>2023</time><span>Virtual counselling and online documentation</span></li>
+        <li><time>2024</time><span>Team expansion and the Mukerian office</span></li>
+        <li class="now"><time>2025</time><span>5,000+ clients guided worldwide</span></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<section id="stories">
+  <div class="wrap tst">
+    <div class="stack" id="stack" aria-hidden="true"></div>
+    <div class="quote" aria-live="polite">
+      <h2 style="margin-bottom:18px">In our clients' words</h2>
+      <div class="stars" aria-label="5 out of 5">★★★★★</div>
+      <p id="qText"></p>
+      <b id="qName"></b><span id="qVisa"></span>
+      <div class="qnav"><button type="button" id="prev" aria-label="Previous review"><svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg></button><button type="button" id="next" aria-label="Next review"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></button><small id="qCount"></small></div>
+      <p class="disclaimer">Reviews shared by Fateh Overseas clients. Every application is assessed individually; past results don't guarantee a visa decision.</p>
+    </div>
+  </div>
+</section>
+
+<section id="faq" style="padding-top:0">
+  <div class="wrap faq">
+    <div><h2>Common questions</h2><p style="color:var(--muted);margin-top:14px">Something else on your mind? <a href="#contact" style="color:var(--red);font-weight:650">Ask us</a></p></div>
+    <div class="acc" id="acc">
+      <details><summary>What migration services do you provide?</summary><div class="a"><p>Study, spouse, tourist and work visas, plus permanent residency guidance, with end-to-end support tailored to your goals.</p></div></details>
+      <details><summary>Which countries do you specialise in?</summary><div class="a"><p>Australia, Canada, the UK, the USA, New Zealand and Europe.</p></div></details>
+      <details><summary>How do you improve my chances?</summary><div class="a"><p>By checking eligibility honestly up front, keeping documentation accurate and following current immigration rules for your country and visa type.</p></div></details>
+      <details><summary>Do you help with documentation and applications?</summary><div class="a"><p>Yes: documentation review, SOP and LOR assistance, application preparation and submission support.</p></div></details>
+      <details><summary>How transparent are your fees and timelines?</summary><div class="a"><p>We share a clear fee structure and a realistic timeline before you start, with no hidden charges.</p></div></details>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="wrap">
+    <div>
+      <h2>Visit our Amritsar office</h2>
+      <p style="color:#3B4D56;font-size:17px;max-width:460px">Walk in for a conversation, or call ahead to book a time with a counsellor.</p>
+      <div class="office"><b>Amritsar, head office</b><p>SCO-24, 4th Floor, District Shopping Complex, Ranjit Avenue, B-Block, Amritsar 143001, Punjab</p>
+        <div class="r"><a class="btn btn-navy" href="https://www.google.com/maps/search/?api=1&query=SCO-24+District+Shopping+Complex+Ranjit+Avenue+Amritsar" target="_blank" rel="noopener">Get directions</a><a class="btn btn-line" href="tel:+919563695636">+91 95636 95636</a></div></div>
+      <div class="office"><b>Mukerian branch</b><p>Opened in 2024 to bring country specialists closer to Doaba families. Call the head office for branch timings.</p></div>
+    </div>
+    <div class="form">
+      <form id="af" novalidate>
+        <h3 style="margin:0 0 4px;font:800 24px var(--f);color:var(--navy)">Free assessment</h3>
+        <p style="color:var(--muted);margin:0 0 18px">A counsellor reviews your profile and explains your realistic options.</p>
+        <div class="fg">
+          <div class="f"><label for="n">Full name</label><input id="n" autocomplete="name" required><span class="err" id="en"></span></div>
+          <div class="f"><label for="m">Mobile / WhatsApp</label><input id="m" inputmode="tel" autocomplete="tel" required><span class="err" id="em"></span></div>
+          <div class="f"><label for="c">Country</label><select id="c"><option>Canada</option><option>Australia</option><option>United Kingdom</option><option>USA</option><option>New Zealand</option><option>Europe</option><option>Not sure yet</option></select></div>
+          <div class="f"><label for="v">Visa type</label><select id="v"><option>Study visa</option><option>Spouse visa</option><option>Tourist visa</option><option>Work visa</option></select></div>
+          <div class="f"><label for="q">Highest qualification</label><input id="q" placeholder="e.g. 12th, B.Com"></div>
+          <div class="f"><label for="s">IELTS / PTE score (if any)</label><input id="s" placeholder="e.g. 6.5 overall"></div>
+          <div class="f full"><label for="x">Anything else? (optional)</label><textarea id="x" rows="3"></textarea></div>
+        </div>
+        <button class="btn btn-red" type="submit" style="width:100%;margin-top:16px">Get my free assessment</button>
+        <p style="font-size:13px;color:var(--muted);margin:10px 0 0">You'll send your details on WhatsApp in the next step. Nothing is sent automatically.</p>
+      </form>
+      <div class="sent" id="sent" aria-live="polite">
+        <span style="color:var(--red);font-weight:650;font-size:14px">Not sent yet</span>
+        <h3>One more tap</h3>
+        <p style="color:#3B4D56;margin:0">Your details are ready. Press the button to send them to our counsellors on WhatsApp.</p>
+        <pre id="pv2"></pre>
+        <div style="display:flex;gap:10px;flex-wrap:wrap"><a class="btn btn-wa" id="sendWa" href="#" target="_blank" rel="noopener">Send on WhatsApp</a><button class="btn btn-line" type="button" id="edit">Edit details</button></div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div><img src="assets/logo-white.png" alt="Fateh Overseas" width="726" height="162"><p style="margin:0;max-width:340px">The right guidance changes everything. Study, spouse, tourist and work visas from Amritsar and Mukerian.</p></div>
+    <div><h4>Visas</h4><a href="#services">Study visa</a><a href="#services">Spouse visa</a><a href="#services">Tourist visa</a><a href="#services">Work visa</a></div>
+    <div><h4>Contact</h4><a href="tel:+919563695636">+91 95636 95636</a><a href="mailto:info@fatehoverseas.in">info@fatehoverseas.in</a><a href="#contact">Free assessment</a></div>
+    <div class="legal"><span>© Fateh Overseas Visa Consultants</span><span>Design concept by SSLC STARTUP</span></div>
+  </div>
+</footer>
+<a class="wa-f" href="https://wa.me/919563695636" target="_blank" rel="noopener" aria-label="WhatsApp Fateh Overseas"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm4.5 12.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.1 5.1 0 0 0 1.1 2.7 11.6 11.6 0 0 0 4.5 4c1.7.7 2.3.8 3.1.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3Z"/></svg></a>
+
+<script>
+const WA='919563695636', $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* nav */
+const nav=$('#nav'),bg=$('.burger');
+bg.addEventListener('click',()=>{const o=nav.classList.toggle('open');bg.setAttribute('aria-expanded',o)});
+$$('.nav ul a').forEach(a=>a.addEventListener('click',()=>{nav.classList.remove('open');bg.setAttribute('aria-expanded',false)}));
+
+/* visa file builder */
+const C={ca:['YYZ','Toronto, Canada','Canada','assets/dest-canada.jpg'],au:['MEL','Melbourne, Australia','Australia','assets/dest-australia.jpg'],uk:['LHR','London, UK','United Kingdom','assets/dest-uk.jpg'],us:['JFK','New York, USA','USA','assets/dest-usa.jpg'],nz:['AKL','Auckland, New Zealand','New Zealand','assets/dest-newzealand.jpg'],eu:['FRA','Frankfurt, Europe','Europe','assets/dest-europe.jpg']};
+const BASE={
+  study:[['Valid passport','At least 6 months beyond your stay'],['Academic transcripts and certificates','10th, 12th and degree, if any'],['IELTS / PTE score','Band depends on course and country'],['Offer letter from the college or university',''],['Proof of funds','Bank statements or an education loan letter'],['Statement of purpose (SOP)','We help you write it'],['Letters of recommendation (LOR)','']],
+  spouse:[['Valid passports for both partners',''],['Marriage certificate',''],['Proof of a genuine relationship','Wedding photos, chats, joint documents'],['Your partner\'s status abroad','Study permit, work permit or PR'],['Financial documents','Income and bank statements'],['Police clearance certificate','']],
+  tourist:[['Valid passport',''],['Travel plan or itinerary',''],['Bank statements','Usually the last 6 months'],['Income proof','ITRs, salary slips or business proof'],['Invitation letter','If you are visiting family'],['Ties to India','Job, business or property documents']],
+  work:[['Valid passport',''],['Job offer or employer sponsorship','Depends on the country\'s work route'],['Experience letters',''],['Qualifications',''],['Language test score','IELTS, PTE or as required'],['Police clearance certificate','']]};
+const EXTRA={
+  'ca-study':[['Provincial attestation letter (PAL)','Required for most study permits'],['GIC','Proof of living funds']],
+  'au-study':[['Genuine Student statement',''],['OSHC health cover','']],
+  'uk-study':[['CAS from your university',''],['TB test certificate','Required for applicants from India']],
+  'us-study':[['Form I-20 and SEVIS fee receipt',''],['DS-160 and visa interview booking','']],
+  'nz-study':[['Offer of place and tuition receipt','']],
+  'eu-study':[['APS certificate','Needed for Germany'],['Blocked account or funds proof','Varies by country']]};
+const docsEl=$('#docs');
+function build(){
+  const c=$('#pc').value,v=$('#pv').value,[code,city]=C[c];
+  $('#toCode').textContent=code;$('#toCity').textContent=city;
+  const plane=$('.route .line svg');plane.style.left='12%';requestAnimationFrame(()=>setTimeout(()=>plane.style.left='88%',30));
+  const list=BASE[v].concat(EXTRA[c+'-'+v]||[]);
+  docsEl.innerHTML=list.map(([d,n],i)=>`<li style="animation-delay:${i*45}ms"><input type="checkbox" id="d${i}" aria-label="${d}"><label for="d${i}">${d}${n?`<small>${n}</small>`:''}</label></li>`).join('');
+  $('#fileN').textContent=list.length+' items';
+  $$('#docs input').forEach(x=>x.addEventListener('change',meter));meter();
+}
+function meter(){const all=$$('#docs input'),n=all.filter(x=>x.checked).length;$('#meter').style.width=(n/all.length*100)+'%';$('#meterT').textContent=`${n} of ${all.length} ready`;
+  const c=C[$('#pc').value][2],v=$('#pv').selectedOptions[0].text,have=all.filter(x=>x.checked).map(x=>'- '+x.getAttribute('aria-label')),miss=all.filter(x=>!x.checked).map(x=>'- '+x.getAttribute('aria-label'));
+  $('#sendFile').href='https://wa.me/'+WA+'?text='+encodeURIComponent(`Hello Fateh Overseas, I want a ${v} for ${c}.\n\nDocuments I have:\n${have.join('\n')||'- none yet'}\n\nStill need help with:\n${miss.join('\n')||'- nothing'}\n\nName:`)}
+$('#pc').addEventListener('change',build);$('#pv').addEventListener('change',build);
+build();
+
+/* number ticker (Magic UI pattern) */
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;io.unobserve(e.target);const el=e.target,to=+el.dataset.to,suf=el.dataset.suf||'',plain=el.dataset.plain;
+  if(reduce)return;const from=plain?to-6:0,t0=performance.now(),d=1300;
+  const f=t=>{const p=Math.min(1,(t-t0)/d),v=Math.round(from+(to-from)*(1-Math.pow(1-p,3)));el.textContent=(plain?v:v.toLocaleString('en-IN'))+suf;if(p<1)requestAnimationFrame(f)};requestAnimationFrame(f)}),{threshold:.6});
+$$('.trust b').forEach(b=>io.observe(b));
+
+/* university marquee (Magic UI pattern) */
+const U=['abertay-university','bisshops-university','brunel-university','chester-university','city-university-london','cleveland-state-university'];
+const track=`<div class="track">${U.map(u=>`<img src="assets/uni-${u}.png" alt="${u.replace(/-/g,' ')}" height="46">`).join('')}</div>`;
+$('#mq').innerHTML=track+track.replace('<div class="track">','<div class="track" aria-hidden="true">');
+
+/* departures */
+$('#routes').innerHTML=Object.entries(C).map(([k,[code,city,name,img]])=>`<button type="button" class="dest" data-c="${k}"><img src="${img}" alt="" loading="lazy"><span class="in"><span class="code">ATQ → ${code}</span><b>${name}</b><span class="v">Study · Spouse · Tourist · Work</span><span class="go">Load documents for ${name}</span></span></button>`).join('');
+$$('.dest').forEach(b=>b.addEventListener('click',()=>{$('#pc').value=b.dataset.c;build();$('.pass').scrollIntoView({behavior:reduce?'auto':'smooth',block:'center'})}));
+$$('.card a[data-v]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();$('#pv').value=a.dataset.v;build();$('.pass').scrollIntoView({behavior:reduce?'auto':'smooth',block:'center'})}));
+
+/* reviews (Spectrum UI animated-testimonials pattern) */
+const R=[['Manpreet Kaur','Australia study visa','AU','Today, I am overjoyed to share that I have received my Australia study visa. From helping me choose the right course and university to preparing my documents and guiding me through the visa process, their team made everything smooth and stress-free.'],
+ ['Sukhdeep Singh','UK study visa','UK','I am truly grateful to Fateh Overseas for their excellent guidance throughout my UK study visa process. Their expertise and transparent approach gave me great confidence and helped me prepare a strong and successful application.'],
+ ['Abhishek Bhogal','Study visa','SV','I am thankful to Fateh Overseas for guiding me through my study visa process. Their team handled my application process. I received my visa in the correct and timely manner, making the journey smooth and stress free.'],
+ ['Karan Khanna','Study visa, for his brother','SV','Today we are very happy to receive my brother\'s study visa through Fateh Overseas. I highly recommend them to anyone who wants to move abroad for their career.']];
+const stack=$('#stack');stack.innerHTML=R.map(r=>`<div class="c"><i>${r[0].split(' ').map(w=>w[0]).join('')}</i><em>${r[2]}</em></div>`).join('');
+const rot=[-6,4,-3,7];let cur=0,timer;
+function show(i){cur=(i+R.length)%R.length;
+  $$('#stack .c').forEach((c,k)=>{const d=(k-cur+R.length)%R.length;c.style.zIndex=R.length-d;c.style.opacity=d>2?0:1;c.style.transform=d===0?'rotate(0) scale(1)':`rotate(${rot[k]}deg) scale(${1-d*.05}) translateY(${d*10}px)`});
+  $('#qText').textContent='"'+R[cur][3]+'"';$('#qName').textContent=R[cur][0];$('#qVisa').textContent=R[cur][1];$('#qCount').textContent=`${cur+1} of ${R.length}`}
+function auto(){clearInterval(timer);if(!reduce)timer=setInterval(()=>show(cur+1),7000)}
+$('#prev').addEventListener('click',()=>{show(cur-1);auto()});$('#next').addEventListener('click',()=>{show(cur+1);auto()});
+show(0);auto();
+
+/* accordion: one open at a time, animated height (shadcn accordion pattern) */
+$$('#acc details').forEach(d=>{const a=d.querySelector('.a');d.querySelector('summary').addEventListener('click',e=>{e.preventDefault();
+  if(d.open){a.animate([{height:a.scrollHeight+'px'},{height:'0px'}],{duration:reduce?0:220}).onfinish=()=>d.open=false}
+  else{$$('#acc details[open]').forEach(o=>{if(o!==d)o.open=false});d.open=true;a.animate([{height:'0px'},{height:a.scrollHeight+'px'}],{duration:reduce?0:260})}})});
+
+/* assessment form -> WhatsApp, never pretends to send */
+$('#af').addEventListener('submit',e=>{e.preventDefault();let ok=true;
+  const n=$('#n').value.trim(),m=$('#m').value.trim();$('#en').textContent=n?'':'Please enter your name.';$('#em').textContent=m.replace(/\D/g,'').length>=10?'':'Enter a 10-digit mobile number.';
+  if(!n){$('#n').focus();ok=false}else if(m.replace(/\D/g,'').length<10){$('#m').focus();ok=false}if(!ok)return;
+  const t=`Hello Fateh Overseas, I would like a free assessment.\nName: ${n}\nMobile: ${m}\nCountry: ${$('#c').value}\nVisa: ${$('#v').value}`+($('#q').value?`\nQualification: ${$('#q').value}`:'')+($('#s').value?`\nIELTS/PTE: ${$('#s').value}`:'')+($('#x').value?`\nNote: ${$('#x').value}`:'');
+  $('#pv2').textContent=t;$('#sendWa').href='https://wa.me/'+WA+'?text='+encodeURIComponent(t);$('#af').style.display='none';$('#sent').classList.add('on')});
+$('#edit').addEventListener('click',()=>{$('#af').style.display='';$('#sent').classList.remove('on')});
+</script>
+</body>
+</html>
