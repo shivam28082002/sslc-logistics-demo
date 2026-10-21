@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prime Operations · Control room</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="assets/fav-icon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..700&family=IBM+Plex+Sans+Arabic:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/app.css">
+<style>
+.flow{background:var(--green-dd);color:#E6ECE7;border-radius:12px;padding:26px 26px 22px;position:relative;overflow:hidden}
+.flow h2{font:600 24px/1.2 var(--sans);font-stretch:115%;margin:0 0 4px;color:#fff;max-width:640px}
+[dir="rtl"] .flow h2{font-family:var(--ar)}
+.flow p.sub{margin:0 0 24px;color:#A9B6AC;max-width:620px}
+.stages{display:grid;grid-template-columns:repeat(6,1fr);gap:0;position:relative}
+.stage{position:relative;padding:16px 16px 14px;text-decoration:none;color:inherit;border-inline-start:1px solid rgba(255,255,255,.1);transition:background .2s}
+.stage:first-child{border-inline-start:0}
+.stage:hover{background:rgba(255,255,255,.05)}
+.stage .n{font-size:12.5px;color:#8FA095}
+.stage b{display:block;font:650 34px/1.1 var(--sans);font-stretch:112%;color:#fff;margin:8px 0 2px}
+.stage span.l{font-size:14px;color:#C9D2CB}
+.stage .go{display:block;font-size:13px;color:var(--amber);margin-top:10px}
+.belt{height:10px;border-radius:5px;margin:4px 0 18px;position:relative;overflow:hidden;background:#2B3830}
+.belt i{position:absolute;top:1px;width:22px;height:8px;border-radius:2px;background:var(--amber);animation:ride 9s linear infinite}
+@keyframes ride{from{inset-inline-start:-3%}to{inset-inline-start:101%}}
+.two{grid-template-columns:1.25fr 1fr;margin-top:16px}
+.dec li{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid #ECEEEA}
+.dec li:last-child{border-bottom:0}
+.dec ul{list-style:none;margin:0;padding:0}
+.dec .ic{width:34px;height:34px;border-radius:8px;display:grid;place-items:center}
+.dec .ic svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8}
+.dec b{display:block;font-weight:600;font-size:14.5px}
+.dec small{color:var(--steel-d);font-size:13px}
+.story ol{margin:0;padding:0;list-style:none;counter-reset:s}
+.story li{counter-increment:s;display:grid;grid-template-columns:30px 1fr;gap:12px;padding:12px 0;border-bottom:1px solid #ECEEEA}
+.story li:last-child{border-bottom:0}
+.story li:before{content:counter(s);width:28px;height:28px;border-radius:50%;background:var(--green);color:#fff;display:grid;place-items:center;font-weight:600;font-size:13px}
+.story li.done:before{content:"✓";background:var(--ok)}
+.story b{display:block;font-weight:600}
+.story a{color:var(--green);font-weight:600}
+@media (max-width:1100px){.stages{grid-template-columns:repeat(3,1fr)}.stage:nth-child(4){border-inline-start:0}.stage:nth-child(n+4){border-top:1px solid rgba(255,255,255,.1)}}
+@media (max-width:900px){.two{grid-template-columns:1fr}}
+@media (max-width:560px){.stages{grid-template-columns:1fr 1fr}.stage:nth-child(odd){border-inline-start:0}.stage:nth-child(4){border-inline-start:1px solid rgba(255,255,255,.1)}.stage:nth-child(n+3){border-top:1px solid rgba(255,255,255,.1)}.stage b{font-size:28px}.flow{padding:20px 16px}}
+</style>
+</head>
+<body>
+<div class="shell">
+<aside class="rail" id="rail"></aside>
+<div>
+<header class="top">
+  <button class="burger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+  <h1 data-ar="غرفة التحكم">Control room</h1>
+  <label class="search"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span class="sr">Search</span><input placeholder="Search shipment, client, truck, SKU" data-ar-ph="ابحث عن شحنة أو عميل أو شاحنة"></label>
+  <span class="sp"></span>
+  <select class="sel hide-m" aria-label="City"><option>All cities</option><option>Riyadh</option><option>Jeddah</option><option>Dammam</option></select>
+  <button class="lang" type="button">عربي</button>
+  <span class="avatar" title="Abzair Khan">AK</span>
+</header>
+<main class="page">
+  <div class="demo-note"><b data-ar="عرض تجريبي لبرايم لوجستيكس.">Demo for Prime Logistics.</b> <span data-ar="كل الأرقام والعملاء هنا بيانات تجريبية.">All figures and clients here are sample data.</span></div>
+
+  <section class="flow" aria-labelledby="flowh">
+    <h2 id="flowh" data-ar="كل منصة نقالة، من الاستلام حتى الفاتورة، في نظام واحد">Every pallet, from the gate to the invoice, in one system</h2>
+    <p class="sub" data-ar="هذا هو يوم برايم اليوم في الرياض وجدة والدمام. اضغط أي مرحلة لفتح الوحدة الخاصة بها.">Today across Riyadh, Jeddah and Dammam. Tap any stage to open the module behind it.</p>
+    <div class="belt" aria-hidden="true"><i></i><i style="animation-delay:-3s"></i><i style="animation-delay:-6s"></i></div>
+    <div class="stages">
+      <a class="stage" href="warehouse.html#inbound"><span class="n" data-ar="الاستلام">Received</span><b>38</b><span class="l" data-ar="منصة دخلت اليوم">pallets in today</span><span class="go" data-ar="المستودع">Warehouse</span></a>
+      <a class="stage" href="warehouse.html"><span class="n" data-ar="التخزين">Stored</span><b>4,812</b><span class="l" data-ar="منصة في 3 مستودعات">pallets in 3 sites</span><span class="go" data-ar="خريطة الرفوف">Rack map</span></a>
+      <a class="stage" href="cold-chain.html"><span class="n" data-ar="مبرد">Chilled</span><b>6</b><span class="l" data-ar="غرف تبريد مراقبة">cold rooms watched</span><span class="go" data-ar="سلسلة التبريد">Cold chain</span></a>
+      <a class="stage" href="transport.html"><span class="n" data-ar="على الطريق">On the road</span><b>41</b><span class="l" data-ar="رحلة جارية">trips running</span><span class="go" data-ar="النقل">Transport</span></a>
+      <a class="stage" href="driver.html"><span class="n" data-ar="تم التسليم">Delivered</span><b id="delivered">312</b><span class="l" data-ar="مع إثبات تسليم">with proof of delivery</span><span class="go" data-ar="تطبيق السائق">Driver app</span></a>
+      <a class="stage" href="billing.html"><span class="n" data-ar="الفوترة">Invoiced</span><b>SAR 184k</b><span class="l" data-ar="هذا الأسبوع، متوافق مع زاتكا">this week, ZATCA-ready</span><span class="go" data-ar="الفوترة">Billing</span></a>
+    </div>
+  </section>
+
+  <div class="grid two">
+    <section class="panel dec">
+      <div class="ph"><h2 data-ar="يحتاج قرارك الآن">Needs a decision now</h2><small data-ar="مرتبة حسب الأهمية">Most urgent first</small></div>
+      <ul id="decisions"></ul>
+    </section>
+    <section class="panel story">
+      <div class="ph"><h2 data-ar="جرّب القصة كاملة">Walk through one delivery</h2><small data-ar="5 دقائق">About 5 minutes</small></div>
+      <ol id="story">
+        <li><div><b data-ar="افتح تطبيق السائق">Open the driver app</b><span data-ar="الشحنة PL-24817 من الرياض إلى الدمام، شاحنة مبردة.">Shipment PL-24817, Riyadh to Dammam, reefer truck.</span> <a href="driver.html" data-ar="فتح">Open</a></div></li>
+        <li><div><b data-ar="سجّل إثبات التسليم">Record the proof of delivery</b><span data-ar="صورة، توقيع المستلم، ورمز التحقق.">Photo, receiver's signature and OTP code.</span></div></li>
+        <li><div><b data-ar="شاهدها كما يراها العميل">See it the way the client sees it</b><span data-ar="البوابة تتحدث فوراً، بالعربية أو الإنجليزية.">The client portal updates at once, in Arabic or English.</span> <a href="client-portal.html" data-ar="فتح">Open</a></div></li>
+        <li><div><b data-ar="أصدر فاتورة زاتكا">Issue the ZATCA invoice</b><span data-ar="التخزين والمناولة والنقل تُحسب تلقائياً.">Storage, handling and transport are calculated for you.</span> <a href="billing.html" data-ar="فتح">Open</a></div></li>
+      </ol>
+    </section>
+  </div>
+</main>
+</div>
+</div>
+<script src="assets/app.js"></script>
+<script>
+const S=PrimeState.get();
+document.getElementById('delivered').textContent=(312+(S.pod?1:0)).toLocaleString('en-US');
+if(S.pod){const li=document.querySelectorAll('#story li');li[0].classList.add('done');li[1].classList.add('done')}
+if(S.invoices.length){document.querySelectorAll('#story li')[3].classList.add('done')}
+const ic={temp:'<path d="M14 14.8V4a2 2 0 1 0-4 0v10.8a4 4 0 1 0 4 0z"/>',doc:'<path d="M6 2h9l5 5v15H6z"/><path d="M14 2v6h6"/>',box:'<path d="M3 7l9-4 9 4v10l-9 4-9-4z"/><path d="M3 7l9 4 9-4M12 11v10"/>',inv:'<path d="M6 2h12v20l-3-2-3 2-3-2-3 2z"/>'};
+const D=[
+  ...(S.tempAck?[]:[['bad','temp','Cold Room 2, Riyadh is at 9.1 °C','غرفة التبريد 2 في الرياض عند 9.1 درجة','Limit is 2 to 8 °C. Najd Pharma stock inside.','الحد من 2 إلى 8 درجات. مخزون نجد فارما بالداخل.','cold-chain.html','Check','افحص']]),
+  ['warn','doc','Istimara for reefer R-07 expires in 6 days','استمارة الشاحنة R-07 تنتهي خلال 6 أيام','Truck is booked on the Jeddah run on Sunday.','الشاحنة محجوزة لرحلة جدة يوم الأحد.','transport.html#fleet','Renew','تجديد'],
+  ['warn','box','Al Waha Foods: date paste below reorder level','الواحة للأغذية: معجون التمر أقل من حد إعادة الطلب','42 cartons left, 7 days of cover.','بقي 42 كرتوناً، تكفي 7 أيام.','warehouse.html#stock','View stock','عرض المخزون'],
+  ['info','inv','3 invoices waiting for ZATCA clearance','3 فواتير بانتظار اعتماد زاتكا','Total SAR 61,240 for this week.','الإجمالي 61,240 ريال لهذا الأسبوع.','billing.html','Review','مراجعة'],
+];
+document.getElementById('decisions').innerHTML=D.map(([k,i,en,ar,sen,sar,h,b,bar])=>`<li><span class="ic" style="background:var(--${k==='bad'?'red':k==='warn'?'amber':'blue'}-l);color:var(--${k==='bad'?'red':k==='warn'?'amber-d':'blue'})"><svg viewBox="0 0 24 24">${ic[i]}</svg></span><div><b data-ar="${ar}">${en}</b><small data-ar="${sar}">${sen}</small></div><a class="btn btn-o" href="${h}" data-ar="${bar}">${b}</a></li>`).join('');
+if(isAr()) applyLang('ar');
+</script>
+</body>
+</html>
