@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prime Operations · Cold chain</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="assets/fav-icon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..700&family=IBM+Plex+Sans+Arabic:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/app.css">
+<style>
+.rooms{grid-template-columns:repeat(3,1fr)}
+.room{border-radius:10px;border:1px solid var(--line);background:#fff;padding:16px 18px;cursor:pointer;text-align:start;transition:border-color .15s}
+.room:hover{border-color:var(--green)}
+.room[aria-pressed="true"]{border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
+.room.alert{border-color:var(--red);background:linear-gradient(#fff,#fff) padding-box}
+.room .rt{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.room b{font-weight:600}
+.room .temp{font:650 40px/1 var(--sans);font-stretch:110%;margin:14px 0 6px}
+.room .temp small{font-size:18px;color:var(--steel-d);font-weight:500}
+.room.alert .temp{color:var(--red)}
+.room .spark{height:34px;width:100%}
+.detail{grid-template-columns:1.6fr 1fr;margin-top:16px}
+.wa{background:#E7F5EC;border-radius:10px;padding:14px;max-width:360px}
+.wa .msg{background:#fff;border-radius:8px 8px 8px 2px;padding:10px 12px;font-size:14px;box-shadow:0 1px 1px rgba(0,0,0,.08)}
+.wa .msg b{display:block;margin-bottom:4px}
+.wa .meta{font-size:11.5px;color:var(--steel-d);text-align:end;margin-top:4px}
+.log li{display:grid;grid-template-columns:52px 1fr;gap:10px;padding:8px 0;border-bottom:1px solid #ECEEEA;font-size:14px}
+.log ul{list-style:none;margin:0;padding:0}
+.log time{color:var(--steel-d)}
+@media (max-width:1100px){.rooms{grid-template-columns:1fr 1fr}.detail{grid-template-columns:1fr}}
+@media (max-width:560px){.rooms{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="shell">
+<aside class="rail"></aside>
+<div>
+<header class="top">
+  <button class="burger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+  <h1 data-ar="سلسلة التبريد">Cold chain</h1>
+  <span class="sp"></span>
+  <button class="btn btn-o hide-m" id="csv" type="button" data-ar="تقرير تدقيق للعميل (CSV)">Client audit report (CSV)</button>
+  <button class="lang" type="button">عربي</button>
+  <span class="avatar">AK</span>
+</header>
+<main class="page">
+  <div class="grid rooms" id="rooms"></div>
+  <div class="grid detail">
+    <section class="panel">
+      <div class="ph"><h2 id="dt"></h2><small data-ar="آخر 24 ساعة، قراءة كل 5 دقائق">Last 24 hours, a reading every 5 minutes</small></div>
+      <div id="big"></div>
+    </section>
+    <aside class="grid" style="gap:16px;align-content:start">
+      <section class="panel" id="alertBox"></section>
+      <section class="panel log"><div class="ph"><h2 data-ar="سجل الأحداث">Event log</h2></div><ul id="log"></ul></section>
+    </aside>
+  </div>
+</main>
+</div>
+</div>
+<script src="assets/app.js"></script>
+<script>
+const S=PrimeState.get();
+const R=[
+ {id:'CR-1',en:'Cold Room 1, Riyadh',ar:'غرفة التبريد 1، الرياض',lo:2,hi:8,now:4.2,who:'Al Waha Foods'},
+ {id:'CR-2',en:'Cold Room 2, Riyadh',ar:'غرفة التبريد 2، الرياض',lo:2,hi:8,now:S.tempAck?6.8:9.1,who:'Najd Pharma Distribution',alert:!S.tempAck},
+ {id:'FZ-1',en:'Freezer 1, Riyadh',ar:'المجمد 1، الرياض',lo:-22,hi:-16,now:-18.6,who:'Al Waha Foods'},
+ {id:'CR-3',en:'Cold Room 3, Jeddah',ar:'غرفة التبريد 3، جدة',lo:2,hi:8,now:5.1,who:'Qimma Beverages'},
+ {id:'FZ-2',en:'Freezer 2, Jeddah',ar:'المجمد 2، جدة',lo:-22,hi:-16,now:-19.4,who:'Tamr Dates Co.'},
+ {id:'CR-4',en:'Cold Room 4, Dammam',ar:'غرفة التبريد 4، الدمام',lo:2,hi:8,now:3.7,who:'Najd Pharma Distribution'}];
+function series(r){let s=r.id.charCodeAt(3)*7;const rnd=()=>(s=(s*9301+49297)%233280)/233280;const mid=(r.lo+r.hi)/2;
+  return Array.from({length:288},(_,i)=>{let v=mid+(rnd()-.5)*1.6+Math.sin(i/24)*.6; if(r.id==='CR-2'&&i>250&&!S.tempAck) v=mid+(i-250)*.11; if(r.id==='CR-2'&&S.tempAck&&i>250) v=mid+Math.max(0,(270-i))*.09; return +v.toFixed(1)})}
+R.forEach(r=>r.s=series(r));
+let cur=S.tempAck?'CR-1':'CR-2';
+function spark(r,w,h,big){const s=big?r.s:r.s.filter((_,i)=>i%6===0);const mn=Math.min(r.lo-2,...s),mx=Math.max(r.hi+2,...s),y=v=>h-(v-mn)/(mx-mn)*h,x=i=>i/(s.length-1)*w;
+  let o=`<svg viewBox="0 0 ${w} ${h+(big?22:0)}" ${big?'role="img" aria-label="Temperature, 24 hours"':''} class="${big?'':'spark'}" ${big?'':'preserveAspectRatio="none"'}><rect x="0" y="${y(r.hi)}" width="${w}" height="${y(r.lo)-y(r.hi)}" fill="#E0F0E5"/>`;
+  if(big){[r.hi,r.lo].forEach(v=>o+=`<line x1="0" x2="${w}" y1="${y(v)}" y2="${y(v)}" stroke="#2F8F4E" stroke-dasharray="4 4"/><text x="4" y="${y(v)-4}" font-size="11" fill="#2F8F4E">${v} °C</text>`);
+    ['00:00','06:00','12:00','18:00',isAr()?'الآن':'Now'].forEach((t,i)=>o+=`<text x="${i/4*w}" y="${h+16}" font-size="11" fill="#5E625F" text-anchor="${i===0?'start':i===4?'end':'middle'}">${t}</text>`)}
+  o+=`<polyline fill="none" stroke="${r.alert?'#C8442B':'#3D4E43'}" stroke-width="${big?2:1.5}" vector-effect="non-scaling-stroke" points="${s.map((v,i)=>x(i).toFixed(1)+','+y(v).toFixed(1)).join(' ')}"/>`;
+  if(big) o+=`<circle cx="${w}" cy="${y(s[s.length-1])}" r="4" fill="${r.alert?'#C8442B':'#3D4E43'}"/>`;
+  return o+'</svg>'}
+function rooms(){document.getElementById('rooms').innerHTML=R.map(r=>`<button type="button" class="room${r.alert?' alert':''}" aria-pressed="${r.id===cur}" data-id="${r.id}"><div class="rt"><b>${isAr()?r.ar:r.en}</b>${r.alert?`<span class="pill p-bad">${isAr()?'خارج الحد':'Out of range'}</span>`:`<span class="pill p-ok">${isAr()?'ضمن الحد':'In range'}</span>`}</div><div class="temp">${r.now}<small> °C</small></div><div class="muted" style="font-size:13px">${isAr()?'الحد':'Range'} ${r.lo} ${isAr()?'إلى':'to'} ${r.hi} °C · ${r.who}</div>${spark(r,200,34)}</button>`).join('');
+  document.querySelectorAll('.room').forEach(b=>b.addEventListener('click',()=>{cur=b.dataset.id;rooms();detail()}))}
+function detail(){const r=R.find(x=>x.id===cur);document.getElementById('dt').textContent=isAr()?r.ar:r.en;document.getElementById('big').innerHTML=spark(r,700,220,true);
+  const a=document.getElementById('alertBox');
+  if(r.alert){a.innerHTML=`<div class="ph"><h2 class="down">${isAr()?'تنبيه أُرسل على واتساب':'Alert sent on WhatsApp'}</h2></div>
+    <div class="wa"><div class="msg"><b>Prime Cold Chain</b>${isAr()?'غرفة التبريد 2 في الرياض عند 9.1 °C منذ 18 دقيقة (الحد 2–8). مخزون نجد فارما بالداخل.':'Cold Room 2, Riyadh is at 9.1 °C for 18 min (limit 2–8). Najd Pharma stock inside.'}<div class="meta">10:42 ✓✓</div></div></div>
+    <p class="muted" style="font-size:13.5px">${isAr()?'أُرسل إلى مشرف الوردية ومدير المستودع.':'Sent to the shift supervisor and the warehouse manager.'}</p>
+    <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-a" id="ack">${isAr()?'تأكيد وإرسال فني':'Acknowledge and send technician'}</button><button class="btn btn-o" onclick="toast('${isAr()?'تم نقل المهمة إلى غرفة التبريد 1':'Move task to Cold Room 1 created'}')">${isAr()?'نقل المخزون':'Move stock'}</button></div>`;
+    document.getElementById('ack').addEventListener('click',()=>{PrimeState.set({tempAck:true});toast(isAr()?'تم التأكيد. الفني في الطريق.':'Acknowledged. Technician on the way.');setTimeout(()=>location.reload(),900)})}
+  else a.innerHTML=`<div class="ph"><h2 class="up">${isAr()?'كل شيء ضمن الحد':'Everything in range'}</h2></div><p class="muted">${isAr()?'سيصل تنبيه على واتساب إذا خرجت الحرارة عن الحد لأكثر من 10 دقائق.':'A WhatsApp alert goes out if the temperature stays outside the range for more than 10 minutes.'}</p>`;
+}
+const LOG=S.tempAck?[['10:51','Technician assigned, Cold Room 2','تم تعيين فني لغرفة التبريد 2'],['10:42','Alert: Cold Room 2 at 9.1 °C','تنبيه: غرفة التبريد 2 عند 9.1 درجة']]:[['10:42','Alert: Cold Room 2 at 9.1 °C','تنبيه: غرفة التبريد 2 عند 9.1 درجة']];
+LOG.push(['09:15','Door open 4 min, Freezer 1','الباب مفتوح 4 دقائق، المجمد 1'],['07:30','Morning check signed, all rooms','فحص الصباح موقّع، كل الغرف'],['02:10','Power dip, generator took over','انقطاع كهرباء، المولد عمل']);
+function log(){document.getElementById('log').innerHTML=LOG.map(([t,en,ar])=>`<li><time>${t}</time><span>${isAr()?ar:en}</span></li>`).join('')}
+document.getElementById('csv').addEventListener('click',()=>{const r=R.find(x=>x.id===cur);const rows=['time,room,temp_c,range'].concat(r.s.map((v,i)=>{const m=i*5;return `${String(Math.floor(m/60)).padStart(2,'0')}:${String(m%60).padStart(2,'0')},${r.id},${v},${r.lo}..${r.hi}`}));
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([rows.join('\n')],{type:'text/csv'}));a.download=`Prime_${r.id}_temperature_log.csv`;a.click();toast(isAr()?'تم تنزيل التقرير':'Report downloaded')});
+rooms();detail();log();
+document.addEventListener('langchange',()=>{rooms();detail();log()});
+if(isAr()) applyLang('ar');
+</script>
+</body>
+</html>
