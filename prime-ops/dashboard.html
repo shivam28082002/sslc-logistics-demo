@@ -11,6 +11,11 @@
 <style>
 .row2{grid-template-columns:1.6fr 1fr;margin-top:16px}
 .row3{grid-template-columns:1fr 1fr 1fr;margin-top:16px}
+.bysvc{margin-top:16px}
+.sv{display:grid;grid-template-columns:170px 1fr 130px 52px;gap:14px;align-items:center;padding:8px 0;border-bottom:1px solid #ECEEEA;font-size:14px}
+.sv:last-child{border-bottom:0}
+.sv .bar{height:12px}
+@media (max-width:700px){.sv{grid-template-columns:1fr 90px;gap:4px 10px}.sv .bar{grid-column:1/-1;order:3}.sv .pc{display:none}}
 .chart svg{width:100%;height:auto;overflow:visible}
 .chart .lg{display:flex;gap:16px;flex-wrap:wrap;font-size:13px;color:var(--steel-d);margin-top:8px}
 .chart .lg i{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-1px;margin-inline-end:6px}
@@ -61,6 +66,11 @@
       <ul id="fleet"></ul>
     </section>
   </div>
+
+  <section class="panel bysvc">
+    <div class="ph"><h2 data-ar="الإيراد حسب الخدمة">Revenue by service</h2><small data-ar="هذا الشهر حتى الآن · الخدمات السبع">This month so far · all seven services</small></div>
+    <div id="bysvc"></div>
+  </section>
 
   <div class="grid row3">
     <section class="panel">
@@ -119,7 +129,11 @@ const F=[['ok','RUH → DMM','الرياض ← الدمام','Reefer T-12, 4 °C
  ['ok','JED city','داخل جدة','Dyna D-08, 7 drops','On time','في الوقت']];
 document.getElementById('fleet').innerHTML=F.map(([k,en,ar,sub,st,sta])=>`<li><span class="d" style="background:var(--${k==='ok'?'ok':k==='warn'?'amber':'red'})"></span><div><b data-ar="${ar}">${en}</b><small>${sub}</small></div><span class="muted" data-ar="${sta}">${st}</span></li>`).join('');
 document.getElementById('sites').innerHTML=[['Riyadh','الرياض',88,'2,640 / 3,000'],['Jeddah','جدة',79,'1,422 / 1,800'],['Dammam','الدمام',74,'750 / 1,010']].map(([en,ar,p,n])=>`<div class="site"><b data-ar="${ar}">${en}</b><div><div class="bar"><i class="${p>85?'hi':''}" style="width:${p}%"></i></div><small class="muted">${n}</small></div><b>${p}%</b></div>`).join('');
-document.getElementById('rev').innerHTML=[['Najd Pharma Distribution',212400,6],['Al Waha Foods',168900,12],['Qimma Beverages',121300,-3],['Rawabi Electronics',98750,4],['Sahara Home Retail',77200,9],['Tamr Dates Co.',54900,21]].map(([c,v,d])=>`<tr><td>${c}</td><td class="num">${v.toLocaleString('en-US')}</td><td class="num ${d<0?'down':'up'}">${d>0?'+':''}${d}%</td></tr>`).join('');
+function rev(){document.getElementById('rev').innerHTML=[['Najd Pharma Distribution',212400,6],['Al Waha Foods',168900,12],['Qimma Beverages',121300,-3],['Rawabi Electronics',98750,4],['Masar Building Materials',63000,0],['Sahara Home Retail',77200,9],['Tamr Dates Co.',54900,21]].map(([c,v,d])=>`<tr><td>${c}<div>${svcTags(c)}</div></td><td class="num">${v.toLocaleString('en-US')}</td><td class="num ${d<0?'down':'up'}">${d>0?'+':''}${d}%</td></tr>`).join('')}
+const BS={'3pl':[186400,8],'wh':[214800,5],'cold':[96300,11],'trans':[171200,7],'2pl':[99300,14],'pack':[38600,23],'pick':[61900,6]};
+function bysvc(){const tot=Object.values(BS).reduce((a,b)=>a+b[0],0),mx=Math.max(...Object.values(BS).map(b=>b[0]));
+  document.getElementById('bysvc').innerHTML=SERVICES.map(v=>{const [a,g]=BS[v[0]];return `<div class="sv"><span><span class="svc svc-${v[0]}">${isAr()?v[2]:v[1]}</span> ${isAr()?v[4]:v[3]}</span><div class="bar"><i style="width:${a/mx*100}%"></i></div><b style="text-align:end">${sar(a).replace('.00','')}</b><span class="pc up">+${g}%</span></div>`}).join('')+`<div class="sv" style="font-weight:600"><span>${isAr()?'الإجمالي':'Total'}</span><span></span><b style="text-align:end">${sar(tot).replace('.00','')}</b><span></span></div>`}
+rev();bysvc();document.addEventListener('langchange',()=>{rev();bysvc()});
 if(isAr()) applyLang('ar');
 </script>
 </body>
