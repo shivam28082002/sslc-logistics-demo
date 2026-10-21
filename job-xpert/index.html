@@ -1,0 +1,766 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Job Xpert · Placement in Punjab. Zero charge to candidates.</title>
+<meta name="description" content="Job Xpert is a placement company. Candidates pay nothing. Employers pay five days' salary, and only after the hire completes one month.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="assets/favicon-64.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Hanken+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F5F0E4; --paper-2:#EDE6D4; --card:#FBF8F1;
+  --ink:#0C1B38; --navy:#0B2A5C; --navy-2:#143A75;
+  --gold:#D9A63A; --gold-deep:#A87A1E; --gold-soft:#F1DFAF;
+  --muted:#5B6478; --rule:#CFC5AE; --rule-soft:#E0D8C4;
+  --serif:"Instrument Serif", Georgia, serif;
+  --sans:"Hanken Grotesk", system-ui, sans-serif;
+  --mono:"IBM Plex Mono", ui-monospace, monospace;
+  --wrap:1180px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 17px/1.6 var(--sans);overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:inherit}
+button,input,select,textarea{font:inherit;color:inherit}
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 28px}
+.mono{font-family:var(--mono);font-size:12.5px;letter-spacing:.06em;text-transform:uppercase}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+:focus-visible{outline:2px solid var(--gold-deep);outline-offset:3px}
+
+/* strip */
+.strip{background:var(--navy);color:#E9E2CF;border-bottom:3px solid var(--gold)}
+.strip .wrap{display:flex;justify-content:space-between;gap:20px;padding-top:9px;padding-bottom:9px}
+.strip b{color:var(--gold);font-weight:500}
+.strip .r{display:flex;gap:22px}
+.strip a{text-decoration:none}
+.strip a:hover{color:#fff}
+
+/* nav */
+header.nav{position:sticky;top:0;z-index:40;background:rgba(245,240,228,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--rule)}
+.nav .wrap{display:flex;align-items:center;gap:28px;height:74px}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none}
+.brand img{width:46px;height:46px}
+.wordmark{font:700 25px/1 var(--sans);letter-spacing:-.03em;color:var(--navy)}
+.wordmark i{font-style:normal;color:var(--gold-deep)}
+.brand small{display:block;font:500 11px/1.2 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-top:4px}
+.nav ul{display:flex;gap:26px;list-style:none;margin:0 0 0 auto;padding:0}
+.nav ul a{text-decoration:none;font-weight:500;font-size:15.5px;padding:6px 0;border-bottom:1.5px solid transparent}
+.nav ul a:hover{border-color:var(--gold-deep)}
+.btn{display:inline-flex;align-items:center;gap:10px;border:0;cursor:pointer;text-decoration:none;font-weight:600;font-size:15.5px;padding:14px 22px;border-radius:2px;transition:transform .15s ease, background .15s ease}
+.btn:active{transform:translateY(1px)}
+.btn-ink{background:var(--navy);color:#fff}
+.btn-ink:hover{background:var(--ink)}
+.btn-gold{background:var(--gold);color:var(--ink)}
+.btn-gold:hover{background:#E6B54B}
+.btn-line{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 1.5px var(--ink)}
+.btn-line:hover{background:var(--ink);color:var(--paper)}
+.nav .btn{padding:11px 18px;font-size:14.5px}
+.burger{display:none;margin-left:auto;background:none;border:1.5px solid var(--ink);width:44px;height:40px;border-radius:2px;cursor:pointer}
+.burger span{display:block;width:18px;height:1.5px;background:var(--ink);margin:4px auto}
+
+/* hero */
+.hero{position:relative;padding:54px 0 0;border-bottom:1px solid var(--rule);overflow:clip}
+.switch{display:inline-flex;border:1.5px solid var(--ink);border-radius:2px;padding:3px;gap:3px;background:var(--card)}
+.switch button{border:0;background:none;padding:9px 16px;font-weight:600;font-size:14.5px;cursor:pointer;border-radius:1px}
+.switch button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.hero-grid{display:grid;grid-template-columns:1.25fr .75fr;gap:56px;align-items:end;margin-top:30px}
+.hero h1{font:400 clamp(46px,7.2vw,96px)/.95 var(--serif);letter-spacing:-.015em;margin:0;color:var(--ink)}
+.hero h1 em{color:var(--navy-2)}
+.hero h1 .u{position:relative;white-space:nowrap}
+.hero h1 .u svg{position:absolute;left:-2%;bottom:-.12em;width:104%;height:.3em;overflow:visible}
+.hero h1 .u path{stroke:var(--gold);stroke-width:5;fill:none;stroke-linecap:round;stroke-dasharray:420;stroke-dashoffset:420;animation:draw 1s .4s cubic-bezier(.6,0,.2,1) forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+.lede{font-size:19.5px;line-height:1.55;max-width:560px;margin:28px 0 30px;color:#26324F}
+.cta-row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.cta-row .note{font-size:14px;color:var(--muted);margin-left:6px}
+[data-aud="employer"] .for-seeker,[data-aud="seeker"] .for-employer{display:none}
+.stamp-wrap{position:relative;justify-self:end;width:min(360px,100%);aspect-ratio:1}
+.stamp-wrap img{position:absolute;inset:13%;width:74%;height:74%;filter:drop-shadow(0 18px 30px rgba(11,42,92,.22))}
+.ring{position:absolute;inset:0;animation:spin 38s linear infinite}
+.ring text{font:500 13.4px var(--mono);letter-spacing:.21em;fill:var(--navy)}
+@keyframes spin{to{transform:rotate(360deg)}}
+.hero-foot{display:grid;grid-template-columns:repeat(4,1fr);margin-top:56px;border-top:1px solid var(--rule)}
+.hero-foot div{padding:20px 22px 24px 0;border-right:1px solid var(--rule)}
+.hero-foot div+div{padding-left:22px}
+.hero-foot div:last-child{border-right:0}
+.hero-foot strong{display:block;font:400 40px/1 var(--serif);color:var(--navy)}
+.hero-foot span{display:block;font-size:14.5px;color:var(--muted);margin-top:8px;line-height:1.4}
+
+/* section heads */
+section{padding:96px 0;scroll-margin-top:74px}
+.kicker{display:flex;align-items:center;gap:12px;color:var(--gold-deep);margin-bottom:18px}
+.kicker:before{content:"";width:26px;height:1.5px;background:currentColor}
+h2{font:400 clamp(36px,4.8vw,60px)/1.02 var(--serif);letter-spacing:-.01em;margin:0}
+h2 em{color:var(--navy-2)}
+.sec-head{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:end;margin-bottom:52px}
+.sec-head p{margin:0;color:#3A4560;font-size:17.5px;max-width:470px}
+
+/* terms ledger */
+.terms{display:grid;grid-template-columns:1fr 1fr;border:1.5px solid var(--ink);background:var(--card)}
+.term{padding:38px 40px 40px}
+.term+.term{border-left:1.5px solid var(--ink)}
+.term header{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--rule);padding-bottom:18px;margin-bottom:8px;gap:12px}
+.term h3{font:400 34px/1.05 var(--serif);margin:0}
+.term .tag{font:500 12px var(--mono);letter-spacing:.06em;text-transform:uppercase;padding:5px 9px;border:1px solid currentColor;white-space:nowrap}
+.term.seek .tag{color:#1E6B3A}
+.term.emp .tag{color:var(--gold-deep)}
+.clauses{list-style:none;margin:0;padding:0}
+.clauses li{display:grid;grid-template-columns:44px 1fr;gap:6px;padding:16px 0;border-bottom:1px dashed var(--rule)}
+.clauses li:last-child{border-bottom:0}
+.clauses .n{font:500 13px var(--mono);color:var(--gold-deep);padding-top:3px}
+.clauses b{display:block;font-weight:600;font-size:17.5px}
+.clauses span{color:#47516A;font-size:15.5px}
+.terms-foot{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;padding:16px 4px 0;color:var(--muted);font-size:14px}
+
+/* fee receipt */
+.fee{background:var(--navy);color:#E8E3D4;position:relative;overflow:hidden}
+.fee:before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0 119px,rgba(255,255,255,.04) 119px 120px);pointer-events:none}
+.fee .wrap{position:relative;display:grid;grid-template-columns:1fr 440px;gap:72px;align-items:center}
+.fee h2{color:#fff}
+.fee h2 em{color:var(--gold)}
+.fee .kicker{color:var(--gold)}
+.fee p.big{font-size:19px;color:#C9CFDD;max-width:520px;margin:24px 0 0}
+.fee .lines{margin:34px 0 0;padding:0;list-style:none;display:grid;gap:12px;max-width:520px}
+.fee .lines li{display:flex;gap:14px;align-items:baseline;border-top:1px solid rgba(255,255,255,.14);padding-top:12px}
+.fee .lines li b{color:var(--gold);font:500 13px var(--mono);min-width:64px}
+.receipt{background:#FFFDF7;color:var(--ink);padding:30px 30px 26px;position:relative;box-shadow:0 30px 60px rgba(0,0,0,.28);transform:rotate(1.2deg)}
+.receipt:before,.receipt:after{content:"";position:absolute;left:0;right:0;height:12px;background:radial-gradient(circle at 8px 0,transparent 7px,#FFFDF7 7.5px) 0 0/16px 12px repeat-x}
+.receipt:before{top:-11px;transform:scaleY(-1)}
+.receipt:after{bottom:-11px}
+.receipt .rh{display:flex;justify-content:space-between;align-items:center;border-bottom:1.5px dashed #B9AF97;padding-bottom:14px;font:500 12.5px var(--mono);letter-spacing:.05em;text-transform:uppercase}
+.receipt .rh img{width:38px;height:38px}
+.receipt label{display:block;font:500 12.5px var(--mono);letter-spacing:.05em;text-transform:uppercase;color:var(--muted);margin:18px 0 8px}
+.money{display:flex;align-items:center;border:1.5px solid var(--ink);background:#fff}
+.money span{padding:0 4px 0 14px;font:400 28px var(--serif)}
+.money input{border:0;outline:0;width:100%;padding:10px 12px 10px 4px;font:400 30px/1 var(--serif);background:transparent}
+.range{width:100%;margin:14px 0 4px;accent-color:var(--navy)}
+.rrow{display:flex;justify-content:space-between;gap:12px;padding:11px 0;border-bottom:1px dashed #D3CAB4;font-size:15.5px}
+.rrow b{font:500 16px var(--mono)}
+.rrow.zero b{color:#1E6B3A}
+.rrow.total{border-bottom:0;padding-top:16px}
+.rrow.total span{font-weight:700}
+.rrow.total b{font:400 34px/1 var(--serif)}
+.receipt small{display:block;color:var(--muted);font-size:13px;line-height:1.45;margin-top:12px}
+
+/* openings (adapted from 21st.dev Job Listing by educalvolpz) */
+.board-top{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:18px}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chips button{border:1.5px solid var(--rule);background:var(--card);padding:7px 14px;border-radius:30px;font-size:14.5px;font-weight:500;cursor:pointer}
+.chips button[aria-pressed="true"]{border-color:var(--ink);background:var(--ink);color:var(--paper)}
+.demo-flag{font:500 12px var(--mono);letter-spacing:.05em;text-transform:uppercase;color:#8A5A00;background:var(--gold-soft);padding:6px 10px}
+.jobs{list-style:none;margin:0;padding:0;border-top:1.5px solid var(--ink)}
+.job{border-bottom:1px solid var(--rule)}
+.job button{all:unset;box-sizing:border-box;display:grid;grid-template-columns:54px 1.6fr 1fr 1fr 28px;gap:20px;align-items:center;width:100%;padding:20px 8px;cursor:pointer;transition:background .2s ease}
+.job button:hover{background:var(--card)}
+.job button:focus-visible{outline:2px solid var(--gold-deep);outline-offset:-2px}
+.mono-logo{width:54px;height:54px;display:grid;place-items:center;font:400 26px var(--serif);color:#fff;background:var(--navy)}
+.job .t b{display:block;font-size:18.5px;font-weight:600;line-height:1.25}
+.job .t span{font-size:14.5px;color:var(--muted)}
+.job .s{font:500 14.5px var(--mono)}
+.job .l{font-size:15px;color:#3A4560}
+.job .arr{font-size:22px;transition:transform .2s ease}
+.job button:hover .arr{transform:translateX(4px)}
+.job[hidden]{display:none}
+.overlay{position:fixed;inset:0;z-index:80;background:rgba(12,27,56,.28);backdrop-filter:blur(10px);display:grid;place-items:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .25s ease}
+.overlay.on{opacity:1;pointer-events:auto}
+.jcard{background:var(--card);width:min(620px,100%);max-height:calc(100vh - 40px);overflow:auto;border:1.5px solid var(--ink);padding:30px;transform:translateY(16px) scale(.98);transition:transform .32s cubic-bezier(.2,.8,.2,1)}
+.overlay.on .jcard{transform:none}
+.jcard .top{display:flex;gap:16px;align-items:center}
+.jcard h3{font:400 34px/1.05 var(--serif);margin:0}
+.jcard .meta{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0}
+.jcard .meta span{font:500 12.5px var(--mono);border:1px solid var(--rule);padding:5px 9px;background:#fff}
+.jcard p{color:#36405A;margin:0 0 14px}
+.jcard ul{margin:0 0 20px;padding-left:20px;color:#36405A}
+.jcard .x{margin-left:auto;align-self:flex-start;background:none;border:1.5px solid var(--ink);width:38px;height:38px;cursor:pointer;font-size:20px;line-height:1}
+.jcard .zero{border-left:3px solid #1E6B3A;padding:10px 14px;background:#EEF4EC;font-size:15px;margin-bottom:20px}
+
+/* process */
+.tracks{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+.track{border-top:1.5px solid var(--ink);padding-top:24px}
+.track h3{font:400 30px/1.1 var(--serif);margin:0 0 6px}
+.track > p{margin:0 0 22px;color:var(--muted);font-size:15.5px}
+.steps{list-style:none;margin:0;padding:0;position:relative}
+.steps:before{content:"";position:absolute;left:21px;top:10px;bottom:10px;width:1.5px;background:var(--rule)}
+.steps li{position:relative;display:grid;grid-template-columns:44px 1fr;gap:18px;padding:0 0 24px}
+.steps .dot{position:relative;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:var(--paper);border:1.5px solid var(--ink);font:500 13px var(--mono)}
+.steps li.key .dot{background:var(--gold);border-color:var(--gold-deep)}
+.steps b{display:block;font-size:17.5px;font-weight:600;padding-top:2px}
+.steps span{color:#47516A;font-size:15.5px}
+.steps em{font-style:normal;font:500 12px var(--mono);letter-spacing:.05em;text-transform:uppercase;color:var(--gold-deep);display:block;margin-top:4px}
+
+/* family */
+.family{padding:0}
+.family .wrap{display:grid;grid-template-columns:auto 1fr auto;gap:36px;align-items:center;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);padding-top:34px;padding-bottom:34px}
+.family p{margin:0;font:400 26px/1.3 var(--serif)}
+.family p em{color:var(--navy-2)}
+.family .names{display:flex;gap:10px;flex-wrap:wrap}
+.family .names span{border:1px solid var(--ink);padding:8px 13px;font-weight:600;font-size:14.5px;background:var(--card)}
+
+/* FAQ (adapted from 21st.dev "slit type FAQ" by kedhareswer: ink flood rows + live search) */
+.faq-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:64px}
+.faq-side .search{display:flex;align-items:center;border-bottom:1.5px solid var(--ink);margin-top:30px}
+.faq-side .search input{border:0;background:transparent;outline:0;padding:12px 0;width:100%;font-size:17px}
+.faq-side .search svg{width:20px;height:20px;flex:none}
+.faq-side .hint{font-size:14px;color:var(--muted);margin-top:12px}
+.qs{list-style:none;margin:0;padding:0;border-top:1.5px solid var(--ink)}
+.q{border-bottom:1.5px solid var(--ink);position:relative}
+.q button{all:unset;box-sizing:border-box;position:relative;display:grid;grid-template-columns:52px 1fr 30px;gap:14px;align-items:center;width:100%;padding:22px 14px 22px 8px;cursor:pointer;z-index:1}
+.q button:focus-visible{outline:2px solid var(--gold);outline-offset:-3px}
+.q .fill{position:absolute;inset:0;background:var(--navy);clip-path:inset(0 100% 0 0);transition:clip-path .28s cubic-bezier(.76,0,.24,1)}
+.q.open .fill{clip-path:inset(0 0 0 0);transition-duration:.42s}
+.q .qn{font:500 13px var(--mono);color:var(--gold-deep);transition:color .2s}
+.q .qt{font-weight:600;font-size:18px;line-height:1.35;transition:color .2s}
+.q .plus{font:300 30px/1 var(--sans);transition:transform .35s cubic-bezier(.76,0,.24,1),color .2s;text-align:center}
+.q.open .qn{color:var(--gold)}
+.q.open .qt,.q.open .plus{color:#fff}
+.q.open .plus{transform:rotate(135deg)}
+.q .panel{position:relative;z-index:1;display:grid;grid-template-rows:0fr;transition:grid-template-rows .3s ease}
+.q.open .panel{grid-template-rows:1fr;transition-duration:.42s}
+.q .panel > div{overflow:hidden}
+.q .panel p{margin:0;padding:0 44px 26px 74px;color:#D6DCE8;font-size:16.5px}
+.q mark{background:var(--gold-soft);color:var(--ink);padding:0 1px}
+.q.open mark{background:var(--gold);color:var(--ink)}
+.q[hidden]{display:none}
+.empty{padding:26px 8px;color:var(--muted);display:none}
+
+/* forms */
+.apply{background:var(--paper-2);border-top:1px solid var(--rule)}
+.apply-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:64px;align-items:start}
+.contact-list{list-style:none;padding:0;margin:34px 0 0}
+.contact-list li{border-top:1px solid var(--rule);padding:16px 0;display:grid;grid-template-columns:110px 1fr;gap:12px}
+.contact-list li:last-child{border-bottom:1px solid var(--rule)}
+.contact-list .mono{color:var(--muted);padding-top:3px}
+.contact-list a{text-decoration:none;font-weight:600;font-size:18px}
+.contact-list a:hover{color:var(--navy-2)}
+.formbox{background:var(--card);border:1.5px solid var(--ink)}
+.tabs{display:grid;grid-template-columns:1fr 1fr;border-bottom:1.5px solid var(--ink)}
+.tabs button{border:0;background:transparent;padding:18px;font-weight:600;font-size:16px;cursor:pointer}
+.tabs button+button{border-left:1.5px solid var(--ink)}
+.tabs button[aria-selected="true"]{background:var(--ink);color:var(--paper)}
+form{padding:30px}
+.fgrid{display:grid;grid-template-columns:1fr 1fr;gap:18px 20px}
+.f{display:flex;flex-direction:column;gap:7px}
+.f.full{grid-column:1/-1}
+.f label{font:500 12.5px var(--mono);letter-spacing:.05em;text-transform:uppercase;color:#4A546C}
+.f input,.f select,.f textarea{border:0;border-bottom:1.5px solid #9C9480;background:transparent;padding:9px 0;font-size:17px;outline:0;border-radius:0}
+.f input:focus,.f select:focus,.f textarea:focus{border-color:var(--navy)}
+.f textarea{resize:vertical;min-height:80px}
+.f .err{font-size:13px;color:#A3261B;min-height:0}
+form .foot{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;margin-top:26px}
+form .foot small{color:var(--muted);font-size:14px;max-width:300px}
+.sentbox{display:none;padding:30px}
+.sentbox.on{display:block}
+.sentbox h3{font:400 32px/1.1 var(--serif);margin:0 0 10px}
+.sentbox p{color:#3A4560;margin:0 0 18px}
+.sentbox pre{white-space:pre-wrap;background:#fff;border:1px dashed var(--rule);padding:14px;font:400 14px/1.5 var(--mono);margin:0 0 20px}
+
+/* footer */
+footer{background:var(--ink);color:#B9C1D3;padding:64px 0 28px}
+.fgrid2{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:40px;align-items:start}
+footer .big{font:400 clamp(34px,4.4vw,54px)/1.02 var(--serif);color:#fff;margin:0}
+footer .big em{color:var(--gold)}
+footer h4{font:500 12.5px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--gold);margin:6px 0 14px}
+footer ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+footer a{text-decoration:none}
+footer a:hover{color:#fff}
+.legal{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-top:1px solid rgba(255,255,255,.12);margin-top:52px;padding-top:20px;font-size:13.5px;color:#7F8AA3}
+.wa-float{position:fixed;right:20px;bottom:20px;z-index:50;width:56px;height:56px;border-radius:50%;background:#1FA855;display:grid;place-items:center;box-shadow:0 10px 24px rgba(0,0,0,.22)}
+.wa-float svg{width:28px;height:28px;fill:#fff}
+
+/* reveal */
+.rv{opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.8,.2,1)}
+.rv.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}.hero h1 .u path{stroke-dashoffset:0}}
+
+/* responsive */
+@media (max-width:1060px){
+  .nav ul{gap:18px}
+  .nav ul li.hide-md{display:none}
+  .fee .wrap{grid-template-columns:1fr 400px;gap:44px}
+}
+@media (max-width:900px){
+  .nav ul,.nav .btn{display:none}
+  .burger{display:block}
+  .nav.open ul li.hide-md{display:block}
+  .nav.open ul{display:flex;flex-direction:column;position:absolute;top:74px;left:0;right:0;background:var(--paper);border-bottom:1px solid var(--rule);padding:12px 28px 20px;gap:4px}
+  .nav.open ul a{display:block;padding:12px 0;font-size:17px}
+  .hero-grid{grid-template-columns:1fr;gap:20px}
+  .stamp-wrap{position:absolute;right:20px;top:34px;width:150px;opacity:.95}
+  .hero h1{max-width:calc(100% - 120px)}
+  .hero-foot{grid-template-columns:1fr 1fr}
+  .hero-foot div:nth-child(2){border-right:0}
+  .hero-foot div:nth-child(3){padding-left:0}
+  .hero-foot div:nth-child(n+3){border-top:1px solid var(--rule)}
+  .sec-head{grid-template-columns:1fr;gap:18px}
+  .terms{grid-template-columns:1fr}
+  .term+.term{border-left:0;border-top:1.5px solid var(--ink)}
+  .fee .wrap{grid-template-columns:1fr}
+  .receipt{max-width:460px;transform:none}
+  .tracks,.faq-grid,.apply-grid{grid-template-columns:1fr;gap:40px}
+  .family .wrap{grid-template-columns:1fr;gap:18px}
+  .fgrid2{grid-template-columns:1fr 1fr}
+  .fgrid2 > div:first-child{grid-column:1/-1}
+  .job button{grid-template-columns:48px 1fr 24px;gap:14px}
+  .mono-logo{width:48px;height:48px;font-size:22px}
+  .job .s,.job .l{display:none}
+  .job .t .m{display:block}
+}
+@media (min-width:901px){.job .t .m{display:none}}
+@media (max-width:600px){
+  body{font-size:16px}
+  .wrap{padding:0 18px}
+  .strip .r{display:none}
+  section{padding:70px 0}
+  .hero{padding-top:30px}
+  .stamp-wrap{width:96px;right:12px;top:22px}
+  .hero h1{max-width:none;font-size:clamp(42px,12.5vw,60px)}
+  .switch{margin-right:96px}
+  .switch button{padding:8px 11px;font-size:13.5px}
+  .lede{font-size:17.5px}
+  .hero-foot strong{font-size:32px}
+  .hero-foot div{padding:16px 12px 18px 0}
+  .hero-foot div+div{padding-left:12px}
+  .hero-foot div:nth-child(3){padding-left:0}
+  .term{padding:28px 20px}
+  .term header{flex-direction:column;align-items:flex-start}
+  .receipt{padding:24px 20px}
+  .fgrid{grid-template-columns:1fr}
+  form{padding:22px 18px}
+  .q button{grid-template-columns:38px 1fr 26px;padding:18px 8px 18px 4px}
+  .q .panel p{padding:0 18px 22px 56px}
+  .fgrid2{grid-template-columns:1fr}
+  .contact-list li{grid-template-columns:1fr;gap:2px}
+  .wordmark{font-size:22px}
+  .brand small{display:none}
+}
+</style>
+</head>
+<body data-aud="seeker">
+
+<div class="strip mono"><div class="wrap">
+  <span>Zero charge to candidates. <b>Zero risk to employers.</b></span>
+  <span class="r"><a href="tel:+911815002555">0181 500 2555</a><a href="tel:+917347012555">73470 12555</a></span>
+</div></div>
+
+<header class="nav" id="nav"><div class="wrap">
+  <a class="brand" href="#top" aria-label="Job Xpert home">
+    <img src="assets/badge-160.webp" alt="" width="46" height="46">
+    <span><span class="wordmark">Job<i>X</i>pert</span><small>Where talent meets opportunity</small></span>
+  </a>
+  <ul>
+    <li><a href="#openings">Openings</a></li>
+    <li><a href="#how">How it works</a></li>
+    <li><a href="#fee">For employers</a></li>
+    <li class="hide-md"><a href="#faq">Questions</a></li>
+    <li><a href="#apply">Contact</a></li>
+  </ul>
+  <a class="btn btn-ink" href="#apply" data-go="seeker">Send your CV</a>
+  <button class="burger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+</div></header>
+
+<main id="top">
+<section class="hero">
+  <div class="wrap">
+    <div class="switch" role="group" aria-label="I am">
+      <button type="button" data-aud="seeker" aria-pressed="true">I'm looking for a job</button>
+      <button type="button" data-aud="employer" aria-pressed="false">I'm hiring</button>
+    </div>
+    <div class="hero-grid">
+      <div>
+        <h1 class="for-seeker">Your next job shouldn't cost you <span class="u">a rupee.<svg viewBox="0 0 300 20" preserveAspectRatio="none" aria-hidden="true"><path d="M3 14 C 70 4, 150 4, 297 11"/></svg></span></h1>
+        <h1 class="for-employer">Hire right. <em>Pay after</em> <span class="u">one month.<svg viewBox="0 0 300 20" preserveAspectRatio="none" aria-hidden="true"><path d="M3 14 C 70 4, 150 4, 297 11"/></svg></span></h1>
+        <p class="lede for-seeker">No registration fee. No placement fee. Not later, not hidden. We match you with real openings from verified employers, help with your résumé, and stay with you until your joining day.</p>
+        <p class="lede for-employer">Tell us the role. We send pre-screened candidates. You pay five days of the hire's salary, and only once they have completed one month with you. If they don't stay, you don't pay.</p>
+        <div class="cta-row for-seeker">
+          <a class="btn btn-ink" href="#apply" data-go="seeker">Send your CV, free</a>
+          <a class="btn btn-line" href="#openings">See openings</a>
+        </div>
+        <div class="cta-row for-employer">
+          <a class="btn btn-ink" href="#apply" data-go="employer">Share a requirement</a>
+          <a class="btn btn-line" href="#fee">Work out the fee</a>
+        </div>
+      </div>
+      <div class="stamp-wrap" aria-hidden="true">
+        <svg class="ring" viewBox="0 0 200 200"><defs><path id="circ" d="M100,100 m-88,0 a88,88 0 1,1 176,0 a88,88 0 1,1 -176,0"/></defs>
+          <text><textPath href="#circ">ZERO FEES FOR CANDIDATES · PAY AFTER ONE MONTH · </textPath></text></svg>
+        <img src="assets/badge-640.webp" alt="" width="640" height="640">
+      </div>
+    </div>
+    <div class="hero-foot">
+      <div><strong>₹0</strong><span>charged to any candidate, at any stage</span></div>
+      <div><strong>8 days</strong><span>salary confirmed in writing, within 8 working days</span></div>
+      <div><strong>5 days'</strong><span>salary is the employer fee, nothing more</span></div>
+      <div><strong>1 month</strong><span>the hire works before the employer pays</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="terms">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div><div class="kicker mono">The terms, in plain words</div><h2>Two promises.<br><em>Both in writing.</em></h2></div>
+      <p>Most placement trouble starts with something that wasn't said at the start. So we put it on paper on day one, for both sides.</p>
+    </div>
+    <div class="terms rv">
+      <article class="term seek">
+        <header><h3>If you're looking for work</h3><span class="tag">You pay ₹0</span></header>
+        <ol class="clauses">
+          <li><span class="n">1.1</span><div><b>No registration fee. No placement fee.</b><span>Not at sign-up, not at the offer, not from your first salary.</span></div></li>
+          <li><span class="n">1.2</span><div><b>Real openings only</b><span>Every job we share comes from an employer we have verified.</span></div></li>
+          <li><span class="n">1.3</span><div><b>Salary in writing within 8 working days</b><span>You know the number before you commit, not after.</span></div></li>
+          <li><span class="n">1.4</span><div><b>A person, not a portal</b><span>Our team helps from your résumé to your joining day.</span></div></li>
+        </ol>
+      </article>
+      <article class="term emp">
+        <header><h3>If you're hiring</h3><span class="tag">Pay after 1 month</span></header>
+        <ol class="clauses">
+          <li><span class="n">2.1</span><div><b>Fee: five days of the hire's salary</b><span>One fee. No retainers, no advance, no per-CV charges.</span></div></li>
+          <li><span class="n">2.2</span><div><b>Payable only after one month</b><span>The candidate completes a month with you first. Then you pay.</span></div></li>
+          <li><span class="n">2.3</span><div><b>Pre-screened shortlist</b><span>You interview people who fit the role, not a pile of CVs.</span></div></li>
+          <li><span class="n">2.4</span><div><b>Clear written terms</b><span>Signed before we start, so there are no surprises later.</span></div></li>
+        </ol>
+      </article>
+    </div>
+    <div class="terms-foot"><span>Zero charge to candidates. Zero risk to employers.</span><span class="mono">Job Xpert · Punjab</span></div>
+  </div>
+</section>
+
+<section class="fee" id="fee">
+  <div class="wrap">
+    <div class="rv">
+      <div class="kicker mono">For employers</div>
+      <h2>5 days' salary.<br>1 month guarantee.<br><em>Zero stress.</em></h2>
+      <p class="big">Move the slider to the monthly salary you're offering. That's the whole fee, and the date it becomes due.</p>
+      <ul class="lines">
+        <li><b>Day 0</b><span>Share the role. No advance asked.</span></li>
+        <li><b>Day 1+</b><span>Shortlist of pre-screened candidates.</span></li>
+        <li><b>Joining</b><span>Your hire starts work.</span></li>
+        <li><b>+1 month</b><span>They've stayed a month. Now the fee is due.</span></li>
+      </ul>
+    </div>
+    <div class="receipt rv" aria-live="polite">
+      <div class="rh"><span>Fee estimate</span><img src="assets/badge-160.webp" alt="" width="38" height="38"></div>
+      <label for="sal">Monthly salary offered</label>
+      <div class="money"><span>₹</span><input id="sal" inputmode="numeric" value="18,000" aria-describedby="feenote"></div>
+      <input class="range" id="salr" type="range" min="8000" max="100000" step="500" value="18000" aria-label="Monthly salary slider">
+      <div class="rrow zero"><span>Candidate pays</span><b>₹0</b></div>
+      <div class="rrow"><span>Salary per day (÷30)</span><b id="perday">₹600</b></div>
+      <div class="rrow"><span>Days charged</span><b>× 5</b></div>
+      <div class="rrow"><span>Due</span><b>after 1 month</b></div>
+      <div class="rrow total"><span>Your fee</span><b id="feeval">₹3,000</b></div>
+      <small id="feenote">An estimate for this page only. Taxes, if any, and the exact working are set out in your written terms.</small>
+    </div>
+  </div>
+</section>
+
+<section id="openings">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div><div class="kicker mono">Openings</div><h2>Jobs on the board <em>this week</em></h2></div>
+      <p>Tap a role to see the details. Applying costs nothing; it starts a WhatsApp chat with our team.</p>
+    </div>
+    <div class="board-top">
+      <div class="chips" role="group" aria-label="Filter openings">
+        <button type="button" aria-pressed="true" data-f="all">All</button>
+        <button type="button" aria-pressed="false" data-f="office">Office &amp; accounts</button>
+        <button type="button" aria-pressed="false" data-f="sales">Sales &amp; front desk</button>
+        <button type="button" aria-pressed="false" data-f="travel">Travel &amp; aviation</button>
+      </div>
+      <span class="demo-flag">Sample listings for this demo</span>
+    </div>
+    <ul class="jobs" id="jobs"></ul>
+  </div>
+</section>
+
+<div class="overlay" id="ov" aria-hidden="true">
+  <div class="jcard" role="dialog" aria-modal="true" aria-labelledby="jt">
+    <div class="top"><div class="mono-logo" id="jl">A</div><div><span class="mono" id="jc" style="color:var(--muted)"></span><h3 id="jt"></h3></div><button class="x" type="button" aria-label="Close">×</button></div>
+    <div class="meta" id="jm"></div>
+    <p id="jd"></p>
+    <ul id="jr"></ul>
+    <div class="zero">You pay nothing to apply or to be placed.</div>
+    <a class="btn btn-ink" id="ja" href="#" target="_blank" rel="noopener">Apply on WhatsApp</a>
+  </div>
+</div>
+
+<section id="how" style="padding-top:20px">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div><div class="kicker mono">How it works</div><h2>Same team.<br><em>Two journeys.</em></h2></div>
+      <p>Candidates and employers each get one point of contact who follows the placement through, start to finish.</p>
+    </div>
+    <div class="tracks">
+      <div class="track rv">
+        <h3>Finding a job</h3><p>Free from the first call to the joining day.</p>
+        <ol class="steps">
+          <li><span class="dot">01</span><div><b>Send your CV or just call</b><span>No CV yet? We'll help you write one.</span></div></li>
+          <li><span class="dot">02</span><div><b>A short chat about what you want</b><span>Role, salary, location, shift. Honest answers both ways.</span></div></li>
+          <li><span class="dot">03</span><div><b>Matched to verified openings</b><span>Only real roles from employers we've checked.</span></div></li>
+          <li class="key"><span class="dot">04</span><div><b>Salary confirmed in writing</b><span>Within 8 working days.</span><em>Before you commit</em></div></li>
+          <li><span class="dot">05</span><div><b>Interview, offer, joining day</b><span>We stay in touch until you've started.</span></div></li>
+        </ol>
+      </div>
+      <div class="track rv">
+        <h3>Hiring someone</h3><p>Nothing to pay until your hire has stayed a month.</p>
+        <ol class="steps">
+          <li><span class="dot">01</span><div><b>Share the requirement</b><span>Role, salary range, timings, joining date.</span></div></li>
+          <li><span class="dot">02</span><div><b>Written terms signed</b><span>Five days' salary, payable after one month.</span></div></li>
+          <li><span class="dot">03</span><div><b>Pre-screened shortlist</b><span>Candidates who match, ready to interview.</span></div></li>
+          <li><span class="dot">04</span><div><b>You pick, they join</b><span>We coordinate the offer and the joining.</span></div></li>
+          <li class="key"><span class="dot">05</span><div><b>One month later, you pay</b><span>Only if the hire is still with you.</span><em>Zero risk</em></div></li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="family">
+  <div class="wrap rv">
+    <img src="assets/badge-160.webp" alt="Job Xpert badge" width="72" height="72" style="width:72px;height:72px">
+    <p>Part of the same group as <em>Travel Xpert</em> and <em>Sky Pearl Aviation India</em>, under one owner, in Punjab.</p>
+    <div class="names"><span>Job Xpert</span><span>Travel Xpert</span><span>Sky Pearl Aviation</span></div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap faq-grid">
+    <div class="faq-side rv">
+      <div class="kicker mono">Questions</div>
+      <h2>Asked <em>every week</em></h2>
+      <label class="search"><span class="sr">Search questions</span><input id="qsearch" type="search" placeholder="Search: fee, salary, refund…" autocomplete="off"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></label>
+      <p class="hint">Can't find it? Call <a href="tel:+911815002555">0181 500 2555</a>.</p>
+    </div>
+    <div>
+      <ol class="qs" id="qs"></ol>
+      <p class="empty" id="qempty">Nothing matches that. Try "fee" or "salary", or just call us.</p>
+    </div>
+  </div>
+</section>
+
+<section class="apply" id="apply">
+  <div class="wrap apply-grid">
+    <div class="rv">
+      <div class="kicker mono">Get in touch</div>
+      <h2>Tell us what<br>you <em>need.</em></h2>
+      <p style="color:#3A4560;max-width:420px;margin:22px 0 0">Fill the form and it opens a ready message in WhatsApp. Or call the office during working hours.</p>
+      <ul class="contact-list">
+        <li><span class="mono">Office</span><a href="tel:+911815002555">0181 500 2555</a></li>
+        <li><span class="mono">Mobile</span><a href="tel:+917347012555">73470 12555</a></li>
+        <li><span class="mono">WhatsApp</span><a href="https://wa.me/919872486000" target="_blank" rel="noopener">98724 86000</a></li>
+      </ul>
+    </div>
+    <div class="formbox rv">
+      <div class="tabs" role="tablist">
+        <button type="button" role="tab" aria-selected="true" data-tab="seeker" id="t-seeker">I need a job</button>
+        <button type="button" role="tab" aria-selected="false" data-tab="employer" id="t-employer">I'm hiring</button>
+      </div>
+      <form id="form" novalidate>
+        <div class="fgrid" id="fields"></div>
+        <div class="foot"><small id="fnote">Free for candidates. Always.</small><button class="btn btn-ink" type="submit">Continue</button></div>
+      </form>
+      <div class="sentbox" id="sentbox" aria-live="polite">
+        <span class="mono" style="color:var(--gold-deep)">Not sent yet</span>
+        <h3>One more tap.</h3>
+        <p>Your message is ready. Press the button to send it to our team on WhatsApp.</p>
+        <pre id="preview"></pre>
+        <div class="cta-row"><a class="btn btn-ink" id="sendwa" href="#" target="_blank" rel="noopener">Send on WhatsApp</a><button class="btn btn-line" type="button" id="edit">Edit details</button></div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="fgrid2">
+      <div><p class="big">Where talent<br>meets <em>opportunity.</em></p></div>
+      <div><h4>Call</h4><ul><li><a href="tel:+911815002555">0181 500 2555</a></li><li><a href="tel:+917347012555">73470 12555</a></li><li><a href="https://wa.me/919872486000" target="_blank" rel="noopener">WhatsApp 98724 86000</a></li></ul></div>
+      <div><h4>Pages</h4><ul><li><a href="#openings">Openings</a></li><li><a href="#how">How it works</a></li><li><a href="#fee">Employer fee</a></li><li><a href="#faq">Questions</a></li></ul></div>
+    </div>
+    <div class="legal"><span>© Job Xpert. Zero charge to candidates. Zero risk to employers.</span><span>Design concept by SSLC STARTUP</span></div>
+  </div>
+</footer>
+
+<a class="wa-float" href="https://wa.me/919872486000" target="_blank" rel="noopener" aria-label="WhatsApp Job Xpert"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.1 5.1 0 0 0 1.1 2.7 11.6 11.6 0 0 0 4.5 4c1.7.7 2.3.8 3.1.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3Z"/></svg></a>
+
+<script>
+const WA = '919872486000';
+const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
+const inr = n => '₹' + Math.round(n).toLocaleString('en-IN');
+
+/* audience switch */
+function setAud(a){
+  document.body.dataset.aud = a;
+  $$('.switch button').forEach(b => b.setAttribute('aria-pressed', b.dataset.aud === a));
+}
+$$('.switch button').forEach(b => b.addEventListener('click', () => setAud(b.dataset.aud)));
+$$('[data-go]').forEach(a => a.addEventListener('click', () => setTab(a.dataset.go)));
+
+/* mobile nav */
+const nav = $('#nav'), burger = $('.burger');
+burger.addEventListener('click', () => { const o = nav.classList.toggle('open'); burger.setAttribute('aria-expanded', o); });
+$$('.nav ul a').forEach(a => a.addEventListener('click', () => { nav.classList.remove('open'); burger.setAttribute('aria-expanded', false); }));
+
+/* fee estimate */
+const sal = $('#sal'), salr = $('#salr');
+function fee(v){
+  v = Math.max(0, Math.min(1000000, v || 0));
+  $('#perday').textContent = inr(v / 30);
+  $('#feeval').textContent = inr(v / 30 * 5);
+}
+sal.addEventListener('input', () => {
+  const v = parseInt(sal.value.replace(/[^\d]/g, ''), 10) || 0;
+  sal.value = v ? v.toLocaleString('en-IN') : '';
+  salr.value = Math.min(100000, Math.max(8000, v));
+  fee(v);
+});
+salr.addEventListener('input', () => { sal.value = (+salr.value).toLocaleString('en-IN'); fee(+salr.value); });
+fee(18000);
+
+/* openings board */
+const JOBS = [
+  {c:'office', co:'Manufacturing firm · Jalandhar', t:'Accounts Assistant', s:'₹15,000–20,000', l:'Jalandhar', type:'Full time', exp:'1–3 yrs',
+   d:'Day-to-day bookkeeping, GST entries and vendor reconciliation for a mid-sized manufacturer.', r:['B.Com or equivalent','Tally and basic Excel','Comfortable in Punjabi, Hindi and English']},
+  {c:'sales', co:'Car dealership · Jalandhar', t:'Front Office Executive', s:'₹12,000–16,000', l:'Jalandhar', type:'Full time', exp:'Fresher OK',
+   d:'Welcome walk-in customers, manage the appointment register and route calls to the sales team.', r:['Graduate, any stream','Clear spoken English','Neat, punctual, good with people']},
+  {c:'travel', co:'Travel agency · Ludhiana', t:'Ticketing Executive (GDS)', s:'₹18,000–25,000', l:'Ludhiana', type:'Full time', exp:'GDS trained',
+   d:'Issue domestic and international tickets, handle reissues and refunds, and quote fares to walk-in clients.', r:['Amadeus or Galileo training','Fare construction basics','Six days a week, rotational Sunday']},
+  {c:'sales', co:'Real estate developer · Mohali', t:'Telecaller, Inside Sales', s:'₹13,000 + incentive', l:'Mohali', type:'Full time', exp:'0–2 yrs',
+   d:'Call enquiries from property portals, qualify leads and book site visits for the sales team.', r:['Confident on the phone','Hindi and Punjabi a must','Basic CRM or Excel']},
+  {c:'office', co:'Hospital · Jalandhar', t:'Billing & Insurance Desk', s:'₹16,000–21,000', l:'Jalandhar', type:'Shifts', exp:'1+ yrs',
+   d:'Prepare patient bills, coordinate cashless approvals with TPAs and keep the billing desk running on time.', r:['Graduate','Hospital or TPA experience preferred','Rotational shifts']},
+  {c:'travel', co:'Visa consultancy · Amritsar', t:'Visa Documentation Officer', s:'₹15,000–22,000', l:'Amritsar', type:'Full time', exp:'1–2 yrs',
+   d:'Check and file student and visitor visa documents and keep clients updated on each step.', r:['Eye for detail','Good written English','Experience with online visa portals']},
+];
+const jobsEl = $('#jobs');
+JOBS.forEach((j, i) => {
+  const li = document.createElement('li'); li.className = 'job'; li.dataset.c = j.c;
+  li.innerHTML = `<button type="button" aria-haspopup="dialog"><span class="mono-logo">${j.t[0]}</span>
+    <span class="t"><b>${j.t}</b><span>${j.co}</span><span class="m">${j.s} · ${j.l}</span></span>
+    <span class="s">${j.s}</span><span class="l">${j.l} · ${j.type}</span><span class="arr" aria-hidden="true">→</span></button>`;
+  li.querySelector('button').addEventListener('click', e => openJob(i, e.currentTarget));
+  jobsEl.appendChild(li);
+});
+$$('.chips button').forEach(b => b.addEventListener('click', () => {
+  $$('.chips button').forEach(x => x.setAttribute('aria-pressed', x === b));
+  $$('.job').forEach(li => li.hidden = !(b.dataset.f === 'all' || li.dataset.c === b.dataset.f));
+}));
+const ov = $('#ov'); let lastBtn = null;
+function openJob(i, btn){
+  const j = JOBS[i]; lastBtn = btn;
+  $('#jl').textContent = j.t[0]; $('#jc').textContent = j.co; $('#jt').textContent = j.t;
+  $('#jm').innerHTML = [j.s, j.l, j.type, j.exp].map(x => `<span>${x}</span>`).join('');
+  $('#jd').textContent = j.d; $('#jr').innerHTML = j.r.map(x => `<li>${x}</li>`).join('');
+  $('#ja').href = 'https://wa.me/' + WA + '?text=' + encodeURIComponent(`Hello Job Xpert, I want to apply for: ${j.t} (${j.l}).\nName:\nQualification:\nExperience:`);
+  ov.classList.add('on'); ov.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+  setTimeout(() => $('.jcard .x').focus(), 60);
+}
+function closeJob(){
+  if (!ov.classList.contains('on')) return;
+  ov.classList.remove('on'); ov.setAttribute('aria-hidden', 'true'); document.body.style.overflow = '';
+  lastBtn && lastBtn.focus();
+}
+$('.jcard .x').addEventListener('click', closeJob);
+ov.addEventListener('click', e => { if (e.target === ov) closeJob(); });
+addEventListener('keydown', e => { if (e.key === 'Escape') closeJob(); });
+
+/* FAQ: ink-flood accordion with live search */
+const QS = [
+  ['Do candidates really pay nothing?', 'Yes. There is no registration fee and no placement fee, at any stage. If anyone asks you for money in the name of Job Xpert, please call the office.'],
+  ['How much does an employer pay?', 'Five days of the hired candidate\'s salary. That is the full fee: no retainer, no advance, no per-CV charge.'],
+  ['When is the employer fee due?', 'Only after the candidate has completed one month with you. If they leave before that, the fee is not due.'],
+  ['When will I know the salary?', 'We share the salary with you in writing within 8 working days, so you know the number before you commit.'],
+  ['Are the openings real?', 'Every opening comes from an employer we have verified. We don\'t post jobs we can\'t place you in.'],
+  ['I don\'t have a CV. Can I still apply?', 'Yes. Call or message us and the team will help you put one together, free.'],
+  ['Which cities do you place in?', 'Mostly across Punjab. Tell us where you want to work and we\'ll tell you honestly what is open.'],
+  ['What kind of roles do you hire for?', 'Office and accounts, sales and front desk, hospital desks, and travel and aviation roles, including GDS ticketing staff.'],
+];
+const qsEl = $('#qs');
+const esc = s => s.replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function hl(text, q){
+  const t = esc(text); if (!q) return t;
+  const words = q.toLowerCase().split(/\s+/).filter(w => w.length > 1).map(w => w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+  if (!words.length) return t;
+  return t.replace(new RegExp('(' + words.join('|') + ')', 'gi'), '<mark>$1</mark>');
+}
+function renderQs(q = ''){
+  qsEl.innerHTML = ''; let shown = 0;
+  QS.forEach(([qq, a], i) => {
+    const hay = (qq + ' ' + a).toLowerCase();
+    const ok = !q || q.toLowerCase().split(/\s+/).filter(Boolean).every(w => hay.includes(w));
+    if (!ok) return; shown++;
+    const li = document.createElement('li'); li.className = 'q';
+    li.innerHTML = `<span class="fill"></span><button type="button" aria-expanded="false" aria-controls="qa${i}" id="qb${i}">
+      <span class="qn">${String(i + 1).padStart(2, '0')}</span><span class="qt">${hl(qq, q)}</span><span class="plus" aria-hidden="true">+</span></button>
+      <div class="panel" id="qa${i}" role="region" aria-labelledby="qb${i}"><div><p>${hl(a, q)}</p></div></div>`;
+    const b = li.querySelector('button');
+    b.addEventListener('click', () => {
+      const open = !li.classList.contains('open');
+      $$('.q.open').forEach(x => { if (x !== li) { x.classList.remove('open'); x.querySelector('button').setAttribute('aria-expanded', false); } });
+      li.classList.toggle('open', open); b.setAttribute('aria-expanded', open);
+    });
+    b.addEventListener('keydown', e => {
+      if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return;
+      e.preventDefault();
+      const all = $$('.q button'), k = all.indexOf(b);
+      all[(k + (e.key === 'ArrowDown' ? 1 : -1) + all.length) % all.length].focus();
+    });
+    qsEl.appendChild(li);
+  });
+  $('#qempty').style.display = shown ? 'none' : 'block';
+}
+renderQs();
+$('#qsearch').addEventListener('input', e => renderQs(e.target.value.trim()));
+
+/* forms -> WhatsApp (never pretends to send) */
+const FIELDS = {
+  seeker: [['name','Full name','text',1],['phone','Mobile number','tel',1],['qual','Qualification','text',1],['exp','Experience','select',0,['Fresher','Under 1 year','1–3 years','3–5 years','5+ years']],
+           ['role','Job you want','text',1],['city','Preferred city','text',0],['msg','Anything else','textarea',0]],
+  employer: [['name','Your name','text',1],['phone','Mobile number','tel',1],['company','Company','text',1],['city','City','text',1],
+             ['role','Role to fill','text',1],['count','How many people','select',0,['1','2–5','6–10','10+']],['msg','Salary range, timings, joining date','textarea',0]]
+};
+let tab = 'seeker';
+function setTab(t){
+  tab = t;
+  $$('.tabs button').forEach(b => b.setAttribute('aria-selected', b.dataset.tab === t));
+  $('#fnote').textContent = t === 'seeker' ? 'Free for candidates. Always.' : 'No advance. Fee only after your hire completes one month.';
+  $('#fields').innerHTML = FIELDS[t].map(([id, lab, type, req, opts]) => {
+    const full = type === 'textarea' ? ' full' : '';
+    const ctl = type === 'select' ? `<select id="f_${id}" name="${id}">${opts.map(o => `<option>${o}</option>`).join('')}</select>`
+      : type === 'textarea' ? `<textarea id="f_${id}" name="${id}" rows="3"></textarea>`
+      : `<input id="f_${id}" name="${id}" type="${type}" ${type === 'tel' ? 'inputmode="tel" autocomplete="tel"' : ''} ${req ? 'required' : ''}>`;
+    return `<div class="f${full}"><label for="f_${id}">${lab}${req ? ' *' : ''}</label>${ctl}<span class="err" id="e_${id}"></span></div>`;
+  }).join('');
+  $('#form').style.display = ''; $('#sentbox').classList.remove('on');
+}
+$$('.tabs button').forEach(b => b.addEventListener('click', () => setTab(b.dataset.tab)));
+setTab('seeker');
+$('#form').addEventListener('submit', e => {
+  e.preventDefault(); let ok = true; const out = [];
+  FIELDS[tab].forEach(([id, lab, type, req]) => {
+    const el = $('#f_' + id), v = el.value.trim(); let err = '';
+    if (req && !v) err = 'Please fill this in.';
+    else if (type === 'tel' && v && v.replace(/\D/g, '').length < 10) err = 'Enter a 10-digit mobile number.';
+    $('#e_' + id).textContent = err; if (err) { ok && el.focus(); ok = false; }
+    if (v) out.push(`${lab}: ${v}`);
+  });
+  if (!ok) return;
+  const text = (tab === 'seeker' ? 'Hello Job Xpert, I am looking for a job.\n' : 'Hello Job Xpert, we want to hire.\n') + out.join('\n');
+  $('#preview').textContent = text;
+  $('#sendwa').href = 'https://wa.me/' + WA + '?text=' + encodeURIComponent(text);
+  $('#form').style.display = 'none'; $('#sentbox').classList.add('on');
+});
+$('#edit').addEventListener('click', () => { $('#form').style.display = ''; $('#sentbox').classList.remove('on'); });
+
+/* reveal on scroll */
+const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), {rootMargin:'0px 0px -8% 0px'});
+$$('.rv').forEach(el => io.observe(el));
+</script>
+</body>
+</html>
