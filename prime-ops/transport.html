@@ -44,6 +44,7 @@
 <main class="page">
   <div class="tabs" role="tablist">
     <button role="tab" aria-selected="true" data-t="live" data-ar="الرحلات الآن">Trips now</button>
+    <button role="tab" aria-selected="false" data-t="2pl" data-ar="أسطول مخصص (2PL)">Dedicated fleet (2PL)</button>
     <button role="tab" aria-selected="false" data-t="fleet" data-ar="الأسطول والوثائق">Fleet and documents</button>
   </div>
 
@@ -63,6 +64,14 @@
       </svg>
     </div>
     <div class="grid board" id="board"></div>
+  </section>
+
+  <section id="v-2pl" hidden>
+    <div class="panel" style="margin-bottom:16px">
+      <div class="ph"><h2 data-ar="عقود النقل فقط (الخدمات اللوجستية الطرف الثاني)">Transport-only contracts (second-party logistics)</h2><small data-ar="العميل يدير مستودعه، وبرايم توفر الشاحنات والسائقين">The client runs its own warehouse. Prime supplies the trucks and drivers.</small></div>
+      <div class="twrap"><table class="t"><thead><tr><th data-ar="العميل">Client</th><th data-ar="المركبات المخصصة">Dedicated vehicles</th><th data-ar="نموذج السعر">Pricing model</th><th class="num" data-ar="رحلات هذا الشهر">Trips this month</th><th class="num" data-ar="كم">km</th><th data-ar="الاستخدام">Utilisation</th><th class="num" data-ar="قيمة الشهر حتى الآن">Month so far</th><th></th></tr></thead><tbody id="c2pl"></tbody></table></div>
+    </div>
+    <div class="panel"><div class="ph"><h2 data-ar="رحلات 2PL اليوم">2PL trips today</h2></div><div class="twrap"><table class="t"><thead><tr><th data-ar="الرحلة">Trip</th><th data-ar="العميل">Client</th><th data-ar="المسار">Route</th><th data-ar="المركبة">Vehicle</th><th data-ar="الحالة">Status</th></tr></thead><tbody id="t2pl"></tbody></table></div></div>
   </section>
 
   <section id="v-fleet" hidden>
@@ -131,11 +140,17 @@ const day=86400000, now=new Date('2026-10-21');
 const V=[['Reefer R-07','Reefer 12 t','Faisal Al-Harbi',6,140,90],['Reefer T-12','Reefer 12 t','Imran Qureshi',210,95,40],['Flatbed F-03','Flatbed 20 t','Saleh Al-Dosari',88,22,160],['Dyna D-21','Dyna 4 t','Ramesh Nair',300,260,12],['Reefer T-04','Reefer 8 t','Faisal Al-Harbi',150,175,120],['Dyna D-08','Dyna 4 t','Ramesh Nair',64,300,210]];
 function docCell(d){const date=new Date(now.getTime()+d*day).toISOString().slice(0,10);const k=d<=14?'p-bad':d<=30?'p-warn':'p-ok';return `<span class="pill ${k}">${date}</span>`}
 function fleet(){document.getElementById('fleet').innerHTML=V.map(v=>{const worst=Math.min(v[3],v[4],v[5]);return `<tr><td><b>${v[0]}</b></td><td>${v[1]}</td><td>${v[2]}</td><td>${docCell(v[3])}</td><td>${docCell(v[4])}</td><td>${docCell(v[5])}</td><td>${worst<=30?`<button class="btn btn-a" onclick="this.outerHTML='<span class=\\'pill p-info\\'>${isAr()?'طلب التجديد أُرسل':'Renewal requested'}</span>';toast('${isAr()?'تم إرسال طلب التجديد':'Renewal request sent'}')">${isAr()?'تجديد':'Renew'}</button>`:''}</td></tr>`}).join('')}
-function tab(t){document.querySelectorAll('.tabs button').forEach(b=>b.setAttribute('aria-selected',b.dataset.t===t));document.getElementById('v-live').hidden=t!=='live';document.getElementById('v-fleet').hidden=t!=='fleet'}
+function tab(t){document.querySelectorAll('.tabs button').forEach(b=>b.setAttribute('aria-selected',b.dataset.t===t));['live','2pl','fleet'].forEach(x=>document.getElementById('v-'+x).hidden=x!==t)}
+const C2=[['Masar Building Materials','3 flatbeds, 20 t, with drivers','3 شاحنات مسطحة 20 طن مع السائقين','Fixed monthly per truck','شهري ثابت لكل شاحنة',46,14820,84,'SAR 21,000 × 3'],
+ ['Gulf Cement Trading','2 flatbeds, 20 t','شاحنتان مسطحتان 20 طن','Per trip, Riyadh to Dammam','لكل رحلة، الرياض إلى الدمام',22,9240,71,'SAR 1,650 × 22']];
+const TOT={'Masar Building Materials':63000,'Gulf Cement Trading':36300};
+const ST2={road:['On the road','على الطريق','p-info'],load:['Loading','قيد التحميل','p-warn'],done:['Delivered','تم التسليم','p-ok']};
+function c2(){document.getElementById('c2pl').innerHTML=C2.map(c=>`<tr><td><b>${c[0]}</b><div>${svcTags(c[0])}</div></td><td>${isAr()?c[2]:c[1]}</td><td>${isAr()?c[4]:c[3]}<br><small class="muted">${c[8]}</small></td><td class="num">${c[5]}</td><td class="num">${c[6].toLocaleString('en-US')}</td><td style="min-width:110px"><div class="bar"><i style="width:${c[7]}%"></i></div><small class="muted">${c[7]}%</small></td><td class="num"><b>${sar(TOT[c[0]])}</b></td><td><a class="btn btn-o" href="billing.html?client=${encodeURIComponent(c[0])}">${isAr()?'فاتورة النقل':'Transport invoice'}</a></td></tr>`).join('');
+ document.getElementById('t2pl').innerHTML=[['PL-24830','Masar Building Materials','RUH → DMM','Flatbed F-05','road'],['PL-24831','Masar Building Materials','Riyadh city','Flatbed F-06','load'],['PL-24832','Gulf Cement Trading','DMM → RUH','Flatbed F-07','road'],['PL-24828','Gulf Cement Trading','RUH → DMM','Flatbed F-08','done']].map(r=>{const st=ST2[r[4]];return `<tr><td>${r[0]}</td><td>${r[1]}</td><td>${rt(r[2])}</td><td>${r[3]}</td><td><span class="pill ${st[2]}">${isAr()?st[1]:st[0]}</span></td></tr>`}).join('')}
 document.querySelectorAll('.tabs button').forEach(b=>b.addEventListener('click',()=>tab(b.dataset.t)));
 function names(){['RUH','DMM','JED'].forEach(k=>document.getElementById('t'+k).textContent=CITY[k][isAr()?1:0])}
-board();fleet();names(); if(location.hash==='#fleet')tab('fleet');
-document.addEventListener('langchange',()=>{board();fleet();names()});
+board();fleet();names();c2(); if(location.hash==='#fleet')tab('fleet'); if(location.hash==='#fleet2pl')tab('2pl');
+document.addEventListener('langchange',()=>{board();fleet();names();c2()});
 if(isAr()) applyLang('ar');
 </script>
 </body>
