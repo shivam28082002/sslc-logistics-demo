@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prime Operations · Packaging</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="assets/fav-icon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..700&family=IBM+Plex+Sans+Arabic:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/app.css">
+<style>
+.pk{grid-template-columns:1.55fr 1fr;margin-top:16px;align-items:start}
+.job{display:grid;grid-template-columns:1fr auto;gap:8px 16px;padding:14px 0;border-bottom:1px solid #ECEEEA}
+.job:last-child{border-bottom:0}
+.job b{font-weight:600}
+.job small{display:block;color:var(--steel-d)}
+.flowline{grid-column:1/-1;display:grid;grid-template-columns:repeat(4,1fr);gap:4px}
+.flowline span{font-size:12px;padding:5px 6px;border-radius:5px;background:#EEF0ED;color:var(--steel-d);text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.flowline span.on{background:var(--green);color:#fff}
+.flowline span.cur{background:var(--amber);color:var(--green-dd);font-weight:600}
+.prog{grid-column:1/-1;display:flex;align-items:center;gap:10px;font-size:13px;color:var(--steel-d)}
+.prog .bar{flex:1}
+.mat{display:grid;grid-template-columns:1fr 70px;gap:4px 12px;align-items:center;padding:8px 0;border-bottom:1px solid #ECEEEA;font-size:14px}
+.mat:last-child{border-bottom:0}
+.mat .bar{grid-column:1/-1}
+.nf{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.nf .full{grid-column:1/-1}
+.est{background:var(--floor);border-radius:8px;padding:10px 12px;font-size:14px;display:flex;justify-content:space-between;gap:10px}
+.est b{font-size:17px}
+.types{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:16px}
+.type{background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px}
+.type b{display:block;font-weight:600;margin-bottom:4px}
+.type small{color:var(--steel-d);font-size:13px}
+.type .r{display:block;margin-top:8px;font-weight:600;color:var(--green)}
+@media (max-width:1200px){.types{grid-template-columns:repeat(3,1fr)}}
+@media (max-width:1000px){.pk{grid-template-columns:1fr}}
+@media (max-width:600px){.types{grid-template-columns:1fr 1fr}.nf{grid-template-columns:1fr}.flowline{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<div class="shell">
+<aside class="rail"></aside>
+<div>
+<header class="top">
+  <button class="burger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+  <h1 data-ar="التغليف">Packaging</h1>
+  <span class="sp"></span>
+  <button class="btn btn-g" type="button" id="nj" data-ar="مهمة تغليف جديدة">New packaging job</button>
+  <button class="lang" type="button">عربي</button>
+  <span class="avatar">AK</span>
+</header>
+<main class="page">
+  <div class="kpis" id="kpis"></div>
+  <div class="types" id="types"></div>
+
+  <div class="grid pk">
+    <section class="panel">
+      <div class="ph"><h2 data-ar="مهام التغليف اليوم">Packaging jobs today</h2><small data-ar="اضغط «الخطوة التالية» عند انتهاء كل مرحلة">Press "Next step" as each stage finishes</small></div>
+      <div id="jobs"></div>
+    </section>
+    <aside class="panel">
+      <div class="ph"><h2 data-ar="مخزون مواد التغليف">Packing materials</h2><small data-ar="ينقص تلقائياً مع كل مهمة">Goes down with every job</small></div>
+      <div id="mats"></div>
+    </aside>
+  </div>
+</main>
+</div>
+</div>
+
+<div class="modal" id="jobM" aria-hidden="true"><div class="box" role="dialog" aria-modal="true" aria-labelledby="jmT">
+  <h3 id="jmT" data-ar="مهمة تغليف جديدة">New packaging job</h3>
+  <form class="nf" id="jf" style="margin-top:14px">
+    <div class="field"><label for="jc" data-ar="العميل">Client</label><select id="jc"><option>Al Waha Foods</option><option>Sahara Home Retail</option><option>Tamr Dates Co.</option></select></div>
+    <div class="field"><label for="jt" data-ar="نوع العمل">Type of work</label><select id="jt"></select></div>
+    <div class="field"><label for="ju" data-ar="عدد الوحدات">Units</label><input id="ju" type="number" min="1" value="600"></div>
+    <div class="field"><label for="jd" data-ar="الموعد">Due</label><select id="jd"><option>Today 18:00</option><option>Tomorrow 12:00</option><option>Thursday</option></select></div>
+    <div class="est full"><span data-ar="التكلفة على فاتورة العميل">Goes on the client's invoice</span><b id="je"></b></div>
+    <div class="full" style="display:flex;gap:8px"><button class="btn btn-g" type="submit" data-ar="إنشاء المهمة">Create job</button><button class="btn btn-o" type="button" onclick="closeModal('jobM')" data-ar="إلغاء">Cancel</button></div>
+  </form>
+</div></div>
+
+<script src="assets/app.js"></script>
+<script>
+const t=(en,ar)=>isAr()?ar:en;
+const TYPES=[['wrap','Shrink-wrap and palletise','تغليف حراري وتجهيز المنصات','Stretch film, corner boards, pallet label','غلاف مطاطي وزوايا وملصق منصة',12,'pallet','منصة'],
+ ['label','Arabic and SFDA labelling','ملصقات عربية وهيئة الغذاء والدواء','Import goods relabelled for the Saudi market','إعادة لصق البضائع المستوردة للسوق السعودي',0.45,'unit','وحدة'],
+ ['kit','Kitting and gift packs','تجميع وعلب هدايا','Ramadan and Eid baskets, promo bundles','سلال رمضان والعيد وعروض مجمعة',3.5,'kit','طقم'],
+ ['repack','Repacking and bundling','إعادة التعبئة والتجميع','Split master cartons, multipacks for retail','تقسيم الكراتين الكبيرة وعبوات للتجزئة',0.8,'unit','وحدة'],
+ ['seal','Carton sealing and strapping','إغلاق الكراتين وتربيطها','Export-grade sealing, strapping, fragile marks','إغلاق للتصدير وتربيط وعلامات قابل للكسر',1.2,'carton','كرتون']];
+const STEPS=[['Received','استلام'],['Packing','تغليف'],['Quality check','فحص الجودة'],['Ready to ship','جاهز للشحن']];
+let J=[{id:'PKG-3107',c:'Al Waha Foods',ty:'kit',u:800,done:520,st:1,due:'Today 18:00'},
+ {id:'PKG-3106',c:'Tamr Dates Co.',ty:'label',u:2400,done:2400,st:2,due:'Today 15:00'},
+ {id:'PKG-3105',c:'Sahara Home Retail',ty:'repack',u:1500,done:300,st:1,due:'Tomorrow 12:00'},
+ {id:'PKG-3104',c:'Al Waha Foods',ty:'wrap',u:36,done:36,st:3,due:'Done 11:20'},
+ {id:'PKG-3108',c:'Sahara Home Retail',ty:'seal',u:220,done:0,st:0,due:'Tomorrow 16:00'}];
+let M=[['Cartons, small','كراتين صغيرة',1840,4000],['Cartons, large','كراتين كبيرة',310,2000],['Stretch film rolls','لفائف الغلاف',42,120],['Arabic labels','ملصقات عربية',5200,20000],['Gift boxes, Ramadan','علب هدايا رمضان',380,1500],['Strapping, metres','شريط تربيط بالمتر',2600,5000]];
+const ty=k=>TYPES.find(x=>x[0]===k);
+function kpis(){const units=J.reduce((a,j)=>a+j.done,0),rev=J.reduce((a,j)=>a+j.done*ty(j.ty)[5],0);
+  document.getElementById('kpis').innerHTML=`<div class="kpi"><span>${t('Jobs open','مهام مفتوحة')}</span><b>${J.filter(j=>j.st<3).length}</b><em class="muted">${t('of','من')} ${J.length} ${t('today','اليوم')}</em></div>
+  <div class="kpi"><span>${t('Units packed today','وحدات مغلفة اليوم')}</span><b>${units.toLocaleString('en-US')}</b><em class="up">▲ ${t('12% on yesterday','12% عن أمس')}</em></div>
+  <div class="kpi"><span>${t('Packaging revenue today','إيراد التغليف اليوم')}</span><b>${sar(rev).replace('.00','')}</b><em class="muted">${t('billed monthly','يُفوتر شهرياً')}</em></div>
+  <div class="kpi"><span>${t('Pack stations busy','محطات التغليف المشغولة')}</span><b>5 / 6</b><em class="muted">${t('one free','واحدة متاحة')}</em></div>
+  <div class="kpi"><span>${t('Materials low','مواد منخفضة')}</span><b>${M.filter(m=>m[2]/m[3]<.25).length}</b><em class="warn">${t('reorder this week','أعد الطلب هذا الأسبوع')}</em></div>`}
+function types(){document.getElementById('types').innerHTML=TYPES.map(x=>`<div class="type"><b>${t(x[1],x[2])}</b><small>${t(x[3],x[4])}</small><span class="r">SAR ${x[5]} / ${t(x[6],x[7])}</span></div>`).join('')}
+function jobs(){document.getElementById('jobs').innerHTML=J.map((j,i)=>{const T=ty(j.ty),pct=Math.round(j.done/j.u*100);return `<div class="job"><div><b>${j.id} · ${t(T[1],T[2])}</b><small>${j.c} · ${j.u.toLocaleString('en-US')} ${t(T[6]+'s',T[7])} · ${t('due','الموعد')} ${j.due}</small><div style="margin-top:4px">${svcTags(j.c)}</div></div>
+  <div>${j.st<3?`<button class="btn btn-o" data-i="${i}">${t('Next step','الخطوة التالية')}</button>`:`<span class="pill p-ok">${t('Ready','جاهز')}</span>`}</div>
+  <div class="flowline">${STEPS.map((s,k)=>`<span class="${k<j.st?'on':k===j.st?'cur':''}">${t(s[0],s[1])}</span>`).join('')}</div>
+  <div class="prog"><div class="bar"><i style="width:${pct}%"></i></div><span>${j.done.toLocaleString('en-US')} / ${j.u.toLocaleString('en-US')}</span></div></div>`}).join('');
+  document.querySelectorAll('#jobs button').forEach(b=>b.addEventListener('click',()=>{const j=J[+b.dataset.i];j.st++;if(j.st>=2)j.done=j.u;if(j.st===1&&!j.done)j.done=Math.round(j.u*.1);
+    if(j.st===3){j.due=t('Done now','انتهت الآن');toast(t(`${j.id} is ready to ship. Charge added to ${j.c}'s invoice.`,`${j.id} جاهزة للشحن. أُضيفت التكلفة لفاتورة ${j.c}.`))}else toast(t(`${j.id}: ${STEPS[j.st][0]}`,`${j.id}: ${STEPS[j.st][1]}`));kpis();jobs()}))}
+function mats(){document.getElementById('mats').innerHTML=M.map(m=>{const p=m[2]/m[3];return `<div class="mat"><span>${t(m[0],m[1])}</span><b style="text-align:end" class="${p<.25?'warn':''}">${m[2].toLocaleString('en-US')}</b><div class="bar"><i class="${p<.25?'hi':''}" style="width:${Math.max(3,p*100)}%"></i></div></div>`}).join('')+`<button class="btn btn-o" style="margin-top:12px" onclick="toast(isAr()?'تم إرسال طلب شراء للمورد':'Purchase order sent to supplier')">${t('Reorder low items','أعد طلب المواد المنخفضة')}</button>`}
+document.getElementById('jt').innerHTML=TYPES.map(x=>`<option value="${x[0]}">${x[1]}</option>`).join('');
+function est(){const T=ty(document.getElementById('jt').value),u=+document.getElementById('ju').value||0;document.getElementById('je').textContent=`${sar(u*T[5])} (${u.toLocaleString('en-US')} × SAR ${T[5]})`}
+['jt','ju'].forEach(id=>document.getElementById(id).addEventListener('input',est));
+document.getElementById('nj').addEventListener('click',()=>{est();openModal('jobM')});
+document.getElementById('jf').addEventListener('submit',e=>{e.preventDefault();const u=+document.getElementById('ju').value;if(!u||u<1){toast(t('Enter the number of units.','أدخل عدد الوحدات.'));return}
+  const k=document.getElementById('jt').value;J.unshift({id:'PKG-'+(3109+J.length-5),c:document.getElementById('jc').value,ty:k,u,done:0,st:0,due:document.getElementById('jd').value});
+  const use={wrap:[2,Math.ceil(u/12)],label:[3,u],kit:[4,u],repack:[0,Math.ceil(u/6)],seal:[5,u*3]}[k];M[use[0]][2]=Math.max(0,M[use[0]][2]-use[1]);
+  closeModal('jobM');kpis();jobs();mats();toast(t('Job created and materials reserved.','تم إنشاء المهمة وحجز المواد.'))});
+function all(){kpis();types();jobs();mats()}
+all(); document.addEventListener('langchange',all);
+if(isAr()) applyLang('ar');
+</script>
+</body>
+</html>
