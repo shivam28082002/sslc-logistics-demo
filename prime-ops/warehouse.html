@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prime Operations · Warehouse</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="assets/fav-icon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..700&family=IBM+Plex+Sans+Arabic:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/app.css">
+<style>
+.wh{grid-template-columns:1fr 320px}
+.floor{background:#E4E6E1;border-radius:10px;padding:16px;overflow-x:auto}
+.aisles{display:grid;gap:10px;min-width:640px}
+.aisle{display:grid;grid-template-columns:28px repeat(14,1fr);gap:3px;align-items:center}
+.aisle>span{font-weight:700;font-stretch:120%;color:var(--green);font-size:15px}
+.cell{aspect-ratio:1.25;border-radius:3px;border:0;cursor:pointer;padding:0;position:relative;background:#fff;transition:transform .12s,outline-color .12s;outline:2px solid transparent}
+.cell:hover{transform:scale(1.15);z-index:2}
+.cell[aria-pressed="true"]{outline-color:var(--ink);z-index:3}
+.cell.dim{opacity:.18}
+.cell.new{animation:pop 1.2s ease 2}
+@keyframes pop{50%{transform:scale(1.4);box-shadow:0 0 0 4px var(--amber)}}
+.walk{height:8px}
+.legend{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.legend button{display:flex;align-items:center;gap:7px;border:1px solid var(--line-2);background:#fff;border-radius:999px;padding:5px 11px;font-size:13px;cursor:pointer}
+.legend button i{width:11px;height:11px;border-radius:3px}
+.legend button[aria-pressed="true"]{border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
+.loc dl{display:grid;grid-template-columns:auto 1fr;gap:8px 14px;margin:14px 0 0;font-size:14px}
+.loc dt{color:var(--steel-d)} .loc dd{margin:0;font-weight:500;text-align:end}
+.loc .big{font:700 34px/1 var(--sans);font-stretch:120%;letter-spacing:.01em}
+.loc .empty{color:var(--steel-d);padding:20px 0}
+.scan{display:flex;gap:8px}
+.scan input{flex:1}
+.gform{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.gform .full{grid-column:1/-1}
+.pick li{display:flex;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid #ECEEEA}
+.pick ul{list-style:none;margin:0;padding:0}
+.pick input{width:18px;height:18px;accent-color:var(--green)}
+.pick li.done span{text-decoration:line-through;color:var(--steel-d)}
+tr.low td{background:#FFF8EA}
+[hidden]{display:none!important}
+@media (max-width:1100px){.wh{grid-template-columns:1fr}}
+@media (max-width:600px){.gform{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="shell">
+<aside class="rail"></aside>
+<div>
+<header class="top">
+  <button class="burger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+  <h1 data-ar="المستودع">Warehouse</h1>
+  <label class="search"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span class="sr">Search</span><input id="q" placeholder="Search SKU, batch or location" data-ar-ph="ابحث عن صنف أو دفعة أو موقع"></label>
+  <span class="sp"></span>
+  <select class="sel" id="site" aria-label="Site"><option value="RUH">Riyadh, Al-Sulay</option><option value="JED">Jeddah</option><option value="DMM">Dammam</option></select>
+  <button class="lang" type="button">عربي</button>
+  <span class="avatar">AK</span>
+</header>
+<main class="page">
+  <div class="tabs" role="tablist">
+    <button role="tab" aria-selected="true" data-t="map" data-ar="خريطة الرفوف">Rack map</button>
+    <button role="tab" aria-selected="false" data-t="stock" id="tab-stock" data-ar="المخزون">Stock</button>
+    <button role="tab" aria-selected="false" data-t="inbound" id="tab-inbound" data-ar="استلام (GRN)">Inbound (GRN)</button>
+    <button role="tab" aria-selected="false" data-t="pick" data-ar="قوائم الالتقاط">Pick lists</button>
+  </div>
+
+  <section id="v-map">
+    <div class="grid wh">
+      <div class="panel">
+        <div class="ph"><h2><span data-ar="مخطط الأرضية من الأعلى">Floor plan, seen from above</span></h2><small id="occ"></small></div>
+        <div class="floor"><div class="aisles" id="aisles"></div></div>
+        <div class="legend" id="legend" role="group" aria-label="Highlight a client"></div>
+      </div>
+      <aside class="panel loc" aria-live="polite" id="loc"><div class="empty" data-ar="اختر أي موقع على الخريطة لرؤية ما بداخله.">Pick any location on the map to see what's in it.</div></aside>
+    </div>
+  </section>
+
+  <section id="v-stock" hidden>
+    <div class="panel">
+      <div class="ph"><h2 data-ar="المخزون حسب العميل والصنف">Stock by client and SKU</h2><small data-ar="الصفوف الصفراء تحت حد إعادة الطلب">Yellow rows are below reorder level</small></div>
+      <div class="twrap"><table class="t"><thead><tr><th data-ar="العميل">Client</th><th>SKU</th><th data-ar="الدفعة">Batch</th><th data-ar="الانتهاء">Expiry</th><th data-ar="الموقع">Location</th><th class="num" data-ar="الكمية">Qty</th><th data-ar="الحالة">Status</th></tr></thead><tbody id="stock"></tbody></table></div>
+    </div>
+  </section>
+
+  <section id="v-inbound" hidden>
+    <div class="grid wh">
+      <div class="panel">
+        <div class="ph"><h2 data-ar="استلام شحنة واردة">Receive an inbound delivery</h2><small data-ar="امسح الباركود أو اكتب">Scan the barcode or type it</small></div>
+        <form class="gform" id="grn">
+          <div class="field full"><label for="bc" data-ar="باركود المنصة">Pallet barcode</label><div class="scan"><input id="bc" value="(00)628100045812" autocomplete="off"><button type="button" class="btn btn-o" id="scanBtn" data-ar="مسح">Scan</button></div></div>
+          <div class="field"><label for="gc" data-ar="العميل">Client</label><select id="gc"></select></div>
+          <div class="field"><label for="gs">SKU</label><input id="gs" value="Date paste 1 kg × 12"></div>
+          <div class="field"><label for="gb" data-ar="الدفعة">Batch</label><input id="gb" value="WF-2610-B"></div>
+          <div class="field"><label for="ge" data-ar="تاريخ الانتهاء">Expiry</label><input id="ge" type="date" value="2027-04-30"></div>
+          <div class="field"><label for="gq" data-ar="الكمية (كرتون)">Quantity (cartons)</label><input id="gq" type="number" min="1" value="48"></div>
+          <div class="field"><label for="gt" data-ar="درجة الحرارة عند الاستلام">Temperature at receipt</label><select id="gt"><option>Ambient</option><option>Chilled 2–8 °C</option><option>Frozen −18 °C</option></select></div>
+          <div class="full" style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><button class="btn btn-g" type="submit" data-ar="استلام واقتراح موقع">Receive and suggest a location</button><small class="muted" data-ar="يختار النظام أقرب موقع فارغ للعميل نفسه.">The system picks the nearest free slot next to the same client's stock.</small></div>
+        </form>
+      </div>
+      <aside class="panel">
+        <div class="ph"><h2 data-ar="آخر الاستلامات">Received today</h2></div>
+        <div class="twrap"><table class="t"><thead><tr><th>GRN</th><th data-ar="العميل">Client</th><th class="num" data-ar="منصات">Pallets</th></tr></thead><tbody id="grns"></tbody></table></div>
+      </aside>
+    </div>
+  </section>
+
+  <section id="v-pick" hidden>
+    <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(300px,1fr))" id="picks"></div>
+  </section>
+</main>
+</div>
+</div>
+<script src="assets/app.js"></script>
+<script>
+const CL=[['Najd Pharma Distribution','#2E6A9E'],['Al Waha Foods','#B87612'],['Qimma Beverages','#7A4E9E'],['Rawabi Electronics','#3D4E43'],['Sahara Home Retail','#A0522D'],['Tamr Dates Co.','#2F8F4E']];
+const SKU={0:['Paracetamol 500 mg, case','Insulin pens, cold','Saline 500 ml × 20'],1:['Date paste 1 kg × 12','Frozen samosa 40 pc','Labneh 500 g × 12'],2:['Water 330 ml × 40','Laban 1 L × 12','Juice 200 ml × 27'],3:['55" TV, boxed','Air conditioner 1.5 t','Router, master carton'],4:['Bedsheet set','Cookware 10 pc','Plastic chairs × 4'],5:['Sukkari dates 3 kg','Ajwa dates 1 kg × 10','Date syrup 500 ml × 12']};
+let seed=7; const rnd=()=>(seed=(seed*16807)%2147483647)/2147483647;
+const AIS='ABCDEFGH'.split(''); let cells=[];
+function build(site){
+  seed={RUH:7,JED:19,DMM:31}[site]; const fill={RUH:.88,JED:.79,DMM:.74}[site]; cells=[];
+  AIS.forEach(a=>{for(let b=1;b<=14;b++){const used=rnd()<fill;const c=Math.floor(rnd()*6);
+    cells.push({id:`${a}-${String(b).padStart(2,'0')}`,a,used,c,sku:SKU[c][Math.floor(rnd()*3)],qty:20+Math.floor(rnd()*60),lvl:1+Math.floor(rnd()*4),exp:`2027-0${1+Math.floor(rnd()*9)}-${10+Math.floor(rnd()*18)}`,batch:`${['NP','WF','QB','RE','SH','TD'][c]}-${2600+Math.floor(rnd()*99)}`})}});
+  render();
+}
+let hl=null, sel=null;
+function render(){
+  const el=document.getElementById('aisles');
+  el.innerHTML=AIS.map((a,i)=>`<div class="aisle"><span>${a}</span>${cells.filter(c=>c.a===a).map(c=>`<button class="cell${hl!==null&&(!c.used||c.c!==hl)?' dim':''}" data-id="${c.id}" aria-label="${c.id} ${c.used?CL[c.c][0]:'free'}" aria-pressed="${sel===c.id}" style="background:${c.used?CL[c.c][1]:'#fff'}"></button>`).join('')}</div>${i%2===1&&i<7?'<div class="walk"></div>':''}`).join('');
+  el.querySelectorAll('.cell').forEach(b=>b.addEventListener('click',()=>{sel=b.dataset.id;show();render()}));
+  const u=cells.filter(c=>c.used).length; document.getElementById('occ').textContent=`${u} / ${cells.length} ${isAr()?'موقع مشغول':'locations used'} · ${Math.round(u/cells.length*100)}%`;
+}
+function show(){
+  const c=cells.find(x=>x.id===sel), L=document.getElementById('loc');
+  if(!c.used){L.innerHTML=`<div class="big">${c.id}</div><p><span class="pill p-mute">${isAr()?'فارغ':'Free'}</span></p><p class="muted">${isAr()?'هذا الموقع جاهز لاستلام منصة جديدة.':'This slot is ready for a new pallet.'}</p><button class="btn btn-g" onclick="goInbound()">${isAr()?'استلام إلى هنا':'Receive into this slot'}</button>`;return}
+  const near=new Date(c.exp)<new Date('2027-03-01');
+  L.innerHTML=`<div class="big">${c.id}-${c.lvl}</div><p style="margin:8px 0 0"><span class="pill" style="background:${CL[c.c][1]}22;color:${CL[c.c][1]}">${CL[c.c][0]}</span></p>
+  <dl><dt>SKU</dt><dd>${c.sku}</dd><dt>${isAr()?'الدفعة':'Batch'}</dt><dd>${c.batch}</dd><dt>${isAr()?'الانتهاء':'Expiry'}</dt><dd class="${near?'warn':''}">${c.exp}${near?(isAr()?' (قريب)':' (soon)'):''}</dd><dt>${isAr()?'الكمية':'Quantity'}</dt><dd>${c.qty} ${isAr()?'كرتون':'cartons'}</dd><dt>${isAr()?'المستوى':'Level'}</dt><dd>${c.lvl} ${isAr()?'من 4':'of 4'}</dd></dl>
+  <div style="display:flex;gap:8px;margin-top:18px;flex-wrap:wrap"><button class="btn btn-o" onclick="toast('${isAr()?'أُضيف إلى قائمة الالتقاط':'Added to a pick list'}')">${isAr()?'التقاط':'Pick'}</button><button class="btn btn-o" onclick="toast('${isAr()?'تم إنشاء مهمة نقل':'Move task created'}')">${isAr()?'نقل':'Move'}</button><button class="btn btn-o" onclick="toast('${isAr()?'بدأ الجرد الدوري لهذا الموقع':'Cycle count started for this slot'}')">${isAr()?'جرد':'Count'}</button></div>`;
+}
+document.getElementById('legend').innerHTML=CL.map(([n,col],i)=>`<button type="button" aria-pressed="false" data-i="${i}"><i style="background:${col}"></i>${n}</button>`).join('');
+document.querySelectorAll('#legend button').forEach(b=>b.addEventListener('click',()=>{const i=+b.dataset.i;hl=hl===i?null:i;document.querySelectorAll('#legend button').forEach(x=>x.setAttribute('aria-pressed',+x.dataset.i===hl));render()}));
+document.getElementById('site').addEventListener('change',e=>{sel=null;document.getElementById('loc').innerHTML=`<div class="empty">${isAr()?'اختر أي موقع على الخريطة لرؤية ما بداخله.':'Pick any location on the map to see what\'s in it.'}</div>`;build(e.target.value);stock()});
+
+/* tabs */
+function tab(t){document.querySelectorAll('.tabs button').forEach(b=>b.setAttribute('aria-selected',b.dataset.t===t));['map','stock','inbound','pick'].forEach(x=>document.getElementById('v-'+x).hidden=x!==t)}
+document.querySelectorAll('.tabs button').forEach(b=>b.addEventListener('click',()=>tab(b.dataset.t)));
+window.goInbound=()=>tab('inbound');
+
+/* stock */
+function stock(q=''){
+  const rows=cells.filter(c=>c.used).slice(0,40).map(c=>({...c,low:c.qty<26}));
+  const rq=q.toLowerCase();
+  document.getElementById('stock').innerHTML=rows.filter(r=>!rq||(CL[r.c][0]+r.sku+r.batch+r.id).toLowerCase().includes(rq)).map(r=>`<tr class="${r.low?'low':''}"><td>${CL[r.c][0]}</td><td>${r.sku}</td><td>${r.batch}</td><td>${r.exp}</td><td>${r.id}-${r.lvl}</td><td class="num">${r.qty}</td><td>${r.low?`<span class="pill p-warn">${isAr()?'أعد الطلب':'Reorder'}</span>`:`<span class="pill p-ok">${isAr()?'جيد':'OK'}</span>`}</td></tr>`).join('');
+}
+document.getElementById('q').addEventListener('input',e=>{tab('stock');stock(e.target.value)});
+
+/* inbound */
+document.getElementById('gc').innerHTML=CL.map(([n],i)=>`<option value="${i}" ${i===1?'selected':''}>${n}</option>`).join('');
+let grns=[['GRN-26-4471','Najd Pharma Distribution',12],['GRN-26-4470','Qimma Beverages',18],['GRN-26-4469','Rawabi Electronics',8]];
+function grnT(){document.getElementById('grns').innerHTML=grns.map(g=>`<tr><td>${g[0]}</td><td>${g[1]}</td><td class="num">${g[2]}</td></tr>`).join('')}
+grnT();
+document.getElementById('scanBtn').addEventListener('click',()=>{const i=document.getElementById('bc');i.value='(00)6281000'+Math.floor(10000+Math.random()*89999);toast(isAr()?'تمت قراءة الباركود':'Barcode read')});
+document.getElementById('grn').addEventListener('submit',e=>{e.preventDefault();
+  const c=+document.getElementById('gc').value, q=+document.getElementById('gq').value;
+  if(!q||q<1){toast(isAr()?'أدخل الكمية':'Enter a quantity');return}
+  const same=cells.filter(x=>x.used&&x.c===c), free=cells.filter(x=>!x.used);
+  if(!free.length){toast(isAr()?'لا توجد مواقع فارغة في هذا الموقع':'No free slots at this site. Try another site.');return}
+  const idx=s=>AIS.indexOf(s.a)*14+ +s.id.slice(2);
+  const target=free.sort((x,y)=>Math.min(...same.map(s=>Math.abs(idx(s)-idx(x))))-Math.min(...same.map(s=>Math.abs(idx(s)-idx(y)))))[0];
+  Object.assign(target,{used:true,c,sku:document.getElementById('gs').value,qty:q,batch:document.getElementById('gb').value,exp:document.getElementById('ge').value,lvl:1});
+  grns.unshift(['GRN-26-'+(4472+grns.length-3),CL[c][0],1]);grnT();
+  sel=target.id;tab('map');render();show();
+  const b=document.querySelector(`.cell[data-id="${target.id}"]`);b.classList.add('new');b.scrollIntoView({block:'center',inline:'center',behavior:'smooth'});
+  toast((isAr()?'تم الاستلام. ضعها في ':'Received. Put it away in ')+target.id+'-1');stock();
+});
+
+/* pick lists */
+const PK=[['PCK-8812','Al Waha Foods','RUH → DMM, PL-24817',[['B-04-2','Date paste 1 kg × 12','24'],['B-05-1','Labneh 500 g × 12','12'],['C-02-3','Frozen samosa 40 pc','16']]],
+ ['PCK-8813','Najd Pharma Distribution','Riyadh city, 4 pharmacies',[['A-11-1','Paracetamol 500 mg, case','30'],['A-12-2','Saline 500 ml × 20','10']]],
+ ['PCK-8814','Rawabi Electronics','RUH → JED',[['F-07-1','55" TV, boxed','18'],['F-08-1','Router, master carton','6'],['G-01-2','Air conditioner 1.5 t','9']]]];
+document.getElementById('picks').innerHTML=PK.map(([id,c,r,lines])=>`<section class="panel pick"><div class="ph"><h2>${id}</h2><span class="pill p-info" data-c="${id}">0 / ${lines.length}</span></div><p class="muted" style="margin:-6px 0 8px">${c} · ${r}</p><ul>${lines.map(l=>`<li><input type="checkbox" aria-label="Picked ${l[1]}"><span><b>${l[0]}</b> ${l[1]} × ${l[2]}</span></li>`).join('')}</ul></section>`).join('');
+document.querySelectorAll('.pick').forEach(p=>p.addEventListener('change',e=>{e.target.closest('li').classList.toggle('done',e.target.checked);const n=p.querySelectorAll('input:checked').length,t=p.querySelectorAll('input').length,pl=p.querySelector('.pill');pl.textContent=`${n} / ${t}`;pl.className='pill '+(n===t?'p-ok':'p-info');if(n===t)toast(isAr()?'اكتملت القائمة، جاهزة للتحميل':'List complete, ready for loading')}));
+
+build('RUH'); stock();
+if(location.hash==='#inbound')tab('inbound'); if(location.hash==='#stock'){tab('stock');stock('Al Waha')}
+document.addEventListener('langchange',()=>{render();if(sel)show();stock(document.getElementById('q').value)});
+if(isAr()) applyLang('ar');
+</script>
+</body>
+</html>
