@@ -1,0 +1,704 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Job Xpert · Get hired. Pay nothing.</title>
+<meta name="description" content="Job Xpert is a placement company. Candidates pay nothing. Employers pay five days' salary, only after the hire completes one month.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="assets/favicon-64.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<!--
+  Section sources (21st.dev, picked via the 21st MCP, rebuilt in plain HTML/CSS/JS):
+  hero ........ felipemenezes098 / Editorial Collage Hero (19074)
+  stats ....... danielpetho / Number Ticker (20459)
+  bento ....... kokonutd / Bento Grid (622)
+  comparison .. mohammadshehadeh / Comparison Table (26827)
+  openings .... educalvolpz / Job Listing (8725)
+  faq ......... kedhareswer / slit-type FAQ (38218)
+  footer ...... kedhareswer / Light Beam Wordmark Footer (35251)
+-->
+<style>
+:root{
+  --bg:#FAF8F3; --white:#fff; --ink:#0D1B36; --navy:#0B2A5C; --navy-2:#173F80; --night:#070F22;
+  --gold:#D6A23A; --gold-deep:#9C7016; --gold-wash:#F6E7C1; --line:#E6E0D2; --line-2:#D7CFBC;
+  --muted:#5E677B; --green:#1D6B3B; --green-wash:#E5F1E8;
+  --serif:"Fraunces", Georgia, serif; --sans:"Geist", system-ui, sans-serif; --mono:"Geist Mono", ui-monospace, monospace;
+  --r:14px; --wrap:1200px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16.5px/1.6 var(--sans);overflow-x:hidden}
+img{display:block;max-width:100%}
+a{color:inherit}
+button,input,select,textarea{font:inherit;color:inherit}
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 28px}
+.mono{font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+:focus-visible{outline:2px solid var(--gold-deep);outline-offset:3px}
+section{padding:110px 0;scroll-margin-top:70px}
+h2{font:400 clamp(34px,4.6vw,58px)/1.04 var(--serif);letter-spacing:-.02em;margin:0}
+h2 em{font-style:italic;color:var(--navy-2)}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;color:var(--gold-deep);margin-bottom:16px}
+.eyebrow:before{content:"";width:6px;height:6px;border-radius:50%;background:var(--gold)}
+.head{display:flex;justify-content:space-between;align-items:flex-end;gap:40px;margin-bottom:48px}
+.head p{max-width:440px;margin:0;color:var(--muted);font-size:17px}
+
+.btn{display:inline-flex;align-items:center;gap:9px;border:0;border-radius:999px;cursor:pointer;text-decoration:none;font-weight:600;font-size:15px;padding:13px 22px;transition:transform .15s ease,background .2s ease,box-shadow .2s ease}
+.btn:active{transform:translateY(1px)}
+.btn-dark{background:var(--ink);color:#fff}
+.btn-dark:hover{background:var(--navy)}
+.btn-gold{background:var(--gold);color:var(--ink)}
+.btn-gold:hover{background:#E3B34E}
+.btn-ghost{color:var(--ink);padding-left:6px;padding-right:6px}
+.btn-ghost:hover{text-decoration:underline;text-underline-offset:4px}
+.btn svg{width:16px;height:16px}
+
+/* nav */
+.nav{position:sticky;top:0;z-index:50;background:rgba(250,248,243,.86);backdrop-filter:saturate(1.4) blur(12px);border-bottom:1px solid transparent;transition:border-color .2s}
+.nav.scrolled{border-color:var(--line)}
+.nav .wrap{display:flex;align-items:center;gap:30px;height:70px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none}
+.brand img{width:40px;height:40px}
+.wordmark{font:700 22px/1 var(--sans);letter-spacing:-.035em;color:var(--navy)}
+.wordmark i{font-style:normal;color:var(--gold-deep)}
+.nav ul{display:flex;gap:4px;list-style:none;margin:0 0 0 auto;padding:0}
+.nav ul a{display:block;text-decoration:none;font-size:15px;font-weight:500;padding:8px 13px;border-radius:999px;color:#2A3550}
+.nav ul a:hover{background:#EFEADF}
+.nav .btn{padding:10px 18px;font-size:14.5px}
+.burger{display:none;margin-left:auto;width:42px;height:42px;border-radius:50%;border:1px solid var(--line-2);background:#fff;cursor:pointer}
+.burger span{display:block;width:16px;height:1.5px;background:var(--ink);margin:3.5px auto}
+
+/* hero — Editorial Collage Hero */
+.hero{position:relative;padding:70px 0 90px;overflow:clip}
+.wash{position:absolute;inset:-10% -5% auto auto;width:70%;height:120%;pointer-events:none;
+  background:radial-gradient(42% 38% at 62% 42%,rgba(214,162,58,.22),transparent 70%),radial-gradient(48% 46% at 78% 60%,rgba(23,63,128,.16),transparent 72%);filter:blur(12px)}
+.hero .wrap{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;min-height:560px}
+.pill{display:inline-flex;gap:4px;padding:4px;border-radius:999px;background:#fff;border:1px solid var(--line);box-shadow:0 1px 2px rgba(13,27,54,.05)}
+.pill button{border:0;background:none;border-radius:999px;padding:8px 15px;font-size:14px;font-weight:600;cursor:pointer;color:#47506A}
+.pill button[aria-pressed="true"]{background:var(--ink);color:#fff}
+.hero h1{font:350 clamp(44px,6.2vw,84px)/1 var(--serif);letter-spacing:-.03em;margin:26px 0 0}
+.hero h1 em{font-style:italic;font-weight:300;color:var(--navy-2)}
+.hero .lede{font-size:18.5px;color:#3B4560;max-width:500px;margin:24px 0 32px}
+.hero .ctas{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+[data-aud="employer"] .for-seeker,[data-aud="seeker"] .for-employer{display:none}
+.collage{position:relative;height:500px}
+.card-back{position:absolute;right:4%;top:4%;width:min(330px,62%);aspect-ratio:4/5;border-radius:22px;background:linear-gradient(160deg,#10306A,#081B40);box-shadow:0 30px 60px -20px rgba(8,27,64,.45);display:grid;place-items:center;transform:rotate(3deg);transition:transform .6s cubic-bezier(.2,.8,.2,1)}
+.card-back img{width:78%;height:auto;filter:drop-shadow(0 16px 24px rgba(0,0,0,.35))}
+.card-back .cap{position:absolute;left:20px;bottom:16px;color:#C9D2E6}
+.letter{position:absolute;left:0;bottom:2%;width:56%;background:#fff;border-radius:16px;padding:22px 22px 20px;box-shadow:0 30px 60px -18px rgba(13,27,54,.30),0 0 0 1px rgba(13,27,54,.05);transform:rotate(-4deg);transition:transform .6s cubic-bezier(.2,.8,.2,1)}
+.collage:hover .card-back{transform:rotate(5deg) translateY(-6px)}
+.collage:hover .letter{transform:rotate(-2deg) translateY(-4px)}
+.letter .lh{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);padding-bottom:12px;margin-bottom:12px}
+.letter .lh b{font:600 13px var(--sans)}
+.letter .lh span{color:var(--muted)}
+.letter p{margin:0 0 6px;font:400 14.5px/1.5 var(--serif);color:#2A3550}
+.letter .amt{font:400 34px/1.1 var(--serif);color:var(--ink);margin:6px 0 10px}
+.letter .amt small{font:400 14px var(--sans);color:var(--muted)}
+.letter .row{display:flex;justify-content:space-between;font-size:13px;color:var(--muted);border-top:1px dashed var(--line-2);padding-top:10px;margin-top:10px}
+.letter .row b{color:var(--green);font-weight:600}
+.seal{position:absolute;right:-18px;top:-22px;width:84px;height:84px;border-radius:50%;background:var(--gold);color:var(--ink);display:grid;place-items:center;text-align:center;font:600 11px/1.15 var(--mono);letter-spacing:.04em;box-shadow:0 10px 20px -6px rgba(156,112,22,.6);transform:rotate(12deg)}
+.seal b{display:block;font:500 24px/1 var(--serif);letter-spacing:0}
+
+/* stats — Number Ticker */
+.stats{padding:0}
+.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);background:#fff;border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.stat{padding:26px 26px 24px;border-right:1px solid var(--line);position:relative}
+.stat:last-child{border-right:0}
+.stat .k{display:flex;justify-content:space-between;color:var(--muted)}
+.stat .v{font:350 52px/1 var(--serif);letter-spacing:-.02em;margin:22px 0 8px;font-variant-numeric:tabular-nums}
+.stat .v small{font-size:22px;color:var(--muted);margin-left:4px}
+.stat p{margin:0;font-size:14.5px;color:#4A5470}
+.stat.hl{background:linear-gradient(180deg,var(--green-wash),#fff 75%)}
+.stat.hl .v{color:var(--green)}
+.stat .strike{font:500 13px var(--mono);color:#A1A7B5;text-decoration:line-through;position:absolute;right:26px;top:66px;opacity:0;transition:opacity .4s}
+.stat.done .strike{opacity:1}
+
+/* bento — Bento Grid */
+.bento{display:grid;grid-template-columns:repeat(6,1fr);gap:14px}
+.tile{position:relative;background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:24px;min-height:210px;display:flex;flex-direction:column;transition:transform .25s ease,box-shadow .25s ease,border-color .25s}
+.tile:hover{transform:translateY(-3px);box-shadow:0 22px 40px -22px rgba(13,27,54,.28);border-color:var(--line-2)}
+.tile.w3{grid-column:span 3}.tile.w2{grid-column:span 2}.tile.w4{grid-column:span 4}
+.tile .top{display:flex;justify-content:space-between;align-items:center;margin-bottom:auto}
+.ico{width:40px;height:40px;border-radius:10px;display:grid;place-items:center;background:#F1EDE3;color:var(--navy)}
+.ico svg{width:20px;height:20px}
+.chip{font:500 11.5px var(--mono);letter-spacing:.03em;padding:4px 9px;border-radius:999px;background:#F1EDE3;color:#4A5470}
+.chip.g{background:var(--green-wash);color:var(--green)}
+.chip.y{background:var(--gold-wash);color:#7A560D}
+.chip.b{background:#E4EBF7;color:var(--navy-2)}
+.tile h3{font:500 22px/1.2 var(--serif);margin:26px 0 6px;letter-spacing:-.01em}
+.tile p{margin:0;font-size:15px;color:var(--muted)}
+.tile .tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:14px}
+.tile .tags span{font:400 12px var(--mono);color:#7A8296}
+.tile.dark{background:var(--navy);border-color:var(--navy);color:#fff}
+.tile.dark p{color:#BFC8DD}
+.tile.dark .ico{background:rgba(255,255,255,.1);color:var(--gold)}
+.mini-steps{display:flex;gap:6px;margin-top:16px}
+.mini-steps span{flex:1;height:6px;border-radius:3px;background:#ECE6D8;position:relative;overflow:hidden}
+.mini-steps span:after{content:"";position:absolute;inset:0;background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform .5s ease}
+.tile:hover .mini-steps span:after{transform:scaleX(1)}
+.tile:hover .mini-steps span:nth-child(2):after{transition-delay:.12s}
+.tile:hover .mini-steps span:nth-child(3):after{transition-delay:.24s}
+.tile:hover .mini-steps span:nth-child(4):after{transition-delay:.36s}
+.tile:hover .mini-steps span:nth-child(5):after{transition-delay:.48s}
+
+/* comparison — Comparison Table */
+.cmp-wrap{background:#fff;border:1px solid var(--line);border-radius:var(--r);overflow:auto}
+table.cmp{width:100%;border-collapse:separate;border-spacing:0;min-width:760px}
+.cmp th,.cmp td{padding:16px 20px;text-align:left;border-bottom:1px solid var(--line);font-size:15px;vertical-align:top}
+.cmp thead th{vertical-align:bottom;padding-top:26px}
+.cmp thead th b{display:block;font:500 19px/1.2 var(--serif)}
+.cmp thead th span{display:block;font-size:13px;color:var(--muted);font-weight:400;margin-top:4px}
+.cmp tbody th{font-weight:500;color:#2A3550;width:28%}
+.cmp td{color:#4A5470;width:24%}
+.cmp .us{background:#FBF5E6;border-left:1px solid #EBDDB7;border-right:1px solid #EBDDB7}
+.cmp thead .us{border-top:3px solid var(--gold)}
+.cmp td.us{color:var(--ink);font-weight:600}
+.cmp .this{display:inline-block;font:500 10.5px var(--mono);letter-spacing:.06em;background:var(--ink);color:#fff;padding:3px 7px;border-radius:4px;margin-left:6px;vertical-align:middle}
+.cmp .ok{color:var(--green)}
+.cmp .no{color:#A1A7B5}
+.cmp tfoot td,.cmp tfoot th{border-bottom:0;padding:18px 20px 22px}
+.cmp-note{font-size:13.5px;color:var(--muted);margin:14px 4px 0}
+
+/* employer fee */
+.emp{background:var(--navy);color:#DCE2EF;border-radius:28px;margin:0 16px;padding:90px 0;position:relative;overflow:hidden}
+.emp:before{content:"";position:absolute;width:640px;height:640px;right:-200px;top:-260px;border-radius:50%;background:radial-gradient(closest-side,rgba(214,162,58,.28),transparent)}
+.emp .wrap{position:relative;display:grid;grid-template-columns:1fr 430px;gap:70px;align-items:center}
+.emp h2{color:#fff}
+.emp h2 em{color:var(--gold)}
+.emp .eyebrow{color:var(--gold)}
+.emp p.big{font-size:18px;color:#B9C3D9;max-width:520px;margin:22px 0 28px}
+.emp ol{list-style:none;margin:0;padding:0;display:grid;gap:10px;max-width:520px}
+.emp ol li{display:grid;grid-template-columns:86px 1fr;gap:10px;padding:12px 0;border-top:1px solid rgba(255,255,255,.12)}
+.emp ol b{font:500 12.5px var(--mono);color:var(--gold);padding-top:2px}
+.calc{background:#fff;color:var(--ink);border-radius:20px;padding:28px;box-shadow:0 40px 80px -30px rgba(0,0,0,.55)}
+.calc label{display:block;color:var(--muted);margin-bottom:8px}
+.money{display:flex;align-items:baseline;border-bottom:2px solid var(--ink);padding-bottom:4px}
+.money span{font:350 30px var(--serif)}
+.money input{border:0;outline:0;width:100%;font:350 40px/1.1 var(--serif);padding:0 0 0 6px;background:transparent;font-variant-numeric:tabular-nums}
+.range{width:100%;margin:18px 0 8px;accent-color:var(--navy)}
+.rrow{display:flex;justify-content:space-between;padding:11px 0;border-bottom:1px solid var(--line);font-size:15px}
+.rrow b{font:500 15px var(--mono)}
+.rrow.zero b{color:var(--green)}
+.rrow.total{border:0;padding-top:18px;align-items:baseline}
+.rrow.total span{font-weight:600}
+.rrow.total b{font:350 40px/1 var(--serif)}
+.calc small{display:block;color:var(--muted);font-size:13px;margin-top:10px;line-height:1.45}
+
+/* openings — Job Listing */
+.board-top{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;align-items:center;margin-bottom:16px}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chips button{border:1px solid var(--line-2);background:#fff;border-radius:999px;padding:7px 14px;font-size:14px;font-weight:500;cursor:pointer}
+.chips button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:#fff}
+.demo-flag{font:500 11.5px var(--mono);letter-spacing:.04em;background:var(--gold-wash);color:#7A560D;padding:6px 10px;border-radius:6px}
+.jobs{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.job[hidden]{display:none}
+.job button{all:unset;box-sizing:border-box;display:flex;gap:16px;align-items:center;width:100%;background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:16px 18px;cursor:pointer;transition:border-color .2s,box-shadow .2s,transform .2s}
+.job button:hover{border-color:var(--line-2);box-shadow:0 16px 30px -20px rgba(13,27,54,.3);transform:translateY(-2px)}
+.job button:focus-visible{outline:2px solid var(--gold-deep);outline-offset:2px}
+.mlogo{flex:none;width:46px;height:46px;border-radius:12px;display:grid;place-items:center;background:var(--navy);color:#fff;font:400 22px var(--serif)}
+.job .t{flex:1;min-width:0}
+.job .t b{display:block;font-weight:600;font-size:16.5px}
+.job .t span{display:block;font-size:13.5px;color:var(--muted)}
+.job .s{font:500 13.5px var(--mono);white-space:nowrap}
+.overlay{position:fixed;inset:0;z-index:90;background:rgba(13,27,54,.18);backdrop-filter:blur(14px);display:grid;place-items:center;padding:18px;opacity:0;pointer-events:none;transition:opacity .25s}
+.overlay.on{opacity:1;pointer-events:auto}
+.jcard{width:min(560px,100%);max-height:calc(100vh - 36px);overflow:auto;background:#fff;border-radius:20px;padding:26px;box-shadow:0 40px 80px -20px rgba(13,27,54,.4);transform:scale(.96) translateY(10px);transition:transform .35s cubic-bezier(.2,.8,.2,1)}
+.overlay.on .jcard{transform:none}
+.jcard .top{display:flex;gap:14px;align-items:center}
+.jcard h3{font:400 28px/1.1 var(--serif);margin:2px 0 0}
+.jcard .x{margin-left:auto;align-self:flex-start;width:36px;height:36px;border-radius:50%;border:1px solid var(--line-2);background:#fff;cursor:pointer;font-size:19px}
+.jcard .meta{display:flex;flex-wrap:wrap;gap:6px;margin:16px 0}
+.jcard .meta span{font:500 12px var(--mono);background:#F4F1EA;padding:5px 9px;border-radius:6px}
+.jcard p{color:#3B4560;margin:0 0 12px}
+.jcard ul{color:#3B4560;margin:0 0 16px;padding-left:20px}
+.jcard .zero{background:var(--green-wash);color:var(--green);border-radius:10px;padding:10px 14px;font-size:14.5px;margin-bottom:18px}
+
+/* faq — ink flood */
+.faq-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:64px}
+.search{display:flex;align-items:center;gap:10px;background:#fff;border:1px solid var(--line-2);border-radius:999px;padding:4px 16px;margin-top:28px}
+.search input{border:0;outline:0;background:transparent;padding:10px 0;width:100%;font-size:16px}
+.search svg{width:18px;height:18px;flex:none;color:var(--muted)}
+.hint{font-size:14px;color:var(--muted);margin-top:12px}
+.qs{list-style:none;margin:0;padding:0;border-top:1px solid var(--ink)}
+.q{position:relative;border-bottom:1px solid var(--ink)}
+.q[hidden]{display:none}
+.q .fill{position:absolute;inset:0;background:var(--navy);clip-path:inset(0 100% 0 0);transition:clip-path .28s cubic-bezier(.76,0,.24,1)}
+.q.open .fill{clip-path:inset(0 0 0 0);transition-duration:.42s}
+.q button{all:unset;box-sizing:border-box;position:relative;z-index:1;display:grid;grid-template-columns:44px 1fr 28px;gap:12px;align-items:center;width:100%;padding:20px 12px 20px 6px;cursor:pointer}
+.q button:focus-visible{outline:2px solid var(--gold);outline-offset:-3px}
+.qn{font:500 12.5px var(--mono);color:var(--gold-deep)}
+.qt{font-weight:600;font-size:17px;line-height:1.35}
+.plus{font:300 28px/1 var(--sans);text-align:center;transition:transform .35s cubic-bezier(.76,0,.24,1)}
+.q.open .qn{color:var(--gold)}
+.q.open .qt,.q.open .plus{color:#fff}
+.q.open .plus{transform:rotate(135deg)}
+.q .panel{position:relative;z-index:1;display:grid;grid-template-rows:0fr;transition:grid-template-rows .3s ease}
+.q.open .panel{grid-template-rows:1fr}
+.q .panel>div{overflow:hidden}
+.q .panel p{margin:0;padding:0 40px 24px 62px;color:#D3DAE8}
+.q mark{background:var(--gold-wash);color:var(--ink)}
+.q.open mark{background:var(--gold)}
+.empty{display:none;color:var(--muted);padding:22px 6px}
+
+/* contact */
+.apply-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:60px;align-items:start}
+.clist{list-style:none;margin:30px 0 0;padding:0;display:grid;gap:10px}
+.clist a{display:flex;justify-content:space-between;align-items:center;text-decoration:none;background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 18px;transition:border-color .2s}
+.clist a:hover{border-color:var(--ink)}
+.clist span{color:var(--muted)}
+.clist b{font-weight:600;font-size:17px}
+.formbox{background:#fff;border:1px solid var(--line);border-radius:20px;padding:8px;box-shadow:0 30px 60px -40px rgba(13,27,54,.35)}
+.tabs{display:grid;grid-template-columns:1fr 1fr;gap:4px;background:#F4F1EA;border-radius:14px;padding:4px}
+.tabs button{border:0;background:none;border-radius:10px;padding:12px;font-weight:600;font-size:15px;cursor:pointer;color:#4A5470}
+.tabs button[aria-selected="true"]{background:#fff;color:var(--ink);box-shadow:0 1px 3px rgba(13,27,54,.12)}
+form{padding:24px 22px 20px}
+.fgrid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.f{display:flex;flex-direction:column;gap:6px}
+.f.full{grid-column:1/-1}
+.f label{font-size:13.5px;font-weight:500;color:#3B4560}
+.f input,.f select,.f textarea{border:1px solid var(--line-2);border-radius:10px;padding:11px 12px;background:#FDFCF9;font-size:16px;outline:0;transition:border-color .2s,box-shadow .2s}
+.f input:focus,.f select:focus,.f textarea:focus{border-color:var(--navy-2);box-shadow:0 0 0 3px rgba(23,63,128,.12)}
+.f textarea{min-height:84px;resize:vertical}
+.err{font-size:12.5px;color:#A3261B}
+.ffoot{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-top:20px}
+.ffoot small{color:var(--muted);font-size:13.5px}
+.sentbox{display:none;padding:26px 22px}
+.sentbox.on{display:block}
+.sentbox h3{font:400 30px/1.1 var(--serif);margin:6px 0 8px}
+.sentbox p{color:#3B4560;margin:0 0 14px}
+.sentbox pre{white-space:pre-wrap;background:#FAF8F3;border:1px dashed var(--line-2);border-radius:10px;padding:14px;font:400 13.5px/1.5 var(--mono);margin:0 0 18px}
+
+/* footer — Light Beam Wordmark Footer */
+footer{position:relative;background:var(--night);color:#AEB8CE;margin-top:40px;overflow:hidden;padding:80px 0 0;isolation:isolate}
+.beam{position:absolute;top:-40%;left:-30%;width:40%;height:180%;background:linear-gradient(90deg,transparent,rgba(120,150,230,.16) 45%,rgba(214,162,58,.10) 55%,transparent);transform:rotate(18deg);animation:beam 14s ease-in-out infinite alternate;pointer-events:none;z-index:-1}
+@keyframes beam{to{left:90%}}
+.glow{position:absolute;width:520px;height:520px;border-radius:50%;background:radial-gradient(closest-side,rgba(90,120,210,.18),transparent);transform:translate(-50%,-50%);pointer-events:none;z-index:-1;left:50%;top:40%;transition:left .25s linear,top .25s linear}
+.fcols{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:36px}
+.fcols h4{font:500 12px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--gold);margin:0 0 14px;padding-bottom:10px;border-bottom:1px solid rgba(255,255,255,.1)}
+.fcols ul{list-style:none;margin:0;padding:0;display:grid;gap:9px}
+.fcols a{text-decoration:none;color:#D5DCEA}
+.fcols a:hover{color:#fff}
+.fcols .lead p{font:350 26px/1.25 var(--serif);color:#fff;margin:0 0 18px}
+.fcols .lead p em{color:var(--gold);font-style:italic}
+.giant{font:700 clamp(70px,17vw,250px)/.78 var(--sans);letter-spacing:-.06em;margin:60px 0 0;white-space:nowrap;text-align:center;
+  background:linear-gradient(180deg,rgba(40,74,160,.9),rgba(12,28,70,.2) 85%);-webkit-background-clip:text;background-clip:text;color:transparent;user-select:none;transform:translateY(12%)}
+.giant i{font-style:normal;background:linear-gradient(180deg,rgba(214,162,58,.95),rgba(214,162,58,.15) 85%);-webkit-background-clip:text;background-clip:text}
+.legal{position:absolute;left:0;right:0;bottom:0;padding:16px 0}
+.legal .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:13px;color:#7F8AA3}
+.wa{position:fixed;right:18px;bottom:18px;z-index:60;width:54px;height:54px;border-radius:50%;background:#1FA855;display:grid;place-items:center;box-shadow:0 12px 24px -6px rgba(0,0,0,.35)}
+.wa svg{width:27px;height:27px;fill:#fff}
+
+.rv{opacity:0;transform:translateY(16px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.8,.2,1)}
+.rv.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}}
+
+@media (max-width:1060px){
+  .nav ul a{padding:8px 9px}
+  .emp .wrap{grid-template-columns:1fr 390px;gap:40px}
+  .fcols{grid-template-columns:1fr 1fr 1fr}
+  .fcols .lead{grid-column:1/-1}
+}
+@media (max-width:900px){
+  .nav ul,.nav .btn{display:none}
+  .burger{display:block}
+  .nav.open ul{display:flex;flex-direction:column;position:absolute;left:0;right:0;top:70px;background:var(--bg);border-bottom:1px solid var(--line);padding:10px 20px 18px}
+  .nav.open ul a{font-size:17px;padding:12px}
+  .hero{padding:44px 0 60px}
+  .hero .wrap{grid-template-columns:1fr;min-height:0}
+  .collage{height:440px;max-width:520px;width:100%;margin:10px auto 0}
+  .head{flex-direction:column;align-items:flex-start;gap:16px}
+  .stat-grid{grid-template-columns:1fr 1fr}
+  .stat:nth-child(2){border-right:0}
+  .stat:nth-child(-n+2){border-bottom:1px solid var(--line)}
+  .bento{grid-template-columns:1fr 1fr}
+  .tile.w3,.tile.w2,.tile.w4{grid-column:span 1}
+  .tile.wide-m{grid-column:1/-1}
+  .emp{margin:0 10px;border-radius:22px}
+  .emp .wrap{grid-template-columns:1fr}
+  .jobs{grid-template-columns:1fr}
+  .faq-grid,.apply-grid{grid-template-columns:1fr;gap:36px}
+}
+@media (max-width:820px){
+  table.cmp{min-width:0}
+  .cmp thead{display:none}
+  .cmp tbody tr{display:grid;grid-template-columns:1fr;border-bottom:1px solid var(--line);padding:14px 16px}
+  .cmp tbody th,.cmp tbody td{display:flex;justify-content:space-between;gap:12px;width:auto;border:0;padding:4px 0;background:none;text-align:right}
+  .cmp tbody th{font-weight:600;color:var(--ink);padding-bottom:8px;text-align:left}
+  .cmp tbody td:before{content:attr(data-l);color:var(--muted);font-weight:400;text-align:left}
+  .cmp tbody td.us{background:#FBF5E6;border:0;border-radius:8px;padding:6px 8px;margin:2px -8px}
+  .cmp tfoot tr{display:block;padding:16px}
+  .cmp tfoot th,.cmp tfoot td:not(.us){display:none}
+  .cmp tfoot td.us{display:block;width:auto;background:none;border:0;padding:0}
+  .cmp tfoot .btn{width:100%;justify-content:center}
+}
+@media (max-width:600px){
+  body{font-size:16px}
+  .wrap{padding:0 18px}
+  section{padding:76px 0}
+  .hero h1{font-size:clamp(40px,11.5vw,54px)}
+  .collage{height:380px}
+  .card-back{width:66%;right:0}
+  .letter{width:72%;padding:18px}
+  .letter .amt{font-size:28px}
+  .seal{width:70px;height:70px;right:-8px;top:-26px;font-size:10px}
+  .seal b{font-size:20px}
+  .stat{padding:20px 16px}
+  .stat .v{font-size:40px}
+  .stat .strike{display:none}
+  .bento{grid-template-columns:1fr}
+  .tile{min-height:0}
+  .tile h3{margin-top:20px}
+  .calc{padding:22px 18px}
+  .fgrid{grid-template-columns:1fr}
+  form{padding:20px 14px 16px}
+  .q button{grid-template-columns:34px 1fr 24px;padding:18px 6px 18px 2px}
+  .q .panel p{padding:0 16px 22px 48px}
+  .job .s{display:none}
+  .fcols{grid-template-columns:1fr 1fr}
+  .wordmark{font-size:20px}
+}
+</style>
+</head>
+<body data-aud="seeker">
+
+<header class="nav" id="nav"><div class="wrap">
+  <a class="brand" href="#top" aria-label="Job Xpert home"><img src="assets/badge-160.webp" alt="" width="40" height="40"><span class="wordmark">Job<i>X</i>pert</span></a>
+  <ul>
+    <li><a href="#why">Why us</a></li>
+    <li><a href="#compare">Compare</a></li>
+    <li><a href="#employers">Employers</a></li>
+    <li><a href="#openings">Openings</a></li>
+    <li><a href="#faq">FAQ</a></li>
+  </ul>
+  <a class="btn btn-dark" href="#apply" data-go="seeker">Send your CV</a>
+  <button class="burger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+</div></header>
+
+<main id="top">
+<section class="hero">
+  <div class="wash" aria-hidden="true"></div>
+  <div class="wrap">
+    <div>
+      <div class="pill" role="group" aria-label="I am">
+        <button type="button" data-aud="seeker" aria-pressed="true">Looking for a job</button>
+        <button type="button" data-aud="employer" aria-pressed="false">Hiring</button>
+      </div>
+      <h1 class="for-seeker">Get hired.<br><em>Pay nothing.</em></h1>
+      <h1 class="for-employer">Hire right.<br><em>Pay after a month.</em></h1>
+      <p class="lede for-seeker">Your next job shouldn't cost you a rupee. Job Xpert matches you with verified employers, puts your salary in writing within 8 working days, and stays with you to your joining day.</p>
+      <p class="lede for-employer">Pre-screened candidates for your role. One fee, five days of the hire's salary, payable only once they've completed a month with you.</p>
+      <div class="ctas for-seeker"><a class="btn btn-dark" href="#apply" data-go="seeker">Send your CV, free <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a><a class="btn btn-ghost" href="#openings">See openings</a></div>
+      <div class="ctas for-employer"><a class="btn btn-dark" href="#apply" data-go="employer">Share a requirement <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a><a class="btn btn-ghost" href="#employers">Work out the fee</a></div>
+    </div>
+    <div class="collage" aria-hidden="true">
+      <div class="card-back"><img src="assets/badge-640.webp" alt="" width="640" height="640"><span class="cap mono">Where talent meets opportunity</span></div>
+      <div class="letter">
+        <div class="seal"><span><b>₹0</b>fee to<br>you</span></div>
+        <div class="lh"><b>Salary confirmation</b><span class="mono">Job Xpert</span></div>
+        <p>Role: Accounts Assistant, Jalandhar</p>
+        <div class="amt">₹18,000 <small>per month</small></div>
+        <p>Confirmed in writing before you commit.</p>
+        <div class="row"><span>Your placement fee</span><b>₹0</b></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="stats" aria-label="Job Xpert in numbers">
+  <div class="wrap">
+    <div class="stat-grid rv">
+      <div class="stat hl" data-from="5000" data-to="0" data-pre="₹"><div class="k mono"><span>Candidate fee</span><span>₹</span></div><div class="v">₹0</div><span class="strike">registration fee</span><p>No registration or placement fee, ever.</p></div>
+      <div class="stat" data-from="0" data-to="8"><div class="k mono"><span>Salary in writing</span><span>↗</span></div><div class="v">8<small>days</small></div><p>Working days to confirm your salary.</p></div>
+      <div class="stat" data-from="0" data-to="5"><div class="k mono"><span>Employer fee</span><span>×</span></div><div class="v">5<small>days'</small></div><p>Salary of the hire. The only fee.</p></div>
+      <div class="stat" data-from="0" data-to="1"><div class="k mono"><span>Pay after</span><span>✓</span></div><div class="v">1<small>month</small></div><p>The hire works a month before you pay.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="why">
+  <div class="wrap">
+    <div class="head rv"><div><div class="eyebrow mono">What you get</div><h2>A person on your side,<br><em>not a portal.</em></h2></div><p>Everything a paid consultancy offers, without the fee on your side. Every promise below is in writing.</p></div>
+    <div class="bento">
+      <article class="tile w4 rv">
+        <div class="top"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 3l7 3v6c0 4.2-3 7.4-7 9-4-1.6-7-4.8-7-9V6z"/><path d="m9 12 2 2 4-4"/></svg></span><span class="chip g">Checked</span></div>
+        <h3>Real openings from verified employers</h3>
+        <p>We check the employer before a role reaches you, so you don't waste a trip on a job that doesn't exist.</p>
+        <div class="tags"><span>#verified</span><span>#no-fake-jobs</span></div>
+      </article>
+      <article class="tile w2 rv">
+        <div class="top"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 13h6M10 17h4"/></svg></span><span class="chip y">Free</span></div>
+        <h3>Résumé help</h3>
+        <p>No CV yet? We write it with you.</p>
+      </article>
+      <article class="tile w2 rv">
+        <div class="top"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></span><span class="chip b">8 working days</span></div>
+        <h3>Salary in writing</h3>
+        <p>You see the number before you say yes.</p>
+      </article>
+      <article class="tile w4 rv wide-m">
+        <div class="top"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg></span><span class="chip">Until you start</span></div>
+        <h3>One contact, from résumé to joining day</h3>
+        <p>The same person calls you before the interview, after the offer, and on your first morning.</p>
+        <div class="mini-steps" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
+      </article>
+      <article class="tile w3 rv dark">
+        <div class="top"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 7h18v13H3zM8 7V4h8v3"/></svg></span><span class="chip y">For employers</span></div>
+        <h3>Pre-screened shortlist</h3>
+        <p>Interview people who fit the role, not a pile of CVs.</p>
+      </article>
+      <article class="tile w3 rv dark">
+        <div class="top"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 2v20M17 6H9.5a3 3 0 0 0 0 6h5a3 3 0 0 1 0 6H6"/></svg></span><span class="chip y">Zero risk</span></div>
+        <h3>Pay only if they stay</h3>
+        <p>Five days' salary, due after the hire's first month.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="compare" style="padding-top:0">
+  <div class="wrap">
+    <div class="head rv"><div><div class="eyebrow mono">Compare</div><h2>Three ways to <em>find a job</em></h2></div><p>Only one of them costs you nothing and still gives you someone who picks up the phone.</p></div>
+    <div class="cmp-wrap rv">
+      <table class="cmp">
+        <thead><tr>
+          <th scope="col"><span class="mono">What you get</span></th>
+          <th scope="col"><b>Paid consultancy</b><span>A fee to register or on placement</span></th>
+          <th scope="col" class="us"><b>Job Xpert <i class="this">THIS ONE</i></b><span>Free for candidates</span></th>
+          <th scope="col"><b>Applying alone</b><span>Portals and walk-ins</span></th>
+        </tr></thead>
+        <tbody>
+          <tr><th scope="row">Fee for the candidate</th><td>Often charged</td><td class="us"><span class="ok">₹0, at every stage</span></td><td>₹0</td></tr>
+          <tr><th scope="row">Employer checked first</th><td>Varies</td><td class="us"><span class="ok">✓ Verified</span></td><td class="no">—</td></tr>
+          <tr><th scope="row">Salary confirmed in writing</th><td>Varies</td><td class="us">Within 8 working days</td><td class="no">—</td></tr>
+          <tr><th scope="row">Help with your résumé</th><td>Sometimes, at extra cost</td><td class="us"><span class="ok">✓ Free</span></td><td class="no">—</td></tr>
+          <tr><th scope="row">Someone with you to joining day</th><td>Sometimes</td><td class="us"><span class="ok">✓ One contact</span></td><td class="no">—</td></tr>
+        </tbody>
+        <tfoot><tr><th></th><td></td><td class="us"><a class="btn btn-gold" href="#apply" data-go="seeker">Send your CV</a></td><td></td></tr></tfoot>
+      </table>
+    </div>
+    <p class="cmp-note">The "paid consultancy" column describes common practice in the market, not any particular firm.</p>
+  </div>
+</section>
+
+<section class="emp" id="employers">
+  <div class="wrap">
+    <div class="rv">
+      <div class="eyebrow mono">For employers</div>
+      <h2>5 days' salary.<br>1 month guarantee.<br><em>Zero stress.</em></h2>
+      <p class="big">No advance, no retainer, no charge per CV. Move the slider to the salary you're offering to see the full fee.</p>
+      <ol>
+        <li><b>Day 0</b><span>Share the role. Written terms signed.</span></li>
+        <li><b>Shortlist</b><span>Pre-screened candidates, ready to interview.</span></li>
+        <li><b>Joining</b><span>Your hire starts work.</span></li>
+        <li><b>+1 month</b><span>Still with you? Now the fee is due.</span></li>
+      </ol>
+    </div>
+    <div class="calc rv" aria-live="polite">
+      <label class="mono" for="sal">Monthly salary offered</label>
+      <div class="money"><span>₹</span><input id="sal" inputmode="numeric" value="18,000"></div>
+      <input class="range" id="salr" type="range" min="8000" max="100000" step="500" value="18000" aria-label="Monthly salary slider">
+      <div class="rrow zero"><span>Candidate pays</span><b>₹0</b></div>
+      <div class="rrow"><span>Per day (÷30)</span><b id="perday">₹600</b></div>
+      <div class="rrow"><span>Days charged</span><b>× 5</b></div>
+      <div class="rrow"><span>Due</span><b>after 1 month</b></div>
+      <div class="rrow total"><span>Your fee</span><b id="feeval">₹3,000</b></div>
+      <small>An estimate for this page. Taxes, if any, and the exact working are in your written terms.</small>
+    </div>
+  </div>
+</section>
+
+<section id="openings">
+  <div class="wrap">
+    <div class="head rv"><div><div class="eyebrow mono">Openings</div><h2>On the board <em>this week</em></h2></div><p>Tap a role for details. Applying is free and starts a WhatsApp chat with our team.</p></div>
+    <div class="board-top">
+      <div class="chips" role="group" aria-label="Filter openings">
+        <button type="button" aria-pressed="true" data-f="all">All</button>
+        <button type="button" aria-pressed="false" data-f="office">Office &amp; accounts</button>
+        <button type="button" aria-pressed="false" data-f="sales">Sales &amp; front desk</button>
+        <button type="button" aria-pressed="false" data-f="travel">Travel &amp; aviation</button>
+      </div>
+      <span class="demo-flag mono">Sample listings for this demo</span>
+    </div>
+    <ul class="jobs" id="jobs"></ul>
+  </div>
+</section>
+
+<div class="overlay" id="ov" aria-hidden="true">
+  <div class="jcard" role="dialog" aria-modal="true" aria-labelledby="jt">
+    <div class="top"><div class="mlogo" id="jl">A</div><div><span class="mono" id="jc" style="color:var(--muted)"></span><h3 id="jt"></h3></div><button class="x" type="button" aria-label="Close">×</button></div>
+    <div class="meta" id="jm"></div><p id="jd"></p><ul id="jr"></ul>
+    <div class="zero">You pay nothing to apply or to be placed.</div>
+    <a class="btn btn-dark" id="ja" href="#" target="_blank" rel="noopener">Apply on WhatsApp</a>
+  </div>
+</div>
+
+<section id="faq" style="padding-top:20px">
+  <div class="wrap faq-grid">
+    <div class="rv">
+      <div class="eyebrow mono">FAQ</div>
+      <h2>Asked <em>every week</em></h2>
+      <label class="search"><span class="sr">Search questions</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="qsearch" type="search" placeholder="Search: fee, salary, CV…" autocomplete="off"></label>
+      <p class="hint">Still unsure? Call <a href="tel:+911815002555">0181 500 2555</a>.</p>
+    </div>
+    <div><ol class="qs" id="qs"></ol><p class="empty" id="qempty">Nothing matches. Try "fee" or "salary", or call us.</p></div>
+  </div>
+</section>
+
+<section id="apply" style="padding-top:20px">
+  <div class="wrap apply-grid">
+    <div class="rv">
+      <div class="eyebrow mono">Get in touch</div>
+      <h2>Tell us what<br>you <em>need.</em></h2>
+      <p style="color:var(--muted);max-width:420px;margin:20px 0 0">The form prepares a WhatsApp message for you to send. Or call during office hours.</p>
+      <ul class="clist">
+        <li><a href="tel:+911815002555"><span>Office</span><b>0181 500 2555</b></a></li>
+        <li><a href="tel:+917347012555"><span>Mobile</span><b>73470 12555</b></a></li>
+        <li><a href="https://wa.me/919872486000" target="_blank" rel="noopener"><span>WhatsApp</span><b>98724 86000</b></a></li>
+      </ul>
+    </div>
+    <div class="formbox rv">
+      <div class="tabs" role="tablist">
+        <button type="button" role="tab" aria-selected="true" data-tab="seeker" id="t-seeker">I need a job</button>
+        <button type="button" role="tab" aria-selected="false" data-tab="employer" id="t-employer">I'm hiring</button>
+      </div>
+      <form id="form" novalidate><div class="fgrid" id="fields"></div><div class="ffoot"><small id="fnote"></small><button class="btn btn-dark" type="submit">Continue</button></div></form>
+      <div class="sentbox" id="sentbox" aria-live="polite">
+        <span class="mono" style="color:var(--gold-deep)">Not sent yet</span>
+        <h3>One more tap.</h3>
+        <p>Your message is ready. Press the button to send it to our team on WhatsApp.</p>
+        <pre id="preview"></pre>
+        <div class="ctas" style="display:flex;gap:10px;flex-wrap:wrap"><a class="btn btn-dark" id="sendwa" href="#" target="_blank" rel="noopener">Send on WhatsApp</a><button class="btn btn-ghost" type="button" id="edit">Edit details</button></div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer id="foot">
+  <div class="beam" aria-hidden="true"></div><div class="glow" id="glow" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="fcols">
+      <div class="lead"><p>Zero charge to candidates.<br><em>Zero risk to employers.</em></p><a class="btn btn-gold" href="#apply" data-go="seeker">Send your CV</a></div>
+      <div><h4>Candidates</h4><ul><li><a href="#openings">Openings</a></li><li><a href="#why">What you get</a></li><li><a href="#compare">Compare</a></li></ul></div>
+      <div><h4>Employers</h4><ul><li><a href="#employers">Fee estimate</a></li><li><a href="#apply" data-go="employer">Share a requirement</a></li><li><a href="#faq">FAQ</a></li></ul></div>
+      <div><h4>Call</h4><ul><li><a href="tel:+911815002555">0181 500 2555</a></li><li><a href="tel:+917347012555">73470 12555</a></li><li><a href="https://wa.me/919872486000" target="_blank" rel="noopener">WhatsApp</a></li></ul></div>
+    </div>
+    <div class="giant" aria-hidden="true">Job<i>X</i>pert</div>
+  </div>
+  <div class="legal"><div class="wrap"><span>© Job Xpert · Where talent meets opportunity</span><span>Design concept by SSLC STARTUP</span></div></div>
+</footer>
+
+<a class="wa" href="https://wa.me/919872486000" target="_blank" rel="noopener" aria-label="WhatsApp Job Xpert"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.1 5.1 0 0 0 1.1 2.7 11.6 11.6 0 0 0 4.5 4c1.7.7 2.3.8 3.1.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3Z"/></svg></a>
+
+<script>
+const WA='919872486000', $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const inr=n=>'₹'+Math.round(n).toLocaleString('en-IN');
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* nav */
+const nav=$('#nav'), burger=$('.burger');
+addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>8),{passive:true});
+burger.addEventListener('click',()=>{const o=nav.classList.toggle('open');burger.setAttribute('aria-expanded',o)});
+$$('.nav ul a').forEach(a=>a.addEventListener('click',()=>{nav.classList.remove('open');burger.setAttribute('aria-expanded',false)}));
+
+/* audience */
+function setAud(a){document.body.dataset.aud=a;$$('.pill button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.aud===a))}
+$$('.pill button').forEach(b=>b.addEventListener('click',()=>setAud(b.dataset.aud)));
+$$('[data-go]').forEach(a=>a.addEventListener('click',()=>setTab(a.dataset.go)));
+
+/* number ticker: tween when the stats scroll into view */
+function tick(el){
+  const from=+el.dataset.from, to=+el.dataset.to, v=el.querySelector('.v'), small=v.querySelector('small'), pre=el.dataset.pre||'';
+  const sm=small?small.outerHTML:''; const t0=performance.now(), dur=1400;
+  const step=t=>{const p=Math.min(1,(t-t0)/dur), e=1-Math.pow(1-p,3), n=Math.round(from+(to-from)*e);
+    v.innerHTML=pre+n.toLocaleString('en-IN')+sm; if(p<1) requestAnimationFrame(step); else el.classList.add('done')};
+  if(reduce){el.classList.add('done');return} requestAnimationFrame(step);
+}
+const so=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){$$('.stat').forEach((s,i)=>setTimeout(()=>tick(s),i*120));so.disconnect()}}),{threshold:.4});
+so.observe($('.stat-grid'));
+
+/* fee estimate */
+const sal=$('#sal'), salr=$('#salr');
+function fee(v){v=Math.max(0,Math.min(1e6,v||0));$('#perday').textContent=inr(v/30);$('#feeval').textContent=inr(v/30*5)}
+sal.addEventListener('input',()=>{const v=parseInt(sal.value.replace(/[^\d]/g,''),10)||0;sal.value=v?v.toLocaleString('en-IN'):'';salr.value=Math.min(100000,Math.max(8000,v));fee(v)});
+salr.addEventListener('input',()=>{sal.value=(+salr.value).toLocaleString('en-IN');fee(+salr.value)});
+fee(18000);
+
+/* openings */
+const JOBS=[
+ {c:'office',co:'Manufacturing firm · Jalandhar',t:'Accounts Assistant',s:'₹15–20k',l:'Jalandhar',type:'Full time',exp:'1–3 yrs',d:'Bookkeeping, GST entries and vendor reconciliation for a mid-sized manufacturer.',r:['B.Com or equivalent','Tally and basic Excel','Punjabi, Hindi and English']},
+ {c:'sales',co:'Car dealership · Jalandhar',t:'Front Office Executive',s:'₹12–16k',l:'Jalandhar',type:'Full time',exp:'Fresher OK',d:'Welcome walk-in customers, manage appointments and route calls to the sales team.',r:['Graduate, any stream','Clear spoken English','Punctual, good with people']},
+ {c:'travel',co:'Travel agency · Ludhiana',t:'Ticketing Executive (GDS)',s:'₹18–25k',l:'Ludhiana',type:'Full time',exp:'GDS trained',d:'Issue domestic and international tickets, handle reissues and refunds, and quote fares.',r:['Amadeus or Galileo training','Fare construction basics','Six days a week']},
+ {c:'sales',co:'Real estate developer · Mohali',t:'Telecaller, Inside Sales',s:'₹13k + incentive',l:'Mohali',type:'Full time',exp:'0–2 yrs',d:'Call portal enquiries, qualify leads and book site visits for the sales team.',r:['Confident on the phone','Hindi and Punjabi','Basic CRM or Excel']},
+ {c:'office',co:'Hospital · Jalandhar',t:'Billing & Insurance Desk',s:'₹16–21k',l:'Jalandhar',type:'Shifts',exp:'1+ yrs',d:'Prepare patient bills and coordinate cashless approvals with TPAs.',r:['Graduate','Hospital or TPA experience preferred','Rotational shifts']},
+ {c:'travel',co:'Visa consultancy · Amritsar',t:'Visa Documentation Officer',s:'₹15–22k',l:'Amritsar',type:'Full time',exp:'1–2 yrs',d:'Check and file student and visitor visa documents, and keep clients updated.',r:['Eye for detail','Good written English','Online visa portals']}];
+const jobsEl=$('#jobs');
+JOBS.forEach((j,i)=>{const li=document.createElement('li');li.className='job';li.dataset.c=j.c;
+  li.innerHTML=`<button type="button" aria-haspopup="dialog"><span class="mlogo">${j.t[0]}</span><span class="t"><b>${j.t}</b><span>${j.co} · ${j.type}</span></span><span class="s">${j.s}</span></button>`;
+  li.querySelector('button').addEventListener('click',e=>openJob(i,e.currentTarget));jobsEl.appendChild(li)});
+$$('.chips button').forEach(b=>b.addEventListener('click',()=>{$$('.chips button').forEach(x=>x.setAttribute('aria-pressed',x===b));$$('.job').forEach(li=>li.hidden=!(b.dataset.f==='all'||li.dataset.c===b.dataset.f))}));
+const ov=$('#ov');let lastBtn=null;
+function openJob(i,btn){const j=JOBS[i];lastBtn=btn;$('#jl').textContent=j.t[0];$('#jc').textContent=j.co;$('#jt').textContent=j.t;
+  $('#jm').innerHTML=[j.s+' / month',j.l,j.type,j.exp].map(x=>`<span>${x}</span>`).join('');$('#jd').textContent=j.d;$('#jr').innerHTML=j.r.map(x=>`<li>${x}</li>`).join('');
+  $('#ja').href='https://wa.me/'+WA+'?text='+encodeURIComponent(`Hello Job Xpert, I want to apply for: ${j.t} (${j.l}).\nName:\nQualification:\nExperience:`);
+  ov.classList.add('on');ov.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';setTimeout(()=>$('.jcard .x').focus(),60)}
+function closeJob(){if(!ov.classList.contains('on'))return;ov.classList.remove('on');ov.setAttribute('aria-hidden','true');document.body.style.overflow='';lastBtn&&lastBtn.focus()}
+$('.jcard .x').addEventListener('click',closeJob);ov.addEventListener('click',e=>{if(e.target===ov)closeJob()});
+addEventListener('keydown',e=>{if(e.key==='Escape'){closeJob();nav.classList.remove('open')}});
+
+/* FAQ */
+const QS=[['Do candidates really pay nothing?','Yes. No registration fee and no placement fee, at any stage. If anyone asks you for money in the name of Job Xpert, please call the office.'],
+ ['How much does an employer pay?','Five days of the hired candidate\'s salary. That is the whole fee: no retainer, no advance, no per-CV charge.'],
+ ['When is the employer fee due?','Only after the candidate has completed one month with you. If they leave before that, the fee is not due.'],
+ ['When will I know the salary?','We share the salary with you in writing within 8 working days, so you know the number before you commit.'],
+ ['Are the openings real?','Every opening comes from an employer we have verified.'],
+ ['I don\'t have a CV. Can I still apply?','Yes. Call or message us and the team will help you put one together, free.'],
+ ['Which cities do you place in?','Mostly across Punjab. Tell us where you want to work and we\'ll tell you honestly what is open.'],
+ ['What kind of roles do you hire for?','Office and accounts, sales and front desk, hospital desks, and travel and aviation roles, including GDS ticketing staff.']];
+const qsEl=$('#qs'), esc=s=>s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function hl(t,q){t=esc(t);const w=q.toLowerCase().split(/\s+/).filter(x=>x.length>1).map(x=>x.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'));return w.length?t.replace(new RegExp('('+w.join('|')+')','gi'),'<mark>$1</mark>'):t}
+function renderQs(q=''){qsEl.innerHTML='';let n=0;
+  QS.forEach(([qq,a],i)=>{const hay=(qq+' '+a).toLowerCase();if(q&&!q.toLowerCase().split(/\s+/).filter(Boolean).every(w=>hay.includes(w)))return;n++;
+    const li=document.createElement('li');li.className='q';
+    li.innerHTML=`<span class="fill"></span><button type="button" aria-expanded="false" aria-controls="qa${i}" id="qb${i}"><span class="qn">${String(i+1).padStart(2,'0')}</span><span class="qt">${hl(qq,q)}</span><span class="plus" aria-hidden="true">+</span></button><div class="panel" id="qa${i}" role="region" aria-labelledby="qb${i}"><div><p>${hl(a,q)}</p></div></div>`;
+    const b=li.querySelector('button');
+    b.addEventListener('click',()=>{const o=!li.classList.contains('open');$$('.q.open').forEach(x=>{if(x!==li){x.classList.remove('open');x.querySelector('button').setAttribute('aria-expanded',false)}});li.classList.toggle('open',o);b.setAttribute('aria-expanded',o)});
+    b.addEventListener('keydown',e=>{if(e.key!=='ArrowDown'&&e.key!=='ArrowUp')return;e.preventDefault();const all=$$('.q button'),k=all.indexOf(b);all[(k+(e.key==='ArrowDown'?1:-1)+all.length)%all.length].focus()});
+    qsEl.appendChild(li)});
+  $('#qempty').style.display=n?'none':'block'}
+renderQs();$('#qsearch').addEventListener('input',e=>renderQs(e.target.value.trim()));
+
+/* forms -> WhatsApp */
+const FIELDS={seeker:[['name','Full name','text',1],['phone','Mobile number','tel',1],['qual','Qualification','text',1],['exp','Experience','select',0,['Fresher','Under 1 year','1–3 years','3–5 years','5+ years']],['role','Job you want','text',1],['city','Preferred city','text',0],['msg','Anything else','textarea',0]],
+ employer:[['name','Your name','text',1],['phone','Mobile number','tel',1],['company','Company','text',1],['city','City','text',1],['role','Role to fill','text',1],['count','How many people','select',0,['1','2–5','6–10','10+']],['msg','Salary range, timings, joining date','textarea',0]]};
+let tab='seeker';
+function setTab(t){tab=t;$$('.tabs button').forEach(b=>b.setAttribute('aria-selected',b.dataset.tab===t));
+  $('#fnote').textContent=t==='seeker'?'Free for candidates. Always.':'No advance. Fee only after your hire completes one month.';
+  $('#fields').innerHTML=FIELDS[t].map(([id,lab,type,req,opts])=>{const ctl=type==='select'?`<select id="f_${id}">${opts.map(o=>`<option>${o}</option>`).join('')}</select>`:type==='textarea'?`<textarea id="f_${id}" rows="3"></textarea>`:`<input id="f_${id}" type="${type}" ${type==='tel'?'inputmode="tel" autocomplete="tel"':''} ${req?'required':''}>`;
+    return `<div class="f${type==='textarea'?' full':''}"><label for="f_${id}">${lab}${req?' *':''}</label>${ctl}<span class="err" id="e_${id}"></span></div>`}).join('');
+  $('#form').style.display='';$('#sentbox').classList.remove('on')}
+$$('.tabs button').forEach(b=>b.addEventListener('click',()=>setTab(b.dataset.tab)));setTab('seeker');
+$('#form').addEventListener('submit',e=>{e.preventDefault();let ok=true;const out=[];
+  FIELDS[tab].forEach(([id,lab,type,req])=>{const el=$('#f_'+id),v=el.value.trim();let err='';
+    if(req&&!v)err='Please fill this in.';else if(type==='tel'&&v&&v.replace(/\D/g,'').length<10)err='Enter a 10-digit mobile number.';
+    $('#e_'+id).textContent=err;if(err){ok&&el.focus();ok=false}if(v)out.push(`${lab}: ${v}`)});
+  if(!ok)return;const text=(tab==='seeker'?'Hello Job Xpert, I am looking for a job.\n':'Hello Job Xpert, we want to hire.\n')+out.join('\n');
+  $('#preview').textContent=text;$('#sendwa').href='https://wa.me/'+WA+'?text='+encodeURIComponent(text);$('#form').style.display='none';$('#sentbox').classList.add('on')});
+$('#edit').addEventListener('click',()=>{$('#form').style.display='';$('#sentbox').classList.remove('on')});
+
+/* comparison labels for the stacked mobile layout */
+$$('.cmp tbody tr').forEach(tr=>{const L=['Paid consultancy','Job Xpert','Applying alone'];[...tr.querySelectorAll('td')].forEach((td,i)=>td.dataset.l=L[i])});
+
+/* footer pointer glow */
+const foot=$('#foot'), glow=$('#glow');
+foot.addEventListener('pointermove',e=>{const r=foot.getBoundingClientRect();glow.style.left=(e.clientX-r.left)+'px';glow.style.top=(e.clientY-r.top)+'px'});
+
+/* reveal */
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{rootMargin:'0px 0px -8% 0px'});
+$$('.rv').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
