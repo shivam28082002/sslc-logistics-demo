@@ -54,9 +54,10 @@
     <section class="panel">
       <div class="ph"><h2 data-ar="فاتورة الشهر، محسوبة من العمليات">This month's invoice, built from operations</h2></div>
       <div class="ctl">
-        <div class="field"><label for="cl" data-ar="العميل">Client</label><select id="cl"><option>Al Waha Foods</option><option>Najd Pharma Distribution</option><option>Qimma Beverages</option><option>Rawabi Electronics</option></select></div>
+        <div class="field"><label for="cl" data-ar="العميل">Client</label><select id="cl"><option>Al Waha Foods</option><option>Najd Pharma Distribution</option><option>Sahara Home Retail</option><option>Masar Building Materials</option><option>Gulf Cement Trading</option></select></div>
         <div class="field"><label for="mo" data-ar="الفترة">Period</label><select id="mo"><option value="2026-10">1–21 Oct 2026</option><option value="2026-09">September 2026</option></select></div>
       </div>
+      <div id="ctags" style="margin:-4px 0 10px"></div>
       <p class="muted" style="margin:0 0 10px;font-size:13.5px" data-ar="الكميات تأتي من المستودع والنقل تلقائياً. الأسعار من عقد العميل، ويمكن تعديلها هنا.">Quantities come from the warehouse and transport modules on their own. Rates come from the client's contract and can be edited here.</p>
       <div class="twrap"><table class="t"><thead><tr><th data-ar="البند">Charge</th><th class="num" data-ar="الكمية">Quantity</th><th data-ar="الوحدة">Unit</th><th class="num" data-ar="السعر">Rate</th><th class="num" data-ar="المبلغ (ريال)">Amount (SAR)</th></tr></thead><tbody id="lines"></tbody></table></div>
       <div class="tot"><span data-ar="المجموع قبل الضريبة">Subtotal</span><b id="sub"></b><span data-ar="ضريبة القيمة المضافة 15%">VAT 15%</span><b id="vat"></b><span class="g" data-ar="الإجمالي">Total</span><b class="g" id="tot"></b></div>
@@ -81,13 +82,20 @@
 <script src="assets/app.js"></script>
 <script>
 const t=(en,ar)=>isAr()?ar:en;
-const Q={'Al Waha Foods':[1860,212,198,1240,9,1],'Najd Pharma Distribution':[2410,180,240,1810,14,1],'Qimma Beverages':[1520,260,251,410,11,0],'Rawabi Electronics':[980,90,96,320,6,0]};
-let R=[0,0,0,0,0,0];
-function lines(){const c=document.getElementById('cl').value,q=Q[c].slice(),k=document.getElementById('mo').value==='2026-09'?1.38:1; q[0]=Math.round(q[0]*k);q[1]=Math.round(q[1]*k);q[2]=Math.round(q[2]*k);q[3]=Math.round(q[3]*k);q[4]=Math.round(q[4]*k);
-  const L=[['Storage, ambient','تخزين عادي',q[0],'pallet-days','منصة-يوم',3.5],['Handling in','مناولة واردة',q[1],'pallets','منصات',18],['Handling out','مناولة صادرة',q[2],'pallets','منصات',18],['Pick and pack','التقاط وتغليف',q[3],'lines','سطور',1.75],['Transport, Riyadh to Dammam','نقل الرياض إلى الدمام',q[4],'trips','رحلات',1450],...(q[5]?[['Cold storage surcharge','رسوم التبريد',Math.round(q[0]*.4),'pallet-days','منصة-يوم',2.25]]:[])];
+const CL_LINES={
+ 'Al Waha Foods':[['Storage, ambient','تخزين عادي',1860,'pallet-days','منصة-يوم',3.5,'wh'],['Cold storage surcharge','رسوم التبريد',744,'pallet-days','منصة-يوم',2.25,'cold'],['Handling in','مناولة واردة',212,'pallets','منصات',18,'3pl'],['Handling out','مناولة صادرة',198,'pallets','منصات',18,'3pl'],['Pick and pack','التقاط وتغليف',1240,'lines','سطور',1.75,'pick'],['Packaging: gift kits','تغليف: علب هدايا',800,'kits','أطقم',3.5,'pack'],['Transport, Riyadh to Dammam','نقل الرياض إلى الدمام',9,'trips','رحلات',1450,'trans']],
+ 'Najd Pharma Distribution':[['Storage, ambient','تخزين عادي',2410,'pallet-days','منصة-يوم',3.5,'wh'],['Cold storage surcharge','رسوم التبريد',964,'pallet-days','منصة-يوم',2.25,'cold'],['Handling in','مناولة واردة',180,'pallets','منصات',18,'3pl'],['Handling out','مناولة صادرة',240,'pallets','منصات',18,'3pl'],['Pick and pack','التقاط وتغليف',1810,'lines','سطور',1.75,'pick'],['Transport, Riyadh to Dammam','نقل الرياض إلى الدمام',14,'trips','رحلات',1450,'trans']],
+ 'Sahara Home Retail':[['Storage, ambient','تخزين عادي',1310,'pallet-days','منصة-يوم',3.5,'wh'],['Handling in','مناولة واردة',140,'pallets','منصات',18,'3pl'],['Handling out','مناولة صادرة',122,'pallets','منصات',18,'3pl'],['Packaging: repacking','تغليف: إعادة تعبئة',1500,'units','وحدات',0.8,'pack'],['Packaging: carton sealing','تغليف: إغلاق الكراتين',220,'cartons','كراتين',1.2,'pack']],
+ 'Masar Building Materials':[['Dedicated flatbed with driver (2PL)','شاحنة مسطحة مخصصة مع سائق (2PL)',3,'trucks / month','شاحنة / شهر',21000,'2pl'],['Extra km above 4,000 per truck','كيلومترات إضافية فوق 4,000 لكل شاحنة',2820,'km','كم',1.1,'2pl']],
+ 'Gulf Cement Trading':[['Trips, Riyadh to Dammam (2PL)','رحلات الرياض إلى الدمام (2PL)',22,'trips','رحلات',1650,'2pl'],['Waiting time over 2 hours','وقت انتظار أكثر من ساعتين',7,'hours','ساعات',95,'2pl']]};
+let R=[0];
+function lines(){const c=document.getElementById('cl').value,k=document.getElementById('mo').value==='2026-09'?1.38:1;
+  const L=CL_LINES[c].map(l=>{const q=l[3].startsWith('trucks')?l[2]:Math.round(l[2]*k);return [l[0],l[1],q,l[3],l[4],l[5],l[6]]});
   if(R.length!==L.length||!R.some(Boolean)) R=L.map(l=>l[5]);
-  document.getElementById('lines').innerHTML=L.map((l,i)=>`<tr><td>${t(l[0],l[1])}</td><td class="num">${l[2].toLocaleString('en-US')}</td><td>${t(l[3],l[4])}</td><td class="num"><input class="rate" type="number" step="0.25" min="0" value="${R[i]}" data-i="${i}" aria-label="Rate"></td><td class="num" id="a${i}"></td></tr>`).join('');
+  const svc=k=>{const v=SERVICES.find(x=>x[0]===k);return `<span class="svc svc-${k}">${isAr()?v[2]:v[1]}</span>`};
+  document.getElementById('lines').innerHTML=L.map((l,i)=>`<tr><td>${t(l[0],l[1])} ${svc(l[6])}</td><td class="num">${l[2].toLocaleString('en-US')}</td><td>${t(l[3],l[4])}</td><td class="num"><input class="rate" type="number" step="0.25" min="0" value="${R[i]}" data-i="${i}" aria-label="Rate"></td><td class="num" id="a${i}"></td></tr>`).join('');
   document.querySelectorAll('.rate').forEach(r=>r.addEventListener('input',()=>{R[+r.dataset.i]=+r.value||0;calc()}));
+  document.getElementById('ctags').innerHTML=svcTags(c);
   window._L=L; calc()}
 function calc(){let s=0;_L.forEach((l,i)=>{const a=l[2]*R[i];s+=a;document.getElementById('a'+i).textContent=a.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})});
   window._tot={sub:s,vat:s*.15,total:s*1.15};document.getElementById('sub').textContent=sar(s);document.getElementById('vat').textContent=sar(s*.15);document.getElementById('tot').textContent=sar(s*1.15)}
@@ -110,6 +118,7 @@ document.getElementById('issue').addEventListener('click',()=>{
   PrimeState.set({invoices:[{no,client:c,total:+_tot.total.toFixed(2),date:ts}].concat(S.invoices)});
   openModal('invM');list();toast(t('Invoice issued and sent for ZATCA clearance','تم إصدار الفاتورة وإرسالها لاعتماد زاتكا'));
 });
+{const q=new URLSearchParams(location.search).get('client');if(q&&CL_LINES[q])document.getElementById('cl').value=q}
 lines();list();
 document.addEventListener('langchange',()=>{lines();list()});
 if(isAr()) applyLang('ar');
