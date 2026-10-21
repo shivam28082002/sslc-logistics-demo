@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prime Operations · Management</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="assets/fav-icon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..700&family=IBM+Plex+Sans+Arabic:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/app.css">
+<style>
+.row2{grid-template-columns:1.6fr 1fr;margin-top:16px}
+.row3{grid-template-columns:1fr 1fr 1fr;margin-top:16px}
+.chart svg{width:100%;height:auto;overflow:visible}
+.chart .lg{display:flex;gap:16px;flex-wrap:wrap;font-size:13px;color:var(--steel-d);margin-top:8px}
+.chart .lg i{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-1px;margin-inline-end:6px}
+.range button{border:1px solid var(--line-2);background:#fff;padding:5px 10px;font-size:13px;cursor:pointer}
+.range button:first-child{border-radius:8px 0 0 8px}.range button:last-child{border-radius:0 8px 8px 0}
+[dir="rtl"] .range button:first-child{border-radius:0 8px 8px 0}[dir="rtl"] .range button:last-child{border-radius:8px 0 0 8px}
+.range button[aria-pressed="true"]{background:var(--green);color:#fff;border-color:var(--green)}
+.site{display:grid;grid-template-columns:90px 1fr 46px;gap:12px;align-items:center;padding:9px 0}
+.site b{font-weight:600}
+.fleet li{display:grid;grid-template-columns:10px 1fr auto;gap:12px;align-items:center;padding:11px 0;border-bottom:1px solid #ECEEEA}
+.fleet li:last-child{border-bottom:0}
+.fleet ul{list-style:none;margin:0;padding:0}
+.fleet .d{width:10px;height:10px;border-radius:50%}
+.fleet small{display:block;color:var(--steel-d)}
+.donut{display:flex;gap:18px;align-items:center}
+.donut svg{width:120px;height:120px;flex:none}
+.donut ul{list-style:none;margin:0;padding:0;font-size:14px;display:grid;gap:7px}
+.donut li i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-inline-end:8px}
+@media (max-width:1100px){.row3{grid-template-columns:1fr 1fr}}
+@media (max-width:900px){.row2,.row3{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="shell">
+<aside class="rail"></aside>
+<div>
+<header class="top">
+  <button class="burger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+  <h1 data-ar="لوحة الإدارة">Management</h1>
+  <label class="search"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span class="sr">Search</span><input placeholder="Search shipment, client, truck, SKU" data-ar-ph="ابحث عن شحنة أو عميل أو شاحنة"></label>
+  <span class="sp"></span>
+  <select class="sel hide-m" id="city" aria-label="City"><option value="all">All cities</option><option value="RUH">Riyadh</option><option value="JED">Jeddah</option><option value="DMM">Dammam</option></select>
+  <button class="lang" type="button">عربي</button>
+  <span class="avatar">AK</span>
+</header>
+<main class="page">
+  <div class="kpis" id="kpis"></div>
+
+  <div class="grid row2">
+    <section class="panel chart">
+      <div class="ph"><h2 data-ar="الطلبات: آخر 14 يوماً وتوقع 3 أيام">Orders: last 14 days and next 3</h2>
+        <div class="range" role="group" aria-label="Range"><button type="button" aria-pressed="true" data-r="14">14d</button><button type="button" aria-pressed="false" data-r="30">30d</button></div></div>
+      <div id="chart"></div>
+      <div class="lg"><span><i style="background:#9BB0A1"></i><span data-ar="فعلي">Actual</span></span><span><i style="background:var(--green)"></i><span data-ar="اليوم">Today</span></span><span><i class="hazard"></i><span data-ar="توقع (رمضان ومواسم العملاء)">Forecast, includes client seasons</span></span></div>
+    </section>
+    <section class="panel fleet">
+      <div class="ph"><h2 data-ar="الأسطول الآن">Fleet right now</h2><a class="btn btn-o" href="transport.html" data-ar="فتح النقل">Open transport</a></div>
+      <ul id="fleet"></ul>
+    </section>
+  </div>
+
+  <div class="grid row3">
+    <section class="panel">
+      <div class="ph"><h2 data-ar="إشغال المستودعات">Warehouse occupancy</h2><small data-ar="مواقع المنصات">Pallet positions</small></div>
+      <div id="sites"></div>
+    </section>
+    <section class="panel">
+      <div class="ph"><h2 data-ar="التسليم في الوقت">On-time delivery</h2><small data-ar="آخر 30 يوماً">Last 30 days</small></div>
+      <div class="donut"><svg viewBox="0 0 42 42" aria-hidden="true"><circle cx="21" cy="21" r="15.9" fill="none" stroke="#EBEDEA" stroke-width="6"/><circle id="otdArc" cx="21" cy="21" r="15.9" fill="none" stroke="var(--green)" stroke-width="6" stroke-dasharray="96.4 3.6" stroke-dashoffset="25" transform="rotate(0)"/><text x="21" y="23.5" text-anchor="middle" font-size="7.5" font-weight="700" fill="#18211B">96.4%</text></svg>
+        <ul><li><i style="background:var(--green)"></i><span data-ar="في الوقت">On time</span> 1,812</li><li><i style="background:var(--amber)"></i><span data-ar="متأخر أقل من ساعة">Under 1 h late</span> 51</li><li><i style="background:var(--red)"></i><span data-ar="متأخر أكثر">Later</span> 17</li></ul></div>
+    </section>
+    <section class="panel">
+      <div class="ph"><h2 data-ar="الإيراد حسب العميل">Revenue by client</h2><small data-ar="هذا الشهر">This month</small></div>
+      <div class="twrap"><table class="t"><thead><tr><th data-ar="العميل">Client</th><th class="num" data-ar="ريال">SAR</th><th class="num" data-ar="التغير">Change</th></tr></thead><tbody id="rev"></tbody></table></div>
+    </section>
+  </div>
+</main>
+</div>
+</div>
+<script src="assets/app.js"></script>
+<script>
+const S=PrimeState.get();
+const CITY={all:[486,96.4,82,'41 / 48'],RUH:[231,97.1,88,'19 / 22'],JED:[148,95.2,79,'13 / 15'],DMM:[107,96.0,74,'9 / 11']};
+function kpis(c){const [o,otd,occ,tr]=CITY[c];const extra=S.pod&&c!=='JED'?1:0;
+  document.getElementById('kpis').innerHTML=`
+  <div class="kpi"><span data-ar="طلبات اليوم">Orders today</span><b>${o}</b><em class="up" data-ar="▲ 8% عن الأسبوع الماضي">▲ 8% on last week</em></div>
+  <div class="kpi"><span data-ar="التسليم في الوقت">On-time delivery</span><b>${otd}%</b><em class="up" data-ar="▲ 2.1 نقطة">▲ 2.1 pts</em></div>
+  <div class="kpi"><span data-ar="إشغال المستودع">Warehouse occupancy</span><b>${occ}%</b><em class="warn" data-ar="الرياض قريبة من الامتلاء">Riyadh close to full</em></div>
+  <div class="kpi"><span data-ar="شاحنات على الطريق">Trucks on the road</span><b>${tr}</b><em class="muted" data-ar="الباقي متاح">rest available</em></div>
+  <div class="kpi"><span data-ar="تسليمات مع إثبات">Delivered with POD</span><b>${(312+extra).toLocaleString('en-US')}</b><em class="${extra?'up':'muted'}">${extra?(isAr()?'▲ وصل PL-24817 للتو':'▲ PL-24817 just delivered'):(isAr()?'اليوم حتى الآن':'today so far')}</em></div>`;
+  if(isAr()) applyLang('ar');
+}
+document.getElementById('city').addEventListener('change',e=>kpis(e.target.value));
+kpis('all');
+
+function chart(days){
+  const base=days===14?[402,431,388,452,468,355,342,447,459,472,463,475,451,486]:Array.from({length:30},(_,i)=>Math.round(360+Math.sin(i/3)*45+i*3.4));
+  const fc=[512,536,559], all=base.concat(fc), W=640,H=230,pad=26, max=Math.max(...all)*1.1, bw=(W-pad)/all.length;
+  let s=`<svg viewBox="0 0 ${W} ${H+24}" role="img" aria-label="Orders per day"><defs><pattern id="hz" width="8" height="8" patternTransform="rotate(45)" patternUnits="userSpaceOnUse"><rect width="8" height="8" fill="#F6D69B"/><rect width="4" height="8" fill="#E8A43A"/></pattern></defs>`;
+  [0,.25,.5,.75,1].forEach(g=>{const y=H-g*H;s+=`<line x1="${pad}" x2="${W}" y1="${y}" y2="${y}" stroke="#ECEEEA"/><text x="0" y="${y+4}" font-size="10" fill="#8A8F8B">${Math.round(g*max)}</text>`});
+  all.forEach((v,i)=>{const h=v/max*H, x=pad+i*bw+bw*.18, w=bw*.64, isF=i>=base.length, isT=i===base.length-1;
+    s+=`<rect x="${x}" y="${H-h}" width="${w}" height="${h}" rx="2" fill="${isF?'url(#hz)':isT?'#3D4E43':'#9BB0A1'}"><title>${v} orders${isF?' (forecast)':''}</title></rect>`;
+    if(isT||isF) s+=`<text x="${x+w/2}" y="${H-h-6}" text-anchor="middle" font-size="10.5" font-weight="600" fill="#18211B">${v}</text>`});
+  s+=`<text x="${pad+(base.length-1)*bw+bw/2}" y="${H+16}" text-anchor="middle" font-size="10.5" fill="#5E625F">${isAr()?'اليوم':'Today'}</text></svg>`;
+  document.getElementById('chart').innerHTML=s;
+}
+let days=14;
+document.querySelectorAll('.range button').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.range button').forEach(x=>x.setAttribute('aria-pressed',x===b));days=+b.dataset.r;chart(days)}));
+chart(14);
+document.addEventListener('langchange',()=>chart(days));
+
+const F=[['ok','RUH → DMM','الرياض ← الدمام','Reefer T-12, 4 °C · PL-24817',S.pod?'Delivered':'ETA 16:40',S.pod?'تم التسليم':'الوصول 16:40'],
+ ['warn','RUH → JED','الرياض ← جدة','Reefer R-07, 3 °C','Rerouted, +12 min','تغيير المسار، +12 دقيقة'],
+ ['ok','Riyadh city','داخل الرياض','Dyna D-21, 9 drops','6 of 9 done','6 من 9'],
+ ['bad','DMM → RUH','الدمام ← الرياض','Flatbed F-03','Returning empty','عائدة فارغة'],
+ ['ok','JED city','داخل جدة','Dyna D-08, 7 drops','On time','في الوقت']];
+document.getElementById('fleet').innerHTML=F.map(([k,en,ar,sub,st,sta])=>`<li><span class="d" style="background:var(--${k==='ok'?'ok':k==='warn'?'amber':'red'})"></span><div><b data-ar="${ar}">${en}</b><small>${sub}</small></div><span class="muted" data-ar="${sta}">${st}</span></li>`).join('');
+document.getElementById('sites').innerHTML=[['Riyadh','الرياض',88,'2,640 / 3,000'],['Jeddah','جدة',79,'1,422 / 1,800'],['Dammam','الدمام',74,'750 / 1,010']].map(([en,ar,p,n])=>`<div class="site"><b data-ar="${ar}">${en}</b><div><div class="bar"><i class="${p>85?'hi':''}" style="width:${p}%"></i></div><small class="muted">${n}</small></div><b>${p}%</b></div>`).join('');
+document.getElementById('rev').innerHTML=[['Najd Pharma Distribution',212400,6],['Al Waha Foods',168900,12],['Qimma Beverages',121300,-3],['Rawabi Electronics',98750,4],['Sahara Home Retail',77200,9],['Tamr Dates Co.',54900,21]].map(([c,v,d])=>`<tr><td>${c}</td><td class="num">${v.toLocaleString('en-US')}</td><td class="num ${d<0?'down':'up'}">${d>0?'+':''}${d}%</td></tr>`).join('');
+if(isAr()) applyLang('ar');
+</script>
+</body>
+</html>
