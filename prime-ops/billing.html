@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prime Operations · Billing and ZATCA</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="assets/fav-icon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..700&family=IBM+Plex+Sans+Arabic:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/app.css">
+<style>
+.bl{grid-template-columns:1.5fr 1fr;align-items:start}
+.ctl{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.t input.rate{width:84px;border:1px solid var(--line-2);border-radius:6px;padding:5px 7px;text-align:end}
+.tot{display:grid;grid-template-columns:1fr auto;gap:6px 20px;margin-top:14px;padding-top:14px;border-top:1px solid var(--line);font-size:15px}
+.tot b{text-align:end}
+.tot .g{font:650 26px/1.2 var(--sans);font-stretch:110%}
+.invdoc{font-size:13px;color:#222}
+.invdoc .hd{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;border-bottom:2px solid var(--green);padding-bottom:12px}
+.invdoc .hd img{width:130px}
+.invdoc h3{font:650 18px var(--sans);margin:0;text-align:end}
+.invdoc .ar{font-family:var(--ar);direction:rtl}
+.invdoc .meta{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0}
+.invdoc .meta div{background:#F6F7F5;border-radius:8px;padding:10px}
+.invdoc .meta span{display:block;color:#666;font-size:12px}
+.invdoc table{width:100%;border-collapse:collapse}
+.invdoc th,.invdoc td{border-bottom:1px solid #E3E5E1;padding:7px 6px;text-align:start}
+.invdoc th{font-size:11.5px;color:#555}
+.invdoc .r{text-align:end}
+.invdoc .ft{display:flex;justify-content:space-between;gap:16px;align-items:flex-end;margin-top:14px}
+.invdoc .qr svg{width:120px;height:120px}
+.invdoc .sum{min-width:220px}
+.invdoc .sum div{display:flex;justify-content:space-between;padding:4px 0}
+.invdoc .sum .g{border-top:2px solid var(--green);font-weight:700;font-size:15px;padding-top:7px}
+#invM .box{width:min(760px,100%)}
+@media print{body *{visibility:hidden}#invDoc,#invDoc *{visibility:visible}#invDoc{position:absolute;left:0;top:0;width:100%}}
+@media (max-width:1000px){.bl{grid-template-columns:1fr}}
+@media (max-width:560px){.invdoc .meta{grid-template-columns:1fr}.invdoc .ft{flex-direction:column;align-items:stretch}}
+</style>
+</head>
+<body>
+<div class="shell">
+<aside class="rail"></aside>
+<div>
+<header class="top">
+  <button class="burger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+  <h1 data-ar="الفوترة وزاتكا">Billing and ZATCA</h1>
+  <span class="sp"></span>
+  <button class="lang" type="button">عربي</button>
+  <span class="avatar">AK</span>
+</header>
+<main class="page">
+  <div class="grid bl">
+    <section class="panel">
+      <div class="ph"><h2 data-ar="فاتورة الشهر، محسوبة من العمليات">This month's invoice, built from operations</h2></div>
+      <div class="ctl">
+        <div class="field"><label for="cl" data-ar="العميل">Client</label><select id="cl"><option>Al Waha Foods</option><option>Najd Pharma Distribution</option><option>Qimma Beverages</option><option>Rawabi Electronics</option></select></div>
+        <div class="field"><label for="mo" data-ar="الفترة">Period</label><select id="mo"><option value="2026-10">1–21 Oct 2026</option><option value="2026-09">September 2026</option></select></div>
+      </div>
+      <p class="muted" style="margin:0 0 10px;font-size:13.5px" data-ar="الكميات تأتي من المستودع والنقل تلقائياً. الأسعار من عقد العميل، ويمكن تعديلها هنا.">Quantities come from the warehouse and transport modules on their own. Rates come from the client's contract and can be edited here.</p>
+      <div class="twrap"><table class="t"><thead><tr><th data-ar="البند">Charge</th><th class="num" data-ar="الكمية">Quantity</th><th data-ar="الوحدة">Unit</th><th class="num" data-ar="السعر">Rate</th><th class="num" data-ar="المبلغ (ريال)">Amount (SAR)</th></tr></thead><tbody id="lines"></tbody></table></div>
+      <div class="tot"><span data-ar="المجموع قبل الضريبة">Subtotal</span><b id="sub"></b><span data-ar="ضريبة القيمة المضافة 15%">VAT 15%</span><b id="vat"></b><span class="g" data-ar="الإجمالي">Total</span><b class="g" id="tot"></b></div>
+      <div style="display:flex;gap:10px;margin-top:16px;flex-wrap:wrap"><button class="btn btn-g" id="issue" data-ar="إصدار فاتورة ضريبية">Issue tax invoice</button><span class="muted" style="font-size:13.5px;align-self:center" data-ar="ثنائية اللغة، مع رمز QR حسب متطلبات زاتكا">Bilingual, with the QR code ZATCA requires</span></div>
+    </section>
+    <section class="panel">
+      <div class="ph"><h2 data-ar="الفواتير الأخيرة">Recent invoices</h2></div>
+      <div class="twrap"><table class="t"><thead><tr><th data-ar="الرقم">Number</th><th data-ar="العميل">Client</th><th class="num" data-ar="الإجمالي">Total</th><th data-ar="زاتكا">ZATCA</th></tr></thead><tbody id="list"></tbody></table></div>
+    </section>
+  </div>
+</main>
+</div>
+</div>
+
+<div class="modal" id="invM" aria-hidden="true"><div class="box" role="dialog" aria-modal="true" aria-label="Tax invoice">
+  <div id="invDoc" class="invdoc"></div>
+  <div style="display:flex;gap:8px;margin-top:16px;flex-wrap:wrap"><button class="btn btn-g" onclick="print()" data-ar="طباعة / PDF">Print or save PDF</button><button class="btn btn-o" onclick="closeModal('invM')" data-ar="إغلاق">Close</button></div>
+  <p class="muted" style="font-size:12.5px;margin:10px 0 0" data-ar="عرض تجريبي: الرقم الضريبي تجريبي، والربط الفعلي مع منصة فاتورة يتم في المشروع.">Demo: the VAT number is a sample. The live connection to the Fatoora platform is part of the project.</p>
+</div></div>
+
+<script src="assets/qrcode.js"></script>
+<script src="assets/app.js"></script>
+<script>
+const t=(en,ar)=>isAr()?ar:en;
+const Q={'Al Waha Foods':[1860,212,198,1240,9,1],'Najd Pharma Distribution':[2410,180,240,1810,14,1],'Qimma Beverages':[1520,260,251,410,11,0],'Rawabi Electronics':[980,90,96,320,6,0]};
+let R=[0,0,0,0,0,0];
+function lines(){const c=document.getElementById('cl').value,q=Q[c].slice(),k=document.getElementById('mo').value==='2026-09'?1.38:1; q[0]=Math.round(q[0]*k);q[1]=Math.round(q[1]*k);q[2]=Math.round(q[2]*k);q[3]=Math.round(q[3]*k);q[4]=Math.round(q[4]*k);
+  const L=[['Storage, ambient','تخزين عادي',q[0],'pallet-days','منصة-يوم',3.5],['Handling in','مناولة واردة',q[1],'pallets','منصات',18],['Handling out','مناولة صادرة',q[2],'pallets','منصات',18],['Pick and pack','التقاط وتغليف',q[3],'lines','سطور',1.75],['Transport, Riyadh to Dammam','نقل الرياض إلى الدمام',q[4],'trips','رحلات',1450],...(q[5]?[['Cold storage surcharge','رسوم التبريد',Math.round(q[0]*.4),'pallet-days','منصة-يوم',2.25]]:[])];
+  if(R.length!==L.length||!R.some(Boolean)) R=L.map(l=>l[5]);
+  document.getElementById('lines').innerHTML=L.map((l,i)=>`<tr><td>${t(l[0],l[1])}</td><td class="num">${l[2].toLocaleString('en-US')}</td><td>${t(l[3],l[4])}</td><td class="num"><input class="rate" type="number" step="0.25" min="0" value="${R[i]}" data-i="${i}" aria-label="Rate"></td><td class="num" id="a${i}"></td></tr>`).join('');
+  document.querySelectorAll('.rate').forEach(r=>r.addEventListener('input',()=>{R[+r.dataset.i]=+r.value||0;calc()}));
+  window._L=L; calc()}
+function calc(){let s=0;_L.forEach((l,i)=>{const a=l[2]*R[i];s+=a;document.getElementById('a'+i).textContent=a.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})});
+  window._tot={sub:s,vat:s*.15,total:s*1.15};document.getElementById('sub').textContent=sar(s);document.getElementById('vat').textContent=sar(s*.15);document.getElementById('tot').textContent=sar(s*1.15)}
+document.getElementById('cl').addEventListener('change',()=>{R=[0];lines()});
+document.getElementById('mo').addEventListener('change',()=>{R=[0];lines()});
+
+/* ZATCA simplified QR: TLV (seller, VAT no, timestamp, total, VAT) as base64 */
+function tlv(fields){const enc=new TextEncoder();let bytes=[];fields.forEach((v,i)=>{const b=enc.encode(v);bytes.push(i+1,b.length,...b)});let bin='';bytes.forEach(x=>bin+=String.fromCharCode(x));return btoa(bin)}
+function list(){const S=PrimeState.get();const L=[...S.invoices.map(i=>[i.no,i.client,i.total,'Cleared','معتمدة']),['INV-2610-131','Najd Pharma Distribution',27410.6,'Pending','قيد الانتظار'],['INV-2610-130','Qimma Beverages',19825.0,'Pending','قيد الانتظار'],['INV-2610-129','Rawabi Electronics',14004.4,'Pending','قيد الانتظار'],['INV-2609-118','Al Waha Foods',41806.5,'Cleared','معتمدة']];
+  document.getElementById('list').innerHTML=L.map(([n,c,v,s,sa])=>`<tr><td>${n}</td><td>${c}</td><td class="num">${sar(v)}</td><td><span class="pill ${s==='Cleared'?'p-ok':'p-warn'}">${t(s,sa)}</span></td></tr>`).join('')}
+document.getElementById('issue').addEventListener('click',()=>{
+  const S=PrimeState.get(), c=document.getElementById('cl').value, no='INV-2610-'+(132+S.invoices.length), now=new Date(), ts=now.toISOString().slice(0,19)+'Z';
+  const qrStr=tlv(['Prime Logistics','300000000000003',ts,_tot.total.toFixed(2),_tot.vat.toFixed(2)]);
+  const qr=qrcode(0,'M');qr.addData(qrStr);qr.make();
+  document.getElementById('invDoc').innerHTML=`<div class="hd"><img src="assets/top-logo.svg" alt="Prime Logistics"><div><h3>Tax invoice</h3><h3 class="ar">فاتورة ضريبية</h3><div style="text-align:end;color:#555">${no}</div></div></div>
+   <div class="meta"><div><span>Seller · البائع</span><b>Prime Logistics</b><br>Istanbul St, Al-Sulay, Riyadh<br>VAT no. 300000000000003 <em style="color:#999">(sample)</em></div><div><span>Buyer · المشتري</span><b>${c}</b><br>Kingdom of Saudi Arabia<br><span>Issue date · تاريخ الإصدار</span>${now.toLocaleString('en-GB')}</div></div>
+   <table><thead><tr><th>Description · الوصف</th><th class="r">Qty</th><th class="r">Rate</th><th class="r">VAT</th><th class="r">Amount</th></tr></thead><tbody>${_L.map((l,i)=>`<tr><td>${l[0]}<br><span class="ar" style="color:#666">${l[1]}</span></td><td class="r">${l[2].toLocaleString('en-US')}</td><td class="r">${R[i].toFixed(2)}</td><td class="r">15%</td><td class="r">${(l[2]*R[i]).toLocaleString('en-US',{minimumFractionDigits:2})}</td></tr>`).join('')}</tbody></table>
+   <div class="ft"><div class="qr">${qr.createSvgTag({cellSize:3,margin:0,scalable:true})}<div style="font-size:11px;color:#777;margin-top:4px">ZATCA QR · رمز زاتكا</div></div>
+   <div class="sum"><div><span>Subtotal · المجموع</span><span>${sar(_tot.sub)}</span></div><div><span>VAT 15% · الضريبة</span><span>${sar(_tot.vat)}</span></div><div class="g"><span>Total · الإجمالي</span><span>${sar(_tot.total)}</span></div></div></div>`;
+  PrimeState.set({invoices:[{no,client:c,total:+_tot.total.toFixed(2),date:ts}].concat(S.invoices)});
+  openModal('invM');list();toast(t('Invoice issued and sent for ZATCA clearance','تم إصدار الفاتورة وإرسالها لاعتماد زاتكا'));
+});
+lines();list();
+document.addEventListener('langchange',()=>{lines();list()});
+if(isAr()) applyLang('ar');
+</script>
+</body>
+</html>
