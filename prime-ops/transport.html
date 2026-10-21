@@ -7,12 +7,31 @@
 <link rel="icon" href="assets/fav-icon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..700&family=IBM+Plex+Sans+Arabic:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/leaflet/leaflet.css">
 <link rel="stylesheet" href="assets/app.css">
 <style>
-.mapwrap{background:var(--green-dd);border-radius:12px;padding:10px;position:relative}
-.mapwrap svg{width:100%;height:auto}
-.mapwrap .cap{position:absolute;inset-inline-start:22px;top:18px;color:#C9D2CB;font-size:13px}
-.mapwrap .cap b{display:block;color:#fff;font-size:16px}
+.mapwrap{position:relative;border-radius:12px;overflow:hidden;background:var(--green-dd);border:1px solid #2B3830}
+#map{height:520px;width:100%;background:#1A231D}
+.mapwrap .cap{position:absolute;inset-inline-start:58px;top:12px;z-index:500;background:rgba(26,35,29,.88);color:#C9D2CB;font-size:13px;padding:10px 14px;border-radius:10px;pointer-events:none;max-width:280px}
+.mapwrap .cap b{display:block;color:#fff;font-size:15px}
+.mapctl{position:absolute;inset-inline-end:12px;top:12px;z-index:500;display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end;max-width:60%}
+.mapctl button{border:0;background:rgba(26,35,29,.9);color:#E6ECE7;border-radius:8px;padding:7px 11px;font-size:13px;font-weight:600;cursor:pointer}
+.mapctl button[aria-pressed="true"]{background:var(--amber);color:var(--green-dd)}
+.truck{display:flex;align-items:center;gap:6px;background:#fff;color:#18211B;border-radius:999px;padding:3px 9px 3px 4px;font:600 11.5px/1 Archivo,sans-serif;white-space:nowrap;box-shadow:0 4px 12px rgba(0,0,0,.45);border:2px solid #1A231D}
+.truckIcon{background:none;border:0;width:auto!important;height:auto!important}
+.truck i{width:18px;height:18px;border-radius:50%;background:var(--green);display:grid;place-items:center}
+.truck i svg{width:11px;height:11px;fill:#fff}
+.truck.warn{background:var(--amber)} .truck.warn i{background:#1A231D}
+.truck.done{background:var(--ok);color:#fff} .truck.done i{background:#fff} .truck.done i svg{fill:var(--ok)}
+.city{background:none;border:0}
+.city span{display:block;transform:translate(-50%,-50%);width:16px;height:16px;border-radius:50%;background:var(--amber);border:3px solid #1A231D;box-shadow:0 0 0 4px rgba(232,164,58,.35)}
+.leaflet-popup-content-wrapper{border-radius:10px}
+.leaflet-popup-content{font:14px/1.45 Archivo,sans-serif;margin:12px 14px}
+.leaflet-popup-content b{display:block;font-size:15px}
+.leaflet-container a.leaflet-popup-close-button{top:4px}
+.leaflet-control-attribution{font-size:10px}
+.leaflet-tooltip.cityTip{background:#1A231D;color:#fff;border:0;font:600 13px Archivo,sans-serif;box-shadow:none;padding:2px 8px}
+.leaflet-tooltip.cityTip:before{display:none}
 .board{grid-template-columns:repeat(4,1fr);margin-top:16px;align-items:start}
 .col{background:#E4E6E1;border-radius:10px;padding:10px}
 .col h3{font:600 14px var(--sans);margin:4px 6px 10px;display:flex;justify-content:space-between}
@@ -26,7 +45,7 @@
 .mrow{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;font-size:14px;margin:14px 0}
 .mrow dt{color:var(--steel-d)} .mrow dd{margin:0;font-weight:500}
 @media (max-width:1100px){.board{grid-template-columns:1fr 1fr}}
-@media (max-width:600px){.board{grid-template-columns:1fr}.mapwrap .cap{position:static;padding:6px 8px 0}}
+@media (max-width:600px){.top .avatar{display:none}#newTrip{padding:8px 11px}.board{grid-template-columns:1fr}#map{height:380px}.mapwrap .cap{display:none}.mapctl{max-width:none;inset-inline-start:52px;inset-inline-end:10px;flex-wrap:nowrap;overflow-x:auto;justify-content:flex-start}.mapctl button{flex:none;padding:7px 9px}}
 </style>
 </head>
 <body>
@@ -50,18 +69,14 @@
 
   <section id="v-live">
     <div class="mapwrap">
-      <div class="cap"><b data-ar="شبكة برايم اليوم">Prime's network today</b><span data-ar="مخطط مبسط، ليس خريطة بمقياس">Schematic, not to scale</span></div>
-      <svg viewBox="0 0 800 380" aria-label="Network map with trucks moving between Jeddah, Riyadh and Dammam" role="img">
-        <defs><path id="r1" d="M440 215 C 520 170, 600 150, 690 140"/><path id="r2" d="M440 215 C 340 240, 230 270, 120 285"/><path id="r3" d="M690 140 C 600 175, 520 200, 440 215"/><path id="r4" d="M440 215 C 470 250, 455 280, 420 300 C 390 280, 400 240, 440 215"/></defs>
-        <g stroke="#3D4E43" stroke-width="10" fill="none" stroke-linecap="round"><use href="#r1"/><use href="#r2"/></g>
-        <g stroke="#5D7062" stroke-width="2" fill="none" stroke-dasharray="2 8" stroke-linecap="round"><use href="#r1"/><use href="#r2"/><use href="#r4"/></g>
-        <g font-family="Archivo, sans-serif" fill="#fff">
-          <circle cx="440" cy="215" r="13" fill="#E8A43A"/><text x="440" y="250" text-anchor="middle" font-size="16" font-weight="700" id="tRUH">Riyadh</text>
-          <circle cx="690" cy="140" r="10" fill="#fff"/><text x="690" y="118" text-anchor="middle" font-size="15" font-weight="600" id="tDMM">Dammam</text>
-          <circle cx="120" cy="285" r="10" fill="#fff"/><text x="120" y="318" text-anchor="middle" font-size="15" font-weight="600" id="tJED">Jeddah</text>
-        </g>
-        <g id="trucks"></g>
-      </svg>
+      <div id="map" role="application" aria-label="Live map of Prime trucks on Saudi roads"></div>
+      <div class="cap"><b data-ar="الشاحنات على الطريق الآن">Trucks on the road now</b><span data-ar="طرق حقيقية، مواقع تجريبية. اضغط أي شاحنة.">Real roads, sample positions. Tap any truck.</span></div>
+      <div class="mapctl" role="group" aria-label="Map view">
+        <button type="button" data-v="ksa" aria-pressed="true" data-ar="المملكة">Kingdom</button>
+        <button type="button" data-v="ruh" aria-pressed="false" data-ar="الرياض">Riyadh</button>
+        <button type="button" data-v="jed" aria-pressed="false" data-ar="جدة">Jeddah</button>
+        <button type="button" data-v="dmm" aria-pressed="false" data-ar="الدمام">Dammam</button>
+      </div>
     </div>
     <div class="grid board" id="board"></div>
   </section>
@@ -88,7 +103,7 @@
   <h3 id="tmT"></h3><p class="muted" id="tmS" style="margin:0"></p>
   <dl class="mrow" id="tmD"></dl>
   <div class="field"><label for="tmDrv" data-ar="السائق">Driver</label><select id="tmDrv"><option>Imran Qureshi</option><option>Faisal Al-Harbi</option><option>Ramesh Nair</option><option>Saleh Al-Dosari</option></select></div>
-  <div style="display:flex;gap:8px;margin-top:16px;flex-wrap:wrap"><button class="btn btn-g" id="tmSave" data-ar="حفظ وإرسال للسائق">Save and send to driver</button><a class="btn btn-o" href="driver.html" id="tmDrvApp" data-ar="فتح تطبيق السائق">Open driver app</a><button class="btn btn-o" onclick="closeModal('tripM')" data-ar="إغلاق">Close</button></div>
+  <div style="display:flex;gap:8px;margin-top:16px;flex-wrap:wrap"><button class="btn btn-g" id="tmSave" data-ar="حفظ وإرسال للسائق">Save and send to driver</button><button class="btn btn-o" type="button" id="tmMap" data-ar="عرض على الخريطة">Show on map</button><a class="btn btn-o" href="driver.html" id="tmDrvApp" data-ar="فتح تطبيق السائق">Open driver app</a><button class="btn btn-o" onclick="closeModal('tripM')" data-ar="إغلاق">Close</button></div>
 </div></div>
 
 <div class="modal" id="newM" aria-hidden="true"><div class="box" role="dialog" aria-modal="true" aria-labelledby="nmT">
@@ -102,6 +117,8 @@
   </form>
 </div></div>
 
+<script src="assets/leaflet/leaflet.js"></script>
+<script src="assets/routes.js"></script>
 <script src="assets/app.js"></script>
 <script>
 const S=PrimeState.get();
@@ -123,7 +140,8 @@ function board(){document.getElementById('board').innerHTML=COLS.map(([k,en,ar])
 let curT;
 function openTrip(id){const t=T.find(x=>x.id===id);curT=t;document.getElementById('tmT').textContent=`${t.id} · ${rt(t.r)}`;document.getElementById('tmS').textContent=t.c;
   document.getElementById('tmD').innerHTML=`<dt>${isAr()?'المركبة':'Vehicle'}</dt><dd>${t.v}</dd><dt>${isAr()?'الوصول':'ETA'}</dt><dd>${t.eta}</dd><dt>${isAr()?'نقاط التسليم':'Drops'}</dt><dd>${t.drops}</dd>${t.temp?`<dt>${isAr()?'الحرارة المطلوبة':'Set temperature'}</dt><dd>${t.temp}</dd>`:''}`;
-  const s=document.getElementById('tmDrv'); if(t.d!=='—') s.value=t.d; document.getElementById('tmDrvApp').hidden=t.id!=='PL-24817'; openModal('tripM')}
+  const s=document.getElementById('tmDrv'); if(t.d!=='—') s.value=t.d; document.getElementById('tmDrvApp').hidden=t.id!=='PL-24817'; document.getElementById('tmMap').hidden=!MOV.some(o=>o.t.id===t.id); openModal('tripM')}
+document.getElementById('tmMap').addEventListener('click',()=>{closeModal('tripM');focusTrip(curT.id)});
 document.getElementById('tmSave').addEventListener('click',()=>{curT.d=document.getElementById('tmDrv').value;if(curT.col==='plan')curT.col='load';closeModal('tripM');board();toast((isAr()?'أُرسلت الرحلة إلى ':'Trip sent to ')+curT.d)});
 document.getElementById('newTrip').addEventListener('click',()=>openModal('newM'));
 document.getElementById('nf').addEventListener('submit',e=>{e.preventDefault();const f=document.getElementById('nfFrom').value,to=document.getElementById('nfTo').value;
@@ -131,16 +149,49 @@ document.getElementById('nf').addEventListener('submit',e=>{e.preventDefault();c
   const code={Riyadh:'RUH',Jeddah:'JED',Dammam:'DMM'};const id='PL-'+(24830+T.length);
   T.unshift({id,c:document.getElementById('nfC').value,r:`${code[f]} → ${code[to]}`,v:document.getElementById('nfV').value,d:'—',col:'plan',eta:'Tomorrow 07:00',drops:1});closeModal('newM');board();toast((isAr()?'تم إنشاء الرحلة ':'Trip created: ')+id)});
 
-/* trucks moving along the routes: the one moving element on this page */
+/* live map: trucks move along real road geometry (OSRM / OpenStreetMap) */
+T.find(t=>t.id==='PL-24817').route='r1'; T.find(t=>t.id==='PL-24818').route='r2'; T.find(t=>t.id==='PL-24821').route='r4'; T.find(t=>t.id==='PL-24809').route='r3';
+T.push({id:'PL-24824',c:'Qimma Beverages',r:'Jeddah city',v:'Dyna D-08',d:'Saleh Al-Ghamdi',col:'road',eta:'17:10',drops:7,route:'r5',hidden:true});
+const map=L.map('map',{zoomControl:true,attributionControl:true,scrollWheelZoom:false,worldCopyJump:false}).setView([24.2,45.2],6);
+L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}',{maxZoom:16,attribution:'Tiles &copy; Esri, HERE, Garmin, &copy; OpenStreetMap contributors · routes OSRM'}).addTo(map);
+L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Reference/MapServer/tile/{z}/{y}/{x}',{maxZoom:16,opacity:.8}).addTo(map);
+map.on('focus',()=>map.scrollWheelZoom.enable()); map.on('blur',()=>map.scrollWheelZoom.disable());
+const CITIES=[['Riyadh','الرياض',24.6877,46.7219],['Jeddah','جدة',21.5433,39.1728],['Dammam','الدمام',26.4207,50.0888]];
+const cityM=CITIES.map(c=>L.marker([c[2],c[3]],{icon:L.divIcon({className:'city',html:'<span></span>',iconSize:[0,0]}),keyboard:false}).addTo(map).bindTooltip(c[0],{direction:'bottom',offset:[0,10],className:'cityTip'}));
+function prep(k){const p=ROUTES[k].pts.map(x=>L.latLng(x[0],x[1]));const d=[0];for(let i=1;i<p.length;i++)d.push(d[i-1]+p[i-1].distanceTo(p[i]));return {p,d,len:d[d.length-1]}}
+const RT={};Object.keys(ROUTES).forEach(k=>{RT[k]=prep(k);L.polyline(RT[k].p,{color:'#3D4E43',weight:6,opacity:.9}).addTo(map);L.polyline(RT[k].p,{color:'#8FA095',weight:1.5,dashArray:'2 7',opacity:.8}).addTo(map)});
+function at(r,f){const want=f*r.len;let lo=0,hi=r.d.length-1;while(hi-lo>1){const m=(lo+hi)>>1;if(r.d[m]<want)lo=m;else hi=m}const seg=r.d[hi]-r.d[lo]||1,u=(want-r.d[lo])/seg;return L.latLng(r.p[lo].lat+(r.p[hi].lat-r.p[lo].lat)*u,r.p[lo].lng+(r.p[hi].lng-r.p[lo].lng)*u)}
+const truckSvg='<svg viewBox="0 0 24 24"><path d="M1 6h13v10H1zM15 9h4l4 4v3h-8z"/></svg>';
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
-document.getElementById('trucks').innerHTML=T.filter(t=>t.col==='road').map((t,i)=>`<g><circle r="9" fill="${t.flag?'#E8A43A':'#fff'}" stroke="#1A231D" stroke-width="2"><title>${t.id} ${t.v}</title></circle>${reduce?'':`<animateMotion dur="${18+i*5}s" repeatCount="indefinite" begin="-${i*4}s"><mpath href="#${t.route}"/></animateMotion>`}</g>`).join('');
+const MOV=[];
+const startF={'PL-24817':.62,'PL-24818':.35,'PL-24821':.4,'PL-24809':.55,'PL-24824':.2};
+const loopS={'PL-24817':240,'PL-24818':420,'PL-24821':150,'PL-24809':260,'PL-24824':130};
+T.filter(t=>t.route&&(t.col==='road'||t.id==='PL-24817')).forEach(t=>{
+  const r=RT[t.route], done=t.col==='done', cls=done?'done':t.flag?'warn':'';
+  const trail=L.polyline([],{color:done?'#2F8F4E':t.flag?'#E8A43A':'#C9D2CB',weight:4,opacity:.95}).addTo(map);
+  const m=L.marker(at(r,done?1:startF[t.id]),{icon:L.divIcon({className:'truckIcon',html:`<div class="truck ${cls}"><i>${truckSvg}</i>${t.v.split(' ').pop()}</div>`,iconSize:null,iconAnchor:[14,14]}),title:t.id}).addTo(map);
+  m.bindPopup(()=>`<b>${t.id} · ${t.v}</b>${t.c}<br>${rt(t.r)} · ${ROUTES[t.route].km} km<br>${isAr()?'السائق':'Driver'}: ${t.d}${t.temp?`<br>${isAr()?'الحرارة':'Reefer'}: ${t.temp}`:''}<br><span style="color:${done?'#2F8F4E':'#B87612'};font-weight:600">${done?(isAr()?'تم التسليم':'Delivered'):(isAr()?'الوصول ':'ETA ')+t.eta}</span>`);
+  MOV.push({t,r,m,trail,f:done?1:startF[t.id],speed:1/loopS[t.id],done});
+});
+let last=performance.now();
+function tick(now){const dt=Math.min(.1,(now-last)/1000);last=now;
+  MOV.forEach(o=>{if(!o.done&&!reduce){o.f+=o.speed*dt;if(o.f>1)o.f=0}const pos=at(o.r,o.f);o.m.setLatLng(pos);
+    const n=Math.max(2,Math.round(o.f*o.r.p.length));o.trail.setLatLngs(o.r.p.slice(0,n).concat([pos]))});
+  requestAnimationFrame(tick)}
+requestAnimationFrame(tick);
+const VIEWS={ksa:[[20.9,38.6],[27.0,50.6]],ruh:[[24.45,46.55],[24.9,47.0]],jed:[[21.38,39.05],[21.72,39.3]],dmm:[[26.2,49.9],[26.55,50.25]]};
+document.querySelectorAll('.mapctl button').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.mapctl button').forEach(x=>x.setAttribute('aria-pressed',x===b));map.flyToBounds(VIEWS[b.dataset.v],{duration:1.2,padding:[20,20]})}));
+map.fitBounds(VIEWS.ksa,{padding:[20,20]});
+window.map=map;
+window.focusTrip=id=>{const o=MOV.find(x=>x.t.id===id);if(!o)return;document.querySelectorAll('.mapctl button').forEach(x=>x.setAttribute('aria-pressed','false'));map.flyTo(o.m.getLatLng(),9,{duration:1.2});setTimeout(()=>o.m.openPopup(),1300);document.getElementById('map').scrollIntoView({behavior:'smooth',block:'center'})};
+function cityNames(){cityM.forEach((m,i)=>m.setTooltipContent(CITIES[i][isAr()?1:0]))}
 
 /* fleet docs */
 const day=86400000, now=new Date('2026-10-21');
 const V=[['Reefer R-07','Reefer 12 t','Faisal Al-Harbi',6,140,90],['Reefer T-12','Reefer 12 t','Imran Qureshi',210,95,40],['Flatbed F-03','Flatbed 20 t','Saleh Al-Dosari',88,22,160],['Dyna D-21','Dyna 4 t','Ramesh Nair',300,260,12],['Reefer T-04','Reefer 8 t','Faisal Al-Harbi',150,175,120],['Dyna D-08','Dyna 4 t','Ramesh Nair',64,300,210]];
 function docCell(d){const date=new Date(now.getTime()+d*day).toISOString().slice(0,10);const k=d<=14?'p-bad':d<=30?'p-warn':'p-ok';return `<span class="pill ${k}">${date}</span>`}
 function fleet(){document.getElementById('fleet').innerHTML=V.map(v=>{const worst=Math.min(v[3],v[4],v[5]);return `<tr><td><b>${v[0]}</b></td><td>${v[1]}</td><td>${v[2]}</td><td>${docCell(v[3])}</td><td>${docCell(v[4])}</td><td>${docCell(v[5])}</td><td>${worst<=30?`<button class="btn btn-a" onclick="this.outerHTML='<span class=\\'pill p-info\\'>${isAr()?'طلب التجديد أُرسل':'Renewal requested'}</span>';toast('${isAr()?'تم إرسال طلب التجديد':'Renewal request sent'}')">${isAr()?'تجديد':'Renew'}</button>`:''}</td></tr>`}).join('')}
-function tab(t){document.querySelectorAll('.tabs button').forEach(b=>b.setAttribute('aria-selected',b.dataset.t===t));['live','2pl','fleet'].forEach(x=>document.getElementById('v-'+x).hidden=x!==t)}
+function tab(t){document.querySelectorAll('.tabs button').forEach(b=>b.setAttribute('aria-selected',b.dataset.t===t));['live','2pl','fleet'].forEach(x=>document.getElementById('v-'+x).hidden=x!==t);if(t==='live'&&window.map)setTimeout(()=>{map.invalidateSize();map.fitBounds(VIEWS.ksa,{padding:[20,20]})},30)}
 const C2=[['Masar Building Materials','3 flatbeds, 20 t, with drivers','3 شاحنات مسطحة 20 طن مع السائقين','Fixed monthly per truck','شهري ثابت لكل شاحنة',46,14820,84,'SAR 21,000 × 3'],
  ['Gulf Cement Trading','2 flatbeds, 20 t','شاحنتان مسطحتان 20 طن','Per trip, Riyadh to Dammam','لكل رحلة، الرياض إلى الدمام',22,9240,71,'SAR 1,650 × 22']];
 const TOT={'Masar Building Materials':63000,'Gulf Cement Trading':36300};
@@ -148,7 +199,7 @@ const ST2={road:['On the road','على الطريق','p-info'],load:['Loading','
 function c2(){document.getElementById('c2pl').innerHTML=C2.map(c=>`<tr><td><b>${c[0]}</b><div>${svcTags(c[0])}</div></td><td>${isAr()?c[2]:c[1]}</td><td>${isAr()?c[4]:c[3]}<br><small class="muted">${c[8]}</small></td><td class="num">${c[5]}</td><td class="num">${c[6].toLocaleString('en-US')}</td><td style="min-width:110px"><div class="bar"><i style="width:${c[7]}%"></i></div><small class="muted">${c[7]}%</small></td><td class="num"><b>${sar(TOT[c[0]])}</b></td><td><a class="btn btn-o" href="billing.html?client=${encodeURIComponent(c[0])}">${isAr()?'فاتورة النقل':'Transport invoice'}</a></td></tr>`).join('');
  document.getElementById('t2pl').innerHTML=[['PL-24830','Masar Building Materials','RUH → DMM','Flatbed F-05','road'],['PL-24831','Masar Building Materials','Riyadh city','Flatbed F-06','load'],['PL-24832','Gulf Cement Trading','DMM → RUH','Flatbed F-07','road'],['PL-24828','Gulf Cement Trading','RUH → DMM','Flatbed F-08','done']].map(r=>{const st=ST2[r[4]];return `<tr><td>${r[0]}</td><td>${r[1]}</td><td>${rt(r[2])}</td><td>${r[3]}</td><td><span class="pill ${st[2]}">${isAr()?st[1]:st[0]}</span></td></tr>`}).join('')}
 document.querySelectorAll('.tabs button').forEach(b=>b.addEventListener('click',()=>tab(b.dataset.t)));
-function names(){['RUH','DMM','JED'].forEach(k=>document.getElementById('t'+k).textContent=CITY[k][isAr()?1:0])}
+function names(){cityNames()}
 board();fleet();names();c2(); if(location.hash==='#fleet')tab('fleet'); if(location.hash==='#fleet2pl')tab('2pl');
 document.addEventListener('langchange',()=>{board();fleet();names();c2()});
 if(isAr()) applyLang('ar');
