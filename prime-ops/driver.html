@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prime Operations · Driver app</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="assets/fav-icon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..700&family=IBM+Plex+Sans+Arabic:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/app.css">
+<style>
+.stage{display:grid;grid-template-columns:auto 1fr;gap:40px;align-items:start}
+.phone{width:360px;height:740px;border-radius:44px;background:#121813;padding:12px;box-shadow:0 40px 80px -30px rgba(26,35,29,.6)}
+.screen{width:100%;height:100%;border-radius:34px;background:#F4F5F2;overflow:hidden;display:flex;flex-direction:column;position:relative}
+.sbar{display:flex;justify-content:space-between;padding:12px 24px 6px;font-size:12.5px;font-weight:600}
+.ahead{background:var(--green);color:#fff;padding:14px 18px 16px}
+.ahead small{color:#C9D2CB;display:block}
+.ahead b{font:650 20px/1.2 var(--sans);font-stretch:110%}
+[dir="rtl"] .ahead b{font-family:var(--ar)}
+.body{flex:1;overflow-y:auto;padding:14px}
+.card{background:#fff;border-radius:12px;padding:14px;margin-bottom:10px;border:1px solid var(--line)}
+.card h4{margin:0 0 4px;font-size:15px}
+.card p{margin:0;color:var(--steel-d);font-size:13.5px}
+.big-btn{display:block;width:100%;border:0;border-radius:12px;padding:15px;font-weight:700;font-size:16px;cursor:pointer;margin-top:8px}
+.big-btn.g{background:var(--green);color:#fff}.big-btn.a{background:var(--amber);color:var(--green-dd)}
+.big-btn:disabled{opacity:.4;cursor:not-allowed}
+.chk{display:flex;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid #EEF0ED;font-size:14.5px}
+.chk input{width:22px;height:22px;accent-color:var(--green)}
+.photo{height:150px;border-radius:10px;border:2px dashed var(--line-2);display:grid;place-items:center;color:var(--steel-d);font-size:14px;overflow:hidden;background:#fff;cursor:pointer;position:relative}
+.photo img{width:100%;height:100%;object-fit:cover}
+.photo input{position:absolute;inset:0;opacity:0;cursor:pointer}
+canvas.sig{width:100%;height:140px;background:#fff;border-radius:10px;border:1px solid var(--line-2);touch-action:none;display:block}
+.otp{display:flex;gap:8px;justify-content:center}
+.otp input{width:46px;height:54px;text-align:center;font-size:22px;font-weight:700;border:1px solid var(--line-2);border-radius:10px}
+.steps{display:flex;gap:6px;padding:10px 18px 0;background:var(--green)}
+.steps i{flex:1;height:4px;border-radius:2px;background:rgba(255,255,255,.25)}
+.steps i.on{background:var(--amber)}
+.done-ic{width:84px;height:84px;border-radius:50%;background:var(--ok);display:grid;place-items:center;margin:30px auto 16px}
+.done-ic svg{width:44px;height:44px;stroke:#fff;fill:none;stroke-width:3}
+.side h2{font:650 26px/1.15 var(--sans);font-stretch:112%;margin:0 0 10px;max-width:520px}
+[dir="rtl"] .side h2{font-family:var(--ar)}
+.side p{color:#3E4640;max-width:520px}
+.side ul{padding-inline-start:20px;color:#3E4640;max-width:520px}
+.side li{margin:6px 0}
+.lab{font-size:13px;color:var(--steel-d);font-weight:600;margin:10px 0 6px;display:block}
+@media (max-width:900px){.stage{grid-template-columns:1fr}.phone{margin:0 auto}}
+@media (max-width:420px){.phone{width:100%;height:auto;min-height:680px;border-radius:30px;padding:8px}.screen{border-radius:24px;min-height:664px}}
+</style>
+</head>
+<body>
+<div class="shell">
+<aside class="rail"></aside>
+<div>
+<header class="top">
+  <button class="burger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+  <h1 data-ar="تطبيق السائق">Driver app</h1>
+  <span class="sp"></span>
+  <button class="lang" type="button">عربي</button>
+  <span class="avatar">AK</span>
+</header>
+<main class="page">
+  <div class="stage">
+    <div class="phone"><div class="screen">
+      <div class="sbar"><span>16:32</span><span>4G ▮▮▮</span></div>
+      <div id="app" style="flex:1;display:flex;flex-direction:column;min-height:0"></div>
+    </div></div>
+    <div class="side">
+      <h2 data-ar="لا مزيد من مطاردة السائقين على واتساب">No more chasing drivers on WhatsApp</h2>
+      <p data-ar="هذا ما يراه السائق عمران على هاتفه. جرّب تسليم الشحنة PL-24817 بنفسك:">This is what the driver, Imran, sees on his phone. Deliver shipment PL-24817 yourself:</p>
+      <ul>
+        <li data-ar="فحص التحميل والحرارة قبل الانطلاق">Load and temperature check before leaving</li>
+        <li data-ar="صورة للبضاعة عند التسليم (من الكاميرا أو صورة تجريبية)">Photo of the goods at delivery (camera, or a sample photo)</li>
+        <li data-ar="توقيع المستلم على الشاشة">Receiver signs on the screen</li>
+        <li data-ar="رمز تحقق يصل للعميل برسالة">An OTP code the client receives by SMS</li>
+      </ul>
+      <p data-ar="عند التأكيد، تتحدث بوابة العميل ولوحة الإدارة فوراً.">When he confirms, the client portal and the management dashboard update straight away.</p>
+      <p><a class="btn btn-g" href="client-portal.html" data-ar="افتح بوابة العميل">Open the client portal</a></p>
+    </div>
+  </div>
+</main>
+</div>
+</div>
+<script src="assets/app.js"></script>
+<script>
+const A=document.getElementById('app'); const OTP='4821';
+let step=0, photo=null, sigDirty=false;
+const t=(en,ar)=>isAr()?ar:en;
+function bar(n){return `<div class="steps">${[0,1,2,3].map(i=>`<i class="${i<=n?'on':''}"></i>`).join('')}</div>`}
+function render(){
+  const S=PrimeState.get();
+  if(S.pod&&step<4) step=4;
+  if(step===0) A.innerHTML=`<div class="ahead"><small>${t('Good afternoon','مساء الخير')}</small><b>Imran Qureshi</b></div><div class="body">
+    <p class="lab">${t('Your trips today','رحلاتك اليوم')}</p>
+    <div class="card"><h4>PL-24817 · ${t('Riyadh → Dammam','الرياض ← الدمام')}</h4><p>Al Waha Foods DC, 2nd Industrial City, Dammam</p><p>${t('Reefer T-12 · set 4 °C · 6 pallets','مبردة T-12 · 4 درجات · 6 منصات')}</p><button class="big-btn g" id="go">${t('Start this trip','ابدأ الرحلة')}</button></div>
+    <div class="card" style="opacity:.6"><h4>PL-24823 · ${t('Riyadh city','داخل الرياض')}</h4><p>${t('6 drops · tomorrow 08:00','6 نقاط · غداً 08:00')}</p></div></div>`;
+  if(step===1) A.innerHTML=`<div class="ahead"><small>PL-24817</small><b>${t('Before you leave','قبل الانطلاق')}</b></div>${bar(0)}<div class="body"><div class="card">
+    <label class="chk"><input type="checkbox" class="c">${t('6 pallets loaded, seal number 448120','تم تحميل 6 منصات، رقم الختم 448120')}</label>
+    <label class="chk"><input type="checkbox" class="c">${t('Reefer reading 4 °C','قراءة التبريد 4 درجات')}</label>
+    <label class="chk"><input type="checkbox" class="c">${t('Delivery note and invoice copy on board','إشعار التسليم ونسخة الفاتورة معك')}</label></div>
+    <button class="big-btn g" id="go" disabled>${t('Leave the warehouse','غادر المستودع')}</button></div>`;
+  if(step===2) A.innerHTML=`<div class="ahead"><small>PL-24817</small><b>${t('On the way to Dammam','في الطريق إلى الدمام')}</b></div>${bar(1)}<div class="body">
+    <div class="card"><h4>${t('ETA 16:40 · 31 km left','الوصول 16:40 · بقي 31 كم')}</h4><p>${t('Reefer 4.1 °C, in range','التبريد 4.1 درجة، ضمن الحد')}</p></div>
+    <div class="card"><h4>${t('Receiver','المستلم')}</h4><p>Mr. Khalid, Al Waha DC · +966 5• ••• 4410</p></div>
+    <button class="big-btn a" id="go">${t('I have arrived','وصلت')}</button></div>`;
+  if(step===3) A.innerHTML=`<div class="ahead"><small>PL-24817</small><b>${t('Proof of delivery','إثبات التسليم')}</b></div>${bar(2)}<div class="body">
+    <span class="lab">${t('1. Photo of the goods','1. صورة البضاعة')}</span>
+    <div class="photo" id="ph">${photo?`<img src="${photo}" alt="Delivery photo">`:t('Tap to take a photo','اضغط لالتقاط صورة')}<input type="file" accept="image/*" capture="environment" id="file" aria-label="Take photo"></div>
+    <button class="btn btn-o" style="margin-top:6px;width:100%" id="sample">${t('Use a sample photo','استخدم صورة تجريبية')}</button>
+    <span class="lab">${t('2. Receiver name','2. اسم المستلم')}</span><input id="rn" class="sel" style="width:100%" value="Khalid Al-Qahtani">
+    <span class="lab">${t('3. Signature','3. التوقيع')} <a href="#" id="clr" style="float:inline-end;color:var(--green)">${t('Clear','مسح')}</a></span><canvas class="sig" id="sig" aria-label="Signature pad"></canvas>
+    <span class="lab">${t('4. OTP from the client\'s SMS','4. رمز التحقق من رسالة العميل')} <span class="muted" style="font-weight:400">(${t('demo code','رمز تجريبي')}: ${OTP})</span></span>
+    <div class="otp" dir="ltr">${[0,1,2,3].map(i=>`<input inputmode="numeric" maxlength="1" class="o" aria-label="OTP digit ${i+1}">`).join('')}</div>
+    <p id="err" class="down" style="font-size:13.5px;min-height:18px;margin:8px 0 0"></p>
+    <button class="big-btn g" id="go">${t('Confirm delivery','تأكيد التسليم')}</button></div>`;
+  if(step===4){const p=S.pod||{};A.innerHTML=`<div class="ahead"><small>PL-24817</small><b>${t('Delivered','تم التسليم')}</b></div>${bar(3)}<div class="body" style="text-align:center">
+    <div class="done-ic"><svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg></div>
+    <h3 style="margin:0 0 6px">${t('Delivered at','تم التسليم الساعة')} ${p.time||''}</h3><p class="muted" style="margin:0 0 14px">${t('Signed by','وقّع')} ${p.name||''}</p>
+    ${p.photo?`<img src="${p.photo}" alt="" style="border-radius:10px;max-height:120px;margin:0 auto 10px;object-fit:cover">`:''}
+    ${p.sig?`<img src="${p.sig}" alt="Signature" style="background:#fff;border-radius:10px;border:1px solid var(--line);margin:0 auto;max-height:80px">`:''}
+    <p class="muted" style="font-size:13.5px">${t('The client and the office can see this now.','العميل والمكتب يرون هذا الآن.')}</p>
+    <a class="big-btn g" href="client-portal.html" style="text-decoration:none">${t('See it in the client portal','شاهدها في بوابة العميل')}</a>
+    <button class="big-btn" style="background:#fff;border:1px solid var(--line-2)" id="again">${t('Reset and try again','إعادة المحاولة')}</button></div>`}
+  wire();
+}
+function wire(){
+  const go=document.getElementById('go');
+  if(step===1){const cs=[...document.querySelectorAll('.c')];cs.forEach(c=>c.addEventListener('change',()=>go.disabled=!cs.every(x=>x.checked)))}
+  if(step===3){
+    const file=document.getElementById('file');
+    file.addEventListener('change',()=>{const f=file.files[0];if(!f)return;const img=new Image();img.onload=()=>{photo=shrink(img);render()};img.src=URL.createObjectURL(f)});
+    document.getElementById('sample').addEventListener('click',()=>{photo=samplePhoto();render()});
+    const c=document.getElementById('sig'), r=c.getBoundingClientRect(); c.width=r.width*2; c.height=r.height*2; const x=c.getContext('2d'); x.scale(2,2); x.lineWidth=2.4; x.lineCap='round'; x.strokeStyle='#18211B';
+    let drawing=false; const pos=e=>{const b=c.getBoundingClientRect();return [e.clientX-b.left,e.clientY-b.top]};
+    c.addEventListener('pointerdown',e=>{drawing=true;c.setPointerCapture(e.pointerId);x.beginPath();x.moveTo(...pos(e))});
+    c.addEventListener('pointermove',e=>{if(!drawing)return;x.lineTo(...pos(e));x.stroke();sigDirty=true});
+    c.addEventListener('pointerup',()=>drawing=false);
+    document.getElementById('clr').addEventListener('click',e=>{e.preventDefault();x.clearRect(0,0,c.width,c.height);sigDirty=false});
+    const os=[...document.querySelectorAll('.o')];os.forEach((o,i)=>o.addEventListener('input',()=>{o.value=o.value.replace(/\D/g,'');if(o.value&&os[i+1])os[i+1].focus()}));
+    go.addEventListener('click',()=>{const err=document.getElementById('err');
+      if(!photo){err.textContent=t('Add a photo of the goods first.','أضف صورة البضاعة أولاً.');return}
+      if(!document.getElementById('rn').value.trim()){err.textContent=t('Enter the receiver\'s name.','أدخل اسم المستلم.');return}
+      if(!sigDirty){err.textContent=t('Ask the receiver to sign.','اطلب من المستلم التوقيع.');return}
+      if(os.map(o=>o.value).join('')!==OTP){err.textContent=t('The OTP does not match. Ask the receiver to read it again.','رمز التحقق غير صحيح. اطلب من المستلم قراءته مرة أخرى.');return}
+      const d=new Date();PrimeState.set({pod:{name:document.getElementById('rn').value.trim(),sig:c.toDataURL('image/png'),photo,time:(d.getHours()*60+d.getMinutes()>12*60+30?d.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'}):'16:38'),date:d.toISOString().slice(0,10)}});
+      step=4;render();toast(t('Delivery confirmed. Client notified.','تم تأكيد التسليم. تم إشعار العميل.'))});
+    return}
+  if(step===4){document.getElementById('again').addEventListener('click',()=>{PrimeState.set({pod:null});photo=null;sigDirty=false;step=0;render()});return}
+  if(go) go.addEventListener('click',()=>{step++;render()});
+}
+function shrink(img){const c=document.createElement('canvas'),s=Math.min(1,480/Math.max(img.width,img.height));c.width=img.width*s;c.height=img.height*s;c.getContext('2d').drawImage(img,0,0,c.width,c.height);return c.toDataURL('image/jpeg',.7)}
+function samplePhoto(){const c=document.createElement('canvas');c.width=480;c.height=300;const x=c.getContext('2d');
+  x.fillStyle='#BFC4BC';x.fillRect(0,0,480,300);x.fillStyle='#8E948B';x.fillRect(0,210,480,90);
+  [[60,90],[190,90],[320,90],[60,30],[190,30]].forEach(([px,py])=>{x.fillStyle='#C89B5C';x.fillRect(px,py+60,110,100);x.strokeStyle='#8A6A3A';x.lineWidth=2;x.strokeRect(px,py+60,110,100);x.fillStyle='#fff';x.fillRect(px+30,py+95,50,22);x.fillStyle='#3D4E43';x.font='bold 11px Archivo, sans-serif';x.fillText('AL WAHA',px+31,py+110)});
+  x.fillStyle='#6B5235';x.fillRect(50,250,390,14);x.fillStyle='rgba(0,0,0,.55)';x.fillRect(0,272,480,28);x.fillStyle='#fff';x.font='12px Archivo, sans-serif';x.fillText('PL-24817 · Dammam · '+new Date().toLocaleString('en-GB'),10,290);
+  return c.toDataURL('image/jpeg',.75)}
+render();
+document.addEventListener('langchange',render);
+if(isAr()) applyLang('ar');
+</script>
+</body>
+</html>
