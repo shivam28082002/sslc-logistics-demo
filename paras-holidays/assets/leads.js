@@ -1,13 +1,13 @@
 /* Paras Holidays demo: shared lead store (localStorage) used by the website and the lead inbox */
 window.ParasLeads = (function () {
   const KEY = 'paras-leads-v1';
-  const WA = '919811268070';
+  const WA = '919717995564';
   const SEED = [
     { id: 'L-1041', name: 'Rohit Malhotra', phone: '98101 2xxxx', trip: 'Kashmir', when: 'December', who: 'Family, 2 adults + 2 kids', budget: '₹25–40k per person', source: 'Google Ads', status: 'Quote sent', created: -26, follow: 0, note: 'Wants houseboat 1 night + Gulmarg gondola.' },
     { id: 'L-1042', name: 'Ananya & Karan', phone: '99711 4xxxx', trip: 'Bali', when: 'February', who: 'Couple (honeymoon)', budget: '₹60k+ per person', source: 'Instagram', status: 'New', created: -2, follow: 0, note: '' },
-    { id: 'L-1043', name: 'Suresh Gupta', phone: '98180 7xxxx', trip: 'Vaishno Devi', when: 'November', who: 'Group, 9 adults', budget: 'Under ₹15k per person', source: 'Website planner', status: 'Contacted', created: -5, follow: 1, note: 'Needs helicopter tickets + Katra hotel near station.' },
+    { id: 'L-1043', name: 'Suresh Gupta', phone: '98180 7xxxx', trip: 'Great European Capitals (group tour)', when: 'May 2026', who: 'Group, 9 adults', budget: '₹2.5L+ per person', source: 'Website planner', status: 'Contacted', created: -5, follow: 1, note: 'Wants Schengen visa help for all 9; two senior citizens.' },
     { id: 'L-1044', name: 'Meenal Arora', phone: '98731 1xxxx', trip: 'Dubai', when: 'January', who: 'Family, 3 adults', budget: '₹40–60k per person', source: 'WhatsApp', status: 'Booked', created: -72, follow: null, note: 'Visa done. Desert safari + Burj Khalifa 124.' },
-    { id: 'L-1045', name: 'Vikram Sethi', phone: '99100 8xxxx', trip: 'Thailand', when: 'Not decided', who: 'Friends, 4 adults', budget: '₹40–60k per person', source: 'Website planner', status: 'New', created: -1, follow: 0, note: '' },
+    { id: 'L-1045', name: 'Vikram Sethi', phone: '99100 8xxxx', trip: 'Turkey', when: 'Not decided', who: 'Friends, 4 adults', budget: '₹1–2.5L per person', source: 'Website planner', status: 'New', created: -1, follow: 0, note: '' },
     { id: 'L-1046', name: 'Pooja Bansal', phone: '98113 5xxxx', trip: 'Kerala', when: 'December', who: 'Couple', budget: '₹25–40k per person', source: 'Google Ads', status: 'Quote sent', created: -30, follow: -1, note: 'Compared with another agent. Follow up today.' },
     { id: 'L-1047', name: 'Harish Kapoor', phone: '98990 2xxxx', trip: 'Manali', when: 'March', who: 'Family, 2 adults + 1 kid', budget: 'Under ₹15k per person', source: 'Visa checklist', status: 'Lost', created: -120, follow: null, note: 'Booked by road with relatives.' },
     { id: 'L-1048', name: 'Nisha Verma', phone: '97170 6xxxx', trip: 'Goa', when: 'December', who: 'Friends, 6 adults', budget: '₹15–25k per person', source: 'Exit offer', status: 'Contacted', created: -9, follow: 2, note: 'New Year week, wants North Goa.' }
