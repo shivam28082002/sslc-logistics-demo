@@ -48,7 +48,7 @@ main{max-width:1280px;margin:0 auto;padding:20px 22px 60px}
 .row b{display:block}
 .row small{color:var(--muted)}
 .st{font-size:12.5px;font-weight:700;padding:4px 9px;border-radius:999px;justify-self:start}
-.s-New{background:#FDE7EC;color:var(--petal)}.s-Contacted{background:#E6ECFF;color:var(--indigo-2)}.s-Quote{background:#FFF1D6;color:#9A6206}.s-Booked{background:#E2F4E9;color:var(--ok)}.s-Lost{background:#EEF0F5;color:#6B7290}
+.s-New{background:#FDE7EC;color:var(--petal)}.s-Contacted{background:#E6ECFF;color:var(--indigo-2)}.s-Quote{background:#FFF1D6;color:#9A6206}.s-Booked{background:#E2F4E9;color:var(--ok)}.s-Lost{background:#EEF0F5;color:#6B7290}.s-Qualified{background:#E2F4E9;color:#1F8A4C}
 .src{font-size:12.5px;color:var(--muted)}
 .due{font-size:12.5px;font-weight:600}
 .due.late{color:var(--petal)}.due.today{color:#9A6206}
@@ -84,7 +84,7 @@ main{max-width:1280px;margin:0 auto;padding:20px 22px 60px}
     <div class="pipe" id="pipe" role="group" aria-label="Filter by status"></div>
     <span class="sp"></span>
     <label class="sr" for="srcF">Source</label>
-    <select id="srcF"><option value="">All sources</option><option>Website planner</option><option>Google Ads</option><option>Instagram</option><option>WhatsApp</option><option>Visa checklist</option><option>Exit offer</option></select>
+    <select id="srcF"><option value="">All sources</option><option>Website planner</option><option>Google Ads</option><option>Instagram</option><option>WhatsApp</option><option>Visa checklist</option><option>Exit offer</option><option>AI planner</option></select>
     <label class="sr" for="q">Search</label>
     <input id="q" type="search" placeholder="Search name or trip">
   </div>
@@ -97,7 +97,7 @@ main{max-width:1280px;margin:0 auto;padding:20px 22px 60px}
 <script src="assets/leads.js"></script>
 <script>
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
-const STATUSES=['New','Contacted','Quote sent','Booked','Lost'];
+const STATUSES=['New','Contacted','Qualified','Quote sent','Booked','Lost'];
 let fStatus='All',cur=null;
 function toast(t){const e=$('#toast');e.textContent=t;e.classList.add('on');clearTimeout(e._t);e._t=setTimeout(()=>e.classList.remove('on'),2400)}
 const ago=ms=>{const h=Math.round((Date.now()-ms)/3600e3);return h<1?'just now':h<24?h+' h ago':Math.round(h/24)+' d ago'};
