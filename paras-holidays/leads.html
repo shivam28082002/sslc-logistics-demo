@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lead inbox · Paras Holidays</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&display=swap" rel="stylesheet">
+<style>
+:root{--indigo:#20286B;--indigo-2:#2E3890;--marigold:#F5A524;--petal:#E5486B;--sky:#EEF3FF;--ink:#151A3A;--muted:#5A6080;--line:#DDE3F3;--wa:#1FA855;--ok:#1F8A4C;--f:"Bricolage Grotesque",system-ui,sans-serif}
+*{box-sizing:border-box}
+body{margin:0;font:400 15.5px/1.5 var(--f);color:var(--ink);background:#F4F6FC}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--marigold);outline-offset:2px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.demo{background:var(--ink);color:#C9CDE6;font-size:13.5px;text-align:center;padding:8px 14px}
+.demo a{color:var(--marigold);font-weight:600}
+header{background:var(--indigo);color:#fff}
+header .w{max-width:1280px;margin:0 auto;padding:16px 22px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+header h1{margin:0;font:800 23px/1.1 var(--f);letter-spacing:-.02em}
+header small{color:#C9CDE6}
+header .sp{flex:1}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:999px;padding:10px 16px;font-weight:700;font-size:14.5px;cursor:pointer;text-decoration:none}
+.btn-mari{background:var(--marigold);color:var(--ink)}
+.btn-ghost{background:rgba(255,255,255,.12);color:#fff}
+.btn-ind{background:var(--indigo);color:#fff}
+.btn-wa{background:var(--wa);color:#fff}
+.btn-line{background:#fff;color:var(--indigo);box-shadow:inset 0 0 0 1.5px var(--line)}
+main{max-width:1280px;margin:0 auto;padding:20px 22px 60px}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.kpi{background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px 16px}
+.kpi span{color:var(--muted);font-size:13.5px}
+.kpi b{display:block;font:800 30px/1.1 var(--f);margin-top:4px}
+.kpi.hot b{color:var(--petal)}
+.bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:18px 0 12px}
+.bar select,.bar input{border:1.5px solid var(--line);border-radius:999px;padding:8px 13px;background:#fff}
+.bar .sp{flex:1}
+.pipe{display:flex;gap:6px;flex-wrap:wrap}
+.pipe button{border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:7px 12px;font-weight:600;cursor:pointer;font-size:14px}
+.pipe button[aria-pressed="true"]{background:var(--indigo);color:#fff;border-color:var(--indigo)}
+.pipe span{font-weight:400;opacity:.75;margin-left:4px}
+.layout{display:grid;grid-template-columns:1fr 380px;gap:16px;align-items:start}
+.list{background:#fff;border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.row{display:grid;grid-template-columns:1.2fr 1fr 1fr 110px 120px;gap:12px;align-items:center;padding:13px 16px;border-bottom:1px solid #EEF1F8;cursor:pointer;width:100%;text-align:left;background:#fff;border-left:0;border-right:0;border-top:0}
+.row:hover{background:#F8F9FE}
+.row[aria-current="true"]{background:#FFF6E2}
+.row b{display:block}
+.row small{color:var(--muted)}
+.st{font-size:12.5px;font-weight:700;padding:4px 9px;border-radius:999px;justify-self:start}
+.s-New{background:#FDE7EC;color:var(--petal)}.s-Contacted{background:#E6ECFF;color:var(--indigo-2)}.s-Quote{background:#FFF1D6;color:#9A6206}.s-Booked{background:#E2F4E9;color:var(--ok)}.s-Lost{background:#EEF0F5;color:#6B7290}
+.src{font-size:12.5px;color:var(--muted)}
+.due{font-size:12.5px;font-weight:600}
+.due.late{color:var(--petal)}.due.today{color:#9A6206}
+.mine{font-size:11.5px;background:var(--marigold);color:var(--ink);border-radius:6px;padding:1px 6px;margin-left:6px;font-weight:700}
+.panel{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px;position:sticky;top:14px}
+.panel h2{margin:0;font:800 22px/1.15 var(--f);color:var(--indigo)}
+.panel dl{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;margin:14px 0;font-size:14.5px}
+.panel dt{color:var(--muted)}.panel dd{margin:0;font-weight:600}
+.panel label{display:block;font-size:13px;font-weight:600;color:var(--muted);margin:12px 0 5px}
+.panel select,.panel input,.panel textarea{width:100%;border:1.5px solid var(--line);border-radius:12px;padding:9px 11px;background:#fff}
+.panel textarea{min-height:70px;resize:vertical}
+.qr{display:grid;gap:8px;margin-top:6px}
+.qr a{font-size:14px;justify-content:flex-start;text-align:left;border-radius:12px;white-space:normal}
+.empty{color:var(--muted);padding:30px 18px;text-align:center}
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,20px);background:var(--ink);color:#fff;padding:11px 16px;border-radius:12px;opacity:0;transition:.25s;z-index:95;pointer-events:none}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+@media (max-width:1000px){.layout{grid-template-columns:1fr}.panel{position:static}.kpis{grid-template-columns:1fr 1fr}}
+@media (max-width:640px){.row{grid-template-columns:1fr auto;gap:4px 10px}.row .c3,.row .c4{display:none}main{padding:14px 12px 50px}}
+</style>
+</head>
+<body>
+<div class="demo">Demo: every enquiry from the <a href="index.html">website</a> lands here. Sample leads are made up; enquiries you make on the demo site appear at the top, marked "You".</div>
+<header><div class="w">
+  <div><h1>Lead inbox</h1><small>Paras Holidays · enquiries from the website, Google, Instagram and WhatsApp</small></div>
+  <span class="sp"></span>
+  <a class="btn btn-mari" href="index.html#planner">Make a test enquiry</a>
+  <button class="btn btn-ghost" type="button" id="csv">Download CSV</button>
+  <button class="btn btn-ghost" type="button" id="reset">Reset demo</button>
+</div></header>
+<main>
+  <div class="kpis" id="kpis"></div>
+  <div class="bar">
+    <div class="pipe" id="pipe" role="group" aria-label="Filter by status"></div>
+    <span class="sp"></span>
+    <label class="sr" for="srcF">Source</label>
+    <select id="srcF"><option value="">All sources</option><option>Website planner</option><option>Google Ads</option><option>Instagram</option><option>WhatsApp</option><option>Visa checklist</option><option>Exit offer</option></select>
+    <label class="sr" for="q">Search</label>
+    <input id="q" type="search" placeholder="Search name or trip">
+  </div>
+  <div class="layout">
+    <div class="list" id="list"></div>
+    <aside class="panel" id="panel" aria-live="polite"><div class="empty">Pick a lead to see details, update the status and send a WhatsApp reply in one tap.</div></aside>
+  </div>
+</main>
+<div class="toast" id="toast" role="status"></div>
+<script src="assets/leads.js"></script>
+<script>
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const STATUSES=['New','Contacted','Quote sent','Booked','Lost'];
+let fStatus='All',cur=null;
+function toast(t){const e=$('#toast');e.textContent=t;e.classList.add('on');clearTimeout(e._t);e._t=setTimeout(()=>e.classList.remove('on'),2400)}
+const ago=ms=>{const h=Math.round((Date.now()-ms)/3600e3);return h<1?'just now':h<24?h+' h ago':Math.round(h/24)+' d ago'};
+function dueTxt(t){if(t==null)return['',''];const day=x=>{const z=new Date(x);z.setHours(0,0,0,0);return z.getTime()};const d=Math.round((day(t)-day(Date.now()))/86400e3);if(d<0)return['Overdue','late'];if(d===0)return['Follow up today','today'];return['In '+d+' day'+(d>1?'s':''),'']}
+const cls=s=>'s-'+s.split(' ')[0];
+function filtered(){const q=$('#q').value.trim().toLowerCase(),src=$('#srcF').value;return ParasLeads.list().filter(l=>(fStatus==='All'||l.status===fStatus)&&(!src||l.source===src)&&(!q||(l.name+' '+l.trip).toLowerCase().includes(q)))}
+function render(){
+  const all=ParasLeads.list(),today=all.filter(l=>Date.now()-l.createdAt<86400e3).length,due=all.filter(l=>l.followAt!=null&&l.followAt<Date.now()+86400e3&&!['Booked','Lost'].includes(l.status)).length,booked=all.filter(l=>l.status==='Booked').length;
+  $('#kpis').innerHTML=`<div class="kpi hot"><span>New in last 24 h</span><b>${today}</b></div><div class="kpi"><span>Follow-ups due today</span><b>${due}</b></div><div class="kpi"><span>Open enquiries</span><b>${all.filter(l=>!['Booked','Lost'].includes(l.status)).length}</b></div><div class="kpi"><span>Booked (this list)</span><b>${booked} of ${all.length}</b></div>`;
+  $('#pipe').innerHTML=['All',...STATUSES].map(s=>`<button type="button" aria-pressed="${s===fStatus}" data-s="${s}">${s}<span>${s==='All'?all.length:all.filter(l=>l.status===s).length}</span></button>`).join('');
+  $$('#pipe button').forEach(b=>b.addEventListener('click',()=>{fStatus=b.dataset.s;render()}));
+  const L=filtered();
+  $('#list').innerHTML=L.length?L.map(l=>{const [dt,dc]=dueTxt(l.followAt);return `<button type="button" class="row" data-id="${l.id}" aria-current="${cur===l.id}"><span><b>${l.name}${l.demo?'<span class="mine">You</span>':''}</b><small>${l.id} · ${ago(l.createdAt)}</small></span><span><b>${l.trip}</b><small>${l.when}</small></span><span class="c3 src">${l.source}<br>${l.budget}</span><span class="st ${cls(l.status)}">${l.status}</span><span class="c4 due ${dc}">${dt}</span></button>`}).join(''):`<div class="empty">No enquiries match. Clear the filters, or <a href="index.html#planner">make a test enquiry</a>.</div>`;
+  $$('#list .row').forEach(r=>r.addEventListener('click',()=>{cur=r.dataset.id;render();show()}));
+}
+function show(){const l=ParasLeads.list().find(x=>x.id===cur);if(!l)return;const first=l.name.split(/[ &]/)[0];
+  const tpl=[['Plan coming',`Namaste ${first}, thank you for your ${l.trip} enquiry. We're preparing your plan and price and will share it today.`],
+    ['Send quote',`Namaste ${first}, here is your ${l.trip} plan for ${l.when}. Price and day-by-day details are attached. Shall I block the hotels?`],
+    ['Gentle follow-up',`Namaste ${first}, just checking if you had a look at the ${l.trip} plan. Happy to change hotels or dates if needed.`]];
+  $('#panel').innerHTML=`<h2>${l.name}</h2><small style="color:var(--muted)">${l.id} · ${l.source} · ${ago(l.createdAt)}</small>
+   <dl><dt>Trip</dt><dd>${l.trip}</dd><dt>When</dt><dd>${l.when}</dd><dt>Who</dt><dd>${l.who}</dd><dt>Budget</dt><dd>${l.budget}</dd><dt>Phone</dt><dd>${l.phone}</dd></dl>
+   <label for="ps">Status</label><select id="ps">${STATUSES.map(s=>`<option ${s===l.status?'selected':''}>${s}</option>`).join('')}</select>
+   <label for="pf">Next follow-up</label><input id="pf" type="date" value="${l.followAt?new Date(l.followAt).toISOString().slice(0,10):''}">
+   <label for="pn">Notes</label><textarea id="pn">${l.note||''}</textarea>
+   <label>Reply on WhatsApp</label><div class="qr">${tpl.map(([t,m])=>`<a class="btn btn-line" href="${'https://wa.me/'+(l.demo?('91'+l.phone.replace(/\D/g,'').slice(-10)):'')+'?text='+encodeURIComponent(m)}" target="_blank" rel="noopener"><b>${t}:</b>&nbsp;${m.slice(0,58)}…</a>`).join('')}</div>
+   <button class="btn btn-ind" type="button" id="save" style="width:100%;margin-top:14px">Save changes</button>`;
+  $('#save').addEventListener('click',()=>{const f=$('#pf').value;ParasLeads.update(l.id,{status:$('#ps').value,note:$('#pn').value,followAt:f?new Date(f+'T10:00').getTime():null});render();show();toast('Saved')});
+}
+$('#q').addEventListener('input',render);$('#srcF').addEventListener('change',render);
+$('#reset').addEventListener('click',()=>{ParasLeads.reset();cur=null;$('#panel').innerHTML='<div class="empty">Demo reset. Pick a lead to see details.</div>';render();toast('Demo reset')});
+$('#csv').addEventListener('click',()=>{const rows=[['id','name','phone','trip','when','who','budget','source','status','note']].concat(ParasLeads.list().map(l=>[l.id,l.name,l.phone,l.trip,l.when,l.who,l.budget,l.source,l.status,(l.note||'').replace(/\n/g,' ')]));
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([rows.map(r=>r.map(c=>'"'+String(c).replace(/"/g,'""')+'"').join(',')).join('\n')],{type:'text/csv'}));a.download='paras_leads.csv';a.click();toast('CSV downloaded')});
+render();
+</script>
+</body>
+</html>
