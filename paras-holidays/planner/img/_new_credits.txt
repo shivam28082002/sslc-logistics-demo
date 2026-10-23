@@ -1,5 +1,0 @@
-darjeeling.jpg: "Kanchenjunga range from tea gardens of darjeeling.jpg" by Souviknshm, CC BY-SA 4.0, https://commons.wikimedia.org/wiki/File:Kanchenjunga_range_from_tea_gardens_of_darjeeling.jpg
-turkey.jpg: "Cappadocia Balloon Inflating Wikimedia Commons.JPG" by Benh LIEU SONG (Flickr), CC BY-SA 3.0, https://commons.wikimedia.org/wiki/File:Cappadocia_Balloon_Inflating_Wikimedia_Commons.JPG
-australia.jpg: "Sydney Harbour Bridge night.jpg" by Diliff, CC BY-SA 3.0, https://commons.wikimedia.org/wiki/File:Sydney_Harbour_Bridge_night.jpg
-europe.jpg: "Eiffel Tower and Pont Alexandre III at night.jpg" by Getfunky Paris, CC BY 2.0, https://commons.wikimedia.org/wiki/File:Eiffel_Tower_and_Pont_Alexandre_III_at_night.jpg
-russia.jpg: "Moscow - 2026 - St. Basil’s Cathedral, daytime view from Red Square.jpg" by Юрий Д.К., CC BY 4.0, https://commons.wikimedia.org/wiki/File:Moscow_-_2026_-_St._Basil%E2%80%99s_Cathedral,_daytime_view_from_Red_Square.jpg
