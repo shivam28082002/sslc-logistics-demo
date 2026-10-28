@@ -1,0 +1,358 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prime Operations · Third-party logistics</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="assets/fav-icon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..700&family=IBM+Plex+Sans+Arabic:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/app.css">
+<link rel="stylesheet" href="assets/tpl.css">
+</head>
+<body>
+<div class="shell">
+<aside class="rail"></aside>
+<div>
+<header class="top">
+  <button class="burger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+  <h1 data-ar="النقل عبر طرف ثالث">Third-party logistics</h1>
+  <span class="sp"></span>
+  <button class="btn btn-a hide-m" type="button" onclick="newBooking()" data-ar="حجز شاحنة مستأجرة">Hire a truck</button>
+  <button class="lang" type="button">عربي</button>
+  <span class="avatar">AK</span>
+</header>
+<main class="page">
+  <div class="demo-note"><b data-ar="بيانات تجريبية">Demo data.</b> <span data-ar="كل الأرقام محاكاة وتُحفظ في هذا المتصفح فقط. لا تتم أي مدفوعات حقيقية. الهامش محسوب على التكلفة.">All figures are simulated and stay in this browser. No real payments happen. Markup is calculated on cost.</span></div>
+  <div class="kpis k7" id="kpis"></div>
+
+  <section class="panel" style="margin-top:16px">
+    <div class="tabs" role="tablist">
+      <button role="tab" aria-selected="true" data-tab="bk" data-ar="الحجوزات">Bookings</button>
+      <button role="tab" aria-selected="false" data-tab="vd" data-ar="الموردون والسائقون">Vendors and drivers</button>
+    </div>
+
+    <div id="tab-bk">
+      <div class="tbar">
+        <div class="field grow"><label for="q" data-ar="بحث">Search</label><input id="q" type="search" placeholder="Booking, customer, shipment, vendor, plate" data-ar-ph="الحجز، العميل، الشحنة، المورد، اللوحة"></div>
+        <div class="field"><label for="fSt" data-ar="حالة الحجز">Booking status</label><select id="fSt"></select></div>
+        <div class="field"><label for="fVt" data-ar="نوع المورد">Vendor type</label><select id="fVt"></select></div>
+        <div class="field"><label for="fVp" data-ar="دفع المورد">Vendor payment</label><select id="fVp"></select></div>
+        <div class="field"><label for="fIn" data-ar="الفوترة">Invoice</label><select id="fIn"></select></div>
+        <div class="field"><label for="fMo" data-ar="الشهر">Month</label><select id="fMo"></select></div>
+        <button class="btn btn-g" type="button" onclick="newBooking()" style="align-self:flex-end" data-ar="حجز جديد">New booking</button>
+      </div>
+      <div class="twrap"><table class="t tt"><thead><tr>
+        <th data-ar="الحجز">Booking</th><th data-ar="العميل">Customer</th><th data-ar="الشحنة">Shipment</th><th data-ar="المورد / السائق">Vendor / driver</th><th data-ar="المركبة">Vehicle</th>
+        <th class="num" data-ar="تكلفة المورد">Vendor cost</th><th class="num" data-ar="سعر العميل">Customer charge</th><th data-ar="دفع المورد">Vendor payment</th><th data-ar="الفاتورة">Invoice</th><th data-ar="الحالة">Status</th><th><span class="sr">Actions</span></th>
+      </tr></thead><tbody id="bkRows"></tbody></table></div>
+      <p class="muted small" id="bkCount"></p>
+    </div>
+
+    <div id="tab-vd" hidden>
+      <div class="tbar">
+        <div class="field grow"><label for="vq" data-ar="بحث">Search</label><input id="vq" type="search" placeholder="Name, phone, plate, city" data-ar-ph="الاسم، الهاتف، اللوحة، المدينة"></div>
+        <div class="field"><label for="vT" data-ar="النوع">Type</label><select id="vT"></select></div>
+        <div class="field"><label for="vS" data-ar="الحالة">Status</label><select id="vS"></select></div>
+        <button class="btn btn-g" type="button" onclick="editVendor()" style="align-self:flex-end" data-ar="إضافة مورد">Add vendor</button>
+      </div>
+      <div class="twrap"><table class="t"><thead><tr>
+        <th data-ar="المورد / السائق">Vendor / driver</th><th data-ar="النوع">Type</th><th data-ar="التواصل">Contact</th><th data-ar="المركبات">Vehicles</th><th data-ar="الأسعار">Agreed rates</th><th data-ar="شروط الدفع">Payment</th><th data-ar="العقد / اللوحة">Contract / plate</th><th data-ar="الحالة">Status</th><th class="num" data-ar="رحلات">Trips</th>
+      </tr></thead><tbody id="vdRows"></tbody></table></div>
+    </div>
+  </section>
+</main>
+</div>
+</div>
+
+<!-- new booking -->
+<div class="modal" id="bkM" aria-hidden="true"><div class="box wide" role="dialog" aria-modal="true" aria-labelledby="bkH">
+  <div class="mh"><h3 id="bkH" data-ar="حجز شاحنة من طرف ثالث">Hire a third-party truck</h3><button class="x" type="button" aria-label="Close" onclick="closeModal('bkM')">×</button></div>
+  <p class="muted small" data-ar="عندما لا تتوفر شاحنة من أسطولكم: سجّل الطلب، اختر المورد، وسيُحسب سعر العميل تلقائياً.">Use this when no company truck is free: record the requirement, pick a vendor, and the customer charge is calculated for you.</p>
+  <form id="bkF" novalidate>
+    <fieldset><legend><span class="stepn">1</span> <span data-ar="متطلبات النقل">Transport requirement</span></legend>
+      <div class="fg">
+        <div class="field"><label for="bCu" data-ar="العميل">Customer</label><select id="bCu" required></select></div>
+        <div class="field"><label for="bDt" data-ar="تاريخ التحميل">Loading date</label><input id="bDt" type="date" required></div>
+        <div class="field s2"><label for="bSh" data-ar="الشحنة">Shipment</label><input id="bSh" required placeholder="e.g. SH-89500 · 16 pallets chilled dairy" data-ar-ph="مثال: SH-89500 · 16 منصة ألبان مبردة"></div>
+        <div class="field"><label for="bPu" data-ar="التحميل من">Pickup</label><input id="bPu" required list="cities" placeholder="e.g. Riyadh, 2nd Industrial City"></div>
+        <div class="field"><label for="bDe" data-ar="التسليم إلى">Destination</label><input id="bDe" required list="cities" placeholder="e.g. Jeddah, Al Khumra"></div>
+        <div class="field"><label for="bVe" data-ar="نوع المركبة">Vehicle type</label><select id="bVe"></select></div>
+        <div class="field"><label for="bQt" data-ar="عدد المركبات">Number of vehicles</label><input id="bQt" type="number" min="1" step="1" value="1" required></div>
+      </div>
+    </fieldset>
+    <fieldset><legend><span class="stepn">2</span> <span data-ar="المورد">Vendor</span></legend>
+      <div class="seg" role="radiogroup" aria-label="Vendor type">
+        <label><input type="radio" name="bVt" value="contract" checked> <span data-ar="مورد بعقد شهري">Monthly contract vendor</span></label>
+        <label><input type="radio" name="bVt" value="spot"> <span data-ar="سائق استئجار فوري">Spot-hire driver</span></label>
+      </div>
+      <div class="fg">
+        <div class="field"><label for="bVd" data-ar="المورد">Vendor</label><select id="bVd" required></select></div>
+        <div class="field" id="rateWrap"><label for="bRt" data-ar="السعر المتعاقد عليه">Contracted rate</label><select id="bRt"></select></div>
+        <div class="field"><label for="bPl" data-ar="رقم اللوحة">Vehicle plate</label><input id="bPl" placeholder="e.g. RYD 2295"></div>
+      </div>
+      <p class="muted small" id="vTerms"></p>
+    </fieldset>
+    <fieldset><legend><span class="stepn">3</span> <span data-ar="التسعير: هامش على التكلفة">Pricing: markup on cost</span></legend>
+      <div class="price">
+        <div class="fg">
+          <div class="field"><label for="bCo" data-ar="تكلفة المورد لهذا الحجز (ريال)">Vendor cost for this booking (SAR)</label><input id="bCo" type="number" min="0" step="0.01" inputmode="decimal" required></div>
+          <div class="field"><label for="bMt" data-ar="نوع الهامش">Markup type</label><select id="bMt"><option value="pct">Markup on cost, %</option><option value="fixed">Fixed markup, SAR</option></select></div>
+          <div class="field"><label for="bMv" id="bMvL">Markup %</label><input id="bMv" type="number" min="0" step="0.01" inputmode="decimal" required></div>
+        </div>
+        <dl class="calc" id="bCalc" aria-live="polite"></dl>
+      </div>
+      <p class="err" id="bErr" role="alert"></p>
+    </fieldset>
+    <fieldset id="payNowFs"><legend><span class="stepn">4</span> <span data-ar="دفع المورد">Vendor payment</span></legend>
+      <label class="chk"><input type="checkbox" id="bPayNow"> <span data-ar="دفع السائق الآن (نقداً أو بطريقة أخرى)">Pay the driver now (cash or another method)</span></label>
+      <div class="fg" id="bPayF" hidden>
+        <div class="field"><label for="bPm" data-ar="طريقة الدفع">Method</label><select id="bPm"></select></div>
+        <div class="field"><label for="bPr" data-ar="المرجع">Reference</label><input id="bPr"></div>
+      </div>
+      <p class="muted small" id="bPayNote"></p>
+    </fieldset>
+    <div class="mf"><button class="btn btn-g" type="submit" data-ar="تأكيد الحجز">Confirm booking</button><button class="btn btn-o" type="button" onclick="closeModal('bkM')" data-ar="إلغاء">Cancel</button></div>
+  </form>
+</div></div>
+<datalist id="cities"></datalist>
+
+<!-- booking detail -->
+<div class="modal drawer" id="dtM" aria-hidden="true"><div class="box" role="dialog" aria-modal="true" aria-labelledby="dtH"><div id="dtB"></div></div></div>
+
+<!-- record vendor payment -->
+<div class="modal" id="payM" aria-hidden="true"><div class="box" role="dialog" aria-modal="true" aria-labelledby="payH">
+  <div class="mh"><h3 id="payH" data-ar="تسجيل دفع المورد">Record vendor payment</h3><button class="x" type="button" aria-label="Close" onclick="closeModal('payM')">×</button></div>
+  <p class="muted small" id="payWho"></p>
+  <form id="payF" novalidate><div class="fg">
+    <div class="field"><label for="pM" data-ar="طريقة الدفع">Method</label><select id="pM"></select></div>
+    <div class="field"><label for="pA" data-ar="المبلغ (ريال)">Amount (SAR)</label><input id="pA" type="number" min="0" step="0.01" required></div>
+    <div class="field"><label for="pD" data-ar="تاريخ الدفع">Payment date</label><input id="pD" type="date" required></div>
+    <div class="field"><label for="pR" data-ar="المرجع">Reference</label><input id="pR" required></div>
+  </div><p class="err" id="pErr" role="alert"></p>
+  <p class="muted small" data-ar="عرض تجريبي: لا تنتقل أي أموال، يتم تسجيل الدفعة في العرض فقط. فاتورة العميل لا تتأثر.">Demo: no money moves, this only records the payment. The customer's invoice is not affected.</p>
+  <div class="mf"><button class="btn btn-g" type="submit" data-ar="حفظ الدفعة">Save payment</button><button class="btn btn-o" type="button" onclick="closeModal('payM')" data-ar="إلغاء">Cancel</button></div></form>
+</div></div>
+
+<!-- vendor add / edit -->
+<div class="modal" id="vM" aria-hidden="true"><div class="box wide" role="dialog" aria-modal="true" aria-labelledby="vH">
+  <div class="mh"><h3 id="vH"></h3><button class="x" type="button" aria-label="Close" onclick="closeModal('vM')">×</button></div>
+  <form id="vF" novalidate>
+    <div class="seg" role="radiogroup" aria-label="Vendor type">
+      <label><input type="radio" name="vTy" value="contract" checked> <span data-ar="مورد بعقد شهري">Monthly contract vendor</span></label>
+      <label><input type="radio" name="vTy" value="spot"> <span data-ar="سائق استئجار فوري">Spot-hire driver</span></label>
+    </div>
+    <div class="fg">
+      <div class="field s2"><label for="vNa" id="vNaL"></label><input id="vNa" required></div>
+      <div class="field only-c"><label for="vCp" data-ar="الشخص المسؤول">Contact person</label><input id="vCp"></div>
+      <div class="field"><label for="vPh" data-ar="الهاتف">Phone</label><input id="vPh" type="tel" required placeholder="+966 5X XXX XXXX"></div>
+      <div class="field"><label for="vCi" data-ar="المدينة">City</label><select id="vCi"></select></div>
+      <div class="field"><label for="vCo" data-ar="الدولة">Country</label><input id="vCo" value="Saudi Arabia"></div>
+      <div class="field"><label for="vSt" data-ar="الحالة">Status</label><select id="vSt"><option>Active</option><option>Inactive</option><option class="only-c">Expired</option></select></div>
+      <div class="field only-c"><label for="vSd" data-ar="بداية العقد">Contract start</label><input id="vSd" type="date"></div>
+      <div class="field only-c"><label for="vEd" data-ar="نهاية العقد">Contract end</label><input id="vEd" type="date"></div>
+      <div class="field only-c s2"><label for="vVe" data-ar="أنواع المركبات المتعاقد عليها">Contracted vehicle types</label><input id="vVe" placeholder="e.g. Reefer trailer 40ft, Flatbed 12m"></div>
+      <div class="field only-c s2"><label for="vTe" data-ar="شروط الدفع">Payment terms</label><select id="vTe"><option>Net 15, monthly statement</option><option>Net 30, monthly statement</option><option>Net 45, monthly statement</option><option>Net 60, monthly statement</option></select></div>
+      <div class="field only-s"><label for="vPl" data-ar="رقم اللوحة">Vehicle plate</label><input id="vPl" placeholder="e.g. RJD 4821"></div>
+      <div class="field only-s"><label for="vVt" data-ar="نوع المركبة">Vehicle type</label><select id="vVt"></select></div>
+      <div class="field only-s"><label for="vCa" data-ar="السعة">Capacity</label><input id="vCa" placeholder="e.g. 10 t / 14 pallets"></div>
+      <div class="field only-s"><label for="vTc" data-ar="التكلفة المتفق عليها للرحلة (ريال)">Agreed trip cost (SAR)</label><input id="vTc" type="number" min="0" step="0.01"></div>
+      <div class="field only-s"><label for="vPm" data-ar="طريقة الدفع">Payment method</label><select id="vPm"></select></div>
+    </div>
+    <div class="only-c"><h4 data-ar="جدول الأسعار المتعاقد عليه">Agreed rate structure</h4>
+      <div class="twrap"><table class="t"><thead><tr><th data-ar="المسار">Route</th><th data-ar="المركبة">Vehicle</th><th class="num" data-ar="السعر للرحلة (ريال)">Rate per trip (SAR)</th><th></th></tr></thead><tbody id="vRates"></tbody></table></div>
+      <button class="btn btn-o sm" type="button" id="vAddRate" data-ar="إضافة سعر">Add rate</button>
+    </div>
+    <div id="vStats"></div>
+    <p class="err" id="vErr" role="alert"></p>
+    <div class="mf"><button class="btn btn-g" type="submit" data-ar="حفظ">Save</button><button class="btn btn-o" type="button" onclick="closeModal('vM')" data-ar="إلغاء">Cancel</button></div>
+  </form>
+</div></div>
+
+<script src="assets/app.js"></script>
+<script src="assets/tpl.js"></script>
+<script>
+const T=TPL, A=T.ASSUME, t=(en,ar)=>isAr()?ar:en, $=id=>document.getElementById(id), esc=T.esc, fmt=T.fmt, pill=T.pill;
+let S=T.get();
+const save=()=>{T.save(S);render()};
+const PAY_METHODS=[['Cash','نقداً'],['Bank transfer','تحويل بنكي'],['STC Pay','STC Pay'],['Cheque','شيك']];
+const opts=(arr,val)=>arr.map(o=>{const [v,en,ar]=Array.isArray(o)?o:[o,o,T.lab(o)];return `<option value="${esc(v)}"${v===val?' selected':''}>${esc(t(en,ar||en))}</option>`}).join('');
+const vType=b=>(T.vendorOf(S,b.vendorId)||{}).type;
+const monthName=m=>{const x=T.MONTHS.find(y=>y[0]===m);return x?t(x[1],x[2]):m};
+
+/* ---------- KPIs ---------- */
+function kpis(){
+  const mo=T.monthOf(A.demoDate), live=S.bookings.filter(b=>b.status!=='Cancelled'), thisMo=live.filter(b=>T.monthOf(b.date)===mo);
+  const cost=thisMo.reduce((a,b)=>a+T.bookingPrice(b).cost,0), chg=thisMo.reduce((a,b)=>a+T.bookingPrice(b).charge,0);
+  const pend=live.filter(b=>b.vendorPay.status!=='Paid');
+  const K=[
+    [t('Active bookings','حجوزات نشطة'),live.filter(b=>b.status==='Confirmed'||b.status==='In transit').length,t('confirmed or in transit','مؤكدة أو في الطريق')],
+    [t('Monthly contract vendors','موردون بعقود شهرية'),S.vendors.filter(v=>v.type==='contract'&&v.status==='Active').length,t('active contracts','عقود نشطة')],
+    [t('Spot-hire bookings','حجوزات استئجار فوري'),thisMo.filter(b=>vType(b)==='spot').length,monthName(mo)],
+    [t('Pending vendor payments','مدفوعات موردين معلقة'),fmt(pend.reduce((a,b)=>a+T.bookingPrice(b).cost,0)),t(pend.length+' bookings','حجوزات: '+pend.length),'warn'],
+    [t('Vendor costs this month','تكلفة الموردين هذا الشهر'),fmt(cost),monthName(mo)],
+    [t('Customer charges this month','مبالغ العملاء هذا الشهر'),fmt(chg),t('before VAT','قبل الضريبة')],
+    [t('Estimated profit margin','هامش الربح التقديري'),fmt(chg-cost),(chg?((chg-cost)/chg*100).toFixed(1):'0.0')+t('% of customer charges','٪ من مبالغ العملاء'),'up']];
+  $('kpis').innerHTML=K.map(([l,v,s,c])=>`<div class="kpi"><span>${l}</span><b>${v}</b><em class="${c||'muted'}">${s}</em></div>`).join('');
+}
+
+/* ---------- bookings table ---------- */
+function fillFilters(){
+  const keep=id=>$(id).value;
+  const sel=(id,arr)=>{const v=keep(id);$(id).innerHTML=`<option value="">${t('All','الكل')}</option>`+opts(arr,v)};
+  sel('fSt',['Confirmed','In transit','Delivered','Cancelled']);
+  sel('fVt',[['contract',t('Monthly contract','عقد شهري')],['spot',t('Spot hire','استئجار فوري')]].map(([v,l])=>[v,l,l]));
+  sel('fVp',['Unpaid','On statement','Paid']);
+  sel('fIn',['Unbilled','Invoiced','Excluded']);
+  sel('fMo',T.MONTHS);
+  sel('vT',[['contract',t('Monthly contract','عقد شهري')],['spot',t('Spot hire','استئجار فوري')]].map(([v,l])=>[v,l,l]));
+  sel('vS',['Active','Inactive','Expired']);
+}
+function invStatus(b){return b.status==='Cancelled'&&b.inv.status==='Unbilled'?'Excluded':b.inv.status}
+function bookings(){
+  const q=$('q').value.trim().toLowerCase(), f={st:$('fSt').value,vt:$('fVt').value,vp:$('fVp').value,inv:$('fIn').value,mo:$('fMo').value};
+  const L=S.bookings.filter(b=>{const v=T.vendorOf(S,b.vendorId)||{};
+    return (!q||[b.id,b.customer,b.shipment,v.name,b.vehicle,b.pickup,b.destination].join(' ').toLowerCase().includes(q))&&(!f.st||b.status===f.st)&&(!f.vt||v.type===f.vt)&&(!f.vp||b.vendorPay.status===f.vp)&&(!f.inv||invStatus(b)===f.inv)&&(!f.mo||T.monthOf(b.date)===f.mo)}).sort((a,b)=>b.date.localeCompare(a.date)||b.id.localeCompare(a.id));
+  $('bkRows').innerHTML=L.length?L.map(b=>{const v=T.vendorOf(S,b.vendorId)||{},p=T.bookingPrice(b);
+    return `<tr><td><button class="lnk" type="button" onclick="detail('${b.id}')">${b.id}</button><small>${b.date}</small></td><td>${esc(b.customer)}</td><td class="wrap">${esc(b.shipment)}<small>${esc(b.pickup)} → ${esc(b.destination)}</small></td>
+      <td>${esc(v.name||'')}<small><span class="vt vt-${v.type}">${v.type==='spot'?t('Spot hire','استئجار فوري'):t('Contract','عقد')}</span></small></td><td>${esc(b.vehicle)}<small>${esc(b.vehicleType)}${b.qty>1?' ×'+b.qty:''}</small></td>
+      <td class="num cost">${fmt(p.cost)}</td><td class="num chg">${fmt(p.charge)}<small class="mk">+${fmt(p.markup)}</small></td><td>${pill(b.vendorPay.status)}</td><td>${pill(invStatus(b))}${b.inv.no?`<small>${b.inv.no}</small>`:''}</td><td>${pill(b.status)}</td>
+      <td class="acts"><button class="btn btn-o sm" type="button" onclick="detail('${b.id}')">${t('View','عرض')}</button>${v.type==='spot'&&b.vendorPay.status==='Unpaid'&&b.status!=='Cancelled'?`<button class="btn btn-a sm" type="button" onclick="payOpen('${b.id}')">${t('Pay now','ادفع الآن')}</button>`:''}</td></tr>`}).join('')
+    :`<tr><td colspan="11" class="empty">${t('No bookings match these filters.','لا توجد حجوزات مطابقة.')} <button class="lnk" type="button" onclick="clearF()">${t('Clear filters','مسح الفلاتر')}</button></td></tr>`;
+  $('bkCount').textContent=t(`${L.length} of ${S.bookings.length} bookings`,`${L.length} من ${S.bookings.length} حجز`);
+}
+function clearF(){['q','fSt','fVt','fVp','fIn','fMo'].forEach(i=>$(i).value='');bookings()}
+
+/* ---------- booking detail ---------- */
+let cur=null;
+function detail(id){cur=id;const b=S.bookings.find(x=>x.id===id),v=T.vendorOf(S,b.vendorId)||{},p=T.bookingPrice(b),inv=invStatus(b),vp=b.vendorPay;
+  const invNote=inv==='Invoiced'?t(`On customer invoice ${b.inv.no}.`,`مدرجة في فاتورة العميل ${b.inv.no}.`):inv==='Excluded'?t('Excluded from customer billing.','مستبعدة من فوترة العميل.'):t(`Waiting for the ${monthName(T.monthOf(b.date))} monthly invoice.`,`بانتظار فاتورة ${monthName(T.monthOf(b.date))} الشهرية.`);
+  const vpNote=vp.status==='Paid'?t(`Paid ${fmt(vp.amount)} by ${vp.method} on ${vp.date}, ref ${vp.ref}.`,`مدفوع ${fmt(vp.amount)} بطريقة ${vp.method} في ${vp.date}، مرجع ${vp.ref}.`):vp.status==='On statement'?t(`Payable on the monthly statement (${v.terms||'contract terms'}).`,`مستحق على كشف الحساب الشهري (${v.terms||''}).`):t('Spot driver not paid yet.','لم يُدفع للسائق بعد.');
+  $('dtB').innerHTML=`<div class="mh"><div><h3 id="dtH">${b.id}</h3><span class="muted small">${b.date} · ${esc(b.customer)}</span></div><button class="x" type="button" aria-label="Close" onclick="closeModal('dtM')">×</button></div>
+   <div style="display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 14px">${pill(b.status)} ${pill(vp.status)} ${pill(inv)}</div>
+   <dl class="kv"><dt>${t('Shipment','الشحنة')}</dt><dd>${esc(b.shipment)}</dd><dt>${t('Route','المسار')}</dt><dd>${esc(b.pickup)} → ${esc(b.destination)}</dd><dt>${t('Vehicle','المركبة')}</dt><dd>${esc(b.vehicleType)}${b.qty>1?' ×'+b.qty:''} · ${esc(b.vehicle||'—')}</dd>
+   <dt>${v.type==='spot'?t('Spot-hire driver','سائق استئجار فوري'):t('Contract vendor','مورد متعاقد')}</dt><dd>${esc(v.name)}<br><span class="muted">${esc(v.contact?v.contact+', ':'')}${esc(v.phone)}</span></dd></dl>
+   <h4>${t('Cost and billing breakdown','تفاصيل التكلفة والفوترة')}</h4>
+   <dl class="calc big"><dt>${t('Vendor base cost','تكلفة المورد الأساسية')}</dt><dd class="cost">${fmt(p.cost)}</dd>
+     <dt>${b.markupType==='pct'?t(`Markup on cost, ${b.markupVal}%`,`هامش على التكلفة ${b.markupVal}٪`):t(`Fixed markup`,`هامش ثابت`)}</dt><dd class="mk">+ ${fmt(p.markup)}</dd>
+     <dt class="tot">${t('Customer charge (before VAT)','سعر العميل (قبل الضريبة)')}</dt><dd class="tot chg">${fmt(p.charge)}</dd>
+     <dt>${t('Gross margin','الهامش الإجمالي')}</dt><dd>${fmt(p.markup)} · ${(p.charge?p.markup/p.charge*100:0).toFixed(1)}% ${t('of charge','من السعر')}</dd></dl>
+   <div class="two"><div class="box2"><b>${t('Vendor payment','دفع المورد')}</b> ${pill(vp.status)}<p>${vpNote}</p></div><div class="box2"><b>${t('Customer invoice','فاتورة العميل')}</b> ${pill(inv)}<p>${invNote}</p></div></div>
+   <p class="hint">${t('Paying the vendor and billing the customer are separate: a driver can be paid in cash today while the customer is billed on the monthly invoice.','دفع المورد وفوترة العميل منفصلان: قد يُدفع للسائق نقداً اليوم ويُفوتر العميل في الفاتورة الشهرية.')}</p>
+   <div class="field" style="max-width:240px;margin:12px 0"><label for="dSt">${t('Booking status','حالة الحجز')}</label><select id="dSt">${opts(['Confirmed','In transit','Delivered','Cancelled'],b.status)}</select></div>
+   <div class="mf">${vp.status==='Unpaid'&&b.status!=='Cancelled'?`<button class="btn btn-a" type="button" onclick="payOpen('${b.id}')">${t('Paid immediately: record payment','مدفوع فوراً: تسجيل الدفعة')}</button>`:''}
+     ${vp.status==='On statement'?`<button class="btn btn-o" type="button" onclick="payOpen('${b.id}')">${t('Mark statement paid','تسجيل دفع كشف الحساب')}</button>`:''}
+     ${b.inv.status==='Unbilled'&&b.status!=='Cancelled'?`<button class="btn btn-o" type="button" onclick="excl('${b.id}',true)">${t('Exclude from billing','استبعاد من الفوترة')}</button>`:''}
+     ${b.inv.status==='Excluded'&&b.status!=='Cancelled'?`<button class="btn btn-o" type="button" onclick="excl('${b.id}',false)">${t('Include in billing','إدراج في الفوترة')}</button>`:''}
+     ${inv==='Unbilled'?`<a class="btn btn-g" href="billing.html?tab=tp&client=${encodeURIComponent(b.customer)}&month=${T.monthOf(b.date)}">${t('Open monthly billing','فتح الفوترة الشهرية')}</a>`:''}</div>`;
+  $('dSt').addEventListener('change',e=>{b.status=e.target.value;save();detail(id);toast(t('Booking status updated','تم تحديث حالة الحجز'))});
+  if(!$('dtM').classList.contains('on')) openModal('dtM');
+}
+function excl(id,on){const b=S.bookings.find(x=>x.id===id);b.inv.status=on?'Excluded':'Unbilled';save();detail(id);toast(on?t('Excluded from customer billing','تم الاستبعاد من الفوترة'):t('Back in the billing queue','عادت إلى قائمة الفوترة'))}
+
+/* ---------- vendor payment ---------- */
+let payFor=null;
+function payOpen(id){payFor=id;const b=S.bookings.find(x=>x.id===id),v=T.vendorOf(S,b.vendorId)||{};
+  $('payWho').textContent=`${b.id} · ${v.name} · ${t('agreed cost','التكلفة المتفق عليها')} ${fmt(T.bookingPrice(b).cost)}`;
+  $('pM').innerHTML=opts(PAY_METHODS,v.type==='spot'?(v.payMethod||'Cash'):'Bank transfer');$('pA').value=T.bookingPrice(b).cost;$('pD').value=A.demoDate;
+  $('pR').value=v.type==='spot'?'CV-'+(1000+Math.floor(Math.random()*8999)):'STMT-'+v.id+'-'+T.monthOf(b.date).replace('-','');$('pErr').textContent='';openModal('payM')}
+$('payF').addEventListener('submit',e=>{e.preventDefault();const a=+$('pA').value;
+  if(!$('pA').value||!isFinite(a)||a<=0){$('pErr').textContent=t('Enter an amount above zero.','أدخل مبلغاً أكبر من صفر.');return}
+  if(!$('pD').value||!$('pR').value.trim()){$('pErr').textContent=t('Payment date and reference are required.','تاريخ الدفع والمرجع مطلوبان.');return}
+  const b=S.bookings.find(x=>x.id===payFor);b.vendorPay={status:'Paid',method:$('pM').value,amount:T.n2(a),date:$('pD').value,ref:$('pR').value.trim()};save();closeModal('payM');
+  if($('dtM').classList.contains('on')) detail(payFor);
+  toast(t(`Vendor payment recorded. ${b.id} stays ${invStatus(b).toLowerCase()} for the customer.`,`تم تسجيل الدفعة. ${b.id} ما زالت ${T.lab(invStatus(b))} للعميل.`))});
+
+/* ---------- new booking ---------- */
+function bVt(){return document.querySelector('[name=bVt]:checked').value}
+function newBooking(){$('bkF').reset();$('bErr').textContent='';$('bDt').value=A.demoDate;$('bMv').value=A.transportMarkupPct;$('bMt').value='pct';
+  $('bCu').innerHTML=`<option value="">${t('Choose a customer','اختر العميل')}</option>`+opts(T.CUSTOMERS);$('bVe').innerHTML=opts(T.VEHICLES);$('bPm').innerHTML=opts(PAY_METHODS);
+  vendorOpts();openModal('bkM')}
+function vendorOpts(){const ty=bVt(),V=S.vendors.filter(v=>v.type===ty&&v.status==='Active');
+  $('bVd').innerHTML=`<option value="">${t('Choose','اختر')}</option>`+V.map(v=>`<option value="${v.id}">${esc(v.name)}${v.type==='spot'?' · '+v.plate+' · '+v.vehicle:' · '+v.city}</option>`).join('');
+  $('rateWrap').hidden=ty!=='contract';$('bRt').innerHTML='';$('bCo').value='';$('bPl').value='';$('payNowFs').querySelector('.chk').hidden=ty!=='spot';$('bPayNow').checked=false;$('bPayF').hidden=true;vendorPick()}
+function vendorPick(){const v=T.vendorOf(S,$('bVd').value),qty=Math.max(1,+$('bQt').value||1);
+  if(!v){$('vTerms').textContent='';$('bPayNote').textContent=bVt()==='contract'?t('Contract vendors are paid on their monthly statement, not per trip.','يُدفع للموردين المتعاقدين عبر كشف الحساب الشهري.'):'';calc();return}
+  if(v.type==='contract'){$('bRt').innerHTML=`<option value="">${t('Enter cost manually','إدخال التكلفة يدوياً')}</option>`+v.rates.map((r,i)=>`<option value="${i}">${esc(r.route)} · ${esc(r.vehicle)} · ${fmt(r.rate)}</option>`).join('');
+    const m=v.rates.findIndex(r=>r.vehicle===$('bVe').value);if(m>=0){$('bRt').value=m;$('bCo').value=T.n2(v.rates[m].rate*qty)}
+    $('vTerms').textContent=t(`Contract ${v.start} to ${v.end} · ${v.terms}`,`العقد ${v.start} إلى ${v.end} · ${v.terms}`);$('bPayNote').textContent=t(`Payable on the monthly statement (${v.terms}). No immediate payment needed.`,`مستحق على كشف الحساب (${v.terms}). لا يلزم دفع فوري.`)}
+  else {$('bCo').value=T.n2(v.tripCost*qty);$('bPl').value=v.plate;$('bVe').value=v.vehicle;$('vTerms').textContent=t(`${v.vehicle}, ${v.capacity} · ${v.phone} · usually paid by ${v.payMethod}`,`${v.vehicle}، ${v.capacity} · ${v.phone} · الدفع عادة ${v.payMethod}`);$('bPm').value=v.payMethod;$('bPayNote').textContent=t('Spot drivers are usually paid on the day. Leave unticked to pay later.','يُدفع للسائقين عادة في نفس اليوم. اتركه لتدفع لاحقاً.')}
+  calc()}
+function calc(){const mt=$('bMt').value;$('bMvL').textContent=mt==='pct'?t('Markup %','الهامش ٪'):t('Fixed markup (SAR)','هامش ثابت (ريال)');
+  const p=T.price($('bCo').value,mt,$('bMv').value);
+  $('bCalc').innerHTML=`<dt>${t('Vendor base cost','تكلفة المورد الأساسية')}</dt><dd class="cost">${p.ok?fmt(p.cost):'—'}</dd><dt>${mt==='pct'?t(`Markup on cost (${+$('bMv').value||0}%)`,`هامش على التكلفة (${+$('bMv').value||0}٪)`):t('Fixed markup','هامش ثابت')}</dt><dd class="mk">${p.ok?'+ '+fmt(p.markup):'—'}</dd><dt class="tot">${t('Customer charge','سعر العميل')}</dt><dd class="tot chg">${p.ok?fmt(p.charge):'—'}</dd><dt>${t('Gross margin','الهامش الإجمالي')}</dt><dd>${p.ok&&p.charge?(p.markup/p.charge*100).toFixed(1)+'% '+t('of charge','من السعر'):'—'}</dd>`;
+  const msg={cost:t('Enter the vendor cost.','أدخل تكلفة المورد.'),'cost-neg':t('Vendor cost cannot be negative.','لا يمكن أن تكون التكلفة سالبة.'),markup:t('Enter the markup.','أدخل الهامش.'),'markup-neg':t('Markup cannot be negative.','لا يمكن أن يكون الهامش سالباً.')};
+  $('bErr').textContent=($('bCo').value!==''||$('bMv').value!=='')&&!p.ok?p.err.map(e=>msg[e]).join(' '):'';return p}
+document.querySelectorAll('[name=bVt]').forEach(r=>r.addEventListener('change',vendorOpts));
+document.querySelectorAll('#bkF input,#bkF select').forEach(el=>['input','change'].forEach(ev=>el.addEventListener(ev,()=>{if(el.value.trim())el.removeAttribute('aria-invalid')})));
+$('bVd').addEventListener('change',vendorPick);$('bVe').addEventListener('change',()=>{if(bVt()==='contract')vendorPick()});
+$('bQt').addEventListener('input',()=>{const v=T.vendorOf(S,$('bVd').value),q=Math.max(1,+$('bQt').value||1);if(!v)return;if(v.type==='spot')$('bCo').value=T.n2(v.tripCost*q);else if($('bRt').value!=='')$('bCo').value=T.n2(v.rates[+$('bRt').value].rate*q);calc()});
+$('bRt').addEventListener('change',()=>{const v=T.vendorOf(S,$('bVd').value),q=Math.max(1,+$('bQt').value||1);if(v&&$('bRt').value!==''){const r=v.rates[+$('bRt').value];$('bCo').value=T.n2(r.rate*q);$('bVe').value=r.vehicle}calc()});
+['bCo','bMv','bMt'].forEach(i=>$(i).addEventListener('input',calc));$('bMt').addEventListener('change',()=>{$('bMv').value=$('bMt').value==='pct'?A.transportMarkupPct:250;calc()});
+$('bPayNow').addEventListener('change',()=>{$('bPayF').hidden=!$('bPayNow').checked;if($('bPayNow').checked&&!$('bPr').value)$('bPr').value='CV-'+(1000+Math.floor(Math.random()*8999))});
+$('bkF').addEventListener('submit',e=>{e.preventDefault();const p=calc(),miss=[];
+  [['bCu',t('customer','العميل')],['bSh',t('shipment','الشحنة')],['bPu',t('pickup','التحميل')],['bDe',t('destination','التسليم')],['bDt',t('date','التاريخ')],['bVd',t('vendor','المورد')]].forEach(([i,l])=>{const el=$(i);el.removeAttribute('aria-invalid');if(!el.value.trim()){miss.push(l);el.setAttribute('aria-invalid','true')}});
+  if(!(+$('bQt').value>=1))miss.push(t('number of vehicles','عدد المركبات'));
+  if(miss.length||!p.ok){$('bErr').textContent=(miss.length?t('Please fill in: ','يرجى إدخال: ')+miss.join(', ')+'. ':'')+(!p.ok?t('Check the vendor cost and markup.','تحقق من التكلفة والهامش.'):'');const f=document.querySelector('#bkF [aria-invalid=true]');f&&f.focus();return}
+  const v=T.vendorOf(S,$('bVd').value),ym=$('bDt').value.slice(2,7).replace('-',''),id='TB-'+ym+'-'+String(S.seq.tb++).padStart(3,'0');
+  const pay=v.type==='spot'?($('bPayNow').checked?{status:'Paid',method:$('bPm').value,amount:p.cost,date:A.demoDate,ref:$('bPr').value.trim()||'CV-'+id.slice(-3)}:{status:'Unpaid',method:'',amount:0,date:'',ref:''}):{status:'On statement',method:'',amount:0,date:'',ref:''};
+  S.bookings.push({id,date:$('bDt').value,customer:$('bCu').value,shipment:$('bSh').value.trim(),pickup:$('bPu').value.trim(),destination:$('bDe').value.trim(),vehicleType:$('bVe').value,qty:Math.floor(+$('bQt').value),vendorId:v.id,vehicle:$('bPl').value.trim()||(v.plate||''),cost:p.cost,markupType:$('bMt').value,markupVal:+$('bMv').value,status:'Confirmed',vendorPay:pay,inv:{status:'Unbilled',no:null}});
+  save();closeModal('bkM');toast(t(`${id} confirmed. Customer charge ${fmt(p.charge)} added to the monthly billing queue.`,`تم تأكيد ${id}. أضيف سعر العميل ${fmt(p.charge)} إلى قائمة الفوترة الشهرية.`));setTimeout(()=>detail(id),300)});
+
+/* ---------- vendors ---------- */
+function vendors(){const q=$('vq').value.trim().toLowerCase(),ty=$('vT').value,st=$('vS').value;
+  const L=S.vendors.filter(v=>(!q||[v.name,v.contact,v.phone,v.plate,v.city,v.vehicles,v.vehicle].join(' ').toLowerCase().includes(q))&&(!ty||v.type===ty)&&(!st||v.status===st));
+  $('vdRows').innerHTML=L.length?L.map(v=>{const n=S.bookings.filter(b=>b.vendorId===v.id).length,unpaid=S.bookings.filter(b=>b.vendorId===v.id&&b.vendorPay.status==='Unpaid'&&b.status!=='Cancelled').length;
+    return `<tr><td><button class="lnk" type="button" onclick="editVendor('${v.id}')">${esc(v.name)}</button><small>${esc(v.city)}, ${esc(v.country)}</small></td><td><span class="vt vt-${v.type}">${v.type==='spot'?t('Spot hire','استئجار فوري'):t('Monthly contract','عقد شهري')}</span></td>
+    <td>${esc(v.contact||v.name)}<small>${esc(v.phone)}</small></td><td class="wrap">${esc(v.type==='spot'?v.vehicle+' · '+v.capacity:v.vehicles)}</td>
+    <td>${v.type==='spot'?fmt(v.tripCost)+t(' per trip',' للرحلة'):v.rates.map(r=>`${esc(r.route)}: ${fmt(r.rate)}`).join('<br>')}</td>
+    <td>${v.type==='spot'?esc(v.payMethod)+(unpaid?`<small class="warn">${t(unpaid+' trip(s) unpaid',' رحلات غير مدفوعة: '+unpaid)}</small>`:`<small>${t('paid per trip','يُدفع لكل رحلة')}</small>`):esc(v.terms)}</td>
+    <td>${v.type==='spot'?`<span class="plate">${esc(v.plate)}</span>`:`${v.start}<small>${t('to','إلى')} ${v.end}</small>`}</td><td>${pill(v.status)}</td><td class="num">${n}</td></tr>`}).join('')
+    :`<tr><td colspan="9" class="empty">${t('No vendors match.','لا يوجد موردون مطابقون.')}</td></tr>`}
+let editing=null;
+function vTy(){return document.querySelector('[name=vTy]:checked').value}
+function vMode(){const c=vTy()==='contract';document.querySelectorAll('#vF .only-c').forEach(e=>e.hidden=!c);document.querySelectorAll('#vF .only-s').forEach(e=>e.hidden=c);$('vNaL').textContent=c?t('Vendor / company name','اسم المورد / الشركة'):t('Driver name','اسم السائق')}
+function rateRows(R){$('vRates').innerHTML=R.map((r,i)=>`<tr><td><input class="ri" data-k="route" data-i="${i}" value="${esc(r.route)}" aria-label="Route" placeholder="Riyadh to Dammam"></td><td><select class="ri" data-k="vehicle" data-i="${i}" aria-label="Vehicle">${opts(T.VEHICLES,r.vehicle)}</select></td><td class="num"><input class="ri num" type="number" min="0" step="0.01" data-k="rate" data-i="${i}" value="${r.rate}" aria-label="Rate"></td><td><button class="x" type="button" aria-label="Remove rate" data-rm="${i}">×</button></td></tr>`).join('')||`<tr><td colspan="4" class="empty">${t('No rates yet.','لا توجد أسعار.')}</td></tr>`}
+let RATES=[];
+function editVendor(id){editing=id||null;const v=id?T.vendorOf(S,id):null;$('vF').reset();$('vErr').textContent='';
+  $('vCi').innerHTML=opts(T.CITIES);$('vVt').innerHTML=opts(T.VEHICLES);$('vPm').innerHTML=opts(PAY_METHODS);
+  document.querySelector(`[name=vTy][value=${v?v.type:'contract'}]`).checked=true;document.querySelectorAll('[name=vTy]').forEach(r=>r.disabled=!!v);
+  $('vH').textContent=v?t('Vendor details','تفاصيل المورد'):t('Add vendor','إضافة مورد');
+  if(v){$('vNa').value=v.name;$('vCp').value=v.contact||'';$('vPh').value=v.phone;$('vCi').value=v.city;$('vCo').value=v.country;$('vSt').value=v.status;
+    if(v.type==='contract'){$('vSd').value=v.start;$('vEd').value=v.end;$('vVe').value=v.vehicles;$('vTe').value=v.terms}else{$('vPl').value=v.plate;$('vVt').value=v.vehicle;$('vCa').value=v.capacity;$('vTc').value=v.tripCost;$('vPm').value=v.payMethod}}
+  else {$('vPh').value='+966 ';$('vCo').value=A.country;$('vSd').value=A.demoDate}
+  RATES=v&&v.rates?v.rates.map(r=>({...r})):[{route:'',vehicle:T.VEHICLES[0],rate:0}];rateRows(RATES);
+  const B=v?S.bookings.filter(b=>b.vendorId===v.id):[];
+  $('vStats').innerHTML=v?`<h4>${t('Bookings with this vendor','الحجوزات مع هذا المورد')}</h4><p class="muted small">${B.length?B.map(b=>`${b.id} · ${fmt(T.bookingPrice(b).cost)} · ${T.lab(b.vendorPay.status)}`).join('<br>'):t('None yet.','لا يوجد.')}</p>`:'';
+  vMode();openModal('vM')}
+document.querySelectorAll('[name=vTy]').forEach(r=>r.addEventListener('change',vMode));
+$('vRates').addEventListener('input',e=>{const i=e.target.dataset.i;if(i===undefined)return;RATES[+i][e.target.dataset.k]=e.target.dataset.k==='rate'?+e.target.value:e.target.value});
+$('vRates').addEventListener('change',e=>{const i=e.target.dataset.i;if(i!==undefined)RATES[+i][e.target.dataset.k]=e.target.dataset.k==='rate'?+e.target.value:e.target.value});
+$('vRates').addEventListener('click',e=>{const i=e.target.dataset.rm;if(i!==undefined){RATES.splice(+i,1);rateRows(RATES)}});
+$('vAddRate').addEventListener('click',()=>{RATES.push({route:'',vehicle:T.VEHICLES[0],rate:0});rateRows(RATES)});
+$('vF').addEventListener('submit',e=>{e.preventDefault();const c=vTy()==='contract',err=[];
+  const name=$('vNa').value.trim(),phone=$('vPh').value.trim();
+  if(!name)err.push(t('Name is required.','الاسم مطلوب.'));
+  if(!/^\+966\s?5\d(\s?\d){7}$/.test(phone))err.push(t('Use a Saudi mobile number: +966 5X XXX XXXX.','استخدم رقم جوال سعودي: ‎+966 5X XXX XXXX.'));
+  if(c){if(!$('vSd').value||!$('vEd').value||$('vEd').value<$('vSd').value)err.push(t('Contract end must be after the start.','يجب أن تكون نهاية العقد بعد بدايته.'));
+    const R=RATES.filter(r=>r.route.trim());if(!R.length)err.push(t('Add at least one contracted rate.','أضف سعراً متعاقداً واحداً على الأقل.'));if(R.some(r=>!(r.rate>0)))err.push(t('Rates must be above zero.','يجب أن تكون الأسعار أكبر من صفر.'))}
+  else {if(!$('vPl').value.trim())err.push(t('Vehicle plate is required.','رقم اللوحة مطلوب.'));if(!(+$('vTc').value>0))err.push(t('Agreed trip cost must be above zero.','يجب أن تكون تكلفة الرحلة أكبر من صفر.'))}
+  if(err.length){$('vErr').textContent=err.join(' ');return}
+  const base={name,phone,city:$('vCi').value,country:$('vCo').value.trim()||A.country,status:$('vSt').value};
+  const data=c?{...base,contact:$('vCp').value.trim(),start:$('vSd').value,end:$('vEd').value,vehicles:$('vVe').value.trim(),rates:RATES.filter(r=>r.route.trim()).map(r=>({route:r.route.trim(),vehicle:r.vehicle,rate:T.n2(r.rate)})),terms:$('vTe').value}
+              :{...base,plate:$('vPl').value.trim().toUpperCase(),vehicle:$('vVt').value,capacity:$('vCa').value.trim(),tripCost:T.n2(+$('vTc').value),payMethod:$('vPm').value};
+  if(editing){Object.assign(T.vendorOf(S,editing),data);toast(t('Vendor updated','تم تحديث المورد'))}
+  else {const id=c?'V-'+S.seq.v1++:'V-'+S.seq.v2++;S.vendors.push({id,type:c?'contract':'spot',...data});toast(t('Vendor added','تمت إضافة المورد'))}
+  save();closeModal('vM')});
+
+/* ---------- tabs, render ---------- */
+document.querySelectorAll('[data-tab]').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('[data-tab]').forEach(x=>x.setAttribute('aria-selected',x===b));$('tab-bk').hidden=b.dataset.tab!=='bk';$('tab-vd').hidden=b.dataset.tab!=='vd'}));
+['q','vq'].forEach(i=>$(i).addEventListener('input',render));['fSt','fVt','fVp','fIn','fMo','vT','vS'].forEach(i=>$(i).addEventListener('change',render));
+$('cities').innerHTML=T.CITIES.map(c=>`<option value="${c}">`).join('');
+function render(){kpis();bookings();vendors()}
+fillFilters();render();
+document.addEventListener('langchange',()=>{fillFilters();render();if($('dtM').classList.contains('on'))detail(cur)});
+if(isAr()) applyLang('ar');
+</script>
+</body>
+</html>

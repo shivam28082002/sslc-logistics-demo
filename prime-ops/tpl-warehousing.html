@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prime Operations · Third-party warehousing</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="assets/fav-icon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..700&family=IBM+Plex+Sans+Arabic:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/app.css">
+<link rel="stylesheet" href="assets/tpl.css">
+</head>
+<body>
+<div class="shell">
+<aside class="rail"></aside>
+<div>
+<header class="top">
+  <button class="burger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+  <h1 data-ar="تخزين الطرف الثالث">Third-party warehousing</h1>
+  <span class="sp"></span>
+  <button class="btn btn-a hide-m" type="button" onclick="allocOpen()" data-ar="تخزين بضائع لدى شريك">Allocate goods</button>
+  <button class="lang" type="button">عربي</button>
+  <span class="avatar">AK</span>
+</header>
+<main class="page">
+  <div class="demo-note"><b data-ar="بيانات تجريبية">Demo data.</b> <span id="policy"></span></div>
+  <div class="kpis k7" id="kpis"></div>
+
+  <section class="panel" style="margin-top:16px">
+    <div class="tabs" role="tablist">
+      <button role="tab" aria-selected="true" data-tab="sk" data-ar="البضائع لدى الشركاء">Stock at partners</button>
+      <button role="tab" aria-selected="false" data-tab="bl" data-ar="فوترة التخزين">Storage billing</button>
+      <button role="tab" aria-selected="false" data-tab="wh" data-ar="مستودعات الشركاء">Partner warehouses</button>
+    </div>
+
+    <div id="tab-sk">
+      <div class="tbar">
+        <div class="field grow"><label for="q" data-ar="بحث">Search</label><input id="q" type="search" placeholder="Reference, goods, SKU, customer" data-ar-ph="المرجع، البضاعة، الرمز، العميل"></div>
+        <div class="field"><label for="fCu" data-ar="العميل">Customer</label><select id="fCu"></select></div>
+        <div class="field"><label for="fWh" data-ar="المستودع">Warehouse</label><select id="fWh"></select></div>
+        <div class="field"><label for="fSt" data-ar="الحالة">Status</label><select id="fSt"></select></div>
+        <button class="btn btn-g" type="button" onclick="allocOpen()" style="align-self:flex-end" data-ar="تخزين بضائع">Allocate goods</button>
+      </div>
+      <div class="twrap"><table class="t"><thead><tr>
+        <th data-ar="المرجع">Reference</th><th data-ar="العميل">Customer</th><th data-ar="البضاعة">Goods</th><th class="num" data-ar="الكمية الآن">Quantity now</th><th data-ar="المستودع الخارجي">External warehouse</th><th data-ar="من / الإفراج المتوقع">Stored from / expected out</th><th data-ar="الحالة">Status</th><th class="num" data-ar="تكلفة الشريك المتراكمة">Partner cost to date</th><th class="num" data-ar="المبلغ للعميل">Customer billable</th><th><span class="sr">Actions</span></th>
+      </tr></thead><tbody id="skRows"></tbody></table></div>
+    </div>
+
+    <div id="tab-bl" hidden>
+      <div class="tbar">
+        <div class="field"><label for="bCu" data-ar="العميل">Customer</label><select id="bCu"></select></div>
+        <div class="field"><label for="bWh" data-ar="المستودع">Warehouse</label><select id="bWh"></select></div>
+        <div class="field"><label for="bMo" data-ar="شهر الفوترة">Billing month</label><select id="bMo"></select></div>
+        <div class="field"><label for="bSt" data-ar="حالة الفوترة">Billing status</label><select id="bSt"></select></div>
+        <div class="field"><label for="bSs" data-ar="حالة التخزين">Storage status</label><select id="bSs"></select></div>
+        <button class="btn btn-g" type="button" id="prevBtn" style="align-self:flex-end" data-ar="معاينة الرسوم">Preview charges</button>
+      </div>
+      <div class="sumrow" id="blSum"></div>
+      <div class="twrap" style="margin-top:12px"><table class="t"><thead><tr>
+        <th data-ar="المرجع">Reference</th><th data-ar="العميل">Customer</th><th data-ar="المستودع">Warehouse</th><th data-ar="الشهر">Month</th><th class="num" data-ar="أيام">Days</th><th class="num" data-ar="كمية × أيام">Qty-days</th><th class="num" data-ar="تكلفة الشريك">Partner cost</th><th class="num" data-ar="الهامش">Markup</th><th class="num" data-ar="المبلغ للعميل">Customer charge</th><th data-ar="الفوترة">Billing</th>
+      </tr></thead><tbody id="blRows"></tbody></table></div>
+    </div>
+
+    <div id="tab-wh" hidden>
+      <div class="tbar">
+        <div class="field grow"><label for="wq" data-ar="بحث">Search</label><input id="wq" type="search" placeholder="Name, city, contact" data-ar-ph="الاسم، المدينة، المسؤول"></div>
+        <div class="field"><label for="wCi" data-ar="المدينة">City</label><select id="wCi"></select></div>
+        <div class="field"><label for="wSt" data-ar="الحالة">Status</label><select id="wSt"></select></div>
+        <button class="btn btn-g" type="button" onclick="whOpen()" style="align-self:flex-end" data-ar="إضافة مستودع">Add warehouse</button>
+      </div>
+      <div class="twrap"><table class="t"><thead><tr>
+        <th data-ar="المستودع">Warehouse</th><th data-ar="العنوان">Address</th><th data-ar="المسؤول">Contact</th><th data-ar="نوع التخزين">Storage type</th><th class="num" data-ar="السعة">Capacity</th><th class="num" data-ar="المتاح">Available</th><th data-ar="السعر">Rate</th><th data-ar="شروط الدفع">Payment terms</th><th data-ar="الحالة">Status</th>
+      </tr></thead><tbody id="whRows"></tbody></table></div>
+    </div>
+  </section>
+</main>
+</div>
+</div>
+
+<!-- allocate goods -->
+<div class="modal" id="alM" aria-hidden="true"><div class="box wide" role="dialog" aria-modal="true" aria-labelledby="alH">
+  <div class="mh"><h3 id="alH" data-ar="تخزين بضائع لدى مستودع شريك">Allocate goods to a partner warehouse</h3><button class="x" type="button" aria-label="Close" onclick="closeModal('alM')">×</button></div>
+  <p class="muted small" data-ar="عندما يكون مستودعكم ممتلئاً: سجّل أين وُضعت البضاعة، وستُحسب رسوم التخزين وتُضاف إلى فاتورة العميل الشهرية.">When your own space is full: record where the goods went, and storage is calculated and added to the customer's monthly invoice.</p>
+  <form id="alF" novalidate><div class="fg">
+    <div class="field"><label for="aCu" data-ar="العميل">Customer</label><select id="aCu" required></select></div>
+    <div class="field s2"><label for="aGo" data-ar="البضاعة">Goods description</label><input id="aGo" required placeholder="e.g. Frozen poultry overflow" data-ar-ph="مثال: دواجن مجمدة فائضة"></div>
+    <div class="field"><label for="aRf" data-ar="رمز الصنف أو مرجع الشحنة">SKU or shipment reference</label><input id="aRf" placeholder="e.g. SKU WF-POUL-2KG"></div>
+    <div class="field s2"><label for="aWh" data-ar="المستودع الشريك">Partner warehouse</label><select id="aWh" required></select></div>
+    <div class="field"><label for="aQt" id="aQtL">Quantity</label><input id="aQt" type="number" min="1" step="1" required></div>
+    <div class="field"><label for="aSd" data-ar="بداية التخزين">Storage start</label><input id="aSd" type="date" required></div>
+    <div class="field"><label for="aEx" data-ar="الإفراج المتوقع">Expected release</label><input id="aEx" type="date"></div>
+    <div class="field"><label for="aMk" data-ar="الهامش على التكلفة ٪">Markup on cost %</label><input id="aMk" type="number" min="0" step="0.5" required></div>
+    <div class="field s2"><label for="aBay" data-ar="الموقع داخل المستودع">Location inside the warehouse</label><input id="aBay" placeholder="e.g. Chamber 2, racks C1–C4" data-ar-ph="مثال: الغرفة 2، الأرفف C1–C4"></div>
+  </div>
+  <h4 data-ar="معاينة رسوم التخزين">Storage charge preview</h4>
+  <dl class="calc" id="aCalc" aria-live="polite"></dl>
+  <p class="err" id="aErr" role="alert"></p>
+  <div class="mf"><button class="btn btn-g" type="submit" data-ar="تأكيد التخزين">Confirm allocation</button><button class="btn btn-o" type="button" onclick="closeModal('alM')" data-ar="إلغاء">Cancel</button></div></form>
+</div></div>
+
+<!-- stock detail -->
+<div class="modal drawer" id="skM" aria-hidden="true"><div class="box" role="dialog" aria-modal="true" aria-labelledby="skH"><div id="skB"></div></div></div>
+
+<!-- preview -->
+<div class="modal" id="pvM" aria-hidden="true"><div class="box wide" role="dialog" aria-modal="true" aria-labelledby="pvH"><div id="pvB"></div></div></div>
+
+<!-- warehouse add / edit -->
+<div class="modal" id="whM" aria-hidden="true"><div class="box wide" role="dialog" aria-modal="true" aria-labelledby="whH">
+  <div class="mh"><h3 id="whH"></h3><button class="x" type="button" aria-label="Close" onclick="closeModal('whM')">×</button></div>
+  <form id="whF" novalidate><div class="fg">
+    <div class="field s2"><label for="wNa" data-ar="اسم المستودع">Warehouse name</label><input id="wNa" required></div>
+    <div class="field"><label for="wCy" data-ar="المدينة">City</label><select id="wCy"></select></div>
+    <div class="field s2"><label for="wAd" data-ar="العنوان">Address</label><input id="wAd" required placeholder="District, street, city, postal code"></div>
+    <div class="field"><label for="wCo" data-ar="الدولة">Country</label><input id="wCo" value="Saudi Arabia"></div>
+    <div class="field"><label for="wCp" data-ar="الشخص المسؤول">Contact person</label><input id="wCp" required></div>
+    <div class="field"><label for="wPh" data-ar="الهاتف">Phone</label><input id="wPh" type="tel" required></div>
+    <div class="field"><label for="wEm" data-ar="البريد الإلكتروني">Email</label><input id="wEm" type="email"></div>
+    <div class="field"><label for="wTy" data-ar="نوع التخزين">Storage type</label><input id="wTy" required placeholder="e.g. Ambient, Cold (2–8°C)"></div>
+    <div class="field"><label for="wCa" data-ar="السعة الكلية">Total capacity</label><input id="wCa" type="number" min="1" required></div>
+    <div class="field"><label for="wAv" data-ar="السعة المتاحة">Available capacity</label><input id="wAv" type="number" min="0" required></div>
+    <div class="field"><label for="wRt" data-ar="نوع السعر">Rate type</label><select id="wRt"></select></div>
+    <div class="field"><label for="wRa" data-ar="السعر (ريال)">Rate (SAR)</label><input id="wRa" type="number" min="0" step="0.01" required></div>
+    <div class="field"><label for="wTe" data-ar="شروط الدفع">Payment terms</label><select id="wTe"><option>Net 15</option><option>Net 30</option><option>Net 45</option><option>Monthly in advance</option></select></div>
+    <div class="field"><label for="wSs" data-ar="الحالة">Status</label><select id="wSs"><option>Active</option><option>Inactive</option></select></div>
+  </div><p class="err" id="wErr" role="alert"></p>
+  <div class="mf"><button class="btn btn-g" type="submit" data-ar="حفظ">Save</button><button class="btn btn-o" type="button" onclick="closeModal('whM')" data-ar="إلغاء">Cancel</button></div></form>
+</div></div>
+
+<script src="assets/app.js"></script>
+<script src="assets/tpl.js"></script>
+<script>
+const T=TPL, A=T.ASSUME, t=(en,ar)=>isAr()?ar:en, $=id=>document.getElementById(id), esc=T.esc, fmt=T.fmt, pill=T.pill;
+let S=T.get();
+const save=()=>{T.save(S);render()};
+const EXT=`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 21V9l7-4 7 4v12"/><path d="M16 11h6v10h-6"/></svg>`;
+const opts=(arr,val)=>arr.map(o=>{const [v,en,ar]=Array.isArray(o)?o:[o,o,T.lab(o)];return `<option value="${esc(v)}"${v===val?' selected':''}>${esc(t(en,ar||en))}</option>`}).join('');
+const monthName=m=>{const x=T.MONTHS.find(y=>y[0]===m);return x?t(x[1],x[2]):m};
+const rateTxt=w=>w.rateType==='monthly'?`${fmt(w.rate)} ${t('per month','شهرياً')}`:`${fmt(w.rate)} ${t(T.RATE_LABEL[w.rateType][0],T.RATE_LABEL[w.rateType][1])}`;
+const unitTxt=u=>({pallets:t('pallets','منصة'),units:t('units','وحدة')}[u]||u);
+const qtyNow=r=>T.qtyOn(r,A.demoDate);
+/* storage to date across every month, using the invoiced snapshot where a month is already billed */
+function toDate(r){const L=T.charges(S,{customer:r.customer}).filter(c=>c.ref===r.id);return {cost:L.reduce((a,c)=>a+c.cost,0),charge:L.reduce((a,c)=>a+c.charge,0),lines:L}}
+
+$('policy').textContent=t(`Simulated in this browser. Storage is billed per day the goods are at the partner, from the start date up to and including ${A.demoDate} (demo date), and not for the day of release. Markup is on cost.`,`محاكاة في هذا المتصفح. يُحتسب التخزين عن كل يوم تكون فيه البضاعة لدى الشريك حتى ${A.demoDate} (تاريخ العرض)، ولا يُحتسب يوم الإفراج. الهامش على التكلفة.`);
+
+function kpis(){const mo=T.monthOf(A.demoDate),all=T.charges(S,{}),M=all.filter(c=>c.kind==='storage'&&c.month===mo),st=all.filter(c=>c.kind==='storage');
+  const pal=S.stock.reduce((a,r)=>a+(r.unit==='pallets'?qtyNow(r):0),0),uni=S.stock.reduce((a,r)=>a+(r.unit==='units'?qtyNow(r):0),0);
+  const cost=M.reduce((a,c)=>a+c.cost,0),chg=M.reduce((a,c)=>a+c.charge,0);
+  const K=[[t('Partner warehouses in use','مستودعات شريكة مستخدمة'),new Set(S.stock.filter(r=>qtyNow(r)>0).map(r=>r.whId)).size+' / '+S.warehouses.filter(w=>w.status==='Active').length,t('with stock / active','بها بضاعة / نشطة')],
+    [t('Stock at partners now','البضاعة لدى الشركاء الآن'),pal.toLocaleString('en-US')+' '+t('pallets','منصة'),uni.toLocaleString('en-US')+' '+t('units','وحدة')],
+    [t('Partner storage cost','تكلفة تخزين الشركاء'),fmt(cost),monthName(mo)+t(', accrued',' (مستحق)')],
+    [t('Customer storage charges','رسوم التخزين للعملاء'),fmt(chg),monthName(mo)],
+    [t('Estimated gross profit','الربح الإجمالي التقديري'),fmt(chg-cost),(chg?((chg-cost)/chg*100).toFixed(1):'0.0')+t('% of charges','٪ من الرسوم'),'up'],
+    [t('Unbilled storage charges','رسوم تخزين غير مفوترة'),fmt(st.filter(c=>c.status==='Unbilled').reduce((a,c)=>a+c.charge,0)),t('waiting for monthly invoices','بانتظار الفواتير الشهرية'),'warn'],
+    [t('Already invoiced','تمت فوترتها'),fmt(st.filter(c=>c.status==='Invoiced').reduce((a,c)=>a+c.charge,0)),t('storage on customer invoices','تخزين في فواتير العملاء')]];
+  $('kpis').innerHTML=K.map(([l,v,s,c])=>`<div class="kpi"><span>${l}</span><b>${v}</b><em class="${c||'muted'}">${s}</em></div>`).join('')}
+
+function fillFilters(){const sel=(id,arr,all=true)=>{const v=$(id).value;$(id).innerHTML=(all?`<option value="">${t('All','الكل')}</option>`:'')+opts(arr,v)};
+  const custs=[...new Set(S.stock.map(r=>r.customer))].sort(),whs=S.warehouses.map(w=>[w.id,w.name,w.name]);
+  sel('fCu',custs);sel('fWh',whs);sel('fSt',['In storage','Released']);sel('bCu',custs);sel('bWh',whs);sel('bMo',T.MONTHS);sel('bSt',['Unbilled','Invoiced','Excluded']);sel('bSs',['In storage','Released']);
+  sel('wCi',[...new Set(S.warehouses.map(w=>w.city))]);sel('wSt',['Active','Inactive'])}
+
+function stock(){const q=$('q').value.trim().toLowerCase(),cu=$('fCu').value,wh=$('fWh').value,st=$('fSt').value;
+  const L=S.stock.filter(r=>(!q||[r.id,r.goods,r.ref,r.customer,r.bay].join(' ').toLowerCase().includes(q))&&(!cu||r.customer===cu)&&(!wh||r.whId===wh)&&(!st||r.status===st)).sort((a,b)=>(a.status>b.status?1:-1)||b.start.localeCompare(a.start));
+  $('skRows').innerHTML=L.length?L.map(r=>{const w=T.whOf(S,r.whId),d=toDate(r);
+    return `<tr${r.status==='Released'?' class="done"':''}><td><button class="lnk" type="button" onclick="detail('${r.id}')">${r.id}</button><small>${esc(r.ref||'')}</small></td><td>${esc(r.customer)}</td><td class="wrap">${esc(r.goods)}</td>
+    <td class="num"><b>${qtyNow(r).toLocaleString('en-US')}</b><small>${unitTxt(r.unit)}</small></td>
+    <td><span class="ext">${EXT}${t('Partner warehouse','مستودع شريك')}</span><span class="whn">${esc(w.name)}</span><small>${esc(w.city)}${r.bay?' · '+esc(r.bay):''}</small></td>
+    <td>${r.start}<small>${t('expected','متوقع')} ${r.expected||'—'}</small></td><td>${pill(r.status)}</td><td class="num cost">${fmt(d.cost)}</td><td class="num chg">${fmt(d.charge)}</td>
+    <td class="acts"><button class="btn btn-o sm" type="button" onclick="detail('${r.id}')">${t('View','عرض')}</button></td></tr>`}).join('')
+    :`<tr><td colspan="10" class="empty">${t('No goods at partner warehouses match these filters.','لا توجد بضائع مطابقة.')}</td></tr>`}
+
+/* ---------- storage billing ---------- */
+function billLines(){const cu=$('bCu').value,wh=$('bWh').value,mo=$('bMo').value,st=$('bSt').value,ss=$('bSs').value;
+  return T.charges(S,{customer:cu||undefined,month:mo||undefined}).filter(c=>c.kind==='storage').map(c=>({...c,rec:S.stock.find(r=>r.id===c.ref)})).filter(c=>(!wh||c.rec.whId===wh)&&(!st||c.status===st)&&(!ss||c.rec.status===ss)).sort((a,b)=>b.month.localeCompare(a.month)||a.ref.localeCompare(b.ref))}
+function billing(){const L=billLines(),sum=k=>L.reduce((a,c)=>a+c[k],0);
+  $('blSum').innerHTML=`<span>${t('Partner cost','تكلفة الشريك')}: <b class="cost">${fmt(sum('cost'))}</b></span><span>${t('Markup','الهامش')}: <b class="mk">${fmt(sum('markup'))}</b></span><span>${t('Customer charges','رسوم العملاء')}: <b>${fmt(sum('charge'))}</b></span><span>${t('Unbilled','غير مفوتر')}: <b class="warn">${fmt(L.filter(c=>c.status==='Unbilled').reduce((a,c)=>a+c.charge,0))}</b></span><span>${t('Invoiced','مفوتر')}: <b>${fmt(L.filter(c=>c.status==='Invoiced').reduce((a,c)=>a+c.charge,0))}</b></span>`;
+  $('blRows').innerHTML=L.length?L.map(c=>{const w=T.whOf(S,c.rec.whId);return `<tr><td><button class="lnk" type="button" onclick="detail('${c.ref}')">${c.ref}</button></td><td>${esc(c.customer)}</td><td>${esc(w.name)}<small>${t(T.RATE_LABEL[w.rateType][0],T.RATE_LABEL[w.rateType][1])}</small></td><td>${monthName(c.month)}</td><td class="num">${c.days}</td><td class="num">${c.qtyDays.toLocaleString('en-US')}</td><td class="num cost">${fmt(c.cost)}</td><td class="num mk">+${fmt(c.markup)}</td><td class="num chg">${fmt(c.charge)}</td><td>${pill(c.status)}${c.invoiceNo?`<small>${c.invoiceNo}</small>`:''}</td></tr>`}).join('')
+    :`<tr><td colspan="10" class="empty">${t('No storage charges for these filters.','لا توجد رسوم تخزين لهذه الفلاتر.')}</td></tr>`}
+$('prevBtn').addEventListener('click',()=>{const L=billLines().filter(c=>c.status==='Unbilled');const cu=$('bCu').value,mo=$('bMo').value;
+  const by={};L.forEach(c=>{(by[c.customer+'|'+c.month]=by[c.customer+'|'+c.month]||[]).push(c)});
+  $('pvB').innerHTML=`<div class="mh"><div><h3 id="pvH">${t('Storage charge preview','معاينة رسوم التخزين')}</h3><span class="muted small">${t('Unbilled storage that will go on the monthly customer invoices. Nothing is invoiced from this screen.','رسوم التخزين غير المفوترة التي ستدخل الفواتير الشهرية. لا تتم الفوترة من هذه الشاشة.')}</span></div><button class="x" type="button" aria-label="Close" onclick="closeModal('pvM')">×</button></div>
+   ${Object.keys(by).length?Object.entries(by).map(([k,G])=>{const [c,m]=k.split('|'),s=G.reduce((a,x)=>a+x.charge,0);return `<h4>${esc(c)} · ${monthName(m)}</h4><div class="twrap"><table class="t"><thead><tr><th>${t('Stock','البضاعة')}</th><th class="num">${t('Partner cost','تكلفة الشريك')}</th><th class="num">${t('Markup','الهامش')}</th><th class="num">${t('Customer charge','المبلغ للعميل')}</th></tr></thead><tbody>${G.map(x=>`<tr><td class="wrap">${x.ref}<small>${esc(x.desc)}</small></td><td class="num cost">${fmt(x.cost)}</td><td class="num mk">+${fmt(x.markup)} <small>${x.rec.markupPct}%</small></td><td class="num chg">${fmt(x.charge)}</td></tr>`).join('')}</tbody></table></div>
+     <div class="sumrow"><span>${t('Storage subtotal','مجموع التخزين')}: <b>${fmt(s)}</b></span><a class="btn btn-g sm" href="billing.html?tab=tp&client=${encodeURIComponent(c)}&month=${m}">${t('Open monthly billing','فتح الفوترة الشهرية')}</a></div>`}).join('')
+   :`<p class="muted">${t('No unbilled storage charges for these filters.','لا توجد رسوم تخزين غير مفوترة.')}</p>`}`;openModal('pvM')});
+
+/* ---------- warehouses ---------- */
+function whs(){const q=$('wq').value.trim().toLowerCase(),ci=$('wCi').value,st=$('wSt').value;
+  const L=S.warehouses.filter(w=>(!q||[w.name,w.city,w.contact,w.address].join(' ').toLowerCase().includes(q))&&(!ci||w.city===ci)&&(!st||w.status===st));
+  $('whRows').innerHTML=L.length?L.map(w=>{const used=w.capacity-w.available,p=used/w.capacity*100;return `<tr><td><button class="lnk" type="button" onclick="whOpen('${w.id}')">${esc(w.name)}</button><small>${esc(w.city)}</small></td><td class="wrap">${esc(w.address)}</td><td>${esc(w.contact)}<small>${esc(w.phone)}<br>${esc(w.email||'')}</small></td><td>${esc(w.type)}</td>
+    <td class="num">${w.capacity.toLocaleString('en-US')}<small>${unitTxt(T.UNIT_FOR[w.rateType])}</small></td><td class="num">${w.available.toLocaleString('en-US')}<div class="bar" style="margin-top:5px;min-width:70px"><i class="${p>85?'crit':p>70?'hi':''}" style="width:${p}%"></i></div></td><td>${rateTxt(w)}</td><td>${esc(w.terms)}</td><td>${pill(w.status)}</td></tr>`}).join('')
+    :`<tr><td colspan="9" class="empty">${t('No warehouses match.','لا توجد مستودعات مطابقة.')}</td></tr>`}
+let wEdit=null;
+function whOpen(id){wEdit=id||null;const w=id?T.whOf(S,id):null;$('whF').reset();$('wErr').textContent='';
+  $('wCy').innerHTML=opts(T.CITIES);$('wRt').innerHTML=opts(Object.entries(T.RATE_LABEL).map(([k,v])=>[k,v[0],v[1]]));
+  $('whH').textContent=w?t('Warehouse details','تفاصيل المستودع'):t('Add partner warehouse','إضافة مستودع شريك');
+  if(w){$('wNa').value=w.name;$('wCy').value=w.city;$('wAd').value=w.address;$('wCp').value=w.contact;$('wPh').value=w.phone;$('wEm').value=w.email||'';$('wTy').value=w.type;$('wCa').value=w.capacity;$('wAv').value=w.available;$('wRt').value=w.rateType;$('wRa').value=w.rate;$('wTe').value=w.terms;$('wSs').value=w.status;$('wCo').value='Saudi Arabia'}
+  else {$('wPh').value='+966 ';$('wCo').value=A.country}
+  $('wRt').disabled=!!(w&&S.stock.some(r=>r.whId===w.id));openModal('whM')}
+$('whF').addEventListener('submit',e=>{e.preventDefault();const err=[],cap=+$('wCa').value,av=+$('wAv').value,rate=+$('wRa').value;
+  ['wNa','wAd','wCp','wTy'].forEach(i=>{if(!$(i).value.trim())err.push(t('Fill in all required fields.','أكمل الحقول المطلوبة.'))});
+  if(!/^\+966\s?\d(\s?\d){7,8}$/.test($('wPh').value.trim()))err.push(t('Use a Saudi number: +966 …','استخدم رقماً سعودياً: ‎+966 …'));
+  if(!(cap>0)||!(av>=0)||av>cap)err.push(t('Available capacity must be between 0 and total capacity.','السعة المتاحة يجب أن تكون بين 0 والسعة الكلية.'));
+  if(!(rate>0))err.push(t('Rate must be above zero.','يجب أن يكون السعر أكبر من صفر.'));
+  if(err.length){$('wErr').textContent=[...new Set(err)].join(' ');return}
+  const d={name:$('wNa').value.trim(),city:$('wCy').value,address:$('wAd').value.trim(),contact:$('wCp').value.trim(),phone:$('wPh').value.trim(),email:$('wEm').value.trim(),type:$('wTy').value.trim(),capacity:cap,available:av,rateType:$('wRt').value,rate:T.n2(rate),terms:$('wTe').value,status:$('wSs').value};
+  if(wEdit){Object.assign(T.whOf(S,wEdit),d);toast(t('Warehouse updated','تم تحديث المستودع'))}else{S.warehouses.push({id:'W-'+String(S.seq.w++).padStart(2,'0'),...d});toast(t('Partner warehouse added','تمت إضافة المستودع'))}
+  save();fillFilters();closeModal('whM')});
+
+/* ---------- allocate ---------- */
+function allocOpen(pre){$('alF').reset();$('aErr').textContent='';$('aCu').innerHTML=`<option value="">${t('Choose a customer','اختر العميل')}</option>`+opts(T.CUSTOMERS);
+  $('aWh').innerHTML=`<option value="">${t('Choose','اختر')}</option>`+S.warehouses.filter(w=>w.status==='Active').map(w=>`<option value="${w.id}">${esc(w.name)} · ${esc(w.city)} · ${rateTxt(w)} · ${w.available.toLocaleString('en-US')} ${unitTxt(T.UNIT_FOR[w.rateType])} ${t('free','متاح')}</option>`).join('');
+  $('aSd').value=A.demoDate;$('aMk').value=A.storageMarkupPct;if(pre){$('aCu').value=pre.customer;$('aGo').value=pre.goods;$('aRf').value=pre.ref||'';$('aQt').value=pre.qty;$('aMk').value=pre.markupPct}aCalc();openModal('alM')}
+function aCalc(){const w=T.whOf(S,$('aWh').value),q=+$('aQt').value,mk=$('aMk').value;$('aQtL').textContent=t('Quantity','الكمية')+(w?' ('+unitTxt(T.UNIT_FOR[w.rateType])+')':'');
+  if(!w||!(q>0)||mk===''||+mk<0){$('aCalc').innerHTML=`<dt>${t('Choose a warehouse and enter a quantity to see the charges.','اختر المستودع وأدخل الكمية لرؤية الرسوم.')}</dt><dd></dd>`;return}
+  const {days:dm}=T.monthRange(T.monthOf($('aSd').value||A.demoDate));
+  const daily=w.rateType==='monthly'?w.rate/dm:q*w.rate,dc=daily*(1+mk/100);
+  const fake={start:$('aSd').value,moves:[{date:$('aSd').value,qty:q}],markupPct:+mk};const mtd=$('aSd').value&&$('aSd').value<=A.demoDate?T.storageFor(fake,w,$('aSd').value,A.demoDate):null;
+  $('aCalc').innerHTML=`<dt>${t('Partner rate','سعر الشريك')}</dt><dd>${rateTxt(w)}</dd>
+   <dt>${w.rateType==='monthly'?t(`Partner cost per day (fee ÷ ${dm} days)`,`تكلفة الشريك يومياً (الرسوم ÷ ${dm} يوم)`):t(`Partner cost per day (${q.toLocaleString('en-US')} × ${fmt(w.rate)})`,`تكلفة الشريك يومياً (${q.toLocaleString('en-US')} × ${fmt(w.rate)})`)}</dt><dd class="cost">${fmt(daily)}</dd>
+   <dt>${t(`Markup on cost (${+mk}%) per day`,`الهامش على التكلفة (${+mk}٪) يومياً`)}</dt><dd class="mk">+ ${fmt(dc-daily)}</dd><dt class="tot">${t('Customer charge per day','المبلغ للعميل يومياً')}</dt><dd class="tot chg">${fmt(dc)}</dd>
+   ${mtd?`<dt>${t(`If stored ${mtd.days} day(s) to ${A.demoDate}: partner cost → customer charge`,`إذا خُزنت ${mtd.days} يوم حتى ${A.demoDate}: التكلفة ← المبلغ`)}</dt><dd>${fmt(mtd.base)} → ${fmt(mtd.charge)}</dd>`:''}
+   ${w.rateType!=='unit_day'&&q>w.available?`<dt class="warn">${t(`Only ${w.available} free at this warehouse.`,`المتاح فقط ${w.available}.`)}</dt><dd></dd>`:''}`}
+['aWh','aQt','aMk','aSd'].forEach(i=>{$(i).addEventListener('input',aCalc);$(i).addEventListener('change',aCalc)});
+$('alF').addEventListener('submit',e=>{e.preventDefault();const w=T.whOf(S,$('aWh').value),q=+$('aQt').value,mk=$('aMk').value,err=[];
+  if(!$('aCu').value)err.push(t('Choose the customer.','اختر العميل.'));if(!$('aGo').value.trim())err.push(t('Describe the goods.','صف البضاعة.'));if(!w)err.push(t('Choose a partner warehouse.','اختر المستودع.'));
+  if(!(q>0)||!Number.isInteger(q))err.push(t('Quantity must be a whole number above zero.','الكمية يجب أن تكون عدداً صحيحاً أكبر من صفر.'));
+  if(mk===''||!(+mk>=0))err.push(t('Markup cannot be empty or negative.','الهامش لا يمكن أن يكون فارغاً أو سالباً.'));
+  if(!$('aSd').value||$('aSd').value>A.demoDate)err.push(t(`Storage start must be on or before ${A.demoDate}.`,`يجب أن تكون البداية في ${A.demoDate} أو قبله.`));
+  if($('aEx').value&&$('aEx').value<$('aSd').value)err.push(t('Expected release cannot be before the start.','الإفراج المتوقع لا يسبق البداية.'));
+  if(w&&w.rateType!=='unit_day'&&q>w.available)err.push(t(`Only ${w.available} free at ${w.name}.`,`المتاح فقط ${w.available} في ${w.name}.`));
+  if(err.length){$('aErr').textContent=err.join(' ');return}
+  const id='XS-'+String(S.seq.xs++).padStart(4,'0');
+  S.stock.push({id,customer:$('aCu').value,goods:$('aGo').value.trim(),ref:$('aRf').value.trim(),whId:w.id,bay:$('aBay').value.trim(),start:$('aSd').value,unit:T.UNIT_FOR[w.rateType],moves:[{date:$('aSd').value,qty:q,note:`Received ${q.toLocaleString('en-US')} ${T.UNIT_FOR[w.rateType]}`}],expected:$('aEx').value,markupPct:+mk,status:'In storage',billed:{},excluded:{}});
+  w.available=Math.max(0,w.available-q);save();closeModal('alM');toast(t(`${id}: ${q.toLocaleString('en-US')} ${unitTxt(T.UNIT_FOR[w.rateType])} placed at ${w.name}`,`${id}: تم وضع ${q} ${unitTxt(T.UNIT_FOR[w.rateType])} في ${w.name}`));setTimeout(()=>detail(id),300)});
+
+/* ---------- stock detail and actions ---------- */
+let cur=null,act=null;
+function detail(id){cur=id;const r=S.stock.find(x=>x.id===id),w=T.whOf(S,r.whId),d=toDate(r),last=r.moves[r.moves.length-1].date,open=r.status==='In storage';
+  const months=d.lines.slice().sort((a,b)=>a.month.localeCompare(b.month));
+  $('skB').innerHTML=`<div class="mh"><div><h3 id="skH">${r.id}</h3><span class="muted small">${esc(r.customer)} · ${esc(r.goods)}</span></div><button class="x" type="button" aria-label="Close" onclick="closeModal('skM')">×</button></div>
+   <div class="hint" style="background:var(--ext-l);color:var(--ext)"><b>${EXT.replace('<svg','<svg style="display:inline;width:15px;height:15px;vertical-align:-2px;stroke:currentColor;fill:none;stroke-width:2"')} ${t('Stored at a partner warehouse, not in Prime\'s own warehouse','مخزنة لدى مستودع شريك، وليست في مستودع برايم')}</b><br>${esc(w.name)} · ${esc(w.address)}${r.bay?'<br>'+t('Location: ','الموقع: ')+esc(r.bay):''}<br>${esc(w.contact)}, ${esc(w.phone)}</div>
+   <dl class="kv" style="margin-top:12px"><dt>${t('Quantity now','الكمية الآن')}</dt><dd><b>${qtyNow(r).toLocaleString('en-US')}</b> ${unitTxt(r.unit)} ${pill(r.status)}</dd><dt>${t('SKU / reference','الرمز / المرجع')}</dt><dd>${esc(r.ref||'—')}</dd><dt>${t('Stored from','من تاريخ')}</dt><dd>${r.start}</dd><dt>${t('Expected release','الإفراج المتوقع')}</dt><dd>${r.expected||'—'}</dd><dt>${t('Partner rate','سعر الشريك')}</dt><dd>${rateTxt(w)} · ${t('markup','هامش')} ${r.markupPct}% ${t('on cost','على التكلفة')}</dd></dl>
+   <h4>${t('Storage cost history','سجل تكلفة التخزين')}</h4>
+   <div class="twrap"><table class="t"><thead><tr><th>${t('Month','الشهر')}</th><th class="num">${t('Days','أيام')}</th><th class="num">${t('Partner cost','تكلفة الشريك')}</th><th class="num">${t('Markup','الهامش')}</th><th class="num">${t('Customer','العميل')}</th><th>${t('Billing','الفوترة')}</th></tr></thead><tbody>${months.map(c=>`<tr><td>${monthName(c.month)}</td><td class="num">${c.days}</td><td class="num cost">${fmt(c.cost)}</td><td class="num mk">+${fmt(c.markup)}</td><td class="num chg">${fmt(c.charge)}</td><td>${pill(c.status)}${c.invoiceNo?`<small>${c.invoiceNo}</small>`:''}${c.status==='Unbilled'?` <button class="lnk small" type="button" onclick="exMonth('${r.id}','${c.month}',true)">${t('exclude','استبعاد')}</button>`:c.status==='Excluded'?` <button class="lnk small" type="button" onclick="exMonth('${r.id}','${c.month}',false)">${t('include','إدراج')}</button>`:''}</td></tr>`).join('')}
+     <tr><td><b>${t('Total','الإجمالي')}</b></td><td></td><td class="num cost"><b>${fmt(d.cost)}</b></td><td class="num mk"><b>+${fmt(d.charge-d.cost)}</b></td><td class="num chg"><b>${fmt(d.charge)}</b></td><td></td></tr></tbody></table></div>
+   <h4>${t('Movements','الحركات')}</h4><ul class="small" style="margin:0;padding-inline-start:18px">${r.moves.map(m=>`<li>${m.date}: ${m.qty>0?'+':''}${m.qty.toLocaleString('en-US')} ${unitTxt(r.unit)} · ${esc(m.note||'')}</li>`).join('')}</ul>
+   ${open?`<h4>${t('Actions','الإجراءات')}</h4><div class="mf" style="margin-top:0">
+     <button class="btn btn-o sm" type="button" onclick="actOpen('in')">${t('Record goods received','تسجيل استلام')}</button>
+     <button class="btn btn-o sm" type="button" onclick="actOpen('out')">${t('Record goods released','تسجيل إفراج')}</button>
+     <button class="btn btn-o sm" type="button" onclick="actOpen('set')">${t('Update quantity (stock count)','تعديل الكمية (جرد)')}</button>
+     <button class="btn btn-o sm" type="button" onclick="actOpen('move')">${t('Change partner warehouse','تغيير المستودع')}</button></div>
+     <form id="actF" class="box2" style="margin-top:10px" hidden novalidate><b id="actH"></b><div class="fg" style="margin-top:8px">
+       <div class="field" id="actQw"><label for="actQ" id="actQL"></label><input id="actQ" type="number" min="0" step="1"></div>
+       <div class="field" id="actWw" hidden><label for="actW">${t('Move to','نقل إلى')}</label><select id="actW">${S.warehouses.filter(x=>x.status==='Active'&&x.id!==w.id&&x.rateType!=='unit_day'===(w.rateType!=='unit_day')).map(x=>`<option value="${x.id}">${esc(x.name)} · ${rateTxt(x)}</option>`).join('')}</select></div>
+       <div class="field"><label for="actD">${t('Date','التاريخ')}</label><input id="actD" type="date" min="${last}" max="${A.demoDate}" value="${A.demoDate}"></div>
+       <div class="field"><label for="actN">${t('Note','ملاحظة')}</label><input id="actN"></div></div>
+       <p class="err" id="actE" role="alert"></p><div class="mf" style="margin-top:6px"><button class="btn btn-g sm" type="submit">${t('Save','حفظ')}</button><button class="btn btn-o sm" type="button" onclick="$('actF').hidden=true">${t('Cancel','إلغاء')}</button></div></form>`:''}
+   <p class="hint">${t('Each month of storage is a separate charge. Once a month is on a customer invoice it is locked, so the same storage can never be billed twice.','كل شهر تخزين رسم مستقل. بعد إدراج الشهر في فاتورة يُقفل، فلا يمكن فوترة نفس التخزين مرتين.')}</p>`;
+  if(open)$('actF').addEventListener('submit',actSave);
+  if(!$('skM').classList.contains('on'))openModal('skM')}
+function exMonth(id,m,on){const r=S.stock.find(x=>x.id===id);if(on)r.excluded[m]=true;else delete r.excluded[m];save();detail(id)}
+function actOpen(k){act=k;const r=S.stock.find(x=>x.id===cur);$('actF').hidden=false;$('actE').textContent='';$('actN').value='';$('actQ').value='';
+  $('actH').textContent={in:t('Record goods received','تسجيل استلام بضاعة'),out:t('Record goods released','تسجيل إفراج عن بضاعة'),set:t('Update quantity after a stock count','تعديل الكمية بعد الجرد'),move:t('Move all goods to another partner warehouse','نقل كل البضاعة إلى مستودع شريك آخر')}[k];
+  $('actQL').textContent={in:t('Quantity received','الكمية المستلمة'),out:t(`Quantity released (max ${qtyNow(r)})`,`الكمية المفرج عنها (الحد ${qtyNow(r)})`),set:t('Counted quantity','الكمية بعد الجرد'),move:''}[k]+' ('+unitTxt(r.unit)+')';
+  $('actQw').hidden=k==='move';$('actWw').hidden=k!=='move';$('actQ').focus()}
+function actSave(e){e.preventDefault();const r=S.stock.find(x=>x.id===cur),w=T.whOf(S,r.whId),d=$('actD').value,q=+$('actQ').value,last=r.moves[r.moves.length-1].date,now=T.qtyOn(r,d||A.demoDate);
+  if(!d||d<last||d>A.demoDate){$('actE').textContent=t(`Date must be between ${last} and ${A.demoDate}.`,`التاريخ يجب أن يكون بين ${last} و ${A.demoDate}.`);return}
+  const bad=m=>{$('actE').textContent=m};
+  if(act==='in'){if(!(q>0)||!Number.isInteger(q))return bad(t('Enter a whole quantity above zero.','أدخل كمية صحيحة أكبر من صفر.'));r.moves.push({date:d,qty:q,note:$('actN').value||'Received '+q});w.available=Math.max(0,w.available-q)}
+  if(act==='out'){if(!(q>0)||!Number.isInteger(q)||q>now)return bad(t(`Enter a whole quantity from 1 to ${now}.`,`أدخل كمية من 1 إلى ${now}.`));r.moves.push({date:d,qty:-q,note:$('actN').value||'Released '+q});w.available+=q}
+  if(act==='set'){if(!Number.isInteger(q)||q<0||$('actQ').value==='')return bad(t('Enter the counted quantity (0 or more).','أدخل الكمية (صفر أو أكثر).'));if(q===now)return bad(t('Quantity is unchanged.','الكمية لم تتغير.'));r.moves.push({date:d,qty:q-now,note:$('actN').value||`Stock count: ${now} → ${q}`});w.available=Math.max(0,w.available-(q-now))}
+  if(act==='move'){const nw=T.whOf(S,$('actW').value);if(!nw)return bad(t('No other matching partner warehouse is active.','لا يوجد مستودع مطابق آخر.'));if(now<=0)return bad(t('Nothing to move.','لا توجد بضاعة للنقل.'));
+    r.moves.push({date:d,qty:-now,note:`Moved ${now} to ${nw.name}`});w.available+=now;
+    const id='XS-'+String(S.seq.xs++).padStart(4,'0');S.stock.push({id,customer:r.customer,goods:r.goods,ref:r.ref,whId:nw.id,bay:'',start:d,unit:r.unit,moves:[{date:d,qty:now,note:`Moved in from ${w.name} (${r.id})`}],expected:r.expected,markupPct:r.markupPct,status:'In storage',billed:{},excluded:{}});nw.available=Math.max(0,nw.available-now);
+    if(T.qtyOn(r,A.demoDate)<=0)r.status='Released';save();toast(t(`Moved to ${nw.name} as ${id}. The old record stops billing on ${d}.`,`نُقلت إلى ${nw.name} برقم ${id}. يتوقف احتساب السجل القديم في ${d}.`));detail(id);return}
+  if(T.qtyOn(r,A.demoDate)<=0)r.status='Released';
+  save();toast(t('Stock updated. Storage charges recalculated.','تم تحديث المخزون وإعادة حساب الرسوم.'));detail(cur)}
+
+/* ---------- tabs, render ---------- */
+document.querySelectorAll('[data-tab]').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('[data-tab]').forEach(x=>x.setAttribute('aria-selected',x===b));['sk','bl','wh'].forEach(k=>$('tab-'+k).hidden=b.dataset.tab!==k)}));
+['q','wq'].forEach(i=>$(i).addEventListener('input',render));['fCu','fWh','fSt','bCu','bWh','bMo','bSt','bSs','wCi','wSt'].forEach(i=>$(i).addEventListener('change',render));
+function render(){kpis();stock();billing();whs()}
+fillFilters();render();
+document.addEventListener('langchange',()=>{fillFilters();render();if($('skM').classList.contains('on'))detail(cur)});
+if(isAr()) applyLang('ar');
+</script>
+</body>
+</html>

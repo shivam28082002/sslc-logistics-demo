@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..700&family=IBM+Plex+Sans+Arabic:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/app.css">
+<link rel="stylesheet" href="assets/tpl.css">
 <style>
 .bl{grid-template-columns:1.5fr 1fr;align-items:start}
 .ctl{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
@@ -50,6 +51,11 @@
   <span class="avatar">AK</span>
 </header>
 <main class="page">
+  <div class="tabs" role="tablist" style="background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:0 10px">
+    <button role="tab" aria-selected="true" data-btab="zt" data-ar="فاتورة العقد وزاتكا">Contract invoice and ZATCA</button>
+    <button role="tab" aria-selected="false" data-btab="tp" data-ar="رسوم الطرف الثالث (شهرية)">Third-party charges, monthly</button>
+  </div>
+  <div id="btab-zt">
   <div class="grid bl">
     <section class="panel">
       <div class="ph"><h2 data-ar="فاتورة الشهر، محسوبة من العمليات">This month's invoice, built from operations</h2></div>
@@ -68,6 +74,27 @@
       <div class="twrap"><table class="t"><thead><tr><th data-ar="الرقم">Number</th><th data-ar="العميل">Client</th><th class="num" data-ar="الإجمالي">Total</th><th data-ar="زاتكا">ZATCA</th></tr></thead><tbody id="list"></tbody></table></div>
     </section>
   </div>
+  </div>
+  <div id="btab-tp" hidden>
+    <div class="demo-note"><b data-ar="بيانات تجريبية">Demo data.</b> <span data-ar="لا تُرسل أي فاتورة حقيقية ولا يتم ربط محاسبي. الهامش على التكلفة.">No real invoice is sent and nothing is posted to accounting. Markup is on cost.</span></div>
+    <section class="panel">
+      <div class="ph"><h2 data-ar="الرسوم المؤهلة لفاتورة العميل الشهرية">Charges ready for the customer's monthly invoice</h2></div>
+      <p class="hint" style="margin:0 0 12px" data-ar="دفع المورد وفوترة العميل مستقلان: قد يكون السائق قد دُفع له نقداً بالفعل، لكن المبلغ يبقى غير مفوتر للعميل حتى إصدار الفاتورة الشهرية.">Paying the vendor and billing the customer are independent. A spot driver may already be paid in cash, but the customer charge stays unbilled until the monthly invoice is generated.</p>
+      <div class="tbar">
+        <div class="field"><label for="tpC" data-ar="العميل">Customer</label><select id="tpC"></select></div>
+        <div class="field"><label for="tpM" data-ar="شهر الفوترة">Billing month</label><select id="tpM"></select></div>
+        <div class="field"><label for="tpS" data-ar="حالة الرسوم">Charge status</label><select id="tpS"></select></div>
+      </div>
+      <div class="twrap"><table class="t"><thead><tr><th><span class="sr">Select</span></th><th data-ar="النوع">Type</th><th data-ar="المرجع والوصف">Reference and description</th><th data-ar="دفع المورد">Vendor payment</th><th class="num" data-ar="تكلفة المورد">Vendor cost</th><th class="num" data-ar="الهامش">Markup</th><th class="num" data-ar="المبلغ للعميل">Customer charge</th><th data-ar="حالة الرسوم">Charge status</th><th><span class="sr">Actions</span></th></tr></thead><tbody id="tpRows"></tbody></table></div>
+      <div class="sumrow" id="tpSum"></div>
+      <div class="mf"><button class="btn btn-o" type="button" id="tpPrev" data-ar="معاينة الفاتورة (مسودة)">Preview invoice (draft)</button><button class="btn btn-g" type="button" id="tpGen" data-ar="إصدار الفاتورة الشهرية">Generate monthly invoice</button></div>
+      <p class="err" id="tpErr" role="alert"></p>
+    </section>
+    <section class="panel" style="margin-top:16px">
+      <div class="ph"><h2 data-ar="سجل فواتير الطرف الثالث">Third-party invoice history</h2></div>
+      <div class="twrap"><table class="t"><thead><tr><th data-ar="الرقم">Number</th><th data-ar="العميل">Customer</th><th data-ar="الشهر">Month</th><th data-ar="التاريخ">Date</th><th class="num" data-ar="البنود">Lines</th><th class="num" data-ar="الإجمالي مع الضريبة">Total incl. VAT</th><th data-ar="الحالة">Status</th><th><span class="sr">Actions</span></th></tr></thead><tbody id="tpHist"></tbody></table></div>
+    </section>
+  </div>
 </main>
 </div>
 </div>
@@ -78,8 +105,12 @@
   <p class="muted" style="font-size:12.5px;margin:10px 0 0" data-ar="عرض تجريبي: الرقم الضريبي تجريبي، والربط الفعلي مع منصة فاتورة يتم في المشروع.">Demo: the VAT number is a sample. The live connection to the Fatoora platform is part of the project.</p>
 </div></div>
 
+<div class="modal" id="tpInvM" aria-hidden="true"><div class="box" role="dialog" aria-modal="true" aria-label="Third-party invoice" style="width:min(780px,100%)"><div id="tpDoc" class="invdoc"></div>
+  <div class="mf"><button class="btn btn-g" id="tpGen2" type="button" data-ar="إصدار الفاتورة">Generate invoice</button><button class="btn btn-o" type="button" onclick="closeModal('tpInvM')" data-ar="إغلاق">Close</button></div></div></div>
+
 <script src="assets/qrcode.js"></script>
 <script src="assets/app.js"></script>
+<script src="assets/tpl.js"></script>
 <script>
 const t=(en,ar)=>isAr()?ar:en;
 const CL_LINES={
@@ -120,7 +151,61 @@ document.getElementById('issue').addEventListener('click',()=>{
 });
 {const q=new URLSearchParams(location.search).get('client');if(q&&CL_LINES[q])document.getElementById('cl').value=q}
 lines();list();
-document.addEventListener('langchange',()=>{lines();list()});
+document.addEventListener('langchange',()=>{lines();list();tpFill();tpRender()});
+/* ---------- third-party charges: monthly customer billing ---------- */
+const TP=TPL, tfmt=TP.fmt, tpill=TP.pill, tesc=TP.esc, $b=id=>document.getElementById(id);
+let TS=TP.get(), TSEL=null;
+const tMonth=m=>{const x=TP.MONTHS.find(y=>y[0]===m);return x?t(x[1],x[2]):m};
+function tpFill(){
+  const cs=[...new Set(TP.charges(TS,{}).map(c=>c.customer))].sort(),c0=$b('tpC').value,m0=$b('tpM').value,s0=$b('tpS').value;
+  $b('tpC').innerHTML=cs.map(c=>`<option${c===c0?' selected':''}>${tesc(c)}</option>`).join('');
+  $b('tpM').innerHTML=TP.MONTHS.map(([v,en,ar])=>`<option value="${v}"${v===m0?' selected':''}>${t(en,ar)}</option>`).join('');
+  $b('tpS').innerHTML=`<option value="">${t('All','الكل')}</option>`+['Unbilled','Invoiced','Excluded'].map(k=>`<option value="${k}"${k===s0?' selected':''}>${TP.lab(k)}</option>`).join('')}
+function tpLines(){return TP.charges(TS,{customer:$b('tpC').value,month:$b('tpM').value})}
+function tpRender(){TS=TP.get();const all=tpLines(),st=$b('tpS').value,L=all.filter(c=>!st||c.status===st);
+  const open=all.filter(c=>c.status==='Unbilled');if(!TSEL)TSEL=new Set(open.map(c=>c.key));[...TSEL].forEach(k=>{if(!open.some(c=>c.key===k))TSEL.delete(k)});
+  $b('tpRows').innerHTML=L.length?L.map(c=>{const cancelled=c.kind==='transport'&&TS.bookings.find(b=>b.id===c.ref).status==='Cancelled';
+    return `<tr class="${c.status==='Unbilled'&&TSEL.has(c.key)?'sel':c.status!=='Unbilled'?'done':''}"><td>${c.status==='Unbilled'?`<input type="checkbox" data-k="${c.key}" ${TSEL.has(c.key)?'checked':''} aria-label="Include ${c.ref}">`:''}</td>
+    <td><span class="svc ${c.kind==='transport'?'svc-trans':'svc-2pl'}">${c.kind==='transport'?t('Transport','نقل'):t('Storage','تخزين')}</span></td>
+    <td class="wrap"><b>${c.ref}</b><small>${tesc(c.desc)}</small><small>${tesc(c.vendor)}${cancelled?' · '+t('booking cancelled','الحجز ملغى'):''}</small></td><td>${tpill(c.vendorPay)}</td>
+    <td class="num cost">${tfmt(c.cost)}</td><td class="num mk">+${tfmt(c.markup)}</td><td class="num chg">${tfmt(c.charge)}</td><td>${tpill(c.status)}${c.invoiceNo?`<small>${c.invoiceNo}</small>`:''}</td>
+    <td class="acts">${c.status==='Unbilled'?`<button class="btn btn-o sm" type="button" data-ex="${c.key}">${t('Exclude','استبعاد')}</button>`:c.status==='Excluded'&&!cancelled?`<button class="btn btn-o sm" type="button" data-in="${c.key}">${t('Include','إدراج')}</button>`:''}</td></tr>`}).join('')
+    :`<tr><td colspan="9" class="empty">${t('No third-party charges for this customer and month.','لا توجد رسوم طرف ثالث لهذا العميل والشهر.')}</td></tr>`;
+  const S=open.filter(c=>TSEL.has(c.key)),sum=(a,k)=>a.reduce((x,c)=>x+c[k],0),tr=S.filter(c=>c.kind==='transport'),sg=S.filter(c=>c.kind==='storage'),sub=TP.n2(sum(S,'charge')),vat=TP.n2(sub*TP.ASSUME.vatPct/100);
+  $b('tpSum').innerHTML=`<span>${t('Selected','المحدد')}: <b>${S.length} / ${open.length}</b></span><span>${t('Transport','النقل')}: <b>${tfmt(sum(tr,'charge'))}</b></span><span>${t('Storage','التخزين')}: <b>${tfmt(sum(sg,'charge'))}</b></span><span>${t('Vendor cost','تكلفة الموردين')}: <b class="cost">${tfmt(sum(S,'cost'))}</b></span><span>${t('Markup','الهامش')}: <b class="mk">${tfmt(sum(S,'markup'))}</b></span><span>${t('Subtotal','المجموع')}: <b>${tfmt(sub)}</b></span><span>${t('VAT','الضريبة')} ${TP.ASSUME.vatPct}%: <b>${tfmt(vat)}</b></span><span>${t('Total','الإجمالي')}: <b>${tfmt(sub+vat)}</b></span>`;
+  $b('tpGen').disabled=$b('tpPrev').disabled=!S.length;$b('tpErr').textContent='';
+  $b('tpHist').innerHTML=TS.invoices.length?TS.invoices.map(i=>`<tr><td><button class="lnk" type="button" data-view="${i.no}">${i.no}</button></td><td>${tesc(i.customer)}</td><td>${tMonth(i.month)}</td><td>${i.date}</td><td class="num">${i.lines.length}</td><td class="num">${tfmt(i.total)}</td><td>${tpill(i.status)}</td>
+    <td class="acts">${i.status!=='Paid'?`<button class="btn btn-o sm" type="button" data-paid="${i.no}">${t('Mark paid','تسجيل كمدفوعة')}</button>`:''}${i.status==='Generated'?`<button class="btn btn-o sm" type="button" data-od="${i.no}">${t('Mark overdue','تسجيل كمتأخرة')}</button>`:''}</td></tr>`).join('')
+    :`<tr><td colspan="8" class="empty">${t('No third-party invoices yet.','لا توجد فواتير بعد.')}</td></tr>`}
+function tpDoc(inv,draft){const grp=k=>inv.lines.filter(l=>l.kind===k);
+  const rows=(k,en,ar)=>grp(k).length?`<tr><td colspan="2" style="font-weight:700;background:#F6F7F5">${en} · <span class="ar">${ar}</span></td></tr>`+grp(k).map(l=>`<tr><td>${l.ref}<br><span style="color:#666">${tesc(l.desc)}</span></td><td class="r">${tfmt(l.charge)}</td></tr>`).join(''):'';
+  $b('tpDoc').innerHTML=`<div class="hd"><img src="assets/top-logo.svg" alt="Prime Logistics"><div><h3>${draft?'Draft invoice':'Tax invoice'}</h3><h3 class="ar">${draft?'مسودة فاتورة':'فاتورة ضريبية'}</h3><div style="text-align:end;color:#555">${inv.no} · ${tpill(inv.status)}</div></div></div>
+   <div class="meta"><div><span>Seller · البائع</span><b>Prime Logistics</b><br>Istanbul St, Al-Sulay, Riyadh<br>VAT no. 300000000000003 <em style="color:#999">(sample)</em></div><div><span>Buyer · المشتري</span><b>${tesc(inv.customer)}</b><br>Kingdom of Saudi Arabia<br><span>Period · الفترة</span>${tMonth(inv.month)} · ${inv.date}</div></div>
+   <table><thead><tr><th>Description · الوصف</th><th class="r">Amount (SAR)</th></tr></thead><tbody>${rows('transport','Third-party transport','النقل عبر طرف ثالث')}${rows('storage','Third-party storage','التخزين لدى طرف ثالث')}</tbody></table>
+   <div class="ft"><div style="font-size:12px;color:#555;max-width:340px"><b>Internal view, not on the customer copy</b><br>Vendor cost ${tfmt(inv.cost)} · markup ${tfmt(inv.subtotal-inv.cost)} (${inv.subtotal?((inv.subtotal-inv.cost)/inv.subtotal*100).toFixed(1):0}% of charges)</div>
+   <div class="sum"><div><span>Subtotal · المجموع</span><span>${tfmt(inv.subtotal)}</span></div><div><span>VAT ${TP.ASSUME.vatPct}% · الضريبة</span><span>${tfmt(inv.vat)}</span></div><div class="g"><span>Total · الإجمالي</span><span>${tfmt(inv.total)}</span></div></div></div>`;
+  $b('tpGen2').hidden=!draft;openModal('tpInvM')}
+function tpDraft(){const keys=[...TSEL],L=tpLines().filter(c=>c.status==='Unbilled'&&keys.includes(c.key)),sub=TP.n2(L.reduce((a,c)=>a+c.charge,0)),vat=TP.n2(sub*TP.ASSUME.vatPct/100);
+  return {no:t('Draft, not numbered yet','مسودة، بلا رقم بعد'),customer:$b('tpC').value,month:$b('tpM').value,date:TP.ASSUME.demoDate,status:'Draft',lines:L,subtotal:sub,vat,total:TP.n2(sub+vat),cost:TP.n2(L.reduce((a,c)=>a+c.cost,0))}}
+function tpGenerate(){TS=TP.get();const c=$b('tpC').value,m=$b('tpM').value,keys=[...TSEL];
+  const inv=TP.generate(TS,c,m,keys);if(!inv){$b('tpErr').textContent=t('Nothing left to invoice: these charges are already invoiced or excluded.','لا يوجد ما يُفوتر: الرسوم مفوترة أو مستبعدة.');return}
+  TP.save(TS);TSEL=null;tpRender();tpDoc(inv,false);toast(t(`${inv.no} generated for ${c}. ${inv.lines.length} charges are now invoiced and locked.`,`تم إصدار ${inv.no} لـ ${c}. ${inv.lines.length} بنود أصبحت مفوترة ومقفلة.`))}
+$b('tpRows').addEventListener('change',e=>{const k=e.target.dataset.k;if(!k)return;e.target.checked?TSEL.add(k):TSEL.delete(k);tpRender()});
+$b('tpRows').addEventListener('click',e=>{const ex=e.target.dataset.ex,inc=e.target.dataset.in,k=ex||inc;if(!k)return;TS=TP.get();const [kind,id,m]=k.split(':');
+  if(kind==='TR'){TS.bookings.find(b=>b.id===id).inv.status=ex?'Excluded':'Unbilled'}else{const r=TS.stock.find(x=>x.id===id);if(ex)r.excluded[m]=true;else delete r.excluded[m]}
+  TP.save(TS);if(TSEL){ex?TSEL.delete(k):TSEL.add(k)}tpRender();toast(ex?t('Charge excluded from this invoice','تم استبعاد البند'):t('Charge back in the queue','عاد البند إلى القائمة'))});
+$b('tpHist').addEventListener('click',e=>{const d=e.target.dataset;TS=TP.get();
+  if(d.view){tpDoc(TS.invoices.find(i=>i.no===d.view),false);return}
+  const i=TS.invoices.find(x=>x.no===(d.paid||d.od));if(!i)return;i.status=d.paid?'Paid':'Overdue';if(d.paid)i.paidDate=TP.ASSUME.demoDate;TP.save(TS);tpRender();toast(t(`${i.no} marked ${i.status.toLowerCase()}`,`تم تحديث ${i.no}: ${TP.lab(i.status)}`))});
+$b('tpPrev').addEventListener('click',()=>tpDoc(tpDraft(),true));
+$b('tpGen').addEventListener('click',tpGenerate);
+$b('tpGen2').addEventListener('click',()=>{closeModal('tpInvM');tpGenerate()});
+['tpC','tpM'].forEach(i=>$b(i).addEventListener('change',()=>{TSEL=null;tpRender()}));$b('tpS').addEventListener('change',tpRender);
+function btab(k){document.querySelectorAll('[data-btab]').forEach(x=>x.setAttribute('aria-selected',x.dataset.btab===k));$b('btab-zt').hidden=k!=='zt';$b('btab-tp').hidden=k!=='tp'}
+document.querySelectorAll('[data-btab]').forEach(b=>b.addEventListener('click',()=>btab(b.dataset.btab)));
+tpFill();{const P=new URLSearchParams(location.search);if(P.get('tab')==='tp'){btab('tp');const c=P.get('client'),m=P.get('month');if(c&&[...$b('tpC').options].some(o=>o.value===c))$b('tpC').value=c;if(m)$b('tpM').value=m}}
+tpRender();
+
 if(isAr()) applyLang('ar');
 </script>
 </body>
