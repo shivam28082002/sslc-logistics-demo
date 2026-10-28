@@ -15,6 +15,29 @@ const PAGES=[
 ];
 const here=(location.pathname.split('/').pop()||'index.html');
 
+/* demo sign-in: three roles. Prime staff see everything; a customer and a partner warehouse see only their own pages.
+   Demo only: accounts live in this file and the session is kept in this browser. */
+window.PrimeUsers=[
+  {email:'admin@primelogistics.sa',name:'Abzair Khan',role:'admin',org:'Prime Logistics'},
+  {email:'ops@alwahafoods.sa',name:'Khalid Al-Qahtani',role:'customer',org:'Al Waha Foods',customer:'Al Waha Foods'},
+  {email:'logistics@najdpharma.sa',name:'Reem Al-Saud',role:'customer',org:'Najd Pharma Distribution',customer:'Najd Pharma Distribution'},
+  {email:'ops@khumracold.sa',name:'Hassan Al-Ghamdi',role:'partner',org:'Al Khumra Cold Stores',whId:'W-02'},
+  {email:'ops@rimalstorage.sa',name:'Turki Al-Shammari',role:'partner',org:'Rimal Storage, Sudair',whId:'W-01'}];
+window.PrimeDemoPassword='demo123';
+window.PrimeAuth={
+  get(){try{return JSON.parse(localStorage.getItem('prime-session'))}catch(e){return null}},
+  signIn(email,pw){const u=PrimeUsers.find(x=>x.email===String(email).trim().toLowerCase());if(!u||pw!==PrimeDemoPassword)return null;localStorage.setItem('prime-session',JSON.stringify(u));return u},
+  signOut(){localStorage.removeItem('prime-session');location.href='login.html'}};
+const ROLE_PAGES={
+  customer:u=>[['customer.html','Our account','حسابنا','<path d="M3 21V8l9-5 9 5v13"/><path d="M9 21v-6h6v6"/>'],...(u.customer==='Al Waha Foods'?[['client-portal.html','Contract services','خدمات العقد','<circle cx="12" cy="8" r="4"/><path d="M4 21c1.6-4 4.6-6 8-6s6.4 2 8 6"/>']]:[])],
+  partner:u=>[['partner.html','Goods held for Prime','بضائع برايم لدينا','<path d="M2 21V9l7-4 7 4v12"/><path d="M5 21v-6h8v6"/><path d="M16 11h6v10h-6"/>']]};
+const SESSION=PrimeAuth.get();
+if(here!=='login.html'){
+  const ok=SESSION&&(SESSION.role==='admin'?!['customer.html','partner.html'].includes(here):ROLE_PAGES[SESSION.role](SESSION).some(p=>p[0]===here));
+  if(!ok){document.documentElement.style.visibility='hidden';location.replace(SESSION?ROLE_PAGES[SESSION.role]?ROLE_PAGES[SESSION.role](SESSION)[0][0]:'index.html':'login.html?next='+encodeURIComponent(here+location.search))}
+}
+const NAV=SESSION&&SESSION.role!=='admin'?ROLE_PAGES[SESSION.role](SESSION):PAGES;
+
 /* demo state shared between pages (driver app -> client portal -> dashboard) */
 const KEY='prime-demo-v1';
 const DEF={pod:null,extraDelivered:0,tempAck:false,invoices:[]};
@@ -27,11 +50,31 @@ window.PrimeState={
 /* rail */
 const rail=document.querySelector('.rail');
 if(rail){
-  rail.innerHTML=`<a class="logo" href="index.html"><img src="assets/white-logo.svg" alt="Prime Logistics" width="150" height="52"></a>
-  <nav aria-label="Modules">${PAGES.map(([h,en,ar,ic],i)=>`${h==='dashboard.html'?`<div class="group" data-ar="العمليات">Operations</div>`:''}${h==='driver.html'?`<div class="group" data-ar="التطبيقات">Apps</div>`:''}
+  rail.innerHTML=`<a class="logo" href="${NAV[0][0]}"><img src="assets/white-logo.svg" alt="Prime Logistics" width="150" height="52"></a>
+  ${SESSION&&SESSION.role!=='admin'?`<div class="group" style="padding-top:0">${SESSION.org}</div>`:''}
+  <nav aria-label="Modules">${NAV.map(([h,en,ar,ic],i)=>`${h==='dashboard.html'?`<div class="group" data-ar="العمليات">Operations</div>`:''}${h==='driver.html'?`<div class="group" data-ar="التطبيقات">Apps</div>`:''}
     <a href="${h}" ${h===here?'aria-current="page"':''}><svg viewBox="0 0 24 24">${ic}</svg><span data-ar="${ar}">${en}</span></a>`).join('')}</nav>
-  <div class="foot"><b data-ar="عرض تجريبي">Demo build</b><br><span data-ar="بيانات تجريبية، ليست بيانات برايم الحقيقية">Sample data, not Prime's real data</span><br><a href="#" id="resetDemo" style="color:#E8A43A" data-ar="إعادة ضبط العرض">Reset demo</a></div>`;
+  <div class="foot"><b data-ar="عرض تجريبي">Demo build</b><br><span data-ar="بيانات تجريبية، ليست بيانات برايم الحقيقية">Sample data, not Prime's real data</span><br><a href="#" id="resetDemo" style="color:#E8A43A" data-ar="إعادة ضبط العرض">Reset demo</a>${SESSION?` · <a href="#" id="railOut" style="color:#E8A43A" data-ar="خروج">Sign out</a>`:''}</div>`;
+  const ro=document.getElementById('railOut');if(ro)ro.addEventListener('click',e=>{e.preventDefault();PrimeAuth.signOut()});
   document.getElementById('resetDemo').addEventListener('click',e=>{e.preventDefault();PrimeState.reset();localStorage.removeItem('prime-tpl-v1');toast(isAr()?'تمت إعادة الضبط':'Demo reset');setTimeout(()=>location.reload(),500)});
+}
+
+/* signed-in user menu on the avatar */
+const av=document.querySelector('.top .avatar');
+if(av&&SESSION){
+  const ini=SESSION.name.split(' ').map(w=>w[0]).filter(c=>/[A-Z]/.test(c)).slice(0,2).join('');
+  const roleTxt={admin:['Prime staff','موظف برايم'],customer:['Customer','عميل'],partner:['Partner warehouse','مستودع شريك']}[SESSION.role];
+  const wrap=document.createElement('div');wrap.className='um';
+  wrap.innerHTML=`<button class="avatar" type="button" aria-haspopup="true" aria-expanded="false" title="${SESSION.name}">${ini}</button>
+    <div class="um-pop" hidden><b>${SESSION.name}</b><span>${SESSION.email}</span><span>${SESSION.org} · <span data-ar="${roleTxt[1]}">${roleTxt[0]}</span></span>
+    <a href="login.html" data-ar="تبديل المستخدم التجريبي">Switch demo user</a><button type="button" class="um-out" data-ar="تسجيل الخروج">Sign out</button></div>`;
+  av.replaceWith(wrap);
+  const b=wrap.querySelector('.avatar'),pop=wrap.querySelector('.um-pop');
+  b.addEventListener('click',e=>{e.stopPropagation();pop.hidden=!pop.hidden;b.setAttribute('aria-expanded',!pop.hidden)});
+  document.addEventListener('click',e=>{if(!wrap.contains(e.target)){pop.hidden=true;b.setAttribute('aria-expanded','false')}});
+  wrap.querySelector('.um-out').addEventListener('click',()=>PrimeAuth.signOut());
+  const st=document.createElement('style');st.textContent=`.um{position:relative}.um .avatar{border:0;cursor:pointer}.um-pop{position:absolute;inset-inline-end:0;top:44px;background:#fff;border:1px solid var(--line);border-radius:10px;box-shadow:0 14px 30px -12px rgba(0,0,0,.3);padding:12px 14px;min-width:240px;z-index:60;display:flex;flex-direction:column;gap:3px;font-size:13.5px}.um-pop[hidden]{display:none}.um-pop span{color:var(--steel-d)}.um-pop a,.um-pop button{margin-top:6px;text-align:start;border:0;background:none;padding:6px 0 0;border-top:1px solid var(--line);font-weight:600;color:var(--green);cursor:pointer;text-decoration:none}.um-pop a+button{border-top:0;margin-top:0}`;
+  document.head.appendChild(st);
 }
 
 /* mobile nav */

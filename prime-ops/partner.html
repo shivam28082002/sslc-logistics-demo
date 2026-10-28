@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prime Operations · Partner warehouse</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="assets/fav-icon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..700&family=IBM+Plex+Sans+Arabic:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/app.css">
+<link rel="stylesheet" href="assets/tpl.css">
+</head>
+<body>
+<div class="shell">
+<aside class="rail"></aside>
+<div>
+<header class="top">
+  <button class="burger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+  <h1 id="h1"></h1>
+  <span class="sp"></span>
+  <button class="lang" type="button">عربي</button>
+  <span class="avatar">--</span>
+</header>
+<main class="page">
+  <div class="demo-note"><b data-ar="بيانات تجريبية">Demo data.</b> <span data-ar="هذا ما يراه المستودع الشريك: البضائع التي يخزنها لصالح برايم وما تستحقه من برايم. لا تظهر أسعار برايم لعملائها.">This is what a partner warehouse sees: the goods it stores for Prime and what Prime owes it. Prime's prices to its customers are never shown here.</span></div>
+  <div class="kpis k7" id="kpis"></div>
+  <section class="panel" style="margin-top:16px">
+    <div class="tabs" role="tablist">
+      <button role="tab" aria-selected="true" data-tab="gd" data-ar="البضائع المخزنة لصالح برايم">Goods stored for Prime</button>
+      <button role="tab" aria-selected="false" data-tab="st" data-ar="كشوف المستحقات من برايم">Statements from Prime</button>
+      <button role="tab" aria-selected="false" data-tab="pf" data-ar="ملف المستودع">Warehouse profile</button>
+    </div>
+    <div id="tab-gd">
+      <div class="tbar">
+        <div class="field grow"><label for="q" data-ar="بحث">Search</label><input id="q" type="search" placeholder="Prime reference, goods, SKU" data-ar-ph="مرجع برايم، البضاعة، الرمز"></div>
+        <div class="field"><label for="fSt" data-ar="الحالة">Status</label><select id="fSt"></select></div>
+      </div>
+      <div class="twrap"><table class="t"><thead><tr><th data-ar="مرجع برايم">Prime reference</th><th data-ar="البضاعة">Goods</th><th data-ar="مالك البضاعة">Goods owner</th><th class="num" data-ar="الكمية الآن">Quantity now</th><th data-ar="الموقع لدينا">Location here</th><th data-ar="من / الإفراج المتوقع">Stored from / expected out</th><th data-ar="الحالة">Status</th><th class="num" data-ar="رسومنا هذا الشهر">Our fee this month</th><th><span class="sr">Actions</span></th></tr></thead><tbody id="gdRows"></tbody></table></div>
+    </div>
+    <div id="tab-st" hidden>
+      <p class="muted small" style="margin-top:0" data-ar="تُحسب رسومكم يومياً حسب الكمية المخزنة وسعركم المتفق عليه. يُدفع الكشف حسب شروط الدفع.">Your fee is calculated per day from the quantity stored and your agreed rate. Each monthly statement is paid on your payment terms.</p>
+      <div class="twrap"><table class="t"><thead><tr><th data-ar="الشهر">Month</th><th class="num" data-ar="سجلات">Records</th><th class="num" data-ar="كمية × أيام">Qty-days</th><th class="num" data-ar="المبلغ المستحق">Amount from Prime</th><th data-ar="تاريخ الاستحقاق">Due date</th><th data-ar="الحالة">Status</th></tr></thead><tbody id="stRows"></tbody></table></div>
+    </div>
+    <div id="tab-pf" hidden><div id="pf"></div></div>
+  </section>
+</main>
+</div>
+</div>
+<div class="modal drawer" id="gdM" aria-hidden="true"><div class="box" role="dialog" aria-modal="true" aria-labelledby="gdH"><div id="gdB"></div></div></div>
+
+<script src="assets/app.js"></script>
+<script src="assets/tpl.js"></script>
+<script>
+const T=TPL,A=T.ASSUME,t=(en,ar)=>isAr()?ar:en,$=id=>document.getElementById(id),esc=T.esc,fmt=T.fmt,pill=T.pill;
+const USER=PrimeAuth.get()||{whId:'W-02',org:'Al Khumra Cold Stores',name:'Partner'};
+let S=T.get(),cur=null,act=null;
+const monthName=m=>{const x=T.MONTHS.find(y=>y[0]===m);return x?t(x[1],x[2]):m};
+const unitTxt=u=>({pallets:t('pallets','منصة'),units:t('units','وحدة')}[u]||u);
+const W=()=>T.whOf(S,USER.whId),mine=()=>S.stock.filter(r=>r.whId===USER.whId);
+const rateTxt=w=>w.rateType==='monthly'?`${fmt(w.rate)} ${t('per month','شهرياً')}`:`${fmt(w.rate)} ${t(T.RATE_LABEL[w.rateType][0],T.RATE_LABEL[w.rateType][1])}`;
+/* the partner's own fee: storage cost at the partner's rate, never Prime's customer price */
+const feeIn=(r,m)=>{const {from,to}=T.monthRange(m);return T.storageFor(r,W(),from,to)};
+function render(){S=T.get();const w=W(),mo=T.monthOf(A.demoDate),st=T.partnerStatement(S,w.id);$('h1').textContent=w.name;
+  const held=mine().reduce((a,r)=>a+T.qtyOn(r,A.demoDate),0),used=w.capacity-w.available,cur=st.find(x=>x.month===mo),due=st.filter(x=>x.status==='Due'||x.status==='Overdue');
+  const K=[[t('Prime goods held now','بضائع برايم لدينا الآن'),held.toLocaleString('en-US')+' '+unitTxt(T.UNIT_FOR[w.rateType]),mine().filter(r=>r.status==='In storage').length+t(' active records',' سجلات نشطة')],
+    [t('Capacity used','السعة المستخدمة'),Math.round(used/w.capacity*100)+'%',`${w.available.toLocaleString('en-US')} ${t('free of','متاح من')} ${w.capacity.toLocaleString('en-US')}`],
+    [t('Fee this month (accruing)','رسوم هذا الشهر (قيد الاحتساب)'),fmt(cur?cur.fee:0),t('to ','حتى ')+A.demoDate],
+    [t('Due from Prime','المستحق من برايم'),fmt(due.reduce((a,x)=>a+x.fee,0)),due.length?t(due.length+' statement(s)','كشوف: '+due.length):t('nothing overdue','لا يوجد متأخر'),due.length?'warn':'up']];
+  $('kpis').innerHTML=K.map(([l,v,s,c])=>`<div class="kpi"><span>${l}</span><b>${v}</b><em class="${c||'muted'}">${s}</em></div>`).join('');
+  const q=$('q').value.trim().toLowerCase(),fs=$('fSt').value;
+  const L=mine().filter(r=>(!q||[r.id,r.goods,r.ref,r.bay].join(' ').toLowerCase().includes(q))&&(!fs||r.status===fs)).sort((a,b)=>(a.status>b.status?1:-1)||b.start.localeCompare(a.start));
+  $('gdRows').innerHTML=L.length?L.map(r=>`<tr${r.status==='Released'?' class="done"':''}><td><button class="lnk" type="button" onclick="detail('${r.id}')">${r.id}</button><small>${esc(r.ref||'')}</small></td><td class="wrap">${esc(r.goods)}</td><td>${esc(r.customer)}<small>${t('via Prime Logistics','عبر برايم')}</small></td>
+    <td class="num"><b>${T.qtyOn(r,A.demoDate).toLocaleString('en-US')}</b><small>${unitTxt(r.unit)}</small></td><td>${esc(r.bay||t('Not set','غير محدد'))}</td><td>${r.start}<small>${t('expected','متوقع')} ${r.expected||'—'}</small></td><td>${pill(r.status)}</td><td class="num cost">${fmt(feeIn(r,mo).base)}</td>
+    <td class="acts">${r.status==='In storage'?`<button class="btn btn-a sm" type="button" onclick="detail('${r.id}','out')">${t('Release','إفراج')}</button>`:''}<button class="btn btn-o sm" type="button" onclick="detail('${r.id}')">${t('Open','فتح')}</button></td></tr>`).join('')
+    :`<tr><td colspan="9" class="empty">${t('No Prime goods match.','لا توجد بضائع مطابقة.')}</td></tr>`;
+  $('stRows').innerHTML=st.length?st.slice().sort((a,b)=>b.month.localeCompare(a.month)).map(x=>`<tr><td>${monthName(x.month)}${x.status==='Accruing'?`<small>${t('to ','حتى ')}${x.upto}</small>`:''}</td><td class="num">${x.records}</td><td class="num">${x.qtyDays.toLocaleString('en-US')}</td><td class="num chg">${fmt(x.fee)}</td><td>${x.due}</td><td>${pill(x.status)}${x.paid?`<small>${x.paid.date} · ${x.paid.ref}</small>`:''}</td></tr>`).join('')
+    :`<tr><td colspan="6" class="empty">${t('No statements yet.','لا توجد كشوف بعد.')}</td></tr>`;
+  $('pf').innerHTML=`<dl class="kv"><dt>${t('Warehouse','المستودع')}</dt><dd><b>${esc(w.name)}</b></dd><dt>${t('Address','العنوان')}</dt><dd>${esc(w.address)}</dd><dt>${t('Contact','المسؤول')}</dt><dd>${esc(w.contact)} · ${esc(w.phone)} · ${esc(w.email||'')}</dd><dt>${t('Storage type','نوع التخزين')}</dt><dd>${esc(w.type)}</dd>
+    <dt>${t('Capacity','السعة')}</dt><dd>${w.capacity.toLocaleString('en-US')} ${unitTxt(T.UNIT_FOR[w.rateType])}</dd><dt>${t('Agreed rate with Prime','السعر المتفق عليه مع برايم')}</dt><dd>${rateTxt(w)}</dd><dt>${t('Payment terms','شروط الدفع')}</dt><dd>${esc(w.terms)}</dd></dl>
+    <form id="capF" class="box2" style="margin-top:14px;max-width:460px" novalidate><b>${t('Update free capacity for Prime','تحديث السعة المتاحة لبرايم')}</b><div class="fg" style="grid-template-columns:1fr auto;margin-top:8px"><div class="field"><label for="capV">${t('Free capacity','السعة المتاحة')} (${unitTxt(T.UNIT_FOR[w.rateType])})</label><input id="capV" type="number" min="0" max="${w.capacity}" value="${w.available}"></div><button class="btn btn-g" type="submit" style="align-self:flex-end">${t('Save','حفظ')}</button></div><p class="err" id="capE" role="alert"></p></form>`;
+  $('capF').addEventListener('submit',e=>{e.preventDefault();const v=+$('capV').value;if($('capV').value===''||!Number.isInteger(v)||v<0||v>w.capacity){$('capE').textContent=t(`Enter a whole number from 0 to ${w.capacity}.`,`أدخل رقماً من 0 إلى ${w.capacity}.`);return}w.available=v;T.save(S);render();toast(t('Free capacity updated. Prime sees it when placing goods.','تم التحديث. ستظهر لبرايم عند تخزين البضائع.'))})}
+function detail(id,open){cur=id;const r=mine().find(x=>x.id===id);if(!r)return;const w=W(),last=r.moves[r.moves.length-1].date,isOpen=r.status==='In storage';
+  $('gdB').innerHTML=`<div class="mh"><div><h3 id="gdH">${r.id}</h3><span class="muted small">${esc(r.goods)} · ${esc(r.customer)} ${t('via Prime','عبر برايم')}</span></div><button class="x" type="button" aria-label="Close" onclick="closeModal('gdM')">×</button></div>
+   <dl class="kv" style="margin-top:8px"><dt>${t('Quantity now','الكمية الآن')}</dt><dd><b>${T.qtyOn(r,A.demoDate).toLocaleString('en-US')}</b> ${unitTxt(r.unit)} ${pill(r.status)}</dd><dt>${t('SKU / reference','الرمز / المرجع')}</dt><dd>${esc(r.ref||'—')}</dd><dt>${t('Location here','الموقع لدينا')}</dt><dd>${esc(r.bay||'—')}</dd><dt>${t('Stored from','من تاريخ')}</dt><dd>${r.start}</dd><dt>${t('Expected release','الإفراج المتوقع')}</dt><dd>${r.expected||'—'}</dd><dt>${t('Our rate','سعرنا')}</dt><dd>${rateTxt(w)}</dd></dl>
+   <h4>${t('Our fee by month','رسومنا حسب الشهر')}</h4><div class="twrap"><table class="t"><thead><tr><th>${t('Month','الشهر')}</th><th class="num">${t('Days','أيام')}</th><th class="num">${t('Qty-days','كمية × أيام')}</th><th class="num">${t('Fee','الرسوم')}</th></tr></thead><tbody>${T.MONTHS.map(([m])=>({m,c:feeIn(r,m)})).filter(x=>x.c.days).reverse().map(({m,c})=>`<tr><td>${monthName(m)}</td><td class="num">${c.days}</td><td class="num">${c.qtyDays.toLocaleString('en-US')}</td><td class="num cost">${fmt(c.base)}</td></tr>`).join('')}</tbody></table></div>
+   <h4>${t('Movements','الحركات')}</h4><ul class="small" style="margin:0;padding-inline-start:18px">${r.moves.map(m=>`<li>${m.date}: ${m.qty>0?'+':''}${m.qty.toLocaleString('en-US')} ${unitTxt(r.unit)} · ${esc(m.note||'')}${m.by?` <span class="muted">(${esc(m.by)})</span>`:''}</li>`).join('')}</ul>
+   ${isOpen?`<h4>${t('Record a movement','تسجيل حركة')}</h4><div class="mf" style="margin-top:0">
+     <button class="btn btn-o sm" type="button" onclick="actOpen('in')">${t('Goods received','استلام بضاعة')}</button><button class="btn btn-o sm" type="button" onclick="actOpen('out')">${t('Goods released','إفراج عن بضاعة')}</button><button class="btn btn-o sm" type="button" onclick="actOpen('set')">${t('Stock count','جرد')}</button></div>
+     <form id="actF" class="box2" style="margin-top:10px" hidden novalidate><b id="actH"></b><div class="fg" style="margin-top:8px">
+       <div class="field"><label for="actQ" id="actQL"></label><input id="actQ" type="number" min="0" step="1"></div>
+       <div class="field"><label for="actD">${t('Date','التاريخ')}</label><input id="actD" type="date" min="${last}" max="${A.demoDate}" value="${A.demoDate}"></div>
+       <div class="field"><label for="actN">${t('Note (e.g. truck, gate pass)','ملاحظة (مثل الشاحنة، تصريح البوابة)')}</label><input id="actN"></div></div>
+       <p class="err" id="actE" role="alert"></p><div class="mf" style="margin-top:6px"><button class="btn btn-g sm" type="submit">${t('Save','حفظ')}</button><button class="btn btn-o sm" type="button" onclick="$('actF').hidden=true">${t('Cancel','إلغاء')}</button></div></form>
+     <p class="hint">${t('What you record here updates Prime\'s stock and billing straight away.','ما تسجله هنا يحدّث مخزون برايم وفوترتها فوراً.')}</p>`:''}`;
+  if(isOpen)$('actF').addEventListener('submit',actSave);
+  if(!$('gdM').classList.contains('on'))openModal('gdM');
+  if(open&&isOpen)actOpen(open)}
+function actOpen(k){act=k;const r=mine().find(x=>x.id===cur);$('actF').hidden=false;$('actE').textContent='';$('actQ').value='';$('actN').value='';
+  $('actH').textContent={in:t('Goods received from Prime','استلام بضاعة من برايم'),out:t('Goods released to Prime\'s truck','إفراج عن بضاعة لشاحنة برايم'),set:t('Stock count correction','تصحيح بعد الجرد')}[k];
+  $('actQL').textContent={in:t('Quantity received','الكمية المستلمة'),out:t(`Quantity released (max ${T.qtyOn(r,A.demoDate)})`,`الكمية (الحد ${T.qtyOn(r,A.demoDate)})`),set:t('Counted quantity','الكمية بعد الجرد')}[k]+' ('+unitTxt(r.unit)+')';$('actQ').focus()}
+function actSave(e){e.preventDefault();const res=T.move(S,cur,act,{qty:$('actQ').value===''?'':+$('actQ').value,date:$('actD').value,note:$('actN').value,by:USER.org},t);
+  if(!res.ok){$('actE').textContent=res.err;return}
+  T.save(S);render();detail(cur);toast(t('Saved. Prime\'s stock and billing are updated.','تم الحفظ وتحديث مخزون برايم وفوترتها.'))}
+document.querySelectorAll('[data-tab]').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('[data-tab]').forEach(x=>x.setAttribute('aria-selected',x===b));['gd','st','pf'].forEach(k=>$('tab-'+k).hidden=b.dataset.tab!==k)}));
+$('fSt').innerHTML=`<option value="">${t('All','الكل')}</option>`+['In storage','Released'].map(k=>`<option value="${k}">${T.lab(k)}</option>`).join('');
+$('q').addEventListener('input',render);$('fSt').addEventListener('change',render);
+render();document.addEventListener('langchange',()=>{render();if($('gdM').classList.contains('on'))detail(cur)});
+if(isAr()) applyLang('ar');
+</script>
+</body>
+</html>

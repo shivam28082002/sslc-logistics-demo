@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prime Operations · Sign in</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="assets/fav-icon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..700&family=IBM+Plex+Sans+Arabic:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/app.css">
+<style>
+.lg{min-height:100vh;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,520px)}
+.lg-side{background:var(--green-dd);color:#C9D2CB;padding:44px 52px;display:flex;flex-direction:column;gap:28px}
+.lg-side img{width:170px}
+.lg-side h1{font:650 34px/1.15 var(--sans);font-stretch:112%;color:#fff;margin:0;max-width:16ch;letter-spacing:-.01em}
+[dir="rtl"] .lg-side h1{font-family:var(--ar)}
+.lg-side p{margin:0;max-width:52ch;font-size:15.5px}
+.roles{display:grid;gap:12px;max-width:560px;margin-top:4px}
+.roles div{border:1px solid rgba(255,255,255,.12);border-radius:10px;padding:13px 16px}
+.roles b{color:#fff;display:block;font-weight:600;margin-bottom:2px}
+.roles span{font-size:14px}
+.lg-side .foot{margin-top:auto;font-size:13px;color:#7F8C83}
+.lg-main{background:var(--floor);display:flex;flex-direction:column;justify-content:center;padding:32px}
+.card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:26px;width:100%;max-width:440px;margin:0 auto}
+.card h2{font:650 22px var(--sans);margin:0 0 4px}
+[dir="rtl"] .card h2{font-family:var(--ar)}
+.card form{display:grid;gap:12px;margin-top:16px}
+.err{color:var(--red);font-size:13.5px;min-height:1.2em;margin:0}
+.acc{margin-top:20px;border-top:1px solid var(--line);padding-top:14px}
+.acc h3{font-size:13px;color:var(--steel-d);font-weight:500;margin:0 0 8px}
+.acc button{display:flex;width:100%;justify-content:space-between;align-items:center;gap:10px;border:1px solid var(--line);background:#fff;border-radius:8px;padding:9px 12px;margin-bottom:6px;cursor:pointer;text-align:start}
+.acc button:hover{border-color:var(--green)}
+.acc button span{display:block;font-size:12.5px;color:var(--steel-d)}
+.acc .rt{font-size:11.5px;font-weight:650;padding:2px 7px;border-radius:5px;white-space:nowrap}
+.rt-admin{background:var(--green-l);color:var(--green)} .rt-customer{background:var(--blue-l);color:var(--blue)} .rt-partner{background:#EEE8F6;color:#5B3E86}
+.toplang{display:flex;justify-content:flex-end;max-width:440px;margin:0 auto 12px;width:100%}
+@media (max-width:900px){.lg{grid-template-columns:1fr}.lg-side{padding:26px 20px;gap:16px}.lg-side h1{font-size:26px}.roles,.lg-side .foot{display:none}.lg-main{padding:20px 14px 40px;justify-content:flex-start}}
+</style>
+</head>
+<body>
+<div class="lg">
+  <section class="lg-side">
+    <img src="assets/white-logo.svg" alt="Prime Logistics" width="170" height="59">
+    <h1 data-ar="منصة عمليات برايم">One platform for Prime, its customers and its partners</h1>
+    <p data-ar="كل طرف يسجّل الدخول ويرى ما يخصه فقط. ما يسجّله مستودع الشريك يظهر فوراً في فوترة برايم وحساب العميل.">Each party signs in and sees only what belongs to them. What a partner warehouse records shows up straight away in Prime's billing and in the customer's account.</p>
+    <div class="roles">
+      <div><b data-ar="موظفو برايم">Prime staff</b><span data-ar="كل العمليات: المستودع، النقل، الشاحنات والمستودعات المستأجرة، الفوترة وزاتكا.">All operations: warehouse, transport, hired trucks and partner warehouses, billing and ZATCA.</span></div>
+      <div><b data-ar="العملاء">Customers</b><span data-ar="شحناتهم، أين بضاعتهم، رسوم التخزين، والفواتير. بدون تكاليف برايم.">Their shipments, where their goods are, storage charges and invoices. Never Prime's costs.</span></div>
+      <div><b data-ar="المستودعات الشريكة">Partner warehouses</b><span data-ar="البضائع المخزنة لديهم لصالح برايم: تسجيل الاستلام والإفراج والجرد، وكشوف المستحقات.">The goods they hold for Prime: record receipts, releases and stock counts, and see what Prime owes them.</span></div>
+    </div>
+    <div class="foot" data-ar="عرض تجريبي: بيانات تجريبية، والحسابات للتجربة فقط.">Demo build: sample data, demo accounts only.</div>
+  </section>
+  <main class="lg-main">
+    <div class="toplang"><button class="lang" type="button">عربي</button></div>
+    <div class="card">
+      <h2 data-ar="تسجيل الدخول">Sign in</h2>
+      <p class="muted" style="margin:0;font-size:14px" data-ar="استخدم أحد الحسابات التجريبية أدناه.">Use one of the demo accounts below.</p>
+      <form id="f" novalidate>
+        <div class="field"><label for="em" data-ar="البريد الإلكتروني">Email</label><input id="em" type="email" autocomplete="username" required></div>
+        <div class="field"><label for="pw" data-ar="كلمة المرور">Password</label><input id="pw" type="password" autocomplete="current-password" required></div>
+        <p class="err" id="err" role="alert"></p>
+        <button class="btn btn-g" type="submit" data-ar="دخول">Sign in</button>
+      </form>
+      <div class="acc"><h3><span data-ar="الحسابات التجريبية (كلمة المرور:">Demo accounts (password:</span> <b>demo123</b>)</h3><div id="accs"></div></div>
+    </div>
+  </main>
+</div>
+<script src="assets/app.js"></script>
+<script>
+const t=(en,ar)=>isAr()?ar:en,$=id=>document.getElementById(id);
+const RT={admin:['Prime staff','موظف برايم'],customer:['Customer','عميل'],partner:['Partner warehouse','مستودع شريك']};
+const HOME={admin:'index.html',customer:'customer.html',partner:'partner.html'};
+function accs(){$('accs').innerHTML=PrimeUsers.map(u=>`<button type="button" data-e="${u.email}"><div><b>${u.org}</b><span>${u.name} · ${u.email}</span></div><span class="rt rt-${u.role}">${t(...RT[u.role])}</span></button>`).join('')}
+$('accs').addEventListener('click',e=>{const b=e.target.closest('[data-e]');if(!b)return;$('em').value=b.dataset.e;$('pw').value=PrimeDemoPassword;$('f').requestSubmit()});
+$('f').addEventListener('submit',e=>{e.preventDefault();const u=PrimeAuth.signIn($('em').value,$('pw').value);
+  if(!u){$('err').textContent=t('Email or password is not right. Pick a demo account below.','البريد أو كلمة المرور غير صحيحة. اختر حساباً تجريبياً.');$('pw').value='';$('pw').focus();return}
+  const next=new URLSearchParams(location.search).get('next');const ok=next&&(u.role==='admin'?!/^(customer|partner)\.html/.test(next):next.startsWith(HOME[u.role]));
+  location.href=ok?next:HOME[u.role]});
+{const s=PrimeAuth.get();if(s)$('em').value=s.email}
+accs();document.addEventListener('langchange',accs);
+if(isAr()) applyLang('ar');
+</script>
+</body>
+</html>

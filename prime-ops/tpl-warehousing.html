@@ -244,7 +244,7 @@ function detail(id){cur=id;const r=S.stock.find(x=>x.id===id),w=T.whOf(S,r.whId)
    <h4>${t('Storage cost history','سجل تكلفة التخزين')}</h4>
    <div class="twrap"><table class="t"><thead><tr><th>${t('Month','الشهر')}</th><th class="num">${t('Days','أيام')}</th><th class="num">${t('Partner cost','تكلفة الشريك')}</th><th class="num">${t('Markup','الهامش')}</th><th class="num">${t('Customer','العميل')}</th><th>${t('Billing','الفوترة')}</th></tr></thead><tbody>${months.map(c=>`<tr><td>${monthName(c.month)}</td><td class="num">${c.days}</td><td class="num cost">${fmt(c.cost)}</td><td class="num mk">+${fmt(c.markup)}</td><td class="num chg">${fmt(c.charge)}</td><td>${pill(c.status)}${c.invoiceNo?`<small>${c.invoiceNo}</small>`:''}${c.status==='Unbilled'?` <button class="lnk small" type="button" onclick="exMonth('${r.id}','${c.month}',true)">${t('exclude','استبعاد')}</button>`:c.status==='Excluded'?` <button class="lnk small" type="button" onclick="exMonth('${r.id}','${c.month}',false)">${t('include','إدراج')}</button>`:''}</td></tr>`).join('')}
      <tr><td><b>${t('Total','الإجمالي')}</b></td><td></td><td class="num cost"><b>${fmt(d.cost)}</b></td><td class="num mk"><b>+${fmt(d.charge-d.cost)}</b></td><td class="num chg"><b>${fmt(d.charge)}</b></td><td></td></tr></tbody></table></div>
-   <h4>${t('Movements','الحركات')}</h4><ul class="small" style="margin:0;padding-inline-start:18px">${r.moves.map(m=>`<li>${m.date}: ${m.qty>0?'+':''}${m.qty.toLocaleString('en-US')} ${unitTxt(r.unit)} · ${esc(m.note||'')}</li>`).join('')}</ul>
+   <h4>${t('Movements','الحركات')}</h4><ul class="small" style="margin:0;padding-inline-start:18px">${r.moves.map(m=>`<li>${m.date}: ${m.qty>0?'+':''}${m.qty.toLocaleString('en-US')} ${unitTxt(r.unit)} · ${esc(m.note||'')}${m.by?` <span class="muted">(${t('recorded by','سجّلها')} ${esc(m.by)})</span>`:''}</li>`).join('')}</ul>
    ${open?`<h4>${t('Actions','الإجراءات')}</h4><div class="mf" style="margin-top:0">
      <button class="btn btn-o sm" type="button" onclick="actOpen('in')">${t('Record goods received','تسجيل استلام')}</button>
      <button class="btn btn-o sm" type="button" onclick="actOpen('out')">${t('Record goods released','تسجيل إفراج')}</button>
@@ -264,18 +264,12 @@ function actOpen(k){act=k;const r=S.stock.find(x=>x.id===cur);$('actF').hidden=f
   $('actH').textContent={in:t('Record goods received','تسجيل استلام بضاعة'),out:t('Record goods released','تسجيل إفراج عن بضاعة'),set:t('Update quantity after a stock count','تعديل الكمية بعد الجرد'),move:t('Move all goods to another partner warehouse','نقل كل البضاعة إلى مستودع شريك آخر')}[k];
   $('actQL').textContent={in:t('Quantity received','الكمية المستلمة'),out:t(`Quantity released (max ${qtyNow(r)})`,`الكمية المفرج عنها (الحد ${qtyNow(r)})`),set:t('Counted quantity','الكمية بعد الجرد'),move:''}[k]+' ('+unitTxt(r.unit)+')';
   $('actQw').hidden=k==='move';$('actWw').hidden=k!=='move';$('actQ').focus()}
-function actSave(e){e.preventDefault();const r=S.stock.find(x=>x.id===cur),w=T.whOf(S,r.whId),d=$('actD').value,q=+$('actQ').value,last=r.moves[r.moves.length-1].date,now=T.qtyOn(r,d||A.demoDate);
-  if(!d||d<last||d>A.demoDate){$('actE').textContent=t(`Date must be between ${last} and ${A.demoDate}.`,`التاريخ يجب أن يكون بين ${last} و ${A.demoDate}.`);return}
-  const bad=m=>{$('actE').textContent=m};
-  if(act==='in'){if(!(q>0)||!Number.isInteger(q))return bad(t('Enter a whole quantity above zero.','أدخل كمية صحيحة أكبر من صفر.'));r.moves.push({date:d,qty:q,note:$('actN').value||'Received '+q});w.available=Math.max(0,w.available-q)}
-  if(act==='out'){if(!(q>0)||!Number.isInteger(q)||q>now)return bad(t(`Enter a whole quantity from 1 to ${now}.`,`أدخل كمية من 1 إلى ${now}.`));r.moves.push({date:d,qty:-q,note:$('actN').value||'Released '+q});w.available+=q}
-  if(act==='set'){if(!Number.isInteger(q)||q<0||$('actQ').value==='')return bad(t('Enter the counted quantity (0 or more).','أدخل الكمية (صفر أو أكثر).'));if(q===now)return bad(t('Quantity is unchanged.','الكمية لم تتغير.'));r.moves.push({date:d,qty:q-now,note:$('actN').value||`Stock count: ${now} → ${q}`});w.available=Math.max(0,w.available-(q-now))}
-  if(act==='move'){const nw=T.whOf(S,$('actW').value);if(!nw)return bad(t('No other matching partner warehouse is active.','لا يوجد مستودع مطابق آخر.'));if(now<=0)return bad(t('Nothing to move.','لا توجد بضاعة للنقل.'));
-    r.moves.push({date:d,qty:-now,note:`Moved ${now} to ${nw.name}`});w.available+=now;
-    const id='XS-'+String(S.seq.xs++).padStart(4,'0');S.stock.push({id,customer:r.customer,goods:r.goods,ref:r.ref,whId:nw.id,bay:'',start:d,unit:r.unit,moves:[{date:d,qty:now,note:`Moved in from ${w.name} (${r.id})`}],expected:r.expected,markupPct:r.markupPct,status:'In storage',billed:{},excluded:{}});nw.available=Math.max(0,nw.available-now);
-    if(T.qtyOn(r,A.demoDate)<=0)r.status='Released';save();toast(t(`Moved to ${nw.name} as ${id}. The old record stops billing on ${d}.`,`نُقلت إلى ${nw.name} برقم ${id}. يتوقف احتساب السجل القديم في ${d}.`));detail(id);return}
-  if(T.qtyOn(r,A.demoDate)<=0)r.status='Released';
-  save();toast(t('Stock updated. Storage charges recalculated.','تم تحديث المخزون وإعادة حساب الرسوم.'));detail(cur)}
+function actSave(e){e.preventDefault();const r=S.stock.find(x=>x.id===cur),nw=T.whOf(S,$('actW').value);
+  const res=T.move(S,cur,act,{qty:$('actQ').value===''?'':+$('actQ').value,date:$('actD').value,note:$('actN').value,toWh:act==='move'?$('actW').value:null,by:'Prime staff'},t);
+  if(!res.ok){$('actE').textContent=res.err;return}
+  save();
+  if(act==='move'){toast(t(`Moved to ${nw.name} as ${res.id}. The old record stops billing on ${$('actD').value}.`,`نُقلت إلى ${nw.name} برقم ${res.id}. يتوقف احتساب السجل القديم في ${$('actD').value}.`));detail(res.id);return}
+  toast(t('Stock updated. Storage charges recalculated.','تم تحديث المخزون وإعادة حساب الرسوم.'));detail(cur)}
 
 /* ---------- tabs, render ---------- */
 document.querySelectorAll('[data-tab]').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('[data-tab]').forEach(x=>x.setAttribute('aria-selected',x===b));['sk','bl','wh'].forEach(k=>$('tab-'+k).hidden=b.dataset.tab!==k)}));

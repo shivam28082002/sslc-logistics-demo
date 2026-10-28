@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prime Operations · Customer account</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="assets/fav-icon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..700&family=IBM+Plex+Sans+Arabic:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/app.css">
+<link rel="stylesheet" href="assets/tpl.css">
+<style>
+.invdoc{font-size:13px;color:#222}.invdoc .hd{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;border-bottom:2px solid var(--green);padding-bottom:12px}.invdoc .hd img{width:130px}.invdoc h3{font:650 18px var(--sans);margin:0;text-align:end}.invdoc .ar{font-family:var(--ar);direction:rtl}
+.invdoc .meta{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0}.invdoc .meta div{background:#F6F7F5;border-radius:8px;padding:10px}.invdoc .meta span{display:block;color:#666;font-size:12px}
+.invdoc table{width:100%;border-collapse:collapse}.invdoc th,.invdoc td{border-bottom:1px solid #E3E5E1;padding:7px 6px;text-align:start}.invdoc .r{text-align:end}
+.invdoc .ft{display:flex;justify-content:flex-end;margin-top:14px}.invdoc .sum{min-width:220px}.invdoc .sum div{display:flex;justify-content:space-between;padding:4px 0}.invdoc .sum .g{border-top:2px solid var(--green);font-weight:700;font-size:15px;padding-top:7px}
+@media print{body *{visibility:hidden}#docB,#docB *{visibility:visible}#docB{position:absolute;left:0;top:0;width:100%}}
+@media (max-width:560px){.invdoc .meta{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="shell">
+<aside class="rail"></aside>
+<div>
+<header class="top">
+  <button class="burger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+  <h1 id="h1"></h1>
+  <span class="sp"></span>
+  <button class="lang" type="button">عربي</button>
+  <span class="avatar">--</span>
+</header>
+<main class="page">
+  <div class="demo-note"><b data-ar="بيانات تجريبية">Demo data.</b> <span data-ar="هذا ما يراه عميل برايم عند تسجيل الدخول: شحناته وبضاعته والفواتير فقط.">This is what a Prime customer sees after signing in: only their own shipments, goods and invoices.</span></div>
+  <div class="kpis k7" id="kpis"></div>
+  <section class="panel" style="margin-top:16px">
+    <div class="tabs" role="tablist">
+      <button role="tab" aria-selected="true" data-tab="sh" data-ar="الشحنات">Shipments</button>
+      <button role="tab" aria-selected="false" data-tab="gd" data-ar="بضاعتنا لدى المستودعات الشريكة">Our goods at partner warehouses</button>
+      <button role="tab" aria-selected="false" data-tab="iv" data-ar="الفواتير">Invoices</button>
+    </div>
+    <div id="tab-sh">
+      <div class="twrap"><table class="t"><thead><tr><th data-ar="الحجز">Booking</th><th data-ar="الشحنة">Shipment</th><th data-ar="المسار">Route</th><th data-ar="المركبة">Vehicle</th><th data-ar="الحالة">Status</th><th class="num" data-ar="المبلغ (قبل الضريبة)">Charge (before VAT)</th><th data-ar="الفاتورة">Invoice</th></tr></thead><tbody id="shRows"></tbody></table></div>
+    </div>
+    <div id="tab-gd" hidden>
+      <div class="twrap"><table class="t"><thead><tr><th data-ar="المرجع">Reference</th><th data-ar="البضاعة">Goods</th><th class="num" data-ar="الكمية الآن">Quantity now</th><th data-ar="مكان البضاعة">Where they are</th><th data-ar="من / الإفراج المتوقع">Stored from / expected out</th><th data-ar="الحالة">Status</th><th class="num" data-ar="رسوم التخزين حتى الآن">Storage charges so far</th><th><span class="sr">Details</span></th></tr></thead><tbody id="gdRows"></tbody></table></div>
+    </div>
+    <div id="tab-iv" hidden>
+      <div class="twrap"><table class="t"><thead><tr><th data-ar="الرقم">Number</th><th data-ar="الفترة">Period</th><th data-ar="تاريخ الإصدار">Issued</th><th class="num" data-ar="البنود">Lines</th><th class="num" data-ar="الإجمالي مع الضريبة">Total incl. VAT</th><th data-ar="الحالة">Status</th><th><span class="sr">View</span></th></tr></thead><tbody id="ivRows"></tbody></table></div>
+      <p class="muted small" id="ivNext"></p>
+    </div>
+  </section>
+</main>
+</div>
+</div>
+<div class="modal drawer" id="gdM" aria-hidden="true"><div class="box" role="dialog" aria-modal="true" aria-labelledby="gdH"><div id="gdB"></div></div></div>
+<div class="modal" id="docM" aria-hidden="true"><div class="box" role="dialog" aria-modal="true" aria-label="Invoice" style="width:min(760px,100%)"><div id="docB" class="invdoc"></div>
+  <div class="mf"><button class="btn btn-g" type="button" onclick="print()" data-ar="طباعة / PDF">Print or save PDF</button><button class="btn btn-o" type="button" onclick="closeModal('docM')" data-ar="إغلاق">Close</button></div></div></div>
+
+<script src="assets/app.js"></script>
+<script src="assets/tpl.js"></script>
+<script>
+const T=TPL,A=T.ASSUME,t=(en,ar)=>isAr()?ar:en,$=id=>document.getElementById(id),esc=T.esc,fmt=T.fmt,pill=T.pill;
+const ME=(PrimeAuth.get()||{}).customer||'Al Waha Foods';
+let S=T.get();
+const monthName=m=>{const x=T.MONTHS.find(y=>y[0]===m);return x?t(x[1],x[2]):m};
+const unitTxt=u=>({pallets:t('pallets','منصة'),units:t('units','وحدة')}[u]||u);
+const EXT=`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 21V9l7-4 7 4v12"/><path d="M16 11h6v10h-6"/></svg>`;
+/* customers see their charge and its status only: no vendor, no vendor cost, no markup */
+const myB=()=>S.bookings.filter(b=>b.customer===ME&&b.status!=='Cancelled'),myS=()=>S.stock.filter(r=>r.customer===ME),myI=()=>S.invoices.filter(i=>i.customer===ME);
+const invSt=b=>b.inv.status;
+function render(){S=T.get();$('h1').textContent=ME;
+  const C=T.charges(S,{customer:ME}),mo=T.monthOf(A.demoDate),open=C.filter(c=>c.status==='Unbilled');
+  const pal=myS().reduce((a,r)=>a+(r.unit==='pallets'?T.qtyOn(r,A.demoDate):0),0),uni=myS().reduce((a,r)=>a+(r.unit==='units'?T.qtyOn(r,A.demoDate):0),0),last=myI()[0];
+  const K=[[t('Hired-truck trips this month','رحلات الشاحنات هذا الشهر'),myB().filter(b=>T.monthOf(b.date)===mo).length,monthName(mo)],
+    [t('Goods at partner warehouses','البضاعة لدى المستودعات الشريكة'),pal.toLocaleString('en-US')+' '+t('pallets','منصة'),uni?uni.toLocaleString('en-US')+' '+t('units','وحدة'):t('right now','الآن')],
+    [t('Charges not invoiced yet','رسوم لم تُفوتر بعد'),fmt(open.reduce((a,c)=>a+c.charge,0)),t('before VAT, on your next monthly invoice','قبل الضريبة، في فاتورتك الشهرية القادمة'),'warn'],
+    [t('Last invoice','آخر فاتورة'),last?fmt(last.total):'—',last?`${last.no} · ${T.lab(last.status)}`:t('none yet','لا يوجد')]];
+  $('kpis').innerHTML=K.map(([l,v,s,c])=>`<div class="kpi"><span>${l}</span><b>${v}</b><em class="${c||'muted'}">${s}</em></div>`).join('');
+  $('shRows').innerHTML=myB().length?myB().sort((a,b)=>b.date.localeCompare(a.date)).map(b=>{const p=T.bookingPrice(b);return `<tr><td><b>${b.id}</b><small>${b.date}</small></td><td class="wrap">${esc(b.shipment)}</td><td class="wrap">${esc(b.pickup)} → ${esc(b.destination)}</td><td>${esc(b.vehicleType)}${b.qty>1?' ×'+b.qty:''}<small>${esc(b.vehicle)}</small></td><td>${pill(b.status)}</td><td class="num chg">${fmt(p.charge)}</td><td>${pill(invSt(b)==='Unbilled'?'Unbilled':invSt(b))}${b.inv.no?`<small>${b.inv.no}</small>`:invSt(b)==='Unbilled'?`<small>${t('next monthly invoice','الفاتورة الشهرية القادمة')}</small>`:''}</td></tr>`}).join('')
+    :`<tr><td colspan="7" class="empty">${t('No hired-truck shipments yet.','لا توجد شحنات.')}</td></tr>`;
+  $('gdRows').innerHTML=myS().length?myS().sort((a,b)=>(a.status>b.status?1:-1)||b.start.localeCompare(a.start)).map(r=>{const w=T.whOf(S,r.whId),ch=C.filter(c=>c.ref===r.id).reduce((a,c)=>a+c.charge,0);
+    return `<tr${r.status==='Released'?' class="done"':''}><td><button class="lnk" type="button" onclick="goods('${r.id}')">${r.id}</button><small>${esc(r.ref||'')}</small></td><td class="wrap">${esc(r.goods)}</td><td class="num"><b>${T.qtyOn(r,A.demoDate).toLocaleString('en-US')}</b><small>${unitTxt(r.unit)}</small></td>
+    <td><span class="ext">${EXT}${t('Partner warehouse','مستودع شريك')}</span><span class="whn">${esc(w.name)}</span><small>${esc(w.city)}</small></td><td>${r.start}<small>${t('expected','متوقع')} ${r.expected||'—'}</small></td><td>${pill(r.status)}</td><td class="num chg">${fmt(ch)}</td><td class="acts"><button class="btn btn-o sm" type="button" onclick="goods('${r.id}')">${t('Details','التفاصيل')}</button></td></tr>`}).join('')
+    :`<tr><td colspan="8" class="empty">${t('None of your goods are at partner warehouses.','لا توجد بضاعة لدى المستودعات الشريكة.')}</td></tr>`;
+  $('ivRows').innerHTML=myI().length?myI().map(i=>`<tr><td><button class="lnk" type="button" onclick="doc('${i.no}')">${i.no}</button></td><td>${monthName(i.month)}</td><td>${i.date}</td><td class="num">${i.lines.length}</td><td class="num chg">${fmt(i.total)}</td><td>${pill(i.status)}</td><td class="acts"><button class="btn btn-o sm" type="button" onclick="doc('${i.no}')">${t('View','عرض')}</button></td></tr>`).join('')
+    :`<tr><td colspan="7" class="empty">${t('No invoices yet.','لا توجد فواتير بعد.')}</td></tr>`;
+  $('ivNext').textContent=t(`Charges not invoiced yet: ${fmt(open.reduce((a,c)=>a+c.charge,0))} before VAT. They go on your monthly invoice from Prime.`,`رسوم لم تُفوتر بعد: ${fmt(open.reduce((a,c)=>a+c.charge,0))} قبل الضريبة، وتدخل فاتورتك الشهرية من برايم.`)}
+function goods(id){const r=S.stock.find(x=>x.id===id&&x.customer===ME);if(!r)return;const w=T.whOf(S,r.whId),L=T.charges(S,{customer:ME}).filter(c=>c.ref===id).sort((a,b)=>a.month.localeCompare(b.month));
+  $('gdB').innerHTML=`<div class="mh"><div><h3 id="gdH">${r.id}</h3><span class="muted small">${esc(r.goods)}</span></div><button class="x" type="button" aria-label="Close" onclick="closeModal('gdM')">×</button></div>
+   <div class="hint" style="background:var(--ext-l);color:var(--ext)"><b>${t('Stored at a partner warehouse arranged by Prime','مخزنة لدى مستودع شريك رتبته برايم')}</b><br>${esc(w.name)} · ${esc(w.address)}${r.bay?'<br>'+t('Location: ','الموقع: ')+esc(r.bay):''}</div>
+   <dl class="kv" style="margin-top:12px"><dt>${t('Quantity now','الكمية الآن')}</dt><dd><b>${T.qtyOn(r,A.demoDate).toLocaleString('en-US')}</b> ${unitTxt(r.unit)} ${pill(r.status)}</dd><dt>${t('Reference','المرجع')}</dt><dd>${esc(r.ref||'—')}</dd><dt>${t('Stored from','من تاريخ')}</dt><dd>${r.start}</dd><dt>${t('Expected release','الإفراج المتوقع')}</dt><dd>${r.expected||'—'}</dd></dl>
+   <h4>${t('Storage charges by month','رسوم التخزين حسب الشهر')}</h4><div class="twrap"><table class="t"><thead><tr><th>${t('Month','الشهر')}</th><th class="num">${t('Days','أيام')}</th><th class="num">${t('Charge','الرسوم')}</th><th>${t('Invoice','الفاتورة')}</th></tr></thead><tbody>${L.map(c=>`<tr><td>${monthName(c.month)}</td><td class="num">${c.days}</td><td class="num chg">${fmt(c.charge)}</td><td>${pill(c.status)}${c.invoiceNo?`<small>${c.invoiceNo}</small>`:''}</td></tr>`).join('')}</tbody></table></div>
+   <h4>${t('Movements','الحركات')}</h4><ul class="small" style="margin:0;padding-inline-start:18px">${r.moves.map(m=>`<li>${m.date}: ${m.qty>0?'+':''}${m.qty.toLocaleString('en-US')} ${unitTxt(r.unit)}</li>`).join('')}</ul>`;
+  openModal('gdM')}
+function doc(no){const i=S.invoices.find(x=>x.no===no&&x.customer===ME);if(!i)return;const grp=k=>i.lines.filter(l=>l.kind===k);
+  const rows=(k,en,ar)=>grp(k).length?`<tr><td colspan="2" style="font-weight:700;background:#F6F7F5">${en} · <span class="ar">${ar}</span></td></tr>`+grp(k).map(l=>`<tr><td>${l.ref}<br><span style="color:#666">${esc(l.desc)}</span></td><td class="r">${fmt(l.charge)}</td></tr>`).join(''):'';
+  $('docB').innerHTML=`<div class="hd"><img src="assets/top-logo.svg" alt="Prime Logistics"><div><h3>Tax invoice</h3><h3 class="ar">فاتورة ضريبية</h3><div style="text-align:end;color:#555">${i.no} · ${pill(i.status)}</div></div></div>
+   <div class="meta"><div><span>Seller · البائع</span><b>Prime Logistics</b><br>Istanbul St, Al-Sulay, Riyadh<br>VAT no. 300000000000003 <em style="color:#999">(sample)</em></div><div><span>Buyer · المشتري</span><b>${esc(i.customer)}</b><br>Kingdom of Saudi Arabia<br><span>Period · الفترة</span>${monthName(i.month)} · ${i.date}</div></div>
+   <table><thead><tr><th>Description · الوصف</th><th class="r">Amount (SAR)</th></tr></thead><tbody>${rows('transport','Transport','النقل')}${rows('storage','Storage','التخزين')}</tbody></table>
+   <div class="ft"><div class="sum"><div><span>Subtotal · المجموع</span><span>${fmt(i.subtotal)}</span></div><div><span>VAT ${A.vatPct}% · الضريبة</span><span>${fmt(i.vat)}</span></div><div class="g"><span>Total · الإجمالي</span><span>${fmt(i.total)}</span></div></div></div>`;
+  openModal('docM')}
+document.querySelectorAll('[data-tab]').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('[data-tab]').forEach(x=>x.setAttribute('aria-selected',x===b));['sh','gd','iv'].forEach(k=>$('tab-'+k).hidden=b.dataset.tab!==k)}));
+render();document.addEventListener('langchange',render);
+if(isAr()) applyLang('ar');
+</script>
+</body>
+</html>

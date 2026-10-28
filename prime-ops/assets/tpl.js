@@ -93,14 +93,22 @@ function seed(){
     S('XS-0421','Sahara Home Retail','Flat-pack furniture','PO SH-4410','W-03','2026-09-01',[{date:'2026-09-01',qty:150,note:'Received 150 pallets'},{date:'2026-10-20',qty:-150,note:'Released all 150 pallets'}],'2026-10-20',20,'Released'),
     S('XS-0424','Qimma Beverages','Water 330ml, retail units','SKU QB-W330','W-04','2026-10-05',[{date:'2026-10-05',qty:18000,note:'Received 18,000 units'},{date:'2026-10-21',qty:-6000,note:'Released 6,000 units'}],'2026-11-10',25,'In storage')
   ];
+  const BAYS={'XS-0412':'Chamber 3, racks A1–A8','XS-0415':'Chamber 1 (2–8°C), racks B1–B3','XS-0418':'Hall 2, rows 10–24','XS-0421':'Bay 6','XS-0424':'Pick zone C, shelves 1–40'};
+  stock.forEach(r=>r.bay=BAYS[r.id]||'');
   const st={v:1,vendors,bookings,warehouses,stock,invoices:[],seq:{tb:24,xs:425,inv:1,v1:104,v2:204,w:6}};
   /* one past invoice so the history is not empty: Al Waha Foods, September, paid */
   const inv=generate(st,'Al Waha Foods','2026-09',null,'2026-10-01'); inv.status='Paid'; inv.paidDate='2026-10-22';
   return st;
 }
 
+/* what Prime has paid each partner warehouse, per month (statement settled) */
+const PARTNER_PAID={'W-01:2026-09':{date:'2026-10-15',ref:'TRF-RIM-0926'},'W-02:2026-09':{date:'2026-10-12',ref:'TRF-KHC-0926'},'W-03:2026-09':{date:'2026-09-01',ref:'TRF-EGW-0926'}};
+
 /* ---------- store ---------- */
-function get(){try{const s=JSON.parse(localStorage.getItem(KEY));if(s&&s.v===1)return s}catch(e){} const s=seed();save(s);return s}
+function get(){let s=null;try{s=JSON.parse(localStorage.getItem(KEY))}catch(e){}
+  if(!(s&&s.v===1)){s=seed();save(s)}
+  if(!s.partnerPay){s.partnerPay={...PARTNER_PAID};save(s)}
+  return s}
 function save(s){localStorage.setItem(KEY,JSON.stringify(s));return s}
 function reset(){localStorage.removeItem(KEY)}
 
@@ -138,17 +146,50 @@ function generate(s,customer,month,onlyKeys,date){
   }
   s.invoices.unshift(inv); return inv;
 }
+/* ---------- stock movements (used by Prime staff and by the partner warehouse login) ---------- */
+/* kind: in | out | set | move. Returns {ok, err, id}. by = who recorded it (shown in the movement log). */
+function move(s,recId,kind,o,t){
+  t=t||((en)=>en); const r=s.stock.find(x=>x.id===recId), w=whOf(s,r.whId), d=o.date, q=+o.qty, last=r.moves[r.moves.length-1].date;
+  if(r.status!=='In storage') return {ok:false,err:t('These goods are already released.','تم الإفراج عن هذه البضاعة.')};
+  if(!d||d<last||d>ASSUME.demoDate) return {ok:false,err:t(`Date must be between ${last} and ${ASSUME.demoDate}.`,`التاريخ يجب أن يكون بين ${last} و ${ASSUME.demoDate}.`)};
+  const now=qtyOn(r,d), by=o.by||'', note=(o.note||'').trim();
+  if(kind==='in'){if(!(q>0)||!Number.isInteger(q))return {ok:false,err:t('Enter a whole quantity above zero.','أدخل كمية صحيحة أكبر من صفر.')};
+    r.moves.push({date:d,qty:q,note:note||`Received ${q.toLocaleString('en-US')}`,by});w.available=Math.max(0,w.available-q)}
+  else if(kind==='out'){if(!(q>0)||!Number.isInteger(q)||q>now)return {ok:false,err:t(`Enter a whole quantity from 1 to ${now}.`,`أدخل كمية من 1 إلى ${now}.`)};
+    r.moves.push({date:d,qty:-q,note:note||`Released ${q.toLocaleString('en-US')}`,by});w.available+=q}
+  else if(kind==='set'){if(o.qty===''||!Number.isInteger(q)||q<0)return {ok:false,err:t('Enter the counted quantity (0 or more).','أدخل الكمية (صفر أو أكثر).')};
+    if(q===now)return {ok:false,err:t('Quantity is unchanged.','الكمية لم تتغير.')};
+    r.moves.push({date:d,qty:q-now,note:note||`Stock count: ${now} → ${q}`,by});w.available=Math.max(0,w.available-(q-now))}
+  else if(kind==='move'){const nw=whOf(s,o.toWh);if(!nw)return {ok:false,err:t('Choose the warehouse to move to.','اختر المستودع.')};if(now<=0)return {ok:false,err:t('Nothing to move.','لا توجد بضاعة للنقل.')};
+    r.moves.push({date:d,qty:-now,note:`Moved ${now} to ${nw.name}`,by});w.available+=now;
+    const id='XS-'+String(s.seq.xs++).padStart(4,'0');
+    s.stock.push({id,customer:r.customer,goods:r.goods,ref:r.ref,whId:nw.id,bay:'',start:d,unit:r.unit,moves:[{date:d,qty:now,note:`Moved in from ${w.name} (${r.id})`,by}],expected:r.expected,markupPct:r.markupPct,status:'In storage',billed:{},excluded:{}});
+    nw.available=Math.max(0,nw.available-now);if(qtyOn(r,ASSUME.demoDate)<=0)r.status='Released';return {ok:true,id}}
+  if(qtyOn(r,ASSUME.demoDate)<=0)r.status='Released';
+  return {ok:true,id:r.id};
+}
+/* what Prime owes one partner warehouse, per month (partner cost only, never the customer price) */
+function partnerStatement(s,whId){
+  const w=whOf(s,whId), out=[];
+  for(const [m] of MONTHS){const {from,to,days}=monthRange(m);let fee=0,qd=0,recs=0;
+    for(const r of s.stock.filter(x=>x.whId===whId)){const c=storageFor(r,w,from,to);if(c.days){fee+=c.base;qd+=c.qtyDays;recs++}}
+    if(!recs)continue;
+    const net=+(String(w.terms).match(/Net (\d+)/)||[0,0])[1], due=w.terms.includes('advance')?from:addDays(to,net), open=m>=monthOf(ASSUME.demoDate);
+    const paid=s.partnerPay[whId+':'+m];
+    out.push({month:m,fee:n2(fee),qtyDays:qd,records:recs,due,status:paid?'Paid':open?'Accruing':(ASSUME.demoDate>due?'Overdue':'Due'),paid,upto:open?ASSUME.demoDate:to})}
+  return out;
+}
 const CUSTOMERS=['Al Waha Foods','Najd Pharma Distribution','Qimma Beverages','Rawabi Electronics','Sahara Home Retail','Tamr Dates Co.','Masar Building Materials','Gulf Cement Trading'];
 const CITIES=['Riyadh','Jeddah','Dammam','Mecca','Medina','Jubail','Sudair','Buraydah','Khobar','Tabuk'];
 const VEHICLES=['Reefer trailer 40ft','Reefer truck 10t','Curtain-side 13.6m','Flatbed 12m','Box truck 7t','Pickup 1.5t'];
 const MONTHS=[['2026-10','October 2026','أكتوبر 2026'],['2026-09','September 2026','سبتمبر 2026']];
 
 /* status labels, EN / AR */
-const L={Unbilled:'غير مفوتر',Invoiced:'مفوتر',Excluded:'مستبعد',Paid:'مدفوع',Unpaid:'غير مدفوع','On statement':'على كشف الحساب',Accrued:'مستحق',Confirmed:'مؤكد','In transit':'في الطريق',Delivered:'تم التسليم',Cancelled:'ملغى',Draft:'مسودة',Generated:'صادرة',Overdue:'متأخرة',Active:'نشط',Inactive:'غير نشط',Expired:'منتهي','In storage':'في المخزن',Released:'تم الإفراج',contract:'عقد شهري',spot:'استئجار فوري'};
-const PILL={Unbilled:'p-warn',Invoiced:'p-ok',Excluded:'p-mute',Paid:'p-ok',Unpaid:'p-bad','On statement':'p-info',Accrued:'p-info',Confirmed:'p-info','In transit':'p-warn',Delivered:'p-ok',Cancelled:'p-mute',Draft:'p-mute',Generated:'p-info',Overdue:'p-bad',Active:'p-ok',Inactive:'p-mute',Expired:'p-mute','In storage':'p-info',Released:'p-mute'};
+const L={Accruing:'قيد الاحتساب',Due:'مستحق',Unbilled:'غير مفوتر',Invoiced:'مفوتر',Excluded:'مستبعد',Paid:'مدفوع',Unpaid:'غير مدفوع','On statement':'على كشف الحساب',Accrued:'مستحق',Confirmed:'مؤكد','In transit':'في الطريق',Delivered:'تم التسليم',Cancelled:'ملغى',Draft:'مسودة',Generated:'صادرة',Overdue:'متأخرة',Active:'نشط',Inactive:'غير نشط',Expired:'منتهي','In storage':'في المخزن',Released:'تم الإفراج',contract:'عقد شهري',spot:'استئجار فوري'};
+const PILL={Accruing:'p-info',Due:'p-warn',Unbilled:'p-warn',Invoiced:'p-ok',Excluded:'p-mute',Paid:'p-ok',Unpaid:'p-bad','On statement':'p-info',Accrued:'p-info',Confirmed:'p-info','In transit':'p-warn',Delivered:'p-ok',Cancelled:'p-mute',Draft:'p-mute',Generated:'p-info',Overdue:'p-bad',Active:'p-ok',Inactive:'p-mute',Expired:'p-mute','In storage':'p-info',Released:'p-mute'};
 const lab=k=>window.isAr&&isAr()&&L[k]?L[k]:k;
 const pill=k=>`<span class="pill ${PILL[k]||'p-mute'}">${lab(k)}</span>`;
 const esc=v=>String(v??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 
-window.TPL={ASSUME,KEY,get,save,reset,price,storageFor,qtyOn,charges,generate,isInvoiced,bookingPrice,vendorOf,whOf,monthOf,monthRange,addDays,fmt,n2,RATE_LABEL,UNIT_FOR,CUSTOMERS,CITIES,VEHICLES,MONTHS,lab,pill,esc};
+window.TPL={ASSUME,KEY,get,save,reset,move,partnerStatement,price,storageFor,qtyOn,charges,generate,isInvoiced,bookingPrice,vendorOf,whOf,monthOf,monthRange,addDays,fmt,n2,RATE_LABEL,UNIT_FOR,CUSTOMERS,CITIES,VEHICLES,MONTHS,lab,pill,esc};
 })();

@@ -13,7 +13,7 @@
 .tbar .field select,.tbar .field input{padding:8px 10px}
 .t td small{display:block;color:var(--steel-d);font-size:12.5px;margin-top:2px}
 .t td.wrap{min-width:170px;max-width:260px}
-.t td.num,.t td:first-child .lnk{white-space:nowrap}
+.t td.num,.t td:first-child .lnk,.t td:first-child>b{white-space:nowrap}
 .tt td{font-size:13.5px;padding:10px 8px}
 .tt th{padding:9px 8px}
 .t td.acts{white-space:nowrap;text-align:end}
