@@ -4,23 +4,27 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>About | My Visa Service</title>
+<meta property="og:type" content="website">
+<meta property="og:title" content="About | My Visa Service">
+<meta property="og:image" content="assets/img/photo/hero.jpg">
 <meta name="description" content="My Visa Service is a one-stop visa agency for all countries and a unit of Paras Holidays, Karol Bagh, New Delhi.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/site.css">
-<link rel="icon" href="assets/img/misc/footerlogo.png">
+<link rel="icon" href="assets/img/misc/logo-dark.png">
+<meta name="theme-color" content="#142B3B">
 </head>
 <body>
 <div id="site-header"></div>
 <main id="main">
-<section class="ph-band"><div class="wrap"><div class="phero" style="background-image:url(assets/img/blog/6838c7e10455e1748551649.jpg)">
+<section class="ph-band"><div class="wrap"><div class="phero"><div class="ph-img" style="background-image:url(assets/img/blog/6838c7e10455e1748551649.jpg)" aria-hidden="true"></div>
   <nav class="crumbs" aria-label="Breadcrumb"><a href="index.html">Home</a><span>/</span><span>About</span></nav>
   <h1>About My Visa Service</h1><p>A unit of Paras Holidays, helping travellers get visas for every country.</p>
 </div></div></section>
 
 <section class="sec"><div class="wrap about">
-  <div class="pic"><img src="assets/img/misc/6838bf6fce56c.jpg" alt="Happy travellers on holiday" width="651" height="801">
-    <div class="badge"><b>12 years</b><span>of experience</span></div></div>
+  <div class="pic"><img src="assets/img/misc/6838bda2479391748549026.jpg" alt="A visa advisor smiling at her desk with travel documents and a world map" width="1400" height="934" style="aspect-ratio:4/5;object-fit:cover;object-position:35% center">
+    <div class="badge"><b>All countries</b><span>One agency for every visa</span></div></div>
   <div>
     <span class="tag">Who we are</span>
     <h2>My Visa Service</h2>
@@ -39,16 +43,16 @@
 
 <section class="sec tint"><div class="wrap">
   <div class="stats">
-    <div class="stat"><b>60,000+</b><span>visas issued worldwide</span></div>
-    <div class="stat"><b>12 years</b><span>of visa experience</span></div>
-    <div class="stat"><b>All</b><span>countries covered</span></div>
-    <div class="stat"><b>48 hrs</b><span>processing on listed packages</span></div>
+    <div class="stat"><b>All countries</b><span>Visa help for destinations worldwide</span></div>
+    <div class="stat"><b>Five purposes</b><span>Tourist, business, student, work and family visas</span></div>
+    <div class="stat"><b>Karol Bagh</b><span>Our office in New Delhi</span></div>
+    <div class="stat"><b>Paras Holidays</b><span>The travel company we are part of</span></div>
   </div>
 </div></section>
 
 <section class="sec"><div class="wrap">
   <div class="center"><span class="tag">What we do</span><h2>End-to-end visa and travel documentation help</h2>
-  <p class="lead">For individuals, families, students and businesses.</p></div>
+  <p class="lead">For individuals, families, students and businesses. Which visas apply depends on your destination and circumstances.</p></div>
   <div class="svc" id="svc" style="margin-top:44px"></div>
 </div></section>
 
@@ -60,7 +64,7 @@
 <section class="sec"><div class="wrap">
   <div class="express">
     <div><h2>Ready to apply?</h2><p>Tell us where you are going. We'll send your document checklist.</p></div>
-    <div class="act"><a class="tel" href="tel:+918800145551"><span><i data-i="phone"></i></span>+91-8800145551</a><a class="btn btn-white btn-arrow" href="apply.html">Apply now <span class="ar"><i data-i="up"></i></span></a></div>
+    <div class="act"><a class="tel" href="tel:+918800145551"><span><i data-i="phone"></i></span>+91-8800145551</a><a class="btn btn-white" href="apply.html">Start an enquiry</a></div>
   </div>
 </div></section>
 </main>
@@ -68,8 +72,8 @@
 <script src="assets/data.js"></script>
 <script src="assets/site.js"></script>
 <script>
-document.getElementById('svc').innerHTML=MVS.services.map(([i,h,p])=>`<div class="sv"><span class="ic">${ICON[i]}</span><h4>${h}</h4><p>${p}</p></div>`).join('');
-document.getElementById('dest').innerHTML=MVS.countries.map(c=>`<a class="dc" href="apply.html?to=${c.id}"><img src="${c.img}" alt="" loading="lazy"><span><b>${c.name}</b><small>Apply for visa</small></span></a>`).join('');
+document.getElementById('svc').innerHTML=MVS.services.map(s=>{const[i,h,p]=s;return `<div class="sv" id="${s.id}"><span class="ic">${ICON[i]}</span><h4>${h}</h4><p>${p}</p></div>`}).join('');
+document.getElementById('dest').innerHTML=MVS.countries.map(c=>`<a class="dc" href="apply.html?to=${c.id}"><img src="${c.img}" alt="" loading="lazy"><span><b>${c.name}</b><small>Enquire</small></span></a>`).join('');
 </script>
 </body>
 </html>

@@ -3,84 +3,74 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Apply Visa | My Visa Service</title>
-<meta name="description" content="Apply for your visa online with My Visa Service in four short steps.">
+<title>Start a visa enquiry | My Visa Service</title>
+<meta name="description" content="Tell My Visa Service about your trip in three short steps and a visa advisor will get back to you.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Start a visa enquiry | My Visa Service">
+<meta property="og:image" content="assets/img/photo/hero.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/site.css">
-<link rel="icon" href="assets/img/misc/footerlogo.png">
+<link rel="icon" href="assets/img/misc/logo-dark.png">
+<meta name="theme-color" content="#142B3B">
 </head>
 <body>
 <div id="site-header"></div>
 <main id="main">
-<section class="ph-band"><div class="wrap"><div class="phero" style="background-image:url(assets/img/blog/6838c78aa59b11748551562.jpg)">
-  <nav class="crumbs" aria-label="Breadcrumb"><a href="index.html">Home</a><span>/</span><span>Apply Visa</span></nav>
-  <h1>Visa application form</h1><p>Four short steps. Keep your passport and a recent photo ready.</p>
+<section class="ph-band"><div class="wrap"><div class="phero"><div class="ph-img" style="background-image:url(assets/img/photo/airport.jpg)" aria-hidden="true"></div>
+  <nav class="crumbs" aria-label="Breadcrumb"><a href="index.html">Home</a><span>/</span><span>Visa enquiry</span></nav>
+  <h1>Start your visa enquiry</h1><p>Three short steps. We'll reply with the visa that usually fits and what it needs. No passport details or documents needed at this stage.</p>
 </div></div></section>
 
 <section class="sec"><div class="wrap two">
   <div class="formcard" id="appWrap">
-    <ol class="stepper" id="stepper"><li>Your trip</li><li>Applicant details</li><li>Documents</li><li>Review</li></ol>
+    <ol class="stepper" id="stepper"><li>Your trip</li><li>Your details</li><li>Review</li></ol>
     <form id="app" novalidate>
-
       <fieldset class="fs" data-step="0">
-        <legend>Your trip</legend><p class="hint">Choose where you are going and the visa you need.</p>
+        <legend>Your trip</legend><p class="hint">Where you are going and why.</p>
         <div class="grid2">
-          <div class="field"><label for="from">I am a citizen of</label><select id="from" required></select><span class="err"></span></div>
-          <div class="field"><label for="to">I am travelling to</label><select id="to" required></select><span class="err"></span></div>
-          <div class="field full"><label for="pkg">Entry type</label><select id="pkg" required></select><span class="err"></span></div>
-          <div class="field"><label for="arr">Arrival date</label><input id="arr" type="date" required><span class="err"></span></div>
-          <div class="field"><label for="purpose">Purpose of travel</label><select id="purpose" required><option value="">Choose a purpose</option><option>Tourism</option><option>Business</option><option>Study</option><option>Work</option><option>Visiting family or friends</option><option>Transit</option></select><span class="err"></span></div>
+          <div class="field"><label for="from">Current citizenship</label><div class="cb"><input id="from" placeholder="Search country"><button class="cb-btn" type="button" tabindex="-1" aria-label="Show countries"><i data-i="chev"></i></button><ul id="from-l" role="listbox" aria-label="Citizenship"></ul></div><span class="err" id="from-e"></span></div>
+          <div class="field"><label for="to">Destination</label><div class="cb"><input id="to" placeholder="Search country"><button class="cb-btn" type="button" tabindex="-1" aria-label="Show destinations"><i data-i="chev"></i></button><ul id="to-l" role="listbox" aria-label="Destination"></ul></div><span class="err" id="to-e"></span></div>
+          <div class="field full"><fieldset class="seg" id="purpose"><legend>Travel purpose</legend></fieldset><span class="err" id="purpose-e"></span></div>
+          <div class="field"><label for="entry">Entry preference</label><select id="entry"><option value="Not sure yet">Not sure yet</option><option>Single entry</option><option>Multiple entry</option></select></div>
+          <div class="field"><label for="month">When do you plan to travel?</label><input id="month" type="month"></div>
+          <div class="field full"><label for="pkg">Package you're interested in (optional)</label><select id="pkg"><option value="">No preference</option></select></div>
         </div>
       </fieldset>
 
       <fieldset class="fs" data-step="1" hidden>
-        <legend>Applicant details</legend><p class="hint">Enter details exactly as they appear in your passport.</p>
+        <legend>Your details</legend><p class="hint">So an advisor can get back to you.</p>
         <div class="grid2">
-          <div class="field full"><label for="name">Applicant full name</label><input id="name" required autocomplete="name"><span class="err"></span></div>
-          <div class="field"><label for="pass">Passport number</label><input id="pass" required style="text-transform:uppercase"><span class="err"></span></div>
-          <div class="field"><label for="dob">Date of birth</label><input id="dob" type="date" required><span class="err"></span></div>
-          <div class="field"><label for="pob">Place of birth</label><input id="pob" required><span class="err"></span></div>
-          <div class="field"><label for="prof">Profession</label><input id="prof" required><span class="err"></span></div>
-          <div class="field"><label for="mar">Marital status</label><select id="mar" required><option value="">Choose</option><option>Single</option><option>Married</option><option>Divorced</option><option>Widowed</option></select><span class="err"></span></div>
-          <div class="field"><label for="gen">Gender</label><select id="gen" required><option value="">Choose</option><option>Male</option><option>Female</option><option>Other</option></select><span class="err"></span></div>
-          <div class="field"><label for="ph">Phone number (with country code)</label><input id="ph" type="tel" required placeholder="+91" autocomplete="tel"><span class="err"></span></div>
-          <div class="field"><label for="wa">WhatsApp number (with country code)</label><input id="wa" type="tel" placeholder="Same as phone if blank"><span class="err"></span></div>
-          <div class="field"><label for="em">Passenger email</label><input id="em" type="email" required autocomplete="email"><span class="err"></span></div>
-          <div class="field"><label for="bem">Billing email</label><input id="bem" type="email" placeholder="Same as passenger if blank"><span class="err"></span></div>
-          <div class="field"><span style="font-size:.78rem;font-weight:600;color:var(--muted)">Is this your first visit?</span><div class="radio" role="radiogroup" aria-label="First visit"><label><input type="radio" name="first" value="Yes" checked>Yes</label><label><input type="radio" name="first" value="No">No</label></div></div>
-          <div class="field"><span style="font-size:.78rem;font-weight:600;color:var(--muted)">Family or friends in this country?</span><div class="radio" role="radiogroup" aria-label="Family or friends in destination"><label><input type="radio" name="fam" value="Yes">Yes</label><label><input type="radio" name="fam" value="No" checked>No</label></div></div>
+          <div class="field full"><label for="name">Full name</label><input id="name" autocomplete="name"><span class="err" id="name-e"></span></div>
+          <div class="field"><label for="ph">Phone number</label><input id="ph" type="tel" autocomplete="tel" placeholder="+91"><span class="err" id="ph-e"></span></div>
+          <div class="field"><label for="em">Email</label><input id="em" type="email" autocomplete="email"><span class="err" id="em-e"></span></div>
+          <div class="field full"><fieldset class="seg" id="via"><legend>Best way to reach you</legend>
+            <label><input type="radio" name="via" value="Phone call" checked><span>Phone call</span></label><label><input type="radio" name="via" value="WhatsApp"><span>WhatsApp</span></label><label><input type="radio" name="via" value="Email"><span>Email</span></label></fieldset></div>
+          <div class="field full"><label for="msg">Anything else we should know? (optional)</label><textarea id="msg" rows="4" placeholder="For example: travelling with family, previous visas, a fixed event date"></textarea></div>
         </div>
       </fieldset>
 
       <fieldset class="fs" data-step="2" hidden>
-        <legend>Upload documents</legend><p class="hint">PDF, JPG or PNG. Maximum 5 MB per file.</p>
-        <div class="uploads" id="ups"></div>
-        <span class="err" id="upErr" style="color:var(--red);font-size:.85rem;display:block;margin-top:10px"></span>
-      </fieldset>
-
-      <fieldset class="fs" data-step="3" hidden>
-        <legend>Review and confirm</legend><p class="hint">Check everything before you continue to payment.</p>
+        <legend>Review your enquiry</legend><p class="hint">Check the details, then send.</p>
         <div class="review" id="review"></div>
-        <label class="consent"><input type="checkbox" id="agree">I confirm the details are correct and agree to the <a href="terms.html" target="_blank">terms</a> and <a href="refund.html" target="_blank">refund policy</a>.</label>
-        <span class="err" id="agErr" style="color:var(--red);font-size:.85rem;display:block;margin-top:8px"></span>
+        <label class="consent"><input type="checkbox" id="agree">I agree to be contacted about this enquiry and have read the <a href="privacy.html" target="_blank">privacy policy</a>.</label>
+        <span class="err" id="agree-e" style="display:block;margin-top:8px"></span>
       </fieldset>
 
       <div class="form-nav">
-        <button class="btn btn-ghost" type="button" id="back" hidden><i data-i="left"></i> Back</button>
-        <button class="btn btn-red" type="submit" id="next" style="margin-left:auto">Continue <i data-i="arrow"></i></button>
+        <button class="btn btn-line" type="button" id="back" hidden><i data-i="left"></i> Back</button>
+        <button class="btn btn-navy" type="submit" id="next" style="margin-left:auto">Continue <i data-i="arrow"></i></button>
       </div>
     </form>
   </div>
 
   <aside class="aside">
-    <div class="box sum"><h4>Your visa</h4>
-      <dl><dt>Destination</dt><dd id="sTo">Not chosen</dd><dt>Visa</dt><dd id="sPkg"></dd><dt>Stay</dt><dd id="sStay"></dd><dt>Processing</dt><dd>48 hours</dd></dl>
-      <div class="tot"><span>Visa fee</span><b id="sFee"></b></div>
-      <p style="font-size:.8rem;color:var(--muted);margin:10px 0 0">Embassy, visa centre and courier charges are separate where they apply.</p>
+    <div class="box sum"><h4>Your enquiry</h4>
+      <dl><dt>Destination</dt><dd id="sTo">Not chosen</dd><dt>Purpose</dt><dd id="sPu">Not chosen</dd><dt>Travel</dt><dd id="sMo">Not set</dd><dt>Package</dt><dd id="sPk">None</dd></dl>
+      <p style="font-size:.8rem;color:var(--slate);margin:16px 0 0">Fees are confirmed by an advisor. Embassy and visa-centre charges are separate.</p>
     </div>
-    <div class="box dark"><h4>Over 60,000 visas issued</h4><p style="font-size:.92rem">Happy customers, end-to-end tracking and reliable customer support.</p>
-      <h4 style="margin-top:20px">Need help?</h4><a class="btn btn-red" href="tel:+918800145551" style="width:100%;justify-content:center"><i data-i="phone"></i>+91-8800145551</a></div>
+    <div class="box dark"><h4>Prefer to talk?</h4><p style="font-size:.92rem">A visa advisor can take your enquiry by phone.</p>
+      <a class="btn btn-gold" href="tel:+918800145551" style="width:100%"><i data-i="phone"></i>+91-8800145551</a></div>
   </aside>
 </div></section>
 </main>
@@ -89,50 +79,42 @@
 <script src="assets/site.js"></script>
 <script>
 (function(){
-const D=MVS,R=MVSR,I=ICON,$=s=>document.querySelector(s),q=new URLSearchParams(location.search);
-$('#from').innerHTML=R.countryOpts(q.get('from')||'india');
-$('#to').innerHTML='<option value="">Choose a country</option>'+R.countryOpts(q.get('to')||'');
-$('#pkg').innerHTML=R.pkgOpts(q.get('pkg')||1);
-const today=new Date().toISOString().slice(0,10);$('#arr').min=today;$('#dob').max=today;
+const D=MVS,I=ICON,$=s=>document.querySelector(s),q=new URLSearchParams(location.search);
+const alias={dubai:'uae'};
+const from=Combo($('#from'),D.places.filter(p=>p.id!=='schengen'),()=>clr('from')),to=Combo($('#to'),D.places,()=>{clr('to');sum()});
+from.set(alias[q.get('from')]||q.get('from')||'india');if(q.get('to'))to.set(alias[q.get('to')]||q.get('to'));
+$('#purpose').insertAdjacentHTML('beforeend',D.purposes.map(([v,t])=>`<label><input type="radio" name="purpose" value="${v}"${q.get('purpose')===v?' checked':''}><span>${t}</span></label>`).join(''));
+$('#pkg').innerHTML+=D.packages.map(p=>`<option value="${p.id}"${String(p.id)===q.get('pkg')?' selected':''}>${p.title}, ${p.stay.toLowerCase()} (₹${p.fee.toLocaleString('en-IN')})</option>`).join('');
+$('#month').min=new Date().toISOString().slice(0,7);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const pur=()=>{const r=document.querySelector('[name=purpose]:checked');return r?D.purposes.find(x=>x[0]===r.value)[1]:''};
+const mon=()=>{const v=$('#month').value;if(!v)return'';const[y,m]=v.split('-');return new Date(+y,+m-1,1).toLocaleDateString('en-IN',{month:'long',year:'numeric'})};
+function sum(){const t=D.places.find(p=>p.id===to.value());$('#sTo').textContent=t?t.name:'Not chosen';$('#sPu').textContent=pur()||'Not chosen';$('#sMo').textContent=mon()||'Not set';$('#sPk').textContent=$('#pkg').value?$('#pkg').selectedOptions[0].text.split(' (')[0]:'None'}
+['#purpose','#month','#pkg'].forEach(s=>$(s).addEventListener('change',()=>{sum();if(s==='#purpose')clr('purpose')}));sum();
 
-const DOCS=[['passport','Valid passport','Clear scan or photo, with at least 6 months validity.'],['photo','Headshot photo','Recent passport-size photo on a plain background.'],['idcard','ID card, resident permit or driving licence','Front side, clearly readable.']];
-const files={};
-$('#ups').innerHTML=DOCS.map(([k,t,h])=>`<div class="up" id="up-${k}"><span class="ui">${I.doc}</span><div><b>${t}</b><span id="upn-${k}">${h}</span></div>
-  <label class="btn btn-ghost" for="f-${k}">${I.upload} Choose file</label><input type="file" id="f-${k}" accept=".pdf,.jpg,.jpeg,.png" data-k="${k}"></div>`).join('');
-$('#ups').addEventListener('change',e=>{const f=e.target.files[0],k=e.target.dataset.k;if(!f)return;
-  if(f.size>5*1024*1024){toast('That file is over 5 MB. Choose a smaller file.');e.target.value='';return}
-  files[k]=f.name;$('#up-'+k).classList.add('has');$('#upn-'+k).textContent=f.name+' · '+Math.max(1,Math.round(f.size/1024))+' KB';$('#up-'+k+' label').childNodes[1].textContent=' Replace';$('#upErr').textContent=''});
+function err(id,m){$('#'+id+'-e').textContent=m;const el=$('#'+id);if(el.tagName==='FIELDSET')el.classList.add('bad');else{el.setAttribute('aria-invalid','true');el.setAttribute('aria-describedby',id+'-e')}}
+function clr(id){$('#'+id+'-e').textContent='';const el=$('#'+id);el.classList.remove('bad');el.removeAttribute('aria-invalid')}
+['name','ph','em'].forEach(id=>$('#'+id).addEventListener('input',()=>clr(id)));
+const checks=[()=>{const b=[];if(!from.value())b.push(['from',$('#from').value?'Pick a country from the list.':'Choose your citizenship.']);if(!to.value())b.push(['to',$('#to').value?'Pick a destination from the list.':'Choose your destination.']);if(!pur())b.push(['purpose','Choose the purpose of your trip.']);return b},
+  ()=>{const b=[];if($('#name').value.trim().length<2)b.push(['name','Enter your full name.']);if($('#ph').value.replace(/\D/g,'').length<10)b.push(['ph','Enter a phone number with at least 10 digits.']);if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test($('#em').value.trim()))b.push(['em','Enter a valid email, like name@example.com.']);return b}];
 
-const summary=()=>{const p=D.packages.find(x=>String(x.id)===$('#pkg').value),c=D.countries.find(x=>x.id===$('#to').value);
-  $('#sTo').textContent=c?c.name:'Not chosen';$('#sPkg').textContent=p.title;$('#sStay').textContent=p.stay.replace(/^Maximum /,'up to ');$('#sFee').textContent='₹'+p.fee.toLocaleString('en-IN')};
-['to','pkg'].forEach(id=>$('#'+id).addEventListener('change',summary));summary();
-
-const MSG={from:'Choose your citizenship.',to:'Choose the country you are travelling to.',pkg:'Choose an entry type.',arr:'Choose your arrival date.',purpose:'Choose the purpose of travel.',name:'Enter the full name as in your passport.',pass:'Enter a passport number (6 to 9 letters and numbers).',dob:'Enter your date of birth.',pob:'Enter your place of birth.',prof:'Enter your profession.',mar:'Choose your marital status.',gen:'Choose your gender.',ph:'Enter a phone number with country code, at least 10 digits.',em:'Enter a valid email, like name@example.com.',wa:'Enter a valid WhatsApp number or leave it blank.',bem:'Enter a valid billing email or leave it blank.'};
-const valid=el=>{const v=el.value.trim();if(el.id==='pass')return /^[A-Za-z0-9]{6,9}$/.test(v);if(el.id==='ph')return v.replace(/\D/g,'').length>=10;
-  if(el.id==='wa')return !v||v.replace(/\D/g,'').length>=10;if(el.type==='email')return el.required?/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v):(!v||/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v));return !el.required||!!v};
-const mark=el=>{const ok=valid(el),e=el.parentElement.querySelector('.err');el.setAttribute('aria-invalid',!ok);if(e){e.id=e.id||el.id+'-e';el.setAttribute('aria-describedby',e.id);e.textContent=ok?'':MSG[el.id]}return ok};
-document.querySelectorAll('#app input:not([type=file]):not([type=radio]),#app select').forEach(el=>{el.addEventListener('input',()=>{if(el.getAttribute('aria-invalid')==='true')mark(el)});el.addEventListener('change',()=>{if(el.getAttribute('aria-invalid')==='true')mark(el)})});
-
-let step=+(q.get('step')||0);const fs=[...document.querySelectorAll('.fs')];
-const go=n=>{step=n;fs.forEach((f,i)=>f.hidden=i!==n);[...$('#stepper').children].forEach((li,i)=>{li.className=i<n?'done':i===n?'cur':'';li.toggleAttribute('aria-current',i===n)});
-  $('#back').hidden=n===0;$('#next').innerHTML=n===3?'Continue to payment '+I.arrow:'Continue '+I.arrow;if(n===3)review();
+let step=0;const fs=[...document.querySelectorAll('#app > .fs')];
+const go=n=>{step=n;fs.forEach((f,i)=>f.hidden=i!==n);[...$('#stepper').children].forEach((li,i)=>{li.className=i<n?'done':i===n?'cur':'';if(i===n)li.setAttribute('aria-current','step');else li.removeAttribute('aria-current')});
+  $('#back').hidden=n===0;$('#next').innerHTML=n===2?'Send enquiry '+I.arrow:'Continue '+I.arrow;if(n===2)review();
+  const lg=fs[n].querySelector('legend');lg.setAttribute('tabindex','-1');if(n)lg.focus({preventScroll:true});
   const top=$('#appWrap').getBoundingClientRect().top+scrollY-110;if(scrollY>top)scrollTo({top})};
-const review=()=>{const g=id=>$('#'+id).value.trim(),sel=id=>$('#'+id).selectedOptions[0].text,p=D.packages.find(x=>String(x.id)===g('pkg'));
-  const rows=[['Citizen of',sel('from')],['Travelling to',sel('to')],['Visa',p.title+', '+p.stay.toLowerCase()],['Arrival date',g('arr')],['Purpose',g('purpose')],['Applicant',g('name')],['Passport number',g('pass').toUpperCase()],['Date of birth',g('dob')],['Place of birth',g('pob')],['Profession',g('prof')],['Marital status',g('mar')],['Gender',g('gen')],['Phone',g('ph')],['WhatsApp',g('wa')||g('ph')],['Email',g('em')],['Billing email',g('bem')||g('em')],['First visit',document.querySelector('[name=first]:checked').value],['Family or friends there',document.querySelector('[name=fam]:checked').value],['Documents',Object.values(files).join(', ')]];
-  const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-  $('#review').innerHTML='<dl>'+rows.map(([k,v])=>`<dt>${k}</dt><dd>${esc(v)}</dd>`).join('')+'</dl>'};
+function review(){const t=D.places.find(p=>p.id===to.value()),f=D.places.find(p=>p.id===from.value());
+  const rows=[['Citizenship',f.name],['Destination',t.name],['Purpose',pur()],['Entry preference',$('#entry').value],['Travel',mon()||'Not decided'],['Package',$('#pkg').value?$('#pkg').selectedOptions[0].text:'No preference'],['Name',$('#name').value.trim()],['Phone',$('#ph').value.trim()],['Email',$('#em').value.trim()],['Contact by',document.querySelector('[name=via]:checked').value],['Notes',$('#msg').value.trim()||'None']];
+  $('#review').innerHTML='<dl>'+rows.map(([k,v])=>`<dt>${k}</dt><dd>${esc(v)}</dd>`).join('')+'</dl>'}
 $('#back').onclick=()=>go(step-1);
 $('#app').addEventListener('submit',e=>{e.preventDefault();
-  if(step<2){const els=[...fs[step].querySelectorAll('input:not([type=radio]),select')];const ok=els.map(mark);const bad=els.find((el,i)=>!ok[i]);if(bad){bad.focus();return}return go(step+1)}
-  if(step===2){const miss=DOCS.filter(([k])=>!files[k]).map(d=>({passport:'passport',photo:'headshot photo',idcard:'ID card'})[d[0]]);if(miss.length){$('#upErr').textContent='Upload your '+(miss.length>1?miss.slice(0,-1).join(', ')+' and '+miss.at(-1):miss[0])+' to continue.';$('#f-'+DOCS.find(([k])=>!files[k])[0]).focus();return}return go(3)}
-  if(!$('#agree').checked){$('#agErr').textContent='Tick the box to confirm your details.';$('#agree').focus();return}
-  const ref='MVS-'+new Date().getFullYear()+'-'+String(Math.floor(1000+Math.random()*9000)),p=D.packages.find(x=>String(x.id)===$('#pkg').value);
-  $('#appWrap').innerHTML=`<div class="done-card"><div class="ok">${I.check}</div><h2 style="font-size:1.7rem">Application received</h2>
-    <p style="color:var(--muted);max-width:480px;margin:0 auto">Thank you, ${$('#name').value.trim().split(' ')[0]}. Your ${p.title.toLowerCase()} application for ${$('#to').selectedOptions[0].text} is in. Keep this reference:</p>
-    <div class="ref">${ref}</div><p style="color:var(--muted)">Our team will check your documents and contact you on ${$('#ph').value.trim()}. Next step: payment of ₹${p.fee.toLocaleString('en-IN')}.</p>
-    <p class="note" style="max-width:520px;margin:18px auto 0">Demo: nothing is sent and no payment is taken. On the live site this step opens the payment page and emails the application to the team.</p>
-    <p style="margin-top:24px"><a class="btn btn-red" href="index.html">Back to home</a></p></div>`;scrollTo({top:0})});
-go(Math.min(step,1));
+  if(step<2){const b=checks[step]();b.forEach(([id,m])=>err(id,m));if(b.length){const id=b[0][0];(id==='purpose'?document.querySelector('[name=purpose]'):$('#'+id)).focus();return}return go(step+1)}
+  if(!$('#agree').checked){$('#agree-e').textContent='Tick the box so we can contact you.';$('#agree').focus();return}
+  const t=D.places.find(p=>p.id===to.value()),via=document.querySelector('[name=via]:checked').value.toLowerCase();
+  $('#appWrap').innerHTML=`<div class="done-card" tabindex="-1" id="done"><div class="ok">${I.check}</div><h2>Thank you, ${esc($('#name').value.trim().split(' ')[0])}</h2>
+    <p style="color:var(--slate);max-width:500px;margin:0 auto 18px">On the live site, your ${esc(pur().toLowerCase())} enquiry for ${esc(t.name)} would now go to a visa advisor, who would contact you by ${esc(via)}.</p>
+    <p class="note" style="max-width:520px;margin:0 auto">Demo only: this enquiry has not been sent or stored. To reach the team now, call <a href="tel:+918800145551">+91-8800145551</a> or email enquiry@myvisaservice.com.</p>
+    <p style="margin-top:26px"><a class="btn btn-navy" href="index.html">Back to home</a></p></div>`;$('#done').focus()});
 })();
 </script>
 </body>

@@ -39,97 +39,137 @@
   };
   window.ICON = I;
 
-  const here = (location.pathname.split('/').pop() || 'index.html').replace(/\?.*/, '');
-  const NAV = [['index.html', 'Home'], ['about.html', 'About'], ['services.html', 'All Services'], ['faq.html', 'FAQ'], ['blog.html', 'Blog'], ['contact.html', 'Contact']];
-  const cur = h => (h === here || (here === 'post.html' && h === 'blog.html') || (here === '' && h === 'index.html')) ? ' aria-current="page"' : '';
+  I.wa = `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.2A9.7 9.7 0 003.7 16.9L2.3 21.8l5-1.3A9.7 9.7 0 1012 2.2zm0 17.7a8 8 0 01-4.1-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8 8 0 1112 19.9zm4.4-6c-.2-.1-1.4-.7-1.6-.8s-.4-.1-.5.1-.6.8-.8.9-.3.2-.5.1a6.6 6.6 0 01-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.7-1.8c-.2-.5-.4-.4-.5-.4h-.5a.9.9 0 00-.7.3 2.8 2.8 0 00-.9 2.1 4.9 4.9 0 001 2.6 11.2 11.2 0 004.3 3.8c1.6.7 2.2.7 3 .6a2.6 2.6 0 001.7-1.2 2.1 2.1 0 00.1-1.2c0-.1-.2-.2-.4-.3z"/></svg>`;
+  I.info = `<svg viewBox="0 0 24 24" ${P}><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg>`;
+  I.chev = `<svg viewBox="0 0 24 24" ${P}><path d="M6 9l6 6 6-6"/></svg>`;
+  I.person = `<svg viewBox="0 0 24 24" ${P}><circle cx="12" cy="8" r="3.5"/><path d="M5 20c.8-3.6 3.6-5.5 7-5.5s6.2 1.9 7 5.5"/></svg>`;
+  I.list = `<svg viewBox="0 0 24 24" ${P}><path d="M9 6h11M9 12h11M9 18h11M4.5 6h.01M4.5 12h.01M4.5 18h.01"/></svg>`;
+
+  const C = D.config;
+  const here = (location.pathname.split('/').pop() || 'index.html');
+  const NAV = [['index.html#destinations', 'Destinations'], ['services.html', 'Services'], ['index.html#process', 'Process'], ['about.html', 'About'], ['faq.html', 'FAQ'], ['blog.html', 'Guides'], ['contact.html', 'Contact']];
+  const cur = h => { const f = h.split('#')[0]; return (!h.includes('#') && (f === here || (here === 'post.html' && f === 'blog.html'))) ? ' aria-current="page"' : '' };
+  const waLink = (msg) => `https://wa.me/${C.whatsapp}?text=${encodeURIComponent(msg || 'Hello, I would like help with a visa application.')}`;
+  window.MVSwa = waLink;
 
   const header = `
   <a class="sr" href="#main">Skip to content</a>
-  <div class="topbar"><div class="wrap">
-    <div class="tb-l"><span>${I.pin}${D.address}</span><a href="mailto:${D.email}">${I.mail}${D.email}</a></div>
-    <div class="tb-r"><a href="tel:${D.tel}">${I.phone}${D.phone}</a></div>
-  </div></div>
   <header class="hdr" id="hdr"><div class="wrap">
-    <a class="logo" href="index.html" aria-label="My Visa Service home"><img src="assets/img/misc/footerlogo.png" alt="My Visa Service" width="114" height="58"><small>A unit of<br>Paras Holidays</small></a>
+    <a class="logo" href="index.html" aria-label="${C.brand} home"><img src="assets/img/misc/logo-dark.png" alt="${C.brand}" width="106" height="54"><small>A unit of<br>${C.parent}</small></a>
     <nav class="nav" aria-label="Main">${NAV.map(([h, t]) => `<a href="${h}"${cur(h)}>${t}</a>`).join('')}</nav>
-    <a class="btn btn-red btn-arrow hdr-cta" href="apply.html">Apply Visa <span class="ar">${I.up}</span></a>
+    <a class="btn btn-navy hdr-cta" href="contact.html">Talk to a visa expert</a>
     <button class="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="drawer">${I.menu}</button>
   </div></header>
-  <div class="drawer" id="drawer" aria-hidden="true"><div class="panel" role="dialog" aria-label="Menu">
+  <div class="drawer" id="drawer" aria-hidden="true"><div class="panel" role="dialog" aria-modal="true" aria-label="Menu">
     <button class="x" type="button" aria-label="Close menu">×</button>
     ${NAV.map(([h, t]) => `<a href="${h}"${cur(h)}>${t}</a>`).join('')}
-    <a class="btn btn-red" href="apply.html">Apply Visa</a>
-    <a class="btn btn-white" href="tel:${D.tel}">Call ${D.phone}</a>
+    <a class="btn btn-navy" href="index.html#finder">Find your visa</a>
+    <a class="btn btn-line" href="tel:${C.tel}">${I.phone} Call ${C.phone}</a>
   </div></div>`;
 
   const footer = `
   <footer class="ftr"><div class="wrap">
-    <div class="news">
-      <div><h2>Subscribe to our newsletter</h2><p>Visa rule changes and travel tips, straight to your inbox.</p></div>
-      <form id="newsF" novalidate><label class="sr" for="newsE">Email address</label><input id="newsE" type="email" placeholder="Your email address" required><button class="btn btn-red" type="submit">Subscribe</button></form>
-    </div>
     <div class="fgrid">
-      <div class="about-f"><img src="assets/img/misc/footerlogo.png" alt="My Visa Service" width="141" height="72">
-        <p>My Visa Service is a trusted visa consultancy dedicated to making international travel simple, convenient, and stress-free. As a unit of Paras Holidays, we guide travellers, students, professionals and businesses through every stage, from document verification and application preparation to submission and status tracking.</p>
-        <div class="soc"><a href="${D.social.facebook}" target="_blank" rel="noopener" aria-label="Facebook">${I.fb}</a><a href="${D.social.x}" target="_blank" rel="noopener" aria-label="X">${I.xx}</a><a href="${D.social.pinterest}" target="_blank" rel="noopener" aria-label="Pinterest">${I.pin2}</a></div>
+      <div class="about-f"><img src="assets/img/misc/footerlogo.png" alt="${C.brand}" width="137" height="70" loading="lazy">
+        <p>${C.brand} is a visa consultancy and a unit of ${C.parent}. We help travellers, students, professionals and families prepare and submit visa applications for destinations worldwide.</p>
+        <div class="soc"><a href="${D.social.facebook}" target="_blank" rel="noopener" aria-label="Facebook">${I.fb}</a><a href="${D.social.x}" target="_blank" rel="noopener" aria-label="X (Twitter)">${I.xx}</a><a href="${D.social.pinterest}" target="_blank" rel="noopener" aria-label="Pinterest">${I.pin2}</a></div>
       </div>
-      <div><h4>Quick links</h4><ul>${NAV.map(([h, t]) => `<li><a href="${h}">${t}</a></li>`).join('')}<li><a href="apply.html">Apply Visa</a></li></ul></div>
-      <div><h4>Company info</h4><ul><li><a href="privacy.html">Privacy policy</a></li><li><a href="terms.html">Terms and conditions</a></li><li><a href="refund.html">Refund policy</a></li></ul></div>
-      <div><h4>Get in touch</h4><ul class="gi">
-        <li>${I.pin}<span>${D.address}</span></li>
-        <li>${I.phone}<a href="tel:${D.tel}">${D.phone}</a></li>
-        <li>${I.mail}<a href="mailto:${D.email}">${D.email}</a></li></ul></div>
+      <div><h4>Explore</h4><ul><li><a href="index.html#finder">Visa finder</a></li><li><a href="index.html#destinations">Destinations</a></li><li><a href="about.html">About us</a></li><li><a href="faq.html">FAQ</a></li><li><a href="blog.html">Visa guides</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+      <div><h4>Visa services</h4><ul>${D.services.slice(0, 6).map(s => `<li><a href="services.html#${s.id}">${s[1]}</a></li>`).join('')}</ul></div>
+      <div><h4>Contact</h4><ul class="gi">
+        <li>${I.pin}<span>${C.address}</span></li>
+        <li>${I.phone}<a href="tel:${C.tel}">${C.phone}</a></li>
+        <li>${I.mail}<a href="mailto:${C.email}">${C.email}</a></li></ul>
+        <p class="src">Demo: contact details taken from myvisaservice.com. Confirm before launch.</p></div>
     </div>
-    <div class="fbot"><span>Copyright © 2026 My Visa Service. All rights reserved.</span><span class="disc">We are a private immigration consultancy and not a government agency.</span></div>
+    <p class="f-disc"><b>Please note:</b> ${C.brand} is a private visa consultancy, not a government agency, embassy or consulate. Visa decisions are made solely by the relevant authorities, and requirements, fees and processing times depend on your circumstances and may change. Government and visa-centre fees are separate from our service fee.</p>
+    <div class="fbot"><span>© 2026 ${C.brand}, a unit of ${C.parent}.</span><span><a href="privacy.html">Privacy policy</a> · <a href="terms.html">Terms of service</a> · <a href="refund.html">Refund policy</a></span></div>
   </div></footer>
-  <div class="cookie" id="cookie" role="region" aria-label="Cookie notice"><b>We use cookies</b><p>Cookies remember your preferences and help us understand how the site is used. Read our <a href="privacy.html">privacy policy</a>.</p><div class="row"><button class="btn btn-red" type="button" data-ck="1">Accept</button><button class="btn btn-ghost" type="button" data-ck="0">Decline</button></div></div>
+  ${C.whatsapp ? `<a class="wa" href="${waLink()}" target="_blank" rel="noopener" aria-label="Chat with us on WhatsApp">${I.wa}<span class="t">Chat on WhatsApp</span></a>` : ''}
+  <div class="cookie" id="cookie" role="region" aria-label="Cookie notice"><b>Cookies on this site</b><p>We use cookies to remember your preferences and understand how the site is used. Read our <a href="privacy.html">privacy policy</a>.</p><div class="row"><button class="btn btn-navy" type="button" data-ck="1">Accept</button><button class="btn btn-line" type="button" data-ck="0">Decline</button></div></div>
   <button class="totop" id="totop" type="button" aria-label="Back to top">${I.top}</button>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>`;
 
   document.getElementById('site-header').outerHTML = header;
   document.getElementById('site-footer').outerHTML = footer;
-
-  // icons placed in markup as <i data-i="name"></i>
   document.querySelectorAll('[data-i]').forEach(el => { el.outerHTML = I[el.dataset.i] || '' });
 
   const $ = s => document.querySelector(s);
-  window.toast = msg => { const t = $('#toast'); t.textContent = msg; t.classList.add('on'); clearTimeout(t._h); t._h = setTimeout(() => t.classList.remove('on'), 3200) };
+  window.toast = msg => { const t = $('#toast'); t.textContent = msg; t.classList.add('on'); clearTimeout(t._h); t._h = setTimeout(() => t.classList.remove('on'), 3400) };
 
-  // drawer
+  // mobile drawer with focus trap
   const dr = $('#drawer'), bg = $('.burger');
   const setDr = on => { dr.classList.toggle('on', on); dr.setAttribute('aria-hidden', !on); bg.setAttribute('aria-expanded', on); document.body.style.overflow = on ? 'hidden' : ''; if (on) dr.querySelector('.x').focus(); else bg.focus() };
   bg.addEventListener('click', () => setDr(true));
-  dr.addEventListener('click', e => { if (e.target === dr || e.target.classList.contains('x')) setDr(false) });
-  document.addEventListener('keydown', e => { if (e.key === 'Escape' && dr.classList.contains('on')) setDr(false) });
+  dr.addEventListener('click', e => { if (e.target === dr || e.target.classList.contains('x') || e.target.closest('.panel a')) setDr(false) });
+  document.addEventListener('keydown', e => {
+    if (!dr.classList.contains('on')) return;
+    if (e.key === 'Escape') setDr(false);
+    if (e.key === 'Tab') { const f = [...dr.querySelectorAll('a,button')], a = f[0], z = f[f.length - 1]; if (e.shiftKey && document.activeElement === a) { e.preventDefault(); z.focus() } else if (!e.shiftKey && document.activeElement === z) { e.preventDefault(); a.focus() } }
+  });
 
-  // sticky shadow + back to top
   const hdr = $('#hdr'), tt = $('#totop');
-  const onScroll = () => { hdr.classList.toggle('stuck', scrollY > 40); tt.classList.toggle('on', scrollY > 700) };
+  const onScroll = () => { hdr.classList.toggle('stuck', scrollY > 10); tt.classList.toggle('on', scrollY > 900) };
   addEventListener('scroll', onScroll, { passive: true }); onScroll();
   tt.addEventListener('click', () => scrollTo({ top: 0 }));
 
-  // cookie notice
   let ck = null; try { ck = localStorage.getItem('mvs-cookie') } catch (e) {}
   const cookie = $('#cookie');
   if (!ck) cookie.classList.add('on');
   cookie.addEventListener('click', e => { const b = e.target.closest('[data-ck]'); if (!b) return; try { localStorage.setItem('mvs-cookie', b.dataset.ck) } catch (er) {} cookie.classList.remove('on') });
 
-  // newsletter
-  $('#newsF').addEventListener('submit', e => {
-    e.preventDefault(); const i = $('#newsE');
-    if (!i.checkValidity()) { i.focus(); toast('Enter a valid email address.'); return }
-    i.value = ''; toast('Subscribed. Watch your inbox for visa updates.');
-  });
+  // reveal on scroll (skipped when reduced motion is requested)
+  const rm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  window.MVSreveal = () => {
+    const els = document.querySelectorAll('.rv:not(.in)');
+    if (rm || !('IntersectionObserver' in window)) { els.forEach(e => e.classList.add('in')); return }
+    const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target) } }), { rootMargin: '0px 0px -8% 0px' });
+    els.forEach(e => io.observe(e));
+  };
+
+  // Accessible combobox (ARIA 1.2 pattern): type to filter, arrows to move, Enter to pick, Esc to close.
+  window.Combo = (input, items, onPick) => {
+    const box = input.closest('.cb'), list = box.querySelector('ul'), btn = box.querySelector('.cb-btn');
+    let shown = [], act = -1; input.value = ''; input.dataset.value = '';
+    input.setAttribute('role', 'combobox'); input.setAttribute('aria-autocomplete', 'list'); input.setAttribute('aria-expanded', 'false'); input.setAttribute('aria-controls', list.id); input.autocomplete = 'off';
+    const esc = s => s.replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+    const render = q => {
+      const n = q.trim().toLowerCase();
+      shown = items.filter(it => !n || it.name.toLowerCase().includes(n)); act = shown.length ? 0 : -1;
+      list.innerHTML = shown.length ? shown.map((it, i) => `<li role="option" id="${list.id}-${i}" aria-selected="${i === act}" data-i="${i}">${it.flag ? `<img src="${it.flag}" alt="">` : ''}<span>${esc(it.name)}</span>${it.group === 'schengen' && it.id !== 'schengen' ? '<small>Schengen</small>' : ''}</li>`).join('') : '<li class="empty" role="option" aria-disabled="true">No matching country. Call us for other destinations.</li>';
+      input.setAttribute('aria-activedescendant', act >= 0 ? list.id + '-0' : '');
+    };
+    const open = () => { box.classList.add('open'); input.setAttribute('aria-expanded', 'true') };
+    const close = () => { box.classList.remove('open'); input.setAttribute('aria-expanded', 'false'); input.removeAttribute('aria-activedescendant') };
+    const pick = it => { input.value = it.name; input.dataset.value = it.id; close(); onPick && onPick(it) };
+    const move = d => { if (!shown.length) return; act = (act + d + shown.length) % shown.length; list.querySelectorAll('li').forEach((li, i) => li.setAttribute('aria-selected', i === act)); const li = list.children[act]; input.setAttribute('aria-activedescendant', li.id); li.scrollIntoView({ block: 'nearest' }) };
+    input.addEventListener('input', () => { input.dataset.value = ''; render(input.value); open() });
+    input.addEventListener('focus', () => { render(input.dataset.value ? '' : input.value) });
+    input.addEventListener('click', () => { render(input.dataset.value ? '' : input.value); open() });
+    input.addEventListener('keydown', e => {
+      if (e.key === 'ArrowDown') { e.preventDefault(); if (!box.classList.contains('open')) { render(input.dataset.value ? '' : input.value); open() } else move(1) }
+      else if (e.key === 'ArrowUp') { e.preventDefault(); move(-1) }
+      else if (e.key === 'Enter' && box.classList.contains('open')) { e.preventDefault(); if (shown[act]) pick(shown[act]) }
+      else if (e.key === 'Escape') { close() }
+    });
+    input.addEventListener('blur', () => setTimeout(() => {
+      close();
+      if (!input.dataset.value && input.value) { const m = items.find(it => it.name.toLowerCase() === input.value.trim().toLowerCase()); if (m) pick(m) }
+    }, 150));
+    list.addEventListener('mousedown', e => { const li = e.target.closest('li[data-i]'); if (li) { e.preventDefault(); pick(shown[+li.dataset.i]) } });
+    btn.addEventListener('click', () => { if (box.classList.contains('open')) close(); else { input.focus(); render(''); open() } });
+    return { set: id => { const it = items.find(x => x.id === id); if (it) { input.value = it.name; input.dataset.value = it.id } }, value: () => input.dataset.value };
+  };
 
   // shared renderers used by several pages
   window.MVSR = {
     pkCard: p => `<article class="pk${p.rec ? ' rec' : ''}">${p.rec ? '<span class="rb">Recommended</span>' : ''}
       <span class="kind">${p.entry === 'single' ? 'Single entry' : 'Multiple entry'}</span><h3>${p.title}</h3><span class="stay">${p.stay}</span>
       <div class="price"><b>₹${p.fee.toLocaleString('en-IN')}</b><span>INR per applicant</span></div>
-      <ul><li>${I.clock}Processing time 48 hours</li><li>${I.check}International fast track</li><li>${I.check}Document review included</li></ul>
-      <a class="btn btn-ghost" href="apply.html?pkg=${p.id}">Get started ${I.arrow}</a></article>`,
+      <ul><li>${I.clock}Processing time 48 hours</li><li>${I.check}Document review included</li></ul>
+      <a class="btn btn-line" href="apply.html?pkg=${p.id}">Enquire about this visa ${I.arrow}</a></article>`,
     postCard: p => `<a class="post" href="post.html?id=${p.id}"><div class="im"><img src="${p.img}" alt="" loading="lazy"></div>
-      <div class="bd"><span class="meta">Visa guide · ${p.mins} min read</span><h3>${p.title}</h3><span class="lnk">Read article ${I.arrow}</span></div></a>`,
+      <div class="bd"><span class="meta">Visa guide, ${p.mins} min read</span><h3>${p.title}</h3><span class="lnk">Read article ${I.arrow}</span></div></a>`,
     countryOpts: sel => D.countries.map(c => `<option value="${c.id}"${c.id === sel ? ' selected' : ''}>${c.name}</option>`).join(''),
     pkgOpts: sel => D.packages.map(p => `<option value="${p.id}"${String(p.id) === String(sel) ? ' selected' : ''}>${p.title}, ${p.stay.toLowerCase()} (₹${p.fee.toLocaleString('en-IN')})</option>`).join('')
   };

@@ -4,24 +4,28 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Contact | My Visa Service</title>
+<meta property="og:type" content="website">
+<meta property="og:title" content="Contact | My Visa Service">
+<meta property="og:image" content="assets/img/photo/hero.jpg">
 <meta name="description" content="Contact My Visa Service at 303, Gurudwara Rd, Karol Bagh, New Delhi. Call +91-8800145551 or email enquiry@myvisaservice.com.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/site.css">
-<link rel="icon" href="assets/img/misc/footerlogo.png">
+<link rel="icon" href="assets/img/misc/logo-dark.png">
+<meta name="theme-color" content="#142B3B">
 </head>
 <body>
 <div id="site-header"></div>
 <main id="main">
-<section class="ph-band"><div class="wrap"><div class="phero" style="background-image:url(assets/img/misc/6838bd9434f561748549012.jpg)">
+<section class="ph-band"><div class="wrap"><div class="phero"><div class="ph-img" style="background-image:url(assets/img/misc/6838bd9434f561748549012.jpg)" aria-hidden="true"></div>
   <nav class="crumbs" aria-label="Breadcrumb"><a href="index.html">Home</a><span>/</span><span>Contact</span></nav>
   <h1>We're always here to help you</h1><p>Call, email or visit our Karol Bagh office.</p>
 </div></div></section>
 
-<section class="sec"><div class="wrap two" style="grid-template-columns:minmax(0,1.3fr) minmax(0,1fr)">
+<section class="sec"><div class="wrap two two-c">
   <div class="formcard" id="cWrap">
     <h2 style="font-size:1.6rem">Send a message</h2>
-    <p style="color:var(--muted)">Tell us your destination and travel date. We usually reply within one working day.</p>
+    <p style="color:var(--slate)">Tell us your destination and when you plan to travel.</p>
     <form id="cF" novalidate>
       <div class="grid2">
         <div class="field"><label for="cN">Full name</label><input id="cN" required autocomplete="name"><span class="err" id="cN-e"></span></div>
@@ -30,7 +34,7 @@
         <div class="field"><label for="cC">Destination country</label><select id="cC"><option value="">Not decided yet</option></select></div>
         <div class="field full"><label for="cM">Message</label><textarea id="cM" rows="5" required></textarea><span class="err" id="cM-e"></span></div>
       </div>
-      <button class="btn btn-red" type="submit" style="margin-top:22px">Send message <i data-i="send"></i></button>
+      <button class="btn btn-navy" type="submit" style="margin-top:22px">Send message <i data-i="send"></i></button>
     </form>
   </div>
   <div class="cinfo">
@@ -48,12 +52,15 @@
 <script src="assets/data.js"></script>
 <script src="assets/site.js"></script>
 <script>
-(function(){const $=s=>document.querySelector(s);$('#cC').innerHTML+=MVSR.countryOpts('');
+(function(){const $=s=>document.querySelector(s);$('#cC').innerHTML+=MVS.places.map(p=>`<option value="${p.id}">${p.name}</option>`).join('');
+  const q=new URLSearchParams(location.search),al={dubai:'uae'},to=al[q.get('to')]||q.get('to'),pl=MVS.places.find(p=>p.id===to),pu=(MVS.purposes.find(x=>x[0]===q.get('purpose'))||[])[1];
+  if(pl)$('#cC').value=pl.id;
+  if(q.get('visa')||pl){$('#cM').value=`I'd like to enquire about ${q.get('visa')?q.get('visa').toLowerCase():'a visa'}${pl?' for '+pl.name:''}${pu?' ('+pu.toLowerCase()+')':''}. `;$('#cWrap h2').textContent='Send an enquiry'}
   const rules={cN:v=>v.trim().length>1||'Enter your name.',cE:v=>/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)||'Enter a valid email, like name@example.com.',cP:v=>v.replace(/\D/g,'').length>=10||'Enter a phone number with at least 10 digits.',cM:v=>v.trim().length>4||'Tell us a little about your trip.'};
   const check=id=>{const el=$('#'+id),r=rules[id](el.value),bad=r!==true;el.setAttribute('aria-invalid',bad);el.setAttribute('aria-describedby',id+'-e');$('#'+id+'-e').textContent=bad?r:'';return !bad};
   Object.keys(rules).forEach(id=>$('#'+id).addEventListener('input',()=>{if($('#'+id).getAttribute('aria-invalid')==='true')check(id)}));
   $('#cF').addEventListener('submit',e=>{e.preventDefault();const ok=Object.keys(rules).map(check);const first=Object.keys(rules).find((k,i)=>!ok[i]);if(first){$('#'+first).focus();return}
-    $('#cWrap').innerHTML=`<div class="done-card"><div class="ok">${ICON.check}</div><h2 style="font-size:1.6rem">Message sent</h2><p style="color:var(--muted)">Thank you, ${$('#cN').value.trim().split(' ')[0]}. Our visa team will reply to ${$('#cE').value.trim()} within one working day.</p><p class="note">Demo: messages aren't delivered yet. On the live site this goes to enquiry@myvisaservice.com.</p></div>`});
+    $('#cWrap').innerHTML=`<div class="done-card" tabindex="-1" id="cDone"><div class="ok">${ICON.check}</div><h2>Thank you, ${$('#cN').value.trim().split(' ')[0].replace(/[<>&"]/g,'')}</h2><p style="color:var(--slate)">On the live site, your message would now go to the visa team, who would reply to the email you gave.</p><p class="note">Demo only: this message has not been sent or stored. To reach the team now, call <a href="tel:+918800145551">+91-8800145551</a> or email enquiry@myvisaservice.com.</p></div>`;$('#cDone').focus()});
 })();
 </script>
 </body>

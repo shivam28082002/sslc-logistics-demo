@@ -4,16 +4,20 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>All Services | My Visa Service</title>
+<meta property="og:type" content="website">
+<meta property="og:title" content="All Services | My Visa Service">
+<meta property="og:image" content="assets/img/photo/hero.jpg">
 <meta name="description" content="Visa packages, fees and services from My Visa Service: tourist, business, student, work and visitor visas.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/site.css">
-<link rel="icon" href="assets/img/misc/footerlogo.png">
+<link rel="icon" href="assets/img/misc/logo-dark.png">
+<meta name="theme-color" content="#142B3B">
 </head>
 <body>
 <div id="site-header"></div>
 <main id="main">
-<section class="ph-band"><div class="wrap"><div class="phero" style="background-image:url(assets/img/blog/6838c7c7c99511748551623.jpg)">
+<section class="ph-band"><div class="wrap"><div class="phero"><div class="ph-img" style="background-image:url(assets/img/blog/6838c7c7c99511748551623.jpg)" aria-hidden="true"></div>
   <nav class="crumbs" aria-label="Breadcrumb"><a href="index.html">Home</a><span>/</span><span>All Services</span></nav>
   <h1>Our services</h1><p>Visa packages available right now, and everything we do around them.</p>
 </div></div></section>
@@ -21,7 +25,7 @@
 <section class="sec"><div class="wrap center">
   <span class="tag">Apply visa</span>
   <h2>Visa packages and fees</h2>
-  <p class="lead">All listed packages are processed in 48 hours. Embassy and visa centre charges are separate where they apply.</p>
+  <p class="lead">Package fees as listed on our current website, with 48-hour processing. Embassy and visa-centre charges are separate. Availability depends on your destination and passport.</p>
   <div class="tabs" role="tablist" aria-label="Entry type">
     <button role="tab" aria-selected="true" data-entry="all" id="tab-a" aria-controls="pkGrid">All</button>
     <button role="tab" aria-selected="false" data-entry="single" id="tab-s" aria-controls="pkGrid">Single entry</button>
@@ -35,7 +39,7 @@
   <div class="svc" id="svc" style="margin-top:44px"></div>
 </div></section>
 
-<section class="sec"><div class="wrap">
+<section class="sec" id="destinations"><div class="wrap">
   <div class="center"><span class="tag">Destinations</span><h2>Choose your destination</h2></div>
   <div class="dest" id="dest" style="margin-top:40px"></div>
 </div></section>
@@ -43,7 +47,7 @@
 <section class="sec" style="padding-top:0"><div class="wrap">
   <div class="express">
     <div><h2>Not sure which visa you need?</h2><p>Call us and we'll match your trip to the right visa category.</p></div>
-    <div class="act"><a class="tel" href="tel:+918800145551"><span><i data-i="phone"></i></span>+91-8800145551</a><a class="btn btn-white btn-arrow" href="contact.html">Contact us <span class="ar"><i data-i="up"></i></span></a></div>
+    <div class="act"><a class="tel" href="tel:+918800145551"><span><i data-i="phone"></i></span>+91-8800145551</a><a class="btn btn-white" href="contact.html">Contact us</a></div>
   </div>
 </div></section>
 </main>
@@ -55,8 +59,8 @@
   const show=en=>{$('#pkGrid').innerHTML=MVS.packages.filter(p=>en==='all'||p.entry===en).map(MVSR.pkCard).join('');
     document.querySelectorAll('[data-entry]').forEach(b=>{const on=b.dataset.entry===en;b.setAttribute('aria-selected',on);if(on)$('#pkGrid').setAttribute('aria-labelledby',b.id)})};
   document.querySelectorAll('[data-entry]').forEach(b=>b.addEventListener('click',()=>show(b.dataset.entry)));show('all');
-  $('#svc').innerHTML=MVS.services.map(([i,h,p])=>`<div class="sv"><span class="ic">${ICON[i]}</span><h4>${h}</h4><p>${p}</p></div>`).join('');
-  $('#dest').innerHTML=MVS.countries.map(c=>`<a class="dc" href="apply.html?to=${c.id}"><img src="${c.img}" alt="" loading="lazy"><span><b>${c.name}</b><small>Apply for visa</small></span></a>`).join('');
+  $('#svc').innerHTML=MVS.services.map(s=>{const[i,h,p]=s;return `<div class="sv" id="${s.id}"><span class="ic">${ICON[i]}</span><h4>${h}</h4><p>${p}</p><a class="lnk" style="margin-top:16px" href="contact.html?visa=${encodeURIComponent(h)}">Enquire ${ICON.arrow}</a></div>`}).join('');
+  $('#dest').innerHTML=MVS.countries.map(c=>`<a class="dc" href="apply.html?to=${c.id}"><img src="${c.img}" alt="" loading="lazy"><span><b>${c.name}</b><small>Enquire</small></span></a>`).join('');
 })();
 </script>
 </body>
