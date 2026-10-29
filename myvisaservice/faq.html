@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FAQ | My Visa Service</title>
+<meta name="description" content="Answers about visa fees, processing times, rejections, interview preparation and data safety at My Visa Service.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+<link rel="icon" href="assets/img/misc/footerlogo.png">
+</head>
+<body>
+<div id="site-header"></div>
+<main id="main">
+<section class="ph-band"><div class="wrap"><div class="phero" style="background-image:url(assets/img/blog/6838c8190341e1748551705.jpg)">
+  <nav class="crumbs" aria-label="Breadcrumb"><a href="index.html">Home</a><span>/</span><span>FAQ</span></nav>
+  <h1>Frequently asked questions</h1><p>Fees, timelines, rejections and how we handle your documents.</p>
+</div></div></section>
+
+<section class="sec"><div class="wrap">
+  <div class="faq" id="faq"></div>
+  <div class="box dark center" style="max-width:900px;margin:40px auto 0;padding:34px">
+    <h4 style="font-size:1.3rem">Still have a question?</h4>
+    <p>Our visa experts answer on the phone and by email.</p>
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+      <a class="btn btn-red" href="tel:+918800145551"><i data-i="phone"></i>+91-8800145551</a>
+      <a class="btn btn-white" href="contact.html">Send a message</a>
+    </div>
+  </div>
+</div></section>
+</main>
+<div id="site-footer"></div>
+<script src="assets/data.js"></script>
+<script src="assets/site.js"></script>
+<script>
+(function(){const f=document.getElementById('faq');
+  f.innerHTML=MVS.faqs.map(([q,a],i)=>`<div class="qa${i===0?' on':''}"><h3 style="margin:0;font-size:inherit"><button type="button" aria-expanded="${i===0}" aria-controls="a${i}" id="q${i}">${q}<span class="pm">${ICON.plus}</span></button></h3><div class="ans" id="a${i}" role="region" aria-labelledby="q${i}">${a}</div></div>`).join('');
+  f.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;const qa=b.closest('.qa'),on=!qa.classList.contains('on');qa.classList.toggle('on',on);b.setAttribute('aria-expanded',on)});
+})();
+</script>
+</body>
+</html>

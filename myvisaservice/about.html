@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>About | My Visa Service</title>
+<meta name="description" content="My Visa Service is a one-stop visa agency for all countries and a unit of Paras Holidays, Karol Bagh, New Delhi.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+<link rel="icon" href="assets/img/misc/footerlogo.png">
+</head>
+<body>
+<div id="site-header"></div>
+<main id="main">
+<section class="ph-band"><div class="wrap"><div class="phero" style="background-image:url(assets/img/blog/6838c7e10455e1748551649.jpg)">
+  <nav class="crumbs" aria-label="Breadcrumb"><a href="index.html">Home</a><span>/</span><span>About</span></nav>
+  <h1>About My Visa Service</h1><p>A unit of Paras Holidays, helping travellers get visas for every country.</p>
+</div></div></section>
+
+<section class="sec"><div class="wrap about">
+  <div class="pic"><img src="assets/img/misc/6838bf6fce56c.jpg" alt="Happy travellers on holiday" width="651" height="801">
+    <div class="badge"><b>12 years</b><span>of experience</span></div></div>
+  <div>
+    <span class="tag">Who we are</span>
+    <h2>My Visa Service</h2>
+    <p>My Visa Service was founded by visionaries with an aim to ease customers from the stress of visa processing. It's a one-stop agency for visas of all countries, providing quality service. We deliver what we promise, with the best of our customers' satisfaction.</p>
+    <p>We have excellent working relationships with embassies, consulates and other travel representatives, and the expertise to walk you through any visa situation.</p>
+    <p>We value your time and understand the frustration of an applicant while applying for a visa. My Visa Service is one place where all worries relating to a visa come to an end. We are just a phone call away; let us assist with all your visa formalities without you having to leave home.</p>
+  </div>
+</div></section>
+
+<section class="sec dark"><div class="wrap">
+  <blockquote style="margin:0 auto;max-width:900px;text-align:center">
+    <p style="font-size:clamp(1.3rem,2.4vw,1.9rem);line-height:1.45;color:#fff;font-weight:500;letter-spacing:-.01em">“We believe in complete satisfaction of every traveller, and recognise that good service is more than competitive pricing. It's a near obsessive attention to detail that turns a good experience into an exceptional one.”</p>
+    <footer style="color:#AEB7D3">The My Visa Service team</footer>
+  </blockquote>
+</div></section>
+
+<section class="sec tint"><div class="wrap">
+  <div class="stats">
+    <div class="stat"><b>60,000+</b><span>visas issued worldwide</span></div>
+    <div class="stat"><b>12 years</b><span>of visa experience</span></div>
+    <div class="stat"><b>All</b><span>countries covered</span></div>
+    <div class="stat"><b>48 hrs</b><span>processing on listed packages</span></div>
+  </div>
+</div></section>
+
+<section class="sec"><div class="wrap">
+  <div class="center"><span class="tag">What we do</span><h2>End-to-end visa and travel documentation help</h2>
+  <p class="lead">For individuals, families, students and businesses.</p></div>
+  <div class="svc" id="svc" style="margin-top:44px"></div>
+</div></section>
+
+<section class="sec tint"><div class="wrap">
+  <div class="center"><span class="tag">Popular locations</span><h2>You can land anywhere with our visa</h2></div>
+  <div class="dest" id="dest" style="margin-top:40px"></div>
+</div></section>
+
+<section class="sec"><div class="wrap">
+  <div class="express">
+    <div><h2>Ready to apply?</h2><p>Tell us where you are going. We'll send your document checklist.</p></div>
+    <div class="act"><a class="tel" href="tel:+918800145551"><span><i data-i="phone"></i></span>+91-8800145551</a><a class="btn btn-white btn-arrow" href="apply.html">Apply now <span class="ar"><i data-i="up"></i></span></a></div>
+  </div>
+</div></section>
+</main>
+<div id="site-footer"></div>
+<script src="assets/data.js"></script>
+<script src="assets/site.js"></script>
+<script>
+document.getElementById('svc').innerHTML=MVS.services.map(([i,h,p])=>`<div class="sv"><span class="ic">${ICON[i]}</span><h4>${h}</h4><p>${p}</p></div>`).join('');
+document.getElementById('dest').innerHTML=MVS.countries.map(c=>`<a class="dc" href="apply.html?to=${c.id}"><img src="${c.img}" alt="" loading="lazy"><span><b>${c.name}</b><small>Apply for visa</small></span></a>`).join('');
+</script>
+</body>
+</html>

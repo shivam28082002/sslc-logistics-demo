@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Blog | My Visa Service</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+<link rel="icon" href="assets/img/misc/footerlogo.png">
+</head>
+<body>
+<div id="site-header"></div>
+<main id="main">
+<section class="ph-band"><div class="wrap"><div class="phero" id="ph">
+  <nav class="crumbs" aria-label="Breadcrumb"><a href="index.html">Home</a><span>/</span><a href="blog.html">Blog</a><span>/</span><span id="crumb"></span></nav>
+  <h1 id="ttl"></h1><p id="meta"></p>
+</div></div></section>
+<section class="sec"><div class="wrap two">
+  <article class="prose" id="body"></article>
+  <aside class="aside">
+    <div class="box"><h4>More guides</h4><div id="more"></div></div>
+    <div class="box dark"><h4>Need help with your visa?</h4><p>Talk to our team before you apply.</p><a class="btn btn-red" href="apply.html" style="width:100%;justify-content:center">Apply Visa</a><a class="btn btn-white" href="tel:+918800145551" style="width:100%;justify-content:center;margin-top:10px">Call +91-8800145551</a></div>
+  </aside>
+</div></section>
+</main>
+<div id="site-footer"></div>
+<script src="assets/data.js"></script>
+<script src="assets/site.js"></script>
+<script>
+(function(){const id=+new URLSearchParams(location.search).get('id'),P=MVS.posts,p=P.find(x=>x.id===id)||P[0],$=s=>document.querySelector(s);
+  document.title=p.title+' | My Visa Service';
+  $('#ph').style.backgroundImage=`url(${p.img})`;$('#ttl').textContent=p.title;$('#crumb').textContent=p.title;$('#meta').textContent='Visa guide · '+p.mins+' min read';
+  $('#body').innerHTML=`<img src="${p.img}" alt="" style="border-radius:16px;margin-bottom:28px;width:100%;aspect-ratio:16/9;object-fit:cover">`+p.body.map(t=>`<p>${t}</p>`).join('')+
+    `<p style="margin-top:28px"><a class="btn btn-red btn-arrow" href="apply.html">Start your application <span class="ar">${ICON.up}</span></a></p>`;
+  $('#more').innerHTML=P.filter(x=>x!==p).map(x=>`<a class="mini" href="post.html?id=${x.id}"><img src="${x.img}" alt="" loading="lazy"><b>${x.title}</b></a>`).join('');
+})();
+</script>
+</body>
+</html>
