@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prime Operations · Load board</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="assets/fav-icon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..700&family=IBM+Plex+Sans+Arabic:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/app.css">
+<link rel="stylesheet" href="assets/tpl.css">
+<style>
+.lgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.lc{border:1px solid var(--line);border-radius:12px;background:#fff;display:flex;flex-direction:column}
+.lc .hd{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:10px 14px;border-bottom:1px solid var(--line);font-size:13px;color:var(--steel-d)}
+.lc .rt{display:grid;grid-template-columns:1fr auto 1fr;gap:8px;align-items:center;padding:12px 14px 6px}
+.lc .rt b{display:block;font:650 17px/1.2 var(--sans);font-stretch:108%}
+[dir=rtl] .lc .rt b{font-family:var(--ar)}
+.lc .rt small{color:var(--steel-d);font-size:12.5px}
+.lc .rt .ln{font-size:12px;color:var(--steel-d);border-bottom:1.5px dashed var(--line-2);padding:0 6px 3px;white-space:nowrap}
+.lc .rt>div:last-child{text-align:end}
+.lc .bd{padding:4px 14px 12px;font-size:13.5px;color:#3E4640;flex:1}
+.lc .bd .tg{display:inline-block;font-size:12px;background:var(--green-l);color:var(--green-d);border-radius:6px;padding:2px 7px;font-weight:600;margin:0 4px 4px 0}
+.lc .ft{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:10px 14px;border-top:1px solid var(--line);background:#FAFAF8;border-radius:0 0 12px 12px}
+.lc .ft b{font-size:14px}
+.oc{border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin-bottom:10px}
+.oc.best{border-color:var(--ok);box-shadow:0 0 0 2px var(--ok-l)}
+.oc .r1{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+.oc .r1 b{font-size:15px}
+.oc .pr{font:650 20px/1 var(--sans);font-stretch:108%;white-space:nowrap}
+.oc .mt{font-size:13px;color:var(--steel-d);margin-top:4px}
+.oc .nt{font-size:13.5px;margin:8px 0 0;color:#3E4640}
+.oc .ac{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.mg{background:var(--green-l);border-radius:8px;padding:8px 10px;font-size:13px;margin-top:8px}
+.how{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:16px}
+.how div{background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px}
+.how b{display:block;margin-bottom:4px}
+.how span{font-size:13.5px;color:#3E4640}
+@media (max-width:900px){.how{grid-template-columns:1fr 1fr}}
+@media (max-width:520px){.how{grid-template-columns:1fr}.lgrid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="shell">
+<aside class="rail"></aside>
+<div>
+<header class="top">
+  <button class="burger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+  <h1 data-ar="لوحة الحمولات">Load board</h1>
+  <span class="sp"></span>
+  <button class="btn btn-a hide-m" type="button" onclick="newLoad()" data-ar="نشر حمولة">Post a load</button>
+  <button class="lang" type="button">عربي</button>
+  <span class="avatar">AK</span>
+</header>
+<main class="page">
+  <div class="demo-note"><b data-ar="بيانات تجريبية.">Demo data.</b> <span data-ar="الحمولات والسائقون والعروض محاكاة وتُحفظ في هذا المتصفح. لا يتم إرسال إشعارات أو مكالمات حقيقية.">Loads, drivers and offers are simulated and stay in this browser. No real notifications or calls are sent.</span></div>
+  <div class="kpis k7" id="kpis"></div>
+
+  <div class="how">
+    <div><b data-ar="1. انشر الحمولة">1. Post the load</b><span data-ar="عندما تكون شاحنات برايم مشغولة: المسار ونوع الشاحنة والوزن وموعد التحميل.">When Prime's trucks are busy: route, truck type, weight and loading time.</span></div>
+    <div><b data-ar="2. يصل للسائقين القريبين">2. Nearby drivers are notified</b><span data-ar="فقط السائقون بنوع الشاحنة المناسب ضمن 200 كم من موقع التحميل.">Only drivers with the right truck within 200 km of pickup.</span></div>
+    <div><b data-ar="3. قارن العروض">3. Compare offers</b><span data-ar="السعر والتقييم وعدد الرحلات والمسافة، مع الهامش وسعر العميل محسوبين.">Price, rating, trips done and distance, with your margin and customer price worked out.</span></div>
+    <div><b data-ar="4. اقبل ← حجز">4. Accept, and it's booked</b><span data-ar="يصبح حجزاً في النقل عبر طرف ثالث: تكلفة المورد، الدفع النقدي، إثبات التسليم والفوترة الشهرية.">It becomes a Third-party logistics booking: vendor cost, cash payment, proof of delivery and monthly billing.</span></div>
+  </div>
+
+  <section class="panel" style="margin-top:16px">
+    <div class="tabs" role="tablist">
+      <button role="tab" aria-selected="true" data-tab="open" data-ar="مفتوحة">Open</button>
+      <button role="tab" aria-selected="false" data-tab="Assigned" data-ar="تم التعيين">Assigned</button>
+      <button role="tab" aria-selected="false" data-tab="Cancelled" data-ar="ملغاة">Cancelled</button>
+    </div>
+    <div class="tbar">
+      <div class="field grow"><label for="q" data-ar="بحث">Search</label><input id="q" type="search" placeholder="Load, customer, city, cargo" data-ar-ph="الحمولة، العميل، المدينة، البضاعة"></div>
+      <div class="field"><label for="fT" data-ar="نوع الشاحنة">Truck type</label><select id="fT"></select></div>
+      <button class="btn btn-g" type="button" onclick="newLoad()" style="align-self:flex-end" data-ar="نشر حمولة">Post a load</button>
+    </div>
+    <div class="lgrid" id="grid"></div>
+    <p class="muted small" id="cnt"></p>
+  </section>
+</main>
+</div>
+</div>
+
+<!-- post a load -->
+<div class="modal" id="nlM" aria-hidden="true"><div class="box wide" role="dialog" aria-modal="true" aria-labelledby="nlH">
+  <div class="mh"><h3 id="nlH" data-ar="نشر حمولة للسائقين">Post a load to drivers</h3><button class="x" type="button" aria-label="Close" onclick="closeModal('nlM')">×</button></div>
+  <form id="nlF" novalidate><div class="fg">
+    <div class="field"><label for="nCu" data-ar="العميل">Customer</label><select id="nCu" required></select></div>
+    <div class="field s2"><label for="nCg" data-ar="البضاعة">Cargo</label><input id="nCg" required placeholder="e.g. 18 pallets chilled dairy" data-ar-ph="مثال: 18 منصة ألبان مبردة"></div>
+    <div class="field"><label for="nFr" data-ar="مدينة التحميل">Pickup city</label><select id="nFr" required></select></div>
+    <div class="field s2"><label for="nFa" data-ar="منطقة التحميل">Pickup area</label><input id="nFa" required placeholder="e.g. 2nd Industrial City" data-ar-ph="مثال: المدينة الصناعية الثانية"></div>
+    <div class="field"><label for="nTo" data-ar="مدينة التسليم">Delivery city</label><select id="nTo" required></select></div>
+    <div class="field s2"><label for="nTa" data-ar="منطقة التسليم">Delivery area</label><input id="nTa" required placeholder="e.g. Al Sulay" data-ar-ph="مثال: السلي"></div>
+    <div class="field"><label for="nTr" data-ar="نوع الشاحنة">Truck type</label><select id="nTr" required></select></div>
+    <div class="field"><label for="nW" data-ar="الوزن (طن)">Weight (t)</label><input id="nW" type="number" min="0.5" step="0.5" required></div>
+    <div class="field"><label for="nD" data-ar="موعد التحميل">Loading time</label><input id="nD" type="datetime-local" required></div>
+    <div class="field"><label for="nB" data-ar="الميزانية (اختياري، ريال)">Budget (optional, SAR)</label><input id="nB" type="number" min="0" step="50"></div>
+    <div class="field s2"><label for="nDs" data-ar="ملاحظات للسائقين">Notes for drivers</label><input id="nDs" placeholder="Loading method, tarpaulin, temperature, timing" data-ar-ph="طريقة التحميل، الشادر، الحرارة، التوقيت"></div>
+  </div>
+  <p class="mg" id="reach" aria-live="polite"></p>
+  <p class="err" id="nErr" role="alert"></p>
+  <div class="mf"><button class="btn btn-g" type="submit" data-ar="نشر وإشعار السائقين">Post and notify drivers</button><button class="btn btn-o" type="button" onclick="closeModal('nlM')" data-ar="إلغاء">Cancel</button></div></form>
+</div></div>
+
+<!-- offers drawer -->
+<div class="modal drawer" id="ofM" aria-hidden="true"><div class="box" role="dialog" aria-modal="true" aria-labelledby="ofH"><div id="ofB"></div></div></div>
+
+<script src="assets/app.js"></script>
+<script src="assets/tpl.js"></script>
+<script src="assets/loads.js"></script>
+<script>
+const T=TPL, A=T.ASSUME, LD=LOADS, t=(en,ar)=>isAr()?ar:en, $=id=>document.getElementById(id), esc=T.esc, fmt=T.fmt;
+let S=LD.get(), tab='open', cur=null;
+const city=c=>isAr()?(LD.CITY_AR[c]||c):c, truckN=k=>isAr()?(LD.TRUCK[k]||[k])[0]:k, num=n=>Number(n).toLocaleString('en-US');
+const ST={Open:['Open','مفتوحة','p-warn'],Assigned:['Assigned','تم التعيين','p-ok'],Cancelled:['Cancelled','ملغاة','p-mute'],Pending:['Waiting','بانتظار الرد','p-warn'],Accepted:['Accepted','مقبول','p-ok'],Declined:['Not selected','لم يُختر','p-mute']};
+const pill=k=>{const s=ST[k];return `<span class="pill ${s[2]}">${t(s[0],s[1])}</span>`};
+const mine=()=>S.loads.filter(l=>l.by==='prime');
+const margin=c=>T.price(c,'pct',A.transportMarkupPct);
+
+function kpis(){const M=mine(),open=M.filter(l=>l.status==='Open'),offers=open.reduce((a,l)=>a+l.offers.filter(o=>o.status==='Pending').length,0);
+  const waiting=open.filter(l=>!l.offers.some(o=>o.status==='Pending')).length,asg=M.filter(l=>l.status==='Assigned');
+  const reached=open.reduce((a,l)=>a+LD.reach(l.truck,l.from),0);
+  $('kpis').innerHTML=[[t('Open loads','حمولات مفتوحة'),open.length,t('posted by Prime','نشرتها برايم')],[t('Offers to review','عروض للمراجعة'),offers,t('from drivers','من السائقين'),offers?'warn':''],
+    [t('Loads with no offer yet','حمولات بلا عروض'),waiting,t('consider raising the budget','فكّر في رفع الميزانية')],[t('Drivers notified','سائقون تم إشعارهم'),num(reached),t('right truck, within 200 km','الشاحنة المناسبة ضمن 200 كم')],
+    [t('Assigned from the board','عُيّنت من اللوحة'),asg.length,t('now hired-truck bookings','أصبحت حجوزات شاحنات مستأجرة')],[t('Marketplace loads','حمولات السوق'),S.loads.filter(l=>l.by!=='prime'&&l.status==='Open').length,t('other shippers, seen by drivers','شاحنون آخرون، يراها السائقون')]]
+    .map(([a,b,c,w])=>`<div class="kpi"><span>${a}</span><b>${b}</b><em class="${w==='warn'?'':'muted'}" style="${w==='warn'?'color:var(--amber-d)':''}">${c}</em></div>`).join('')}
+
+function grid(){const q=$('q').value.trim().toLowerCase(),ft=$('fT').value;
+  const L=mine().filter(l=>(tab==='open'?l.status==='Open':l.status===tab)&&(!ft||l.truck===ft)&&(!q||[l.id,l.customer,l.from,l.to,l.cargo,LD.CITY_AR[l.from],LD.CITY_AR[l.to]].join(' ').toLowerCase().includes(q)));
+  $('grid').innerHTML=L.length?L.map(l=>{const k=LD.km(l.from,l.to),po=l.offers.filter(o=>o.status==='Pending'),best=po.length?Math.min(...po.map(o=>o.price)):null,acc=l.offers.find(o=>o.status==='Accepted');
+    return `<article class="lc"><div class="hd"><span><b style="color:var(--ink)">${esc(l.id)}</b> · ${esc(l.customer)}</span>${pill(l.status)}</div>
+    <div class="rt"><div><b>${esc(city(l.from))}</b><small>${esc(l.fromArea)}</small></div><div class="ln">${k?num(k)+' '+t('km','كم'):''}</div><div><b>${esc(city(l.to))}</b><small>${esc(l.toArea)}</small></div></div>
+    <div class="bd"><span class="tg">${esc(truckN(l.truck))}</span><span class="tg">${l.weight} ${t('t','طن')}</span><span class="tg">${t('Loading','التحميل')} ${esc(l.date.slice(5))}</span>${l.budget?`<span class="tg">${t('Budget','الميزانية')} ${fmt(l.budget)}</span>`:''}
+      <div>${esc(l.cargo)}</div><div class="muted small">${t('Posted','نُشرت')} ${esc(LD.ago(l.ago,isAr()?'ar':'en'))} · ${t('Notified','تم إشعار')} ${num(LD.reach(l.truck,l.from))} ${t('drivers','سائق')}</div></div>
+    <div class="ft">${l.status==='Open'?(po.length?`<span>${po.length} ${t(po.length>1?'offers':'offer','عرض')} · ${t('best','الأفضل')} <b>${fmt(best)}</b></span>`:`<span class="muted">${t('No offers yet','لا عروض بعد')}</span>`)
+      :l.status==='Assigned'?`<span>${esc(acc?LD.DRIVERS[acc.driver].name:'')} · <b>${acc?fmt(acc.price):''}</b></span>`:`<span class="muted">${t('Cancelled','ملغاة')}</span>`}
+      <button class="btn ${l.status==='Open'&&po.length?'btn-g':'btn-o'}" type="button" onclick="offers('${l.id}')">${l.status==='Open'?t('Review offers','راجع العروض'):t('View','عرض')}</button></div></article>`}).join('')
+    :`<p class="empty">${tab==='open'?t('No open loads. Post one when your own trucks are busy.','لا توجد حمولات مفتوحة. انشر حمولة عندما تكون شاحناتك مشغولة.'):t('Nothing here yet.','لا شيء هنا بعد.')}</p>`;
+  $('cnt').textContent=t(`${L.length} loads`,`${L.length} حمولة`)}
+
+function offers(id){cur=id;S=LD.get();const l=S.loads.find(x=>x.id===id),k=LD.km(l.from,l.to);
+  const os=[...l.offers].sort((a,b)=>(a.status==='Pending'?0:1)-(b.status==='Pending'?0:1)||a.price-b.price),best=os.find(o=>o.status==='Pending');
+  $('ofB').innerHTML=`<div class="mh"><div><h3 id="ofH">${esc(l.id)} · ${esc(city(l.from))} → ${esc(city(l.to))}</h3><p class="muted small" style="margin:0">${esc(l.customer)} · ${esc(l.cargo)}, ${l.weight} ${t('t','طن')} · ${esc(truckN(l.truck))} · ${k?num(k)+' '+t('km','كم'):''}</p></div><button class="x" type="button" aria-label="Close" onclick="closeModal('ofM')">×</button></div>
+   <p>${pill(l.status)} <span class="muted small">${t('Loading','التحميل')} ${esc(l.date)}${l.budget?' · '+t('Budget','الميزانية')+' '+fmt(l.budget):''}</span></p>
+   ${l.status==='Assigned'&&l.booking?`<p class="mg">${t('Booked as','تم الحجز برقم')} <b>${esc(l.booking)}</b> ${t('in Third-party logistics: vendor payment Unpaid until recorded, customer billed on the monthly invoice.','في النقل عبر طرف ثالث: دفع المورد غير مدفوع حتى يُسجَّل، والعميل يُفوتر في الفاتورة الشهرية.')} <a href="tpl-transport.html">${t('Open Third-party logistics','افتح النقل عبر طرف ثالث')}</a></p>`:''}
+   <h4 style="margin:16px 0 8px">${t('Offers from drivers','عروض السائقين')} (${l.offers.length})</h4>
+   ${os.length?os.map(o=>{const d=LD.DRIVERS[o.driver],p=margin(o.price),dk=LD.km(d.city,l.from);return `<div class="oc ${o===best&&l.status==='Open'?'best':''}">
+     <div class="r1"><div><b>${esc(d.name)}</b> ${d.verified?`<span class="pill p-ok">${t('Verified','موثّق')}</span>`:`<span class="pill p-mute">${t('Not verified','غير موثّق')}</span>`} ${d.vendorId?`<span class="pill p-info">${t('Prime vendor','مورد لبرايم')}</span>`:''}
+       <div class="mt">★ ${d.rating} · ${d.trips} ${t('trips','رحلة')} · ${esc(truckN(d.truck))} · ${esc(d.plate)} · ${esc(city(d.city))}${dk!=null?` (${num(dk)} ${t('km from pickup','كم من التحميل')})`:''}</div></div>
+       <div style="text-align:end"><div class="pr">${fmt(o.price)}</div><div class="mt">${esc(o.at)}</div></div></div>
+     ${o.note&&o.note.en?`<p class="nt">“${esc(isAr()?o.note.ar:o.note.en)}”</p>`:''}
+     <div class="mg">${t('Your margin','هامشك')} ${A.transportMarkupPct}%: ${t('customer charge','سعر العميل')} <b>${fmt(p.charge)}</b> · ${t('profit','الربح')} <b>${fmt(p.markup)}</b></div>
+     <div class="ac">${o.status==='Pending'&&l.status==='Open'?`<button class="btn btn-g" type="button" onclick="acc('${l.id}','${o.driver}')">${t('Accept and book','اقبل واحجز')}</button>`:pill(o.status)}
+       <button class="btn btn-o" type="button" onclick="toast(t('Demo: calling ','عرض تجريبي: الاتصال بـ ')+'${esc(d.phone)}')">${t('Call','اتصال')}</button>
+       <button class="btn btn-o" type="button" onclick="toast(t('Demo: WhatsApp chat with ','عرض تجريبي: محادثة واتساب مع ')+'${esc(d.name)}')">WhatsApp</button></div></div>`}).join('')
+    :`<p class="empty">${t('No offers yet. Drivers with a','لا عروض بعد. تم إشعار السائقين بشاحنة')} ${esc(truckN(l.truck))} ${t('near','قرب')} ${esc(city(l.from))} ${t('have been notified.','.')}</p>`}
+   ${l.status==='Open'?`<div class="mf"><button class="btn btn-o" type="button" onclick="cancelLoad('${l.id}')">${t('Cancel this load','إلغاء الحمولة')}</button></div>`:''}`;
+  openModal('ofM')}
+function acc(id,drv){S=LD.get();const b=LD.accept(S,id,drv);S=LD.get();render();offers(id);toast(t('Booked: ','تم الحجز: ')+b+t(' added to Third-party logistics',' أضيف إلى النقل عبر طرف ثالث'))}
+function cancelLoad(id){S=LD.get();LD.cancel(S,id);S=LD.get();closeModal('ofM');render();toast(t('Load cancelled. Drivers who sent offers are told in the app.','أُلغيت الحمولة. يتم إبلاغ السائقين في التطبيق.'))}
+
+function newLoad(){$('nlF').reset();$('nErr').textContent='';$('nCu').innerHTML=T.CUSTOMERS.map(c=>`<option>${esc(c)}</option>`).join('');
+  const cs=Object.keys(LD.CITY_AR);$('nFr').innerHTML=cs.map(c=>`<option value="${c}">${esc(city(c))}</option>`).join('');$('nTo').innerHTML=$('nFr').innerHTML;$('nTo').value='Riyadh';$('nFr').value='Dammam';
+  $('nTr').innerHTML=LD.TRUCKS.map(k=>`<option value="${esc(k)}">${esc(truckN(k))}</option>`).join('');$('nD').value=A.demoDate+'T20:00';reach();openModal('nlM')}
+function reach(){const r=LD.reach($('nTr').value,$('nFr').value),k=LD.km($('nFr').value,$('nTo').value);
+  $('reach').innerHTML=`${t('Will notify','سيتم إشعار')} <b>${num(r)}</b> ${t('drivers with a','سائقاً بشاحنة')} ${esc(truckN($('nTr').value))} ${t('within 200 km of','ضمن 200 كم من')} ${esc(city($('nFr').value))}.${k?` ${t('Route','المسار')} ≈ ${num(k)} ${t('km','كم')}.`:''}`}
+['nTr','nFr','nTo'].forEach(i=>$(i).addEventListener('change',reach));
+$('nlF').addEventListener('submit',e=>{e.preventDefault();const miss=[];
+  [['nCg',t('cargo','البضاعة')],['nFa',t('pickup area','منطقة التحميل')],['nTa',t('delivery area','منطقة التسليم')],['nW',t('weight','الوزن')],['nD',t('loading time','موعد التحميل')]].forEach(([i,l])=>{const el=$(i);el.removeAttribute('aria-invalid');if(!String(el.value).trim()){miss.push(l);el.setAttribute('aria-invalid','true')}});
+  if($('nFr').value===$('nTo').value)miss.push(t('a delivery city different from pickup','مدينة تسليم مختلفة عن التحميل'));
+  if(miss.length){$('nErr').textContent=t('Please fill in: ','يرجى إدخال: ')+miss.join(', ')+'.';const f=document.querySelector('#nlF [aria-invalid=true]');f&&f.focus();return}
+  S=LD.get();const l=LD.post(S,{customer:$('nCu').value,cargo:$('nCg').value.trim(),from:$('nFr').value,fromArea:$('nFa').value.trim(),to:$('nTo').value,toArea:$('nTa').value.trim(),truck:$('nTr').value,weight:$('nW').value,date:$('nD').value.replace('T',' '),budget:$('nB').value,desc:$('nDs').value.trim()||$('nCg').value.trim()});
+  S=LD.get();closeModal('nlM');tab='open';setTab();render();toast(t(`${l.id} posted. ${num(LD.reach(l.truck,l.from))} drivers notified.`,`تم نشر ${l.id}. تم إشعار ${num(LD.reach(l.truck,l.from))} سائقاً.`))});
+
+function setTab(){document.querySelectorAll('[data-tab]').forEach(b=>b.setAttribute('aria-selected',b.dataset.tab===tab))}
+document.querySelectorAll('[data-tab]').forEach(b=>b.addEventListener('click',()=>{tab=b.dataset.tab;setTab();grid()}));
+function fill(){const v=$('fT').value;$('fT').innerHTML=`<option value="">${t('All','الكل')}</option>`+LD.TRUCKS.map(k=>`<option value="${esc(k)}">${esc(truckN(k))}</option>`).join('');$('fT').value=v}
+$('q').addEventListener('input',grid);$('fT').addEventListener('change',grid);
+function render(){S=LD.get();kpis();grid()}
+window.addEventListener('storage',e=>{if(e.key===LD.KEY){render();if(cur&&$('ofM').classList.contains('on'))offers(cur)}});
+fill();render();
+document.addEventListener('langchange',()=>{fill();render();if($('ofM').classList.contains('on'))offers(cur)});
+if(isAr()) applyLang('ar');
+</script>
+</body>
+</html>

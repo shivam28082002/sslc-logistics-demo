@@ -9,7 +9,9 @@ const PAGES=[
   ['packaging.html','Packaging','التغليف','<path d="M3 7l9-4 9 4v10l-9 4-9-4z"/><path d="M3 7l9 4 9-4M12 11v10M7.5 5l9 4"/>'],
   ['transport.html','Transport','النقل','<path d="M1 7h13v10H1zM14 10h5l4 4v3h-9"/><circle cx="5" cy="18" r="2"/><circle cx="18" cy="18" r="2"/>'],
   ['tpl-transport.html','Third-party logistics','النقل عبر طرف ثالث','<path d="M1 8h11v9H1zM12 11h5l4 4v2h-9"/><circle cx="5" cy="18" r="2"/><circle cx="17" cy="18" r="2"/><path d="M15 3l3 3-3 3"/><path d="M9 6h9"/>'],
+  ['load-board.html','Load board','لوحة الحمولات','<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 13h4M8 16h7"/><circle cx="17" cy="14.5" r="1.5"/>'],
   ['driver.html','Driver app','تطبيق السائق','<rect x="6" y="2" width="12" height="20" rx="2"/><path d="M11 18h2"/>'],
+  ['loads-driver.html','Load board app','تطبيق الحمولات','<rect x="6" y="2" width="12" height="20" rx="2"/><path d="M9 7h6M9 10h6M9 13h3"/><path d="M11 18h2"/>'],
   ['client-portal.html','Client portal','بوابة العملاء','<circle cx="12" cy="8" r="4"/><path d="M4 21c1.6-4 4.6-6 8-6s6.4 2 8 6"/>'],
   ['billing.html','Billing & ZATCA','الفوترة وزاتكا','<path d="M6 2h12v20l-3-2-3 2-3-2-3 2z"/><path d="M9 7h6M9 11h6M9 15h4"/>'],
 ];
@@ -56,7 +58,7 @@ if(rail){
     <a href="${h}" ${h===here?'aria-current="page"':''}><svg viewBox="0 0 24 24">${ic}</svg><span data-ar="${ar}">${en}</span></a>`).join('')}</nav>
   <div class="foot"><b data-ar="عرض تجريبي">Demo build</b><br><span data-ar="بيانات تجريبية، ليست بيانات برايم الحقيقية">Sample data, not Prime's real data</span><br><a href="#" id="resetDemo" style="color:#E8A43A" data-ar="إعادة ضبط العرض">Reset demo</a>${SESSION?` · <a href="#" id="railOut" style="color:#E8A43A" data-ar="خروج">Sign out</a>`:''}</div>`;
   const ro=document.getElementById('railOut');if(ro)ro.addEventListener('click',e=>{e.preventDefault();PrimeAuth.signOut()});
-  document.getElementById('resetDemo').addEventListener('click',e=>{e.preventDefault();PrimeState.reset();localStorage.removeItem('prime-tpl-v1');toast(isAr()?'تمت إعادة الضبط':'Demo reset');setTimeout(()=>location.reload(),500)});
+  document.getElementById('resetDemo').addEventListener('click',e=>{e.preventDefault();PrimeState.reset();localStorage.removeItem('prime-tpl-v1');localStorage.removeItem('prime-loads-v1');toast(isAr()?'تمت إعادة الضبط':'Demo reset');setTimeout(()=>location.reload(),500)});
 }
 
 /* signed-in user menu on the avatar */

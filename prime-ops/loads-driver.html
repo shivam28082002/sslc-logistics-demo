@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prime Operations · Load board driver app</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="assets/fav-icon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..700&family=IBM+Plex+Sans+Arabic:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/app.css">
+<style>
+.stage{display:grid;grid-template-columns:auto 1fr;gap:40px;align-items:start}
+.phone{width:372px;height:780px;border-radius:44px;background:#121813;padding:12px;box-shadow:0 40px 80px -30px rgba(26,35,29,.6);flex:none}
+.screen{width:100%;height:100%;border-radius:34px;background:#F4F5F2;overflow:hidden;display:flex;flex-direction:column;position:relative}
+.screen[dir=rtl]{font-family:var(--ar)}
+.sbar{display:flex;justify-content:space-between;padding:12px 24px 6px;font-size:12.5px;font-weight:600;direction:ltr}
+#app{flex:1;display:flex;flex-direction:column;min-height:0;position:relative}
+.pad{padding:18px}
+.grow{flex:1;overflow-y:auto}
+.brand{flex:1;display:grid;place-items:center;text-align:center}
+.brand .mark{width:86px;height:86px;border-radius:24px;background:var(--green);display:grid;place-items:center;margin:0 auto 14px}
+.brand .mark svg{width:50px;height:50px;stroke:#fff;fill:none;stroke-width:1.7}
+.brand b{display:block;font:650 24px/1.1 var(--sans);font-stretch:112%}
+.brand small{color:var(--steel-d);font-size:13px}
+.choice{display:block;width:100%;border:1px solid var(--line-2);background:#fff;border-radius:12px;padding:14px;margin-top:10px;font-weight:600;font-size:16px;cursor:pointer;color:var(--green-d)}
+.choice:hover,.choice[aria-pressed=true]{border-color:var(--green);box-shadow:0 0 0 3px rgba(61,78,67,.14)}
+.lbl{font-size:13px;font-weight:600;color:var(--steel-d);display:block;margin:14px 0 6px}
+.inp{width:100%;border:1px solid var(--line-2);border-radius:10px;padding:12px;font-size:16px;background:#fff}
+.inp:focus{outline:0;border-color:var(--green);box-shadow:0 0 0 3px rgba(61,78,67,.14)}
+.row{display:flex;gap:8px}
+.cta{display:block;width:100%;border:0;border-radius:12px;padding:15px;font-weight:700;font-size:16px;cursor:pointer;background:var(--green);color:#fff;margin-top:16px}
+.cta.a{background:var(--amber);color:var(--green-dd)}
+.cta.o{background:#fff;color:var(--green-d);border:1px solid var(--line-2)}
+.cta:disabled{opacity:.4;cursor:not-allowed}
+.back{border:0;background:none;padding:6px;cursor:pointer;font-size:20px;line-height:1}
+.top-a{display:flex;align-items:center;gap:8px;padding:6px 14px 10px;border-bottom:1px solid var(--line);background:#fff}
+.top-a h3{margin:0;font-size:16px;flex:1;text-align:center}
+.otp{display:flex;gap:10px;justify-content:center;direction:ltr;margin-top:10px}
+.otp input{width:54px;height:60px;text-align:center;font-size:24px;font-weight:700;border:1px solid var(--line-2);border-radius:12px}
+.hint{font-size:12.5px;color:var(--steel-d);text-align:center;margin-top:10px}
+.trucks{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:6px}
+.trucks button{border:1px solid var(--line-2);background:#fff;border-radius:12px;padding:12px 8px;cursor:pointer;font-size:13.5px;font-weight:600;display:flex;flex-direction:column;align-items:center;gap:6px;color:var(--ink)}
+.trucks button svg{width:38px;height:26px;stroke:var(--green);fill:none;stroke-width:1.6}
+.trucks button[aria-pressed=true]{border-color:var(--green);background:var(--green-l)}
+/* feed */
+.fhead{background:#fff;padding:4px 12px 0;border-bottom:1px solid var(--line)}
+.od{display:grid;grid-template-columns:18px 1fr;gap:6px 8px;align-items:center;padding:6px 2px}
+.od i{width:12px;height:12px;border-radius:50%;border:3px solid var(--green);justify-self:center}
+.od i.d{border-color:var(--amber-d);border-radius:50% 50% 50% 0;transform:rotate(-45deg)}
+.od select{border:1px solid var(--line);border-radius:9px;padding:8px 10px;background:#fff;font-size:14px;width:100%}
+.ftabs{display:flex;gap:4px;margin-top:6px}
+.ftabs button{flex:1;border:0;background:none;padding:10px 4px;font-weight:600;font-size:13.5px;color:var(--steel-d);border-bottom:3px solid transparent;cursor:pointer}
+.ftabs button[aria-selected=true]{color:var(--green-d);border-color:var(--amber)}
+.ftabs em{font-style:normal;background:var(--amber);color:var(--green-dd);border-radius:999px;padding:0 6px;font-size:11.5px;margin-inline-start:4px}
+.sec{display:flex;align-items:center;gap:10px;color:var(--steel-d);font-size:12.5px;font-weight:600;margin:14px 2px 8px}
+.sec:after,.sec:before{content:"";flex:1;height:1px;background:var(--line-2)}
+.ld{background:#fff;border:1px solid var(--line);border-radius:14px;margin-bottom:10px;overflow:hidden}
+.ld .meta{display:flex;justify-content:space-between;gap:6px;background:#F0F2EF;padding:7px 12px;font-size:12px;color:var(--steel-d)}
+.ld .meta b{color:var(--green-d);font-weight:600}
+.route{display:grid;grid-template-columns:1fr auto 1fr;gap:6px;align-items:center;padding:12px 12px 6px;text-align:center}
+.route b{display:block;font-size:16px}
+.route small{color:var(--steel-d);font-size:12px}
+.route .ln{font-size:11.5px;color:var(--steel-d);min-width:80px;border-bottom:1.5px dashed var(--line-2);padding-bottom:3px;direction:ltr}
+.tags{display:flex;flex-wrap:wrap;gap:6px;padding:4px 12px 8px}
+.tg{font-size:11.5px;background:var(--green-l);color:var(--green-d);border-radius:6px;padding:2px 7px;font-weight:600}
+.tg.am{background:var(--amber-l);color:var(--amber-d)}
+.tg.ok{background:var(--ok-l);color:var(--ok)}
+.ld p{margin:0;padding:0 12px 10px;font-size:13.5px;color:#3E4640}
+.ld .go{display:block;width:100%;border:0;background:var(--green);color:#fff;padding:11px;font-weight:700;cursor:pointer;font-size:14.5px}
+.ld .go.c{background:var(--amber);color:var(--green-dd)}
+.empty-s{text-align:center;color:var(--steel-d);padding:24px 10px;font-size:14px}
+/* sheet + dialog */
+.scrim{position:absolute;inset:0;background:rgba(18,24,19,.45);display:flex;align-items:flex-end;z-index:5}
+.scrim.mid{align-items:center;padding:18px}
+.sheet{background:#fff;border-radius:22px 22px 0 0;width:100%;max-height:88%;display:flex;flex-direction:column}
+.sheet .sh{display:flex;align-items:center;justify-content:space-between;padding:14px 16px 8px;border-bottom:1px solid var(--line)}
+.sheet .sh b{font-size:16px}
+.sheet .sb{overflow-y:auto;padding:4px 16px 12px}
+.sheet .sf{display:flex;gap:8px;padding:12px 16px 16px;border-top:1px solid var(--line)}
+.sheet .sf button{flex:1;margin:0}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:6px 12px;font-size:13.5px;margin:10px 0}
+.kv span{color:var(--steel-d)}
+.note{background:#F0F2EF;border-radius:10px;padding:10px 12px;font-size:12.5px;color:#3E4640;margin:10px 0}
+.more{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px}
+.more button{flex:none;border:1px solid var(--line);border-radius:10px;background:#fff;padding:8px 10px;font-size:12.5px;cursor:pointer;text-align:start}
+.dlg{background:#fff;border-radius:16px;padding:20px;text-align:center;width:100%}
+.dlg .ic{width:46px;height:46px;border-radius:50%;background:var(--green);color:#fff;display:grid;place-items:center;margin:0 auto 10px;font-weight:700;font-size:22px}
+.dlg p{margin:0 0 14px;font-size:15px}
+.dlg .row button{flex:1;margin:0}
+.wa{background:#1FA855!important;color:#fff!important}
+.okc{display:grid;place-items:center;text-align:center;padding:30px 18px}
+.okc .ic{width:76px;height:76px;border-radius:50%;background:var(--ok);display:grid;place-items:center;margin-bottom:14px}
+.okc svg{width:40px;height:40px;stroke:#fff;fill:none;stroke-width:3}
+.of{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:10px 12px;border-top:1px solid var(--line);font-size:13px}
+/* side */
+.side h2{font:650 26px/1.15 var(--sans);font-stretch:112%;margin:0 0 10px;max-width:540px}
+[dir="rtl"] .side h2{font-family:var(--ar)}
+.side p,.side li{color:#3E4640;max-width:540px}
+.side ol{padding-inline-start:20px;max-width:540px}
+.side li{margin:6px 0}
+.side .tip{background:var(--amber-l);border:1px solid #F0D9A8;border-radius:10px;padding:12px 14px;max-width:540px;font-size:14px}
+@media (max-width:960px){.stage{grid-template-columns:1fr}.phone{margin:0 auto}}
+@media (max-width:420px){.phone{width:100%;height:760px;border-radius:30px;padding:8px}.screen{border-radius:24px}}
+</style>
+</head>
+<body>
+<div class="shell">
+<aside class="rail"></aside>
+<div>
+<header class="top">
+  <button class="burger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+  <h1 data-ar="تطبيق السائق: لوحة الحمولات">Load board: driver app</h1>
+  <span class="sp"></span>
+  <button class="lang" type="button">عربي</button>
+  <span class="avatar">AK</span>
+</header>
+<main class="page">
+  <div class="stage">
+    <div class="phone"><div class="screen" id="scr">
+      <div class="sbar"><span>16:32</span><span>4G ▮▮▮</span></div>
+      <div id="app"></div>
+    </div></div>
+    <div class="side">
+      <h2 data-ar="سائقون خارجيون يجدون حمولات برايم بأنفسهم">Outside drivers find Prime's loads themselves</h2>
+      <p data-ar="عندما تكون شاحنات برايم مشغولة، تنشر الحمولة هنا. يراها السائقون القريبون بنوع الشاحنة المناسب، ويرسلون سعرهم، وتقبل برايم أفضل عرض.">When Prime's own trucks are busy, the load is posted here. Nearby drivers with the right truck see it, send their price, and Prime accepts the best offer.</p>
+      <ol>
+        <li data-ar="اختر اللغة: الأردو أو العربية أو الإنجليزية">Choose a language: Urdu, Arabic or English</li>
+        <li data-ar="سجّل الدخول برقم الجوال والرمز (الرمز التجريبي 1234)">Sign in with mobile number and code (demo code 1234)</li>
+        <li data-ar="اختر نوع الشاحنة: سطحة 12م">Pick the truck type: Flatbed 12m</li>
+        <li data-ar="افتح حمولة برايم LD-1047 (الدمام إلى الرياض) وأرسل سعرك">Open Prime's load LD-1047 (Dammam to Riyadh) and send your price</li>
+        <li data-ar="جرّب تبويب حمولات العودة لرحلة الرجوع إلى الدمام">Try the Return loads tab for the trip back to Dammam</li>
+      </ol>
+      <p class="tip" data-ar="ثم افتح «لوحة الحمولات» كموظف برايم واقبل عرض عمران. يتحول العرض إلى حجز في النقل عبر طرف ثالث، مع التكلفة والهامش وحالة الدفع، ويظهر «مقبول» هنا في «عروضي».">Then open the Load board as Prime staff and accept Imran's offer. It becomes a booking in Third-party logistics with cost, margin and payment status, and shows as Accepted here under My offers.</p>
+      <p><a class="btn btn-g" href="load-board.html" data-ar="افتح لوحة الحمولات">Open the Load board</a> <button class="btn btn-o" type="button" id="restart" data-ar="ابدأ التطبيق من جديد">Restart the app</button></p>
+      <p class="muted small" data-ar="عرض تجريبي: لا يتم إجراء أي اتصال أو رسالة، والحمولات والسائقون بيانات تجريبية.">Demo: no calls or messages are placed; loads and drivers are sample data.</p>
+    </div>
+  </div>
+</main>
+</div>
+</div>
+<script src="assets/app.js"></script>
+<script src="assets/tpl.js"></script>
+<script src="assets/loads.js"></script>
+<script>
+(function(){
+const LD=window.LOADS, D=LD.DRIVERS[LD.ME];
+let S=LD.get();
+const app=document.getElementById('app'), scr=document.getElementById('scr');
+const ui={screen:S.driver.signedIn?'feed':'lang',tab:'loads',origin:'near',dest:'all',open:null,dialog:null};
+const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const STR={
+ en:{lang:'Please select your language',phone:'Your mobile number',country:'Country',send:'Send code',otp:'Enter the code we sent by SMS',otpHint:'Demo code: 1234',verify:'Verify',wrong:'That code is not right. Try 1234.',truck:'What truck do you drive?',truckSub:'You will see loads that fit your truck.',cont:'Continue',
+  origin:'Origin',dest:'Destination',near:'Around me',allR:'All regions',loads:'Loads',ret:'Return loads',mine:'My offers',nearSec:'Near you',far:'Cargo farther from you',farSub:'These loads are more than 200 km from you.',none:'No loads found around you.',
+  view:'View load',call:'Call',msg:'WhatsApp',offer:'Send your price',update:'Update your price',km:'km',fromYou:'from you',loading:'Loading',cargo:'Cargo',weight:'Weight',truckT:'Truck',budget:'Budget',postedBy:'Posted by',details:'Load details',
+  verified:'Verified',prime:'Prime Logistics',primeNote:'Prime confirms your price in the app before loading. You get the trip, proof-of-delivery steps and payment status in this app (cash or bank transfer).',
+  otherNote:'You are connected directly to the shipper. Agree the price and details with them.',moreBy:'More loads by this shipper',yourPrice:'Your price (SAR)',noteL:'Note to Prime (optional)',sendOffer:'Send offer',sent:'Offer sent',sentSub:'Prime Logistics will reply in the app. You will get a notification.',done:'Done',
+  notifyQ:'Get a notification when a new load for your truck is posted near you?',yes:'Yes, notify me',notNow:'Not now',pending:'Waiting for Prime',accepted:'Accepted',declined:'Not selected',openTrip:'Open trip',noOffers:'You have not sent any offers yet.',
+  retHead:'After your trip, loads back home',retNone:'No return loads yet. Accept a trip first, or check again later.',retFor:'Back to',sar:'SAR',t:'t',calling:'Demo: the phone app would now call',waing:'Demo: WhatsApp would open a chat with',priceErr:'Enter a price in SAR.',logout:'Sign out',hi:'Hi',trip:'Trip',
+  tl:'Truck',chg:'Change'},
+ ar:{lang:'يرجى اختيار اللغة',phone:'رقم الجوال',country:'الدولة',send:'إرسال الرمز',otp:'أدخل الرمز المرسل برسالة',otpHint:'الرمز التجريبي: 1234',verify:'تحقق',wrong:'الرمز غير صحيح. جرّب 1234.',truck:'ما نوع شاحنتك؟',truckSub:'ستظهر لك الحمولات المناسبة لشاحنتك.',cont:'متابعة',
+  origin:'من',dest:'إلى',near:'حولي',allR:'كل المناطق',loads:'الحمولات',ret:'حمولات العودة',mine:'عروضي',nearSec:'قريب منك',far:'حمولات أبعد عنك',farSub:'هذه الحمولات تبعد أكثر من 200 كم عنك.',none:'لا توجد حمولات حولك.',
+  view:'عرض الحمولة',call:'اتصال',msg:'واتساب',offer:'أرسل سعرك',update:'عدّل سعرك',km:'كم',fromYou:'منك',loading:'التحميل',cargo:'البضاعة',weight:'الوزن',truckT:'الشاحنة',budget:'الميزانية',postedBy:'نشرها',details:'تفاصيل الحمولة',
+  verified:'موثّق',prime:'برايم للخدمات اللوجستية',primeNote:'تؤكد برايم سعرك في التطبيق قبل التحميل. تحصل على الرحلة وخطوات إثبات التسليم وحالة الدفع في هذا التطبيق (نقداً أو تحويل بنكي).',
+  otherNote:'سيتم توصيلك مباشرة بصاحب الشحنة. اتفق معه على السعر والتفاصيل.',moreBy:'حمولات أخرى من نفس الجهة',yourPrice:'سعرك (ريال)',noteL:'ملاحظة لبرايم (اختياري)',sendOffer:'إرسال العرض',sent:'تم إرسال العرض',sentSub:'سترد برايم في التطبيق، وسيصلك إشعار.',done:'تم',
+  notifyQ:'هل تريد إشعاراً عند نشر حمولة جديدة لشاحنتك بالقرب منك؟',yes:'نعم، أبلغني',notNow:'ليس الآن',pending:'بانتظار برايم',accepted:'مقبول',declined:'لم يتم اختياره',openTrip:'فتح الرحلة',noOffers:'لم ترسل أي عروض بعد.',
+  retHead:'بعد رحلتك: حمولات العودة',retNone:'لا توجد حمولات عودة بعد. اقبل رحلة أولاً أو تحقق لاحقاً.',retFor:'العودة إلى',sar:'ريال',t:'طن',calling:'عرض تجريبي: سيتصل التطبيق الآن بـ',waing:'عرض تجريبي: سيفتح واتساب محادثة مع',priceErr:'أدخل السعر بالريال.',logout:'تسجيل الخروج',hi:'مرحباً',trip:'رحلة',
+  tl:'الشاحنة',chg:'تغيير'},
+ ur:{lang:'براہ کرم اپنی زبان منتخب کریں',phone:'آپ کا موبائل نمبر',country:'ملک',send:'کوڈ بھیجیں',otp:'SMS سے آیا ہوا کوڈ لکھیں',otpHint:'ڈیمو کوڈ: 1234',verify:'تصدیق کریں',wrong:'کوڈ درست نہیں۔ 1234 آزمائیں۔',truck:'آپ کون سا ٹرک چلاتے ہیں؟',truckSub:'آپ کو اپنے ٹرک کے مطابق لوڈ نظر آئیں گے۔',cont:'آگے بڑھیں',
+  origin:'کہاں سے',dest:'کہاں تک',near:'میرے آس پاس',allR:'تمام علاقے',loads:'لوڈ',ret:'واپسی کے لوڈ',mine:'میری آفرز',nearSec:'آپ کے قریب',far:'آپ سے دور کے لوڈ',farSub:'یہ لوڈ آپ سے 200 کلومیٹر سے زیادہ دور ہیں۔',none:'آپ کے آس پاس کوئی لوڈ نہیں ملا۔',
+  view:'لوڈ دیکھیں',call:'کال',msg:'واٹس ایپ',offer:'اپنا ریٹ بھیجیں',update:'ریٹ تبدیل کریں',km:'کلومیٹر',fromYou:'آپ سے',loading:'لوڈنگ',cargo:'سامان',weight:'وزن',truckT:'ٹرک',budget:'بجٹ',postedBy:'پوسٹ کرنے والا',details:'لوڈ کی تفصیل',
+  verified:'تصدیق شدہ',prime:'پرائم لاجسٹکس',primeNote:'لوڈنگ سے پہلے پرائم ایپ میں آپ کا ریٹ کنفرم کرتا ہے۔ ٹرپ، ڈیلیوری کا ثبوت اور ادائیگی کی حالت اسی ایپ میں (کیش یا بینک ٹرانسفر)۔',
+  otherNote:'آپ کا رابطہ براہ راست سامان والے سے ہوگا۔ ریٹ اور تفصیل ان سے طے کریں۔',moreBy:'اسی پارٹی کے مزید لوڈ',yourPrice:'آپ کا ریٹ (ریال)',noteL:'پرائم کے لیے نوٹ (اختیاری)',sendOffer:'آفر بھیجیں',sent:'آفر بھیج دی گئی',sentSub:'پرائم ایپ میں جواب دے گا، آپ کو نوٹیفکیشن ملے گا۔',done:'ٹھیک ہے',
+  notifyQ:'کیا آپ کے قریب آپ کے ٹرک کا نیا لوڈ آنے پر نوٹیفکیشن چاہیے؟',yes:'ہاں، بتائیں',notNow:'ابھی نہیں',pending:'پرائم کا انتظار',accepted:'منظور',declined:'منتخب نہیں ہوا',openTrip:'ٹرپ کھولیں',noOffers:'آپ نے ابھی کوئی آفر نہیں بھیجی۔',
+  retHead:'ٹرپ کے بعد گھر واپسی کے لوڈ',retNone:'ابھی واپسی کا کوئی لوڈ نہیں۔ پہلے کوئی ٹرپ منظور کروائیں یا بعد میں دیکھیں۔',retFor:'واپسی',sar:'ریال',t:'ٹن',calling:'ڈیمو: ایپ اب کال کرے گی',waing:'ڈیمو: واٹس ایپ پر چیٹ کھلے گی',priceErr:'ریال میں ریٹ لکھیں۔',logout:'سائن آؤٹ',hi:'السلام علیکم',trip:'ٹرپ',
+  tl:'ٹرک',chg:'تبدیل'}};
+const L=()=>S.driver.lang||'en', t=k=>STR[L()][k]||STR.en[k];
+const city=c=>L()==='ar'?(LD.CITY_AR[c]||c):L()==='ur'?(LD.CITY_UR[c]||c):c;
+const region=c=>{const r=LD.REGION[c]||[c,c,c];return r[{en:0,ar:1,ur:2}[L()]]};
+const truckN=k=>L()==='en'?k:(LD.TRUCK[k]||[k,k])[L()==='ar'?0:1];
+const num=n=>Number(n).toLocaleString('en-US');
+const TRUCK_IC='<path d="M2 6h20v11H2z" opacity=".001"/><path d="M1 7h13v9H1zM14 10h4l4 4v2h-8"/><circle cx="5" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/>';
+function dirSet(){const r=L()!=='en';scr.setAttribute('dir',r?'rtl':'ltr');scr.setAttribute('lang',L())}
+function save(){LD.save(S)}
+
+function render(){S=LD.get();dirSet();const f={lang,phone,otp,truck,feed}[ui.screen];app.innerHTML=f();bind();if(ui.open)sheet();if(ui.dialog)dialog()}
+function lang(){return `<div class="brand"><div><div class="mark"><svg viewBox="0 0 24 24">${TRUCK_IC}</svg></div><b>Prime Loads</b><small>برايم · Prime Logistics</small></div></div>
+  <div class="pad"><b style="font-size:14px">Please select your language · اختر اللغة</b>
+  <button class="choice" data-l="ur" lang="ur" style="font-family:var(--ar)">اُردو</button><button class="choice" data-l="ar" lang="ar" style="font-family:var(--ar)">العربية</button><button class="choice" data-l="en">English</button></div>`}
+function phone(){return `<div class="top-a"><button class="back" data-go="lang" aria-label="Back">${L()==='en'?'←':'→'}</button><h3>${t('phone')}</h3><span style="width:28px"></span></div>
+  <div class="pad grow"><label class="lbl" for="cc">${t('country')}</label>
+  <select class="inp" id="cc"><option value="966">🇸🇦 Saudi Arabia +966</option><option value="971">🇦🇪 UAE +971</option><option value="968">🇴🇲 Oman +968</option><option value="965">🇰🇼 Kuwait +965</option><option value="974">🇶🇦 Qatar +974</option><option value="973">🇧🇭 Bahrain +973</option><option value="962">🇯🇴 Jordan +962</option><option value="20">🇪🇬 Egypt +20</option><option value="92">🇵🇰 Pakistan +92</option><option value="91">🇮🇳 India +91</option></select>
+  <label class="lbl" for="ph">${t('phone')}</label><input class="inp" id="ph" inputmode="tel" dir="ltr" value="57 884 2093" autocomplete="tel">
+  <button class="cta" data-go="otp">${t('send')}</button></div>`}
+function otp(){return `<div class="top-a"><button class="back" data-go="phone" aria-label="Back">${L()==='en'?'←':'→'}</button><h3>${t('otp')}</h3><span style="width:28px"></span></div>
+  <div class="pad grow"><p class="hint" style="font-size:14px;color:var(--ink)" dir="ltr">+966 57 884 2093</p>
+  <div class="otp">${[0,1,2,3].map(i=>`<input inputmode="numeric" maxlength="1" aria-label="Digit ${i+1}" class="od-i">`).join('')}</div>
+  <p class="hint">${t('otpHint')}</p><p class="hint" id="oErr" role="alert" style="color:var(--red)"></p><button class="cta" id="vf">${t('verify')}</button></div>`}
+function truck(){return `<div class="top-a"><span style="width:28px"></span><h3>${t('truck')}</h3><span style="width:28px"></span></div>
+  <div class="pad grow"><p class="hint" style="margin-top:0">${t('truckSub')}</p><div class="trucks">${LD.TRUCKS.map(k=>`<button data-tr="${esc(k)}" aria-pressed="${(S.driver.truck||D.truck)===k}"><svg viewBox="0 0 24 22">${TRUCK_IC}</svg>${esc(truckN(k))}</button>`).join('')}</div>
+  <button class="cta" data-go="feed" id="tc">${t('cont')}</button></div>`}
+
+function visible(){const tr=S.driver.truck||D.truck;return S.loads.filter(l=>l.status==='Open'&&l.truck===tr)}
+function dist(l){return LD.km(D.city,l.from)}
+function card(l){const k=LD.km(l.from,l.to),mine=l.offers.find(o=>o.driver===LD.ME&&o.status==='Pending');const pr=l.by==='prime';
+  return `<article class="ld"><div class="meta"><span>${LD.ago(l.ago,L())}</span><b>${pr?esc(t('prime'))+' ✓':esc(l.owner)}</b></div>
+  <div class="route"><div><b>${esc(city(l.from))}</b><small>${esc(region(l.from))}</small></div><div class="ln">${k?num(k)+' '+t('km'):''}</div><div><b>${esc(city(l.to))}</b><small>${esc(region(l.to))}</small></div></div>
+  <div class="tags"><span class="tg">${esc(truckN(l.truck))}</span><span class="tg">${l.weight} ${t('t')}</span><span class="tg am">${t('loading')}: ${esc(l.date.slice(5).replace(' ',' · '))}</span>${l.budget?`<span class="tg ok">${t('budget')} ${num(l.budget)} ${t('sar')}</span>`:''}${dist(l)!=null?`<span class="tg">${num(dist(l))} ${t('km')} ${t('fromYou')}</span>`:''}</div>
+  <p>${esc(l.desc[L()]||l.desc.en)}</p>
+  <button class="go ${pr?'':'c'}" data-open="${l.id}">${mine?t('update'):(pr?t('view'):t('call')+' / '+t('msg'))}</button></article>`}
+function feedLoads(){let L1=visible();if(ui.dest!=='all')L1=L1.filter(l=>l.to===ui.dest);
+  if(ui.origin!=='near'){L1=L1.filter(l=>l.from===ui.origin);return L1.length?L1.map(card).join(''):`<p class="empty-s">${t('none')}</p>`}
+  const near=L1.filter(l=>(dist(l)||9999)<=200).sort((a,b)=>a.ago-b.ago),far=L1.filter(l=>(dist(l)||9999)>200).sort((a,b)=>a.ago-b.ago);
+  return (near.length?`<div class="sec">${t('nearSec')}</div>${near.map(card).join('')}`:`<p class="empty-s">${t('none')}</p>`)+(far.length?`<div class="sec">${t('far')}</div><p class="hint" style="margin:-4px 0 8px">${t('farSub')}</p>${far.map(card).join('')}`:'')}
+function myOffers(){const rows=[];S.loads.forEach(l=>l.offers.forEach(o=>{if(o.driver===LD.ME)rows.push({l,o})}));
+  if(!rows.length)return `<p class="empty-s">${t('noOffers')}</p>`;
+  return rows.map(({l,o})=>`<article class="ld"><div class="meta"><span>${esc(l.id)}</span><b>${t('prime')} ✓</b></div>
+   <div class="route"><div><b>${esc(city(l.from))}</b></div><div class="ln">${num(LD.km(l.from,l.to)||0)} ${t('km')}</div><div><b>${esc(city(l.to))}</b></div></div>
+   <div class="of"><span>${t('yourPrice')}: <b dir="ltr">${num(o.price)}</b></span><span class="pill ${o.status==='Accepted'?'p-ok':o.status==='Declined'?'p-mute':'p-warn'}">${t(o.status==='Accepted'?'accepted':o.status==='Declined'?'declined':'pending')}</span></div>
+   ${o.status==='Accepted'?`<div class="of"><span>${t('trip')} <b dir="ltr">${esc(l.booking||'')}</b></span><a class="btn btn-g" href="driver.html" style="padding:7px 12px">${t('openTrip')}</a></div>`:''}</article>`).join('')}
+function returns(){const acc=S.loads.filter(l=>l.offers.some(o=>o.driver===LD.ME&&o.status==='Accepted')&&l.to!==D.city);
+  const dests=[...new Set(acc.map(l=>l.to))].concat(acc.length?[]:['Riyadh']);
+  const tr=S.driver.truck||D.truck;const list=S.loads.filter(l=>l.status==='Open'&&l.truck===tr&&dests.includes(l.from)&&(LD.km(l.to,D.city)||9999)<=120);
+  return `<p class="hint" style="margin:12px 0 4px;font-weight:600;color:var(--ink)">${t('retHead')}: ${dests.map(c=>esc(city(c))).join(', ')} → ${esc(city(D.city))}</p>`+(list.length?list.map(card).join(''):`<p class="empty-s">${t('retNone')}</p>`)}
+function feed(){const tr=S.driver.truck||D.truck,n=S.loads.reduce((a,l)=>a+l.offers.filter(o=>o.driver===LD.ME).length,0);const cities=['Dammam','Khobar','Jubail','Riyadh','Jeddah','Mecca','Buraydah'];
+  return `<div class="fhead"><div style="display:flex;justify-content:space-between;align-items:center;font-size:12.5px;color:var(--steel-d);padding:2px 2px 4px"><span>${t('hi')}, ${esc(D.name.split(' ')[0])} · ${esc(truckN(tr))} <button class="lnk" data-go="truck" style="border:0;background:none;color:var(--amber-d);font-weight:600;cursor:pointer">${t('chg')}</button></span><button class="lnk" id="lo" style="border:0;background:none;color:var(--steel-d);cursor:pointer;font-size:12px">${t('logout')}</button></div>
+   <div class="od"><i></i><select id="fo" aria-label="${t('origin')}"><option value="near">${t('origin')}: ${t('near')}</option>${cities.map(c=>`<option value="${c}" ${ui.origin===c?'selected':''}>${t('origin')}: ${esc(city(c))}</option>`).join('')}</select>
+   <i class="d"></i><select id="fd" aria-label="${t('dest')}"><option value="all">${t('dest')}: ${t('allR')}</option>${cities.concat(['Hafr Al Batin','Medina']).map(c=>`<option value="${c}" ${ui.dest===c?'selected':''}>${t('dest')}: ${esc(city(c))}</option>`).join('')}</select></div>
+   <div class="ftabs" role="tablist">${[['loads',t('loads')],['ret',t('ret')],['mine',t('mine')+(n?`<em>${n}</em>`:'')]].map(([k,v])=>`<button role="tab" aria-selected="${ui.tab===k}" data-tab="${k}">${v}</button>`).join('')}</div></div>
+   <div class="grow" style="padding:0 12px 12px" id="fl">${ui.tab==='loads'?feedLoads():ui.tab==='ret'?returns():myOffers()}</div>`}
+
+function sheet(){const l=S.loads.find(x=>x.id===ui.open);if(!l){ui.open=null;return}
+  const pr=l.by==='prime',k=LD.km(l.from,l.to),mine=l.offers.find(o=>o.driver===LD.ME&&o.status==='Pending');
+  const others=S.loads.filter(x=>x.id!==l.id&&x.status==='Open'&&(pr?x.by==='prime':x.owner===l.owner)).slice(0,5);
+  const el=document.createElement('div');el.className='scrim';el.innerHTML=`<div class="sheet" role="dialog" aria-modal="true" aria-label="${t('details')}">
+   <div class="sh"><b>${t('details')} <span class="muted small" dir="ltr">${esc(l.id)}</span></b><button class="back" id="shx" aria-label="Close">×</button></div>
+   <div class="sb"><div class="route" style="padding:12px 0 4px"><div><b>${esc(city(l.from))}</b><small>${esc(l.fromArea)}</small></div><div class="ln">${k?num(k)+' '+t('km'):''}</div><div><b>${esc(city(l.to))}</b><small>${esc(l.toArea)}</small></div></div>
+   <div class="kv"><span>${t('loading')}</span><b dir="ltr" style="text-align:start">${esc(l.date)}</b><span>${t('cargo')}</span><b>${esc(l.cargo)}</b><span>${t('weight')}</span><b>${l.weight} ${t('t')}</b><span>${t('truckT')}</span><b>${esc(truckN(l.truck))}</b>
+   ${l.budget?`<span>${t('budget')}</span><b>${num(l.budget)} ${t('sar')}</b>`:''}<span>${t('postedBy')}</span><b>${pr?esc(t('prime'))+` <span class="tg ok">${t('verified')}</span>`:esc(l.owner)}</b></div>
+   <p style="font-size:14px;margin:6px 0">${esc(l.desc[L()]||l.desc.en)}</p>
+   ${others.length?`<p class="lbl">${t('moreBy')}</p><div class="more">${others.map(x=>`<button data-open2="${x.id}">${esc(city(x.from))} → ${esc(city(x.to))}<br><span class="muted">${esc(truckN(x.truck))}</span></button>`).join('')}</div>`:''}
+   <div class="note">ⓘ ${pr?t('primeNote'):t('otherNote')}</div>
+   ${pr?`<label class="lbl" for="op">${t('yourPrice')}</label><input class="inp" id="op" inputmode="numeric" dir="ltr" value="${mine?mine.price:(l.budget||'')}" placeholder="1200">
+   <label class="lbl" for="on">${t('noteL')}</label><input class="inp" id="on" value="${mine?esc(mine.note.en):''}"><p class="hint" id="opErr" role="alert" style="color:var(--red);text-align:start"></p>`:''}</div>
+   <div class="sf">${pr?`<button class="cta o" id="cl">${t('call')}</button><button class="cta a" id="so">${mine?t('update'):t('sendOffer')}</button>`:`<button class="cta a" id="cl">📞 ${t('call')}</button><button class="cta wa" id="wa">${t('msg')}</button>`}</div></div>`;
+  app.appendChild(el);
+  el.addEventListener('click',e=>{if(e.target===el)close()});
+  el.querySelector('#shx').onclick=close;
+  el.querySelectorAll('[data-open2]').forEach(b=>b.onclick=()=>{ui.open=b.dataset.open2;render()});
+  const ph=pr?'+966 11 000 0000 (Prime operations)':l.ownerPhone;
+  el.querySelector('#cl').onclick=()=>toast(t('calling')+' '+ph);
+  const w=el.querySelector('#wa');if(w)w.onclick=()=>toast(t('waing')+' '+l.owner);
+  const so=el.querySelector('#so');if(so)so.onclick=()=>{const p=Math.round(+el.querySelector('#op').value);if(!(p>0)){el.querySelector('#opErr').textContent=t('priceErr');el.querySelector('#op').focus();return}
+    S=LD.get();LD.offer(S,l.id,LD.ME,p,el.querySelector('#on').value.trim());ui.open=null;ui.dialog='sent';render()};
+  setTimeout(()=>{const f=el.querySelector('#shx');f&&f.focus({preventScroll:true})},50);
+  function close(){ui.open=null;render()}}
+function dialog(){const el=document.createElement('div');el.className='scrim mid';
+  if(ui.dialog==='notify')el.innerHTML=`<div class="dlg" role="alertdialog" aria-modal="true"><div class="ic">!</div><p>${t('notifyQ')}</p><div class="row"><button class="cta a" id="y">${t('yes')}</button><button class="cta o" id="n">${t('notNow')}</button></div></div>`;
+  else el.innerHTML=`<div class="dlg" role="alertdialog" aria-modal="true"><div class="okc" style="padding:4px"><div class="ic"><svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg></div><b style="font-size:18px">${t('sent')}</b><p class="hint">${t('sentSub')}</p></div><button class="cta" id="y">${t('done')}</button></div>`;
+  app.appendChild(el);const y=el.querySelector('#y');y.focus();
+  y.onclick=()=>{if(ui.dialog==='notify'){S.driver.notify=true;save()}else{ui.tab='mine'}ui.dialog=null;render()};
+  const n=el.querySelector('#n');if(n)n.onclick=()=>{S.driver.notify=false;save();ui.dialog=null;render()}}
+
+function bind(){
+  app.querySelectorAll('[data-l]').forEach(b=>b.onclick=()=>{S.driver.lang=b.dataset.l;save();ui.screen='phone';render()});
+  app.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>{const g=b.dataset.go;if(g==='feed'){S.driver.signedIn=true;save();if(S.driver.notify==null)ui.dialog='notify'}ui.screen=g;render()});
+  app.querySelectorAll('[data-tr]').forEach(b=>b.onclick=()=>{S.driver.truck=b.dataset.tr;save();app.querySelectorAll('[data-tr]').forEach(x=>x.setAttribute('aria-pressed',x===b))});
+  const ins=[...app.querySelectorAll('.od-i')];ins.forEach((i,k)=>{i.addEventListener('input',()=>{i.value=i.value.replace(/\D/g,'').slice(0,1);if(i.value&&ins[k+1])ins[k+1].focus()});i.addEventListener('keydown',e=>{if(e.key==='Backspace'&&!i.value&&ins[k-1])ins[k-1].focus()})});
+  if(ins[0])setTimeout(()=>ins[0].focus(),50);
+  const vf=document.getElementById('vf');if(vf)vf.onclick=()=>{if(ins.map(i=>i.value).join('')==='1234'){ui.screen='truck';render()}else document.getElementById('oErr').textContent=t('wrong')};
+  app.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{ui.tab=b.dataset.tab;render()});
+  app.querySelectorAll('[data-open]').forEach(b=>b.onclick=()=>{ui.open=b.dataset.open;render()});
+  const fo=document.getElementById('fo');if(fo){fo.value=ui.origin;fo.onchange=()=>{ui.origin=fo.value;ui.tab='loads';render()}}
+  const fd=document.getElementById('fd');if(fd){fd.value=ui.dest;fd.onchange=()=>{ui.dest=fd.value;ui.tab='loads';render()}}
+  const lo=document.getElementById('lo');if(lo)lo.onclick=()=>{S.driver.signedIn=false;save();ui.screen='lang';ui.tab='loads';render()};
+}
+document.getElementById('restart').onclick=()=>{S=LD.get();S.driver={signedIn:false,lang:null,truck:null,notify:null,offers:{}};save();Object.assign(ui,{screen:'lang',tab:'loads',origin:'near',dest:'all',open:null,dialog:null});render()};
+window.addEventListener('storage',e=>{if(e.key===LD.KEY||e.key===null){if(!ui.open)render()}});
+render();
+})();
+</script>
+</body>
+</html>
